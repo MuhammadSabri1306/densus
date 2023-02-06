@@ -17,7 +17,7 @@
                             <h2>DENSUS TR VII</h2><span><h4><b>Mari Mulai Perjalanan DeFa dari STO Balaikota</b></h4></span>
                         </div>
                         <div class="card-body btn-showcase">
-                            <a class="btn btn-primary btn-lg" href="#">Mulai</a>
+                            <RouterLink to="/monitoring/detail/RTU_BALA" class="btn btn-primary btn-lg">Mulai</RouterLink>
                         </div>
                     </div>
                 </div>
