@@ -1,0 +1,182 @@
+<script setup>
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import { useViewStore } from "@stores/view";
+import Footer from "./DashboardFooter.vue";
+import SidebarUser from "./DashboardSidebarUser.vue";
+import SidebarMenu from "./DashboardSidebarMenu.vue";
+
+await import("@/assets/css/theme.css");
+await import("@/assets/css/responsive.css");
+
+const viewStore = useViewStore();
+const hideSidebar = computed(() => viewStore.hideSidebar);
+
+const setupSidebarVisibility = () => {
+    const bodyWidth = document.body.offsetWidth;
+    const showSidebar = bodyWidth <= 991;
+    viewStore.toggleSidebarVisibility(showSidebar);
+};
+
+onMounted(() => window.addEventListener("resize", setupSidebarVisibility));
+onUnmounted(() => window.addEventListener("resize", setupSidebarVisibility));
+setupSidebarVisibility();
+</script>
+<template>
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+        <!-- Page Header Start-->
+        <div :class="{ 'close_icon': hideSidebar }" class="page-main-header">
+            <div class="main-header-right row m-0">
+                <div class="main-header-left">
+                    <div class="logo-wrapper">
+                        <a href="#" title="Dashboard">
+                            <img src="/assets/img/logo-densus.png" class="img-fluid brand-logo" alt="" />
+                        </a>
+                    </div>
+                    <div class="dark-logo-wrapper">
+                        <a href="#" title="Dashboard">
+                            <img src="/assets/img/logo-densus.png" class="img-fluid brand-logo" alt="" />
+                        </a>
+                    </div>
+                    <div @click="viewStore.toggleSidebarVisibility()" class="toggle-sidebar" tabindex="0" role="button" aria-pressed="false" title="Toggle Sidebar">
+                        <vue-feather type="align-center" class="status_toggle middle" />
+                    </div>
+                </div>
+                <div class="left-menu-header col">
+                    <ul>
+                        <li>
+                            <form class="form-inline search-form">
+                                <div class="search-bg">
+                                    <vue-feather type="search" strokeWidth="3.8" style="width: 0.9rem;" />
+                                    <input class="form-control-plaintext" placeholder="Search here.....">
+                                </div>
+                            </form>
+                            <span class="d-sm-none mobile-search search-bg">
+                                <vue-feather type="search" strokeWidth="3.8" style="width: 0.9rem;" />
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nav-right col pull-right right-menu p-0">
+                    <ul class="nav-menus">
+                        <li>
+                            <a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()">
+                                <vue-feather type="maximize" />
+                            </a>
+                        </li>
+                        <li class="onhover-dropdown">
+                            <div class="notification-box">
+                                <vue-feather type="bell" />
+                                <span class="dot-animated"></span>
+                            </div>
+                            <ul class="notification-dropdown onhover-show-div">
+                                <li>
+                                    <p class="f-w-700 mb-0">You have 3 Notifications<span class="pull-right badge badge-primary badge-pill">4</span></p>
+                                </li>
+                                <li class="noti-primary">
+                                    <div class="media">
+                                        <span class="notification-bg bg-light-primary">
+                                            <vue-feather type="activity" />
+                                        </span>
+                                        <div class="media-body">
+                                            <p>Delivery processing </p><span>10 minutes ago</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="noti-secondary">
+                                    <div class="media">
+                                        <span class="notification-bg bg-light-secondary">
+                                            <vue-feather type="check-circle" />
+                                        </span>
+                                        <div class="media-body">
+                                            <p>Order Complete</p><span>1 hour ago</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="noti-success">
+                                    <div class="media">
+                                        <span class="notification-bg bg-light-success">
+                                            <vue-feather type="file-text" />
+                                        </span>
+                                        <div class="media-body">
+                                            <p>Tickets Generated</p><span>3 hour ago</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="noti-danger">
+                                    <div class="media">
+                                        <span class="notification-bg bg-light-danger">
+                                            <vue-feather type="user-check" />
+                                        </span>
+                                        <div class="media-body">
+                                            <p>Delivery Complete</p><span>6 hour ago</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="onhover-dropdown p-0">
+                            <a href="#" class="btn btn-primary-light btn-icon"><vue-feather type="log-out" />Log out</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="d-lg-none mobile-toggle pull-right w-auto">
+                    <vue-feather type="more-horizontal" />
+                </div>
+            </div>
+        </div>
+        <!-- Page Header Ends -->
+
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper">
+            <!-- Page Sidebar Start-->
+            <header :class="{ 'close_icon': !hideSidebar }" class="main-nav">
+                <SidebarUser />
+                <SidebarMenu />
+            </header>
+            <main class="page-body">
+                <slot name="main"></slot>
+            </main>
+            <Footer />
+        </div>
+    </div>
+</template>
+<style scoped>
+
+.brand-logo {
+    max-width: 5.2rem;
+}
+
+:global(#mainnav .vue-feather) {
+    vertical-align: middle;
+	margin-bottom: 3px;
+}
+
+:global(#mainnav .according-menu svg) {
+    width: 14px!important;
+    margin: 0!important;
+    transform: rotate(0deg);
+    transition: transform 0.3s;
+}
+
+:global(#mainnav .dropdown.expand svg) {
+    transform: rotate(90deg);
+}
+
+:global(#mainnav .nav-submenu) {
+    display: block!important;;
+    opacity: 1;
+    max-height: 0;
+    overflow-y: hidden;
+    transition: opacity 0.3s, max-height 0.3s;
+}
+
+:global(#mainnav .dropdown.expand .nav-submenu) {
+    opacity: 1;
+    max-height: 100vh;
+}
+
+:global(.vue-feather__content) {
+    display: inline!important;;
+}
+
+</style>
