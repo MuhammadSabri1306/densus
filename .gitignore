@@ -12,6 +12,9 @@ vite-project/dist
 vite-project/dist-ssr
 *.local
 
+index.html
+assets
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
