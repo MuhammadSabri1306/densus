@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export default axios.create({
-	baseURL: "http://localhost/densus/api",
+	baseURL: "https://juarayya.telkom.co.id/densus/api",
 	headers: { "Accept": "application/json" }
 });

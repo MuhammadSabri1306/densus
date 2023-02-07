@@ -2,12 +2,12 @@
 import http from "@/helpers/http-common";
 
 const props = defineProps({
-    stoCode: { required: true }
+    rtuCode: { required: true }
 });
 
 let dataBbmCost = null;
 try {
-    let response =  await http.get("/monitoring/costbbm/" + props.stoCode);
+    let response =  await http.get("/monitoring/costbbm/" + props.rtuCode);
     dataBbmCost = response.data["bbm_cost"] || 0;
 } catch(err) {
     console.error(err);

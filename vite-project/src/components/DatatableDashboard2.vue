@@ -4,12 +4,12 @@ import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 
 const props = defineProps({
-    stoCode: { required: true }
+    rtuCode: { required: true }
 });
 
 let degtabledata = null;
 try {
-    const response = await http.get("/monitoring/degtabledata/" + props.stoCode);
+    const response = await http.get("/monitoring/degtabledata/" + props.rtuCode);
     degtabledata = response.data.degtabledata.table;
 } catch(err) {
     console.error(err);

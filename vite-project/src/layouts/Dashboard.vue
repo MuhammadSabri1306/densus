@@ -1,5 +1,6 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from "vue";
+import { computed, onMounted, onUnmounted } from "vue";
+import { useRouter } from "vue-router";
 import { useViewStore } from "@stores/view";
 import Footer from "./DashboardFooter.vue";
 import SidebarUser from "./DashboardSidebarUser.vue";
@@ -11,15 +12,16 @@ await import("@/assets/css/responsive.css");
 const viewStore = useViewStore();
 const hideSidebar = computed(() => viewStore.hideSidebar);
 
-const setupSidebarVisibility = () => {
-    const bodyWidth = document.body.offsetWidth;
-    const showSidebar = bodyWidth <= 991;
-    viewStore.toggleSidebarVisibility(showSidebar);
-};
+const router = useRouter();
+router.beforeEach(() => {
+    viewStore.resetSidebarVisibility();
+});
 
+const setupSidebarVisibility = () => viewStore.resetSidebarVisibility();
 onMounted(() => window.addEventListener("resize", setupSidebarVisibility));
 onUnmounted(() => window.addEventListener("resize", setupSidebarVisibility));
-setupSidebarVisibility();
+
+viewStore.resetSidebarVisibility();
 </script>
 <template>
     <div class="page-wrapper compact-wrapper" id="pageWrapper">
@@ -28,14 +30,14 @@ setupSidebarVisibility();
             <div class="main-header-right row m-0">
                 <div class="main-header-left">
                     <div class="logo-wrapper">
-                        <a href="#" title="Dashboard">
+                        <RouterLink to="/" title="Dashboard">
                             <img src="/assets/img/logo-densus.png" class="img-fluid brand-logo" alt="" />
-                        </a>
+                        </RouterLink>
                     </div>
                     <div class="dark-logo-wrapper">
-                        <a href="#" title="Dashboard">
+                        <RouterLink to="/" title="Dashboard">
                             <img src="/assets/img/logo-densus.png" class="img-fluid brand-logo" alt="" />
-                        </a>
+                        </RouterLink>
                     </div>
                     <div @click="viewStore.toggleSidebarVisibility()" class="toggle-sidebar" tabindex="0" role="button" aria-pressed="false" title="Toggle Sidebar">
                         <vue-feather type="align-center" class="status_toggle middle" />
@@ -158,7 +160,7 @@ setupSidebarVisibility();
     transition: transform 0.3s;
 }
 
-:global(#mainnav .dropdown.expand svg) {
+:global(#mainnav .dropdown.expand .according-menu svg) {
     transform: rotate(90deg);
 }
 
@@ -175,8 +177,9 @@ setupSidebarVisibility();
     max-height: 100vh;
 }
 
-:global(.vue-feather__content) {
-    display: inline!important;;
-}
+/* :global(i.vue-feather) {
+    width: 1em;
+    height: 1em;
+} */
 
 </style>

@@ -2,12 +2,12 @@
 import http from "@/helpers/http-common";
 
 const props = defineProps({
-    stoCode: { required: true }
+    rtuCode: { required: true }
 });
 
 let dataKwh = null;
 try {
-    let response = await http.get("/monitoring/kwhreal/" + props.stoCode);
+    let response = await http.get("/monitoring/kwhreal/" + props.rtuCode);
     dataKwh = response.data["kwh_real"];
 } catch(err) {
     console.error(err);

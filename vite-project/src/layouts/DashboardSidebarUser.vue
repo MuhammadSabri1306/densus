@@ -11,7 +11,7 @@ const userLocation = computed(() => userStore.location);
         <a class="setting-primary" href="#">
             <vue-feather type="settings" />
         </a>
-        <img class="img-90 rounded-circle" src="/assets/img/user1.png" alt="">
+        <img class="img-90 rounded-circle mx-auto" src="/assets/img/user1.png" alt="">
         <div class="badge-bottom">
             <span class="badge badge-primary">New</span>
         </div>

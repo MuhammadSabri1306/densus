@@ -1,24 +1,13 @@
 import { defineStore } from "pinia";
+import menuItems from "@/configs/menu-items";
 
 export const useViewStore = defineStore("view", {
     state: () => ({
-        menuItems: [
-            { key: "landing", to: "/", title: "Dashboard", icon: "home" },
-            { key: "monitoring", to: "/", title: "Monitoring RTU", icon: "airplay" },
-            {
-                key: "rtu",
-                title: "Master RTU",
-                icon: "hard-drive",
-                child: [
-                    { key: "list", to: "/", title: "List RTU tersedia" },
-                    { key: "add", to: "/", title: "Registrasi RTU Baru" },
-                    { key: "backup", to: "/", title: "Buat Backup" }
-                ]
-            }
-        ],
+        menuItems,
         menuActiveKey: "landing",
         menuExpanded: -1,
-        hideSidebar: false
+        hideSidebar: false,
+        toast: null
     }),
     getters: {
         menuActKeys: state => {
@@ -46,6 +35,16 @@ export const useViewStore = defineStore("view", {
                 return;
             }
             this.hideSidebar = !show;
-        }
+        },
+
+        resetSidebarVisibility() {
+            const bodyWidth = document.body.offsetWidth;
+            const showSidebar = bodyWidth <= 991;
+            this.hideSidebar = !showSidebar;
+        },
+
+        showToast(title, message, success) {
+			this.toast = { title, message, success };
+		}
     }
 });

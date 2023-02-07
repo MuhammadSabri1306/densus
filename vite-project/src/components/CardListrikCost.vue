@@ -2,13 +2,13 @@
 import http from "@/helpers/http-common";
 
 const props = defineProps({
-    stoCode: { required: true }
+    rtuCode: { required: true }
 });
 
 let dataTotalCost = null;
 try {
     
-    let response = await http.get("/monitoring/tabledata/" + props.stoCode);
+    let response = await http.get("/monitoring/tabledata/" + props.rtuCode);
     const totalCost = response.data["tabledata"].table[0]["total_biaya"];
     dataTotalCost = new Intl.NumberFormat("id-ID", {
         style: "currency",

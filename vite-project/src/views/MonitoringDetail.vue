@@ -2,8 +2,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import Skeleton from "primevue/skeleton";
-import DataTable from "primevue/datatable";
-import Column from "primevue/column";
+import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 
 import CardCurrKwh from "@components/CardCurrKwh.vue";
 import CardTotalKwh from "@components/CardTotalKwh.vue";
@@ -20,8 +19,6 @@ import DatatableDashboard2 from "@components/DatatableDashboard2.vue";
 
 const route = useRoute();
 const rtuCode = computed(() => route.params.rtuCode);
-
-const stoCode = "BAL";
 </script>
 <template>
     <div>
@@ -29,14 +26,8 @@ const stoCode = "BAL";
             <div class="">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3> STO BALAI KOTA</h3>
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="#">Divisi Telkom Regional VII</a>
-                            </li>
-                            <li class="breadcrumb-item">Witel Makassar</li>
-                            <li class="breadcrumb-item active"> STO BALAI KOTA</li>
-                        </ol>
+                        <h3>STO BALAI KOTA</h3>
+                        <DashboardBreadcrumb :items="['Divisi Telkom Regional VII', 'Witel Makassar', 'STO BALAI KOTA']" />
                     </div>
                 </div>
             </div>
@@ -45,7 +36,7 @@ const stoCode = "BAL";
             <div class="row">
                 <div class="col-sm-6 col-xl-3 col-lg-6">
                     <Suspense>
-                        <CardCurrKwh :stoCode="stoCode" />
+                        <CardCurrKwh :rtuCode="rtuCode" />
                         <template #fallback>
                             <Skeleton width="100%" height="5rem" />
                         </template>
@@ -53,7 +44,7 @@ const stoCode = "BAL";
                 </div>
                 <div class="col-sm-6 col-xl-3 col-lg-6">
                     <Suspense>
-                        <CardTotalKwh :stoCode="stoCode" />
+                        <CardTotalKwh :rtuCode="rtuCode" />
                         <template #fallback>
                             <Skeleton width="100%" height="5rem" />
                         </template>
@@ -61,7 +52,7 @@ const stoCode = "BAL";
                 </div>
                 <div class="col-sm-6 col-xl-3 col-lg-6">
                     <Suspense>
-                        <CardListrikCost :stoCode="stoCode" />
+                        <CardListrikCost :rtuCode="rtuCode" />
                         <template #fallback>
                             <Skeleton width="100%" height="5rem" />
                         </template>
@@ -69,7 +60,7 @@ const stoCode = "BAL";
                 </div>
                 <div class="col-sm-6 col-xl-3 col-lg-6">
                     <Suspense>
-                        <CardSolarCost :stoCode="stoCode" />
+                        <CardSolarCost :rtuCode="rtuCode" />
                         <template #fallback>
                             <Skeleton width="100%" height="5rem" />
                         </template>
@@ -79,7 +70,7 @@ const stoCode = "BAL";
             <div class="row">
                 <div class="col-xl-8 box-col-8 des-xl-100 dashboard-sec">
                     <Suspense>
-                        <ChartKwhDaily :stoCode="stoCode" />
+                        <ChartKwhDaily :rtuCode="rtuCode" />
                         <template #fallback>
                             <div class="card income-card">
                                 <div class="card">
@@ -98,7 +89,7 @@ const stoCode = "BAL";
                     <div class="row">
                         <div class="col-xl-6 col-md-3 col-sm-2 box-col-3 des-xl-25 rate-sec">
                             <Suspense>
-                                <CardKwhUsageToday :stoCode="stoCode" />
+                                <CardKwhUsageToday :rtuCode="rtuCode" />
                                 <template #fallback>
                                     <Skeleton width="100%" height="10rem" />
                                 </template>
@@ -106,14 +97,14 @@ const stoCode = "BAL";
                         </div>
                         <div class="col-xl-6 col-md-3 col-sm-2 box-col-3 des-xl-25 rate-sec">
                             <Suspense>
-                                <CardTotalEnergyCost :stoCode="stoCode" />
+                                <CardTotalEnergyCost :rtuCode="rtuCode" />
                                 <template #fallback>
                                     <Skeleton width="100%" height="10rem" />
                                 </template>
                             </Suspense>
                         </div>
                         <div class="col-xl-12 col-md box-col-12 des-xl-50">
-                            <CardMonitoringAlert :stoCode="stoCode" />
+                            <CardMonitoringAlert :rtuCode="rtuCode" />
                         </div>
                     </div>
                 </div>
@@ -121,7 +112,7 @@ const stoCode = "BAL";
             <div class="row">
                 <div class="col-xl-4 box-col-4 des-xl-100 dashboard-sec">
                     <Suspense>
-                        <ChartSavingEnergyResult :stoCode="stoCode" />
+                        <ChartSavingEnergyResult :rtuCode="rtuCode" />
                         <template #fallback>
                             <Skeleton width="100%" height="10rem" />
                         </template>
@@ -129,7 +120,7 @@ const stoCode = "BAL";
                 </div>
                 <div class="col-xl-8 box-col-8 des-xl-100">
                     <Suspense>
-                        <ChartEnergyCostEstimation :stoCode="stoCode" />
+                        <ChartEnergyCostEstimation :rtuCode="rtuCode" />
                         <template #fallback>
                             <Skeleton width="100%" height="10rem" />
                         </template>
@@ -139,7 +130,7 @@ const stoCode = "BAL";
             <div class="row">
                 <div class="col-sm-12">
                     <Suspense>
-                        <DatatableDashboard1 :stoCode="stoCode" />
+                        <DatatableDashboard1 :rtuCode="rtuCode" />
                         <template #fallback>
                             <div class="card">
                                 <div class="card-body">
@@ -176,7 +167,7 @@ const stoCode = "BAL";
             <div class="row">
                 <div class="col-sm-12">
                     <Suspense>
-                        <DatatableDashboard2 :stoCode="stoCode" />
+                        <DatatableDashboard2 :rtuCode="rtuCode" />
                         <template #fallback>
                             <div class="card">
                                 <div class="card-body">

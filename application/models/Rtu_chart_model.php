@@ -3,13 +3,12 @@ class Rtu_chart_model extends CI_Model {
 
         public function __construct()
         {
-                
                 $this->load->database('opnimus');
         }
 
-		public function get_lokasidata($sto)
+		public function get_lokasidata($rtu)
 		{
-			$sql="SELECT * FROM juan5684_densus.rtu_map where sto_kode='$sto'";    
+			$sql="SELECT * FROM juan5684_densus.rtu_map where rtu_kode='$rtu'";    
 			$query = $this->db->query($sql);
 			return $query->row_array();
 		}

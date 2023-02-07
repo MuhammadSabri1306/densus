@@ -3,12 +3,12 @@ import http from "@/helpers/http-common";
 import VueApexCharts from "vue3-apexcharts";
 
 const props = defineProps({
-    stoCode: { required: true }
+    rtuCode: { required: true }
 });
 
 let dataSavingPercent = null;
 try {
-    const response = await http.get("/monitoring/savingpercent/" + props.stoCode);
+    const response = await http.get("/monitoring/savingpercent/" + props.rtuCode);
     dataSavingPercent = response.data.savingpercent;
 } catch(err) {
     console.error(err);

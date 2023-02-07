@@ -29,11 +29,11 @@ const setMenuExpanded = index => {
                     </li>
                     <li v-for="(item, index) in menuItems" :class="{ 'dropdown': item.child, 'expand': index === menuExpanded || item.key === menuActKeys[0] }">
                         <RouterLink v-if="!item.child" :to="item.to" :class="{ 'active': item.key == menuActKeys[0] }" class="nav-link">
-                            <vue-feather :type="item.icon" />
+                            <vue-feather :type="item.icon" size="1.2rem" class="me-2" />
                             <span>{{ item.title }}</span>
                         </RouterLink>
                         <a v-else @click="setMenuExpanded(index)" :class="{ 'active': item.key === menuActKeys[0] }" class="nav-link menu-title" role="button">
-                            <vue-feather :type="item.icon" />
+                            <vue-feather :type="item.icon" size="1.2rem" class="me-2" />
                             <span>{{ item.title }}</span>
                             <div class="according-menu">
                                 <vue-feather type="chevron-right" />

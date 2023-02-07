@@ -3,7 +3,7 @@ import http from "@/helpers/http-common";
 import VueApexCharts from "vue3-apexcharts";
 
 const props = defineProps({
-    stoCode: { required: true }
+    rtuCode: { required: true }
 });
 
 const colors = {
@@ -31,7 +31,7 @@ const chartOptions = {
 
 let dataChart = null;
 try {
-    let response = await http.get("/monitoring/chartdatadaily/" + props.stoCode);
+    let response = await http.get("/monitoring/chartdatadaily/" + props.rtuCode);
     dataChart = response.data["chartdata_daily"];
 } catch(err) {
     console.error(err);

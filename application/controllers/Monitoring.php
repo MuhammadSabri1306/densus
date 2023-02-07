@@ -3,23 +3,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 use chriskacerguis\RestServer\RestController;
 
-class Monitoring extends RestController {
-
+class Monitoring extends RestController
+{
     private $bbmprice = 28440;
     private $biayalwbp = 1091;
     private $biayawbp = 1609;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
 
-    public function costbbm_get($sto)
+    public function costbbm_get($rtu)
     {
         $this->load->model('rtu_chart_model');
-        $lokasidata = $this->rtu_chart_model->get_lokasidata($sto);
-        
-        $rtu = $lokasidata['rtu_kode'];
+        $lokasidata = $this->rtu_chart_model->get_lokasidata($rtu);
         $port_genset = $lokasidata['port_genset'];
         $kva_genset = $lokasidata['kva_genset'];
 
@@ -28,105 +26,112 @@ class Monitoring extends RestController {
         $this->response($data, 200);
     }
 
-    public function performance_get($sto)
+    public function performance_get($rtu)
     {
         $this->load->model('rtu_chart_model');
-        
-        $lokasidata = $this->rtu_chart_model->get_lokasidata($sto);
-        $rtu = $lokasidata['rtu_kode'];
         $data['performance'] = $this->rtu_chart_model->get_kwhdata($rtu);
 
         $this->response($data, 200);
     }
 
-    public function kwhreal_get($sto)
+    public function kwhreal_get($rtu)
     {
         $this->load->model('rtu_chart_model');
-        $lokasidata = $this->rtu_chart_model->get_lokasidata($sto);
-        
-        $rtu = $lokasidata['rtu_kode'];
+        $lokasidata = $this->rtu_chart_model->get_lokasidata($rtu);
         $port = $lokasidata['port_kwh'];
 
         $data['kwh_real'] = $this->rtu_chart_model->get_realkwh($rtu, $port);
         $this->response($data, 200);
     }
     
-    public function savingpercent_get($sto)
+    public function savingpercent_get($rtu)
     {
         $this->load->model('rtu_chart_model');
-
-        $lokasidata = $this->rtu_chart_model->get_lokasidata($sto);
-        $rtu = $lokasidata['rtu_kode'];
         $data['savingpercent'] = $this->rtu_chart_model->get_savingpercent($rtu);
-
         $this->response($data, 200);
     }
     
-    public function kwhtotal_get($sto)
+    public function kwhtotal_get($rtu)
     {
         $this->load->model('rtu_chart_model');
-
-        $lokasidata = $this->rtu_chart_model->get_lokasidata($sto);
-        $rtu = $lokasidata['rtu_kode'];
         $data['kwh_total']=$this->rtu_chart_model->get_kwhtotal($rtu);
-
         $this->response($data, 200);
     }
     
-    public function kwhtoday_get($sto)
+    public function kwhtoday_get($rtu)
     {
         $this->load->model('rtu_chart_model');
-
-        $lokasidata = $this->rtu_chart_model->get_lokasidata($sto);
-        $rtu = $lokasidata['rtu_kode'];
         $data['kwh_today']=$this->rtu_chart_model->get_kwhtoday($rtu);
-
         $this->response($data, 200);
     }
 
-    public function totalalarm_get($sto)
+    public function totalalarm_get($rtu)
     {
         $this->load->model('rtu_chart_model');
-
-        $lokasidata = $this->rtu_chart_model->get_lokasidata($sto);
-        $rtu = $lokasidata['rtu_kode'];
         $data['total_alarm']=$this->rtu_chart_model->get_totalAlarm($rtu);
-
         $this->response($data, 200);
     }
     
-    public function tabledata_get($sto)
+    public function tabledata_get($rtu)
     {
         $this->load->model('rtu_chart_model');
-
-        $lokasidata = $this->rtu_chart_model->get_lokasidata($sto);
-        $rtu = $lokasidata['rtu_kode'];
         $data['tabledata']=$this->rtu_chart_model->get_tabledata($rtu, $this->biayalwbp, $this->biayawbp);
-
         $this->response($data, 200);
     }
     
-    public function degtabledata_get($sto)
+    public function degtabledata_get($rtu)
     {
         $this->load->model('rtu_chart_model');
 
-        $lokasidata = $this->rtu_chart_model->get_lokasidata($sto);
+        $lokasidata = $this->rtu_chart_model->get_lokasidata($rtu);
         $port_genset = $lokasidata['port_genset'];
         $kva_genset = $lokasidata['kva_genset'];
-
-        $rtu = $lokasidata['rtu_kode'];
         $data['degtabledata'] = $this->rtu_chart_model->get_deg_tabledata($rtu, $kva_genset, $port_genset, $this->bbmprice);
 
         $this->response($data, 200);
     }
     
-    public function chartdatadaily_get($sto)
+    public function chartdatadaily_get($rtu)
     {
         $this->load->model('rtu_chart_model');
-
-        $lokasidata = $this->rtu_chart_model->get_lokasidata($sto);
-        $rtu = $lokasidata['rtu_kode'];
         $data['chartdata_daily'] = $this->rtu_chart_model->get_chartdata($rtu, "daily");
+        $this->response($data, 200);
+    }
+
+    public function divre_get()
+    {
+        $this->load->model('rtu_list_model');
+        $divre = $this->rtu_list_model->get_divre();
+        $data = [ 'divre' => $divre ];
+        $this->response($data, 200);
+    }
+
+    public function witel_get($divreCode)
+    {
+        $this->load->model('rtu_list_model');
+        $data = [ 'witel' => $this->rtu_list_model->get_witel_by_divre($divreCode) ];
+        $this->response($data, 200);
+    }
+
+    public function rtulist_get($divreCode, $witelCode)
+    {
+        $this->load->model('rtu_map_model');
+        $rtuMap = $this->rtu_map_model->get();
+
+        $availableRtu = array_map(function($item) {
+            return $item->rtu_kode;
+        }, $rtuMap);
+        
+        $envPattern = EnvPattern::getPattern();
+        $asoseUrl = "$envPattern->api_osase&divre=$divreCode&witel=$witelCode";
+        $content = json_decode(file_get_contents($asoseUrl));
+
+        $data = [ 'rtu' => [] ];
+        foreach($content as $item) {
+            $temp = $item;
+            $temp->AVAILABLE = in_array($item->RTU_ID, $availableRtu);
+            array_push($data['rtu'], $temp);
+        }
 
         $this->response($data, 200);
     }

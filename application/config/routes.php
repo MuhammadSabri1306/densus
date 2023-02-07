@@ -60,8 +60,22 @@ $route['api/monitoring/totalalarm/(:any)'] = 'monitoring/totalalarm/$1';
 $route['api/monitoring/tabledata/(:any)'] = 'monitoring/tabledata/$1';
 $route['api/monitoring/degtabledata/(:any)'] = 'monitoring/degtabledata/$1';
 $route['api/monitoring/chartdatadaily/(:any)'] = 'monitoring/chartdatadaily/$1';
+$route['api/monitoring/divre'] = 'monitoring/divre';
+$route['api/monitoring/witel/(:any)'] = 'monitoring/witel/$1';
+$route['api/monitoring/rtulist/(:any)/(:any)'] = 'monitoring/rtulist/$1/$2';
 
-$route['monitoring/detail/(:any)'] = 'vue';
+$route['api/rtu/(:any)']['get'] = 'rtu/index/$1';
+$route['api/rtu/(:any)']['put'] = 'rtu/update/$1';
+$route['api/rtu']['get'] = 'rtu';
+$route['api/rtu']['post'] = 'rtu/add';
+
+$route['monitoring/(:any)/(:any)'] = 'vue';
+$route['monitoring/(:any)'] = 'vue';
+$route['monitoring'] = 'vue';
+$route['rtu/(:any)/(:any)'] = 'vue';
+$route['rtu/(:any)'] = 'vue';
+$route['rtu'] = 'vue';
+
 $route['default_controller'] = 'vue';
 // $route['(.*)'] = 'vue/index';
 $route['404_override'] = '';

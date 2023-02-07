@@ -3,7 +3,7 @@ import http from "@/helpers/http-common";
 import VueApexCharts from "vue3-apexcharts";
 
 const props = defineProps({
-    stoCode: { required: true }
+    rtuCode: { required: true }
 });
 
 const colors = {
@@ -15,7 +15,7 @@ let dataEstimation = null;
 let degtabledata = null;
 let tabledata = null;
 try {
-    let response = await http.get("/monitoring/degtabledata/" + props.stoCode);
+    let response = await http.get("/monitoring/degtabledata/" + props.rtuCode);
     degtabledata = response.data.degtabledata;
     const totalGenset = degtabledata.chart["Total_genset"];
     

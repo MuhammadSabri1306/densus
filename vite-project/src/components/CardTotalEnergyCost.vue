@@ -2,15 +2,15 @@
 import http from "@/helpers/http-common";
 
 const props = defineProps({
-    stoCode: { required: true }
+    rtuCode: { required: true }
 });
 
 let dataEnergyCost = null;
 try {
-    let response =  await http.get("/monitoring/costbbm/" + props.stoCode);
+    let response =  await http.get("/monitoring/costbbm/" + props.rtuCode);
     const bbmCost = response.data["bbm_cost"] || 0;
     
-    response = await http.get("/monitoring/tabledata/" + props.stoCode);
+    response = await http.get("/monitoring/tabledata/" + props.rtuCode);
     const tableData = response.data.tabledata.table[0]["total_biaya"];
     
     dataEnergyCost = bbmCost + tableData;
