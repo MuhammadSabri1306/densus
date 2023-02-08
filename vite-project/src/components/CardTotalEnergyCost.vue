@@ -1,5 +1,6 @@
 <script setup>
 import http from "@/helpers/http-common";
+import { toIdrCurrency } from "@helpers/number-format";
 
 const props = defineProps({
     rtuCode: { required: true }
@@ -8,12 +9,16 @@ const props = defineProps({
 let dataEnergyCost = null;
 try {
     let response =  await http.get("/monitoring/costbbm/" + props.rtuCode);
-    const bbmCost = response.data["bbm_cost"] || 0;
+    let bbmCost = 0;
+    if(response.data["bbm_cost"] && response.data["bbm_cost"]["bbm_cost"]) {
+        bbmCost = response.data["bbm_cost"]["bbm_cost"];
+    }
     
     response = await http.get("/monitoring/tabledata/" + props.rtuCode);
     const tableData = response.data.tabledata.table[0]["total_biaya"];
     
     dataEnergyCost = bbmCost + tableData;
+    console.log(dataEnergyCost);
 } catch(err) {
     console.error(err);
 }
@@ -30,7 +35,7 @@ try {
                                         </g>
                                     </svg>
             </div>
-            <h5 style="color: #2f7f70;">Rp {{ dataEnergyCost }}</h5>
+            <h5 class="tw-whitespace-nowrap" style="color: #2f7f70;">Rp {{ toIdrCurrency(dataEnergyCost) }}</h5>
             <h6>Total Energy Cost Feb 2023 (Listrik + BBM)</h6>
             <a class="btn-arrow arrow-secondary" style="color: #2f7f70;" href="#">
                 <i class="toprightarrow-primary me-2"><VueFeather type="arrow-up-right" strokeWidth="4" style="width:0.8rem" class="ms-1 mt-1" /></i>9.54%

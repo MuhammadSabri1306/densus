@@ -9,6 +9,7 @@ let dataKwh = null;
 try {
     let response = await http.get("/monitoring/kwhreal/" + props.rtuCode);
     dataKwh = response.data["kwh_real"];
+    console.log(response.data);
 } catch(err) {
     console.error(err);
 }

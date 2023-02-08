@@ -1,5 +1,6 @@
 <script setup>
 import http from "@/helpers/http-common";
+import { toIdrCurrency } from "@helpers/number-format";
 
 const props = defineProps({
     rtuCode: { required: true }
@@ -9,11 +10,7 @@ let dataTotalCost = null;
 try {
     
     let response = await http.get("/monitoring/tabledata/" + props.rtuCode);
-    const totalCost = response.data["tabledata"].table[0]["total_biaya"];
-    dataTotalCost = new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR"
-    }).format(totalCost);
+    dataTotalCost = response.data["tabledata"].table[0]["total_biaya"];
 
 } catch(err) {
     console.error(err);
@@ -28,7 +25,7 @@ try {
                 </div>
                 <div class="media-body">
                     <span class="m-0">Est Cost Listrik</span>
-                    <h4>Rp {{ dataTotalCost }}</h4>
+                    <h4 class="tw-whitespace-nowrap">Rp {{ toIdrCurrency(dataTotalCost) }}</h4>
                     <VueFeather type="dollar-sign" class="icon-bg" />
                 </div>
             </div>

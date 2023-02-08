@@ -24,7 +24,6 @@ try {
                 <div class="media-body">
                     <span class="m-0">KwH Total Feb 2023</span>
                     <h4 class="mb-0 counter">{{ dataKwhTotal }}</h4>
-                    <!-- <i class="icon-bg" data-feather=""></i> -->
                     <VueFeather type="battery-charging" class="icon-bg" />
                 </div>
             </div>

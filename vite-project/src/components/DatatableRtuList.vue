@@ -30,8 +30,8 @@ try {
             </div>
         </div>
         <DataTable :value="tableRtu" showGridlines :paginator="true" :rows="10"
-            v-model:filters="filter" selectionMode="single"
-            dataKey="id" stateStorage="session" stateKey="dt-state-rtu" class="table-sm">
+            v-model:filters="filter" dataKey="id" stateStorage="session"
+            stateKey="dt-state-rtu" class="table-sm">
             <Column field="no" header="No" :sortable="true" />
             <Column field="rtu_kode" header="KODE RTU" :sortable="true" />
             <Column field="rtu_name" header="NAMA RTU" :sortable="true" />

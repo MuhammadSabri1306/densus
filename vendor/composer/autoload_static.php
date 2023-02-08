@@ -21,6 +21,10 @@ class ComposerStaticInit19553b49869a7747168488bf14188a68
             'Symfony\\Polyfill\\Ctype\\' => 23,
             'Symfony\\Component\\Yaml\\' => 23,
         ),
+        'F' => 
+        array (
+            'Firebase\\JWT\\' => 13,
+        ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
@@ -40,6 +44,10 @@ class ComposerStaticInit19553b49869a7747168488bf14188a68
         'Symfony\\Component\\Yaml\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
+        ),
+        'Firebase\\JWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
         ),
         'Doctrine\\Instantiator\\' => 
         array (

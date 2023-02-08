@@ -19,7 +19,7 @@ try {
     degtabledata = response.data.degtabledata;
     const totalGenset = degtabledata.chart["Total_genset"];
     
-    response = await http.get("/monitoring/tabledata/" + props.stoCode);
+    response = await http.get("/monitoring/tabledata/" + props.rtuCode);
     tabledata = response.data.tabledata;
     const totalPln = tabledata.chart["Total_pln"];
     
@@ -28,7 +28,7 @@ try {
     console.error(err);
 }
 
-const monthKeys = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Des"];
+const monthKeys = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const series = [
     { name: "Tagihan PLN", data: monthKeys.map(item => tabledata.chart[item]) },
     { name: "BBM Genset", data: monthKeys.map(item => degtabledata.chart[item]) }
@@ -77,42 +77,40 @@ const chartOptions = {
 };
 </script>
 <template>
-    <div class="col-xl-12 box-col-6 des-xl-50">
-        <div class="card trasaction-sec">
-            <div class="card-header">
-                <div class="header-top d-sm-flex align-items-center">
-                    <h5>Energy Cost Estimation Chart</h5>
-                    <div class="center-content">
-                        <p>5878 Suceessfull Transaction</p>
-                    </div>
-                    <div class="setting-list">
-                        <ul class="list-unstyled setting-option">
-                            <li>
-                                <div class="setting-secondary">
-                                    <VueFeather type="settings" />
-                                </div>
-                            </li>
-                            <li><i class="view-html fa fa-code font-secondary"></i></li>
-                            <li><i class="icofont icofont-maximize full-card font-secondary"></i></li>
-                            <li><i class="icofont icofont-minus minimize-card font-secondary"></i></li>
-                            <li><i class="icofont icofont-refresh reload-card font-secondary"></i></li>
-                            <li><i class="icofont icofont-error close-card font-secondary"></i></li>
-                        </ul>
-                    </div>
+    <div class="card trasaction-sec">
+        <div class="card-header">
+            <div class="header-top d-sm-flex align-items-center">
+                <h5>Energy Cost Estimation Chart</h5>
+                <div class="center-content">
+                    <p>5878 Suceessfull Transaction</p>
+                </div>
+                <div class="setting-list">
+                    <ul class="list-unstyled setting-option">
+                        <li>
+                            <div class="setting-secondary">
+                                <VueFeather type="settings" />
+                            </div>
+                        </li>
+                        <li><i class="view-html fa fa-code font-secondary"></i></li>
+                        <li><i class="icofont icofont-maximize full-card font-secondary"></i></li>
+                        <li><i class="icofont icofont-minus minimize-card font-secondary"></i></li>
+                        <li><i class="icofont icofont-refresh reload-card font-secondary"></i></li>
+                        <li><i class="icofont icofont-error close-card font-secondary"></i></li>
+                    </ul>
                 </div>
             </div>
-            <div class="transaction-totalbal">
-                <h2> Rp {{ dataEstimation }} <span class="ms-3">
-                    <a class="btn-arrow arrow-secondary" href="#">
-                        <i class="toprightarrow-secondary fa fa-arrow-up me-2"></i>98.54%
-                    </a></span>
-                </h2>
-                <p>Cost Tagihan PLN & BBM Genset Tahun 2023</p>
-            </div>
-            <div class="card-body">
-                <div id="chart-widget4">
-                    <VueApexCharts height="350px" type="bar" :options="chartOptions" :series="series" />
-                </div>
+        </div>
+        <div class="transaction-totalbal">
+            <h2> Rp {{ dataEstimation }} <span class="ms-3">
+                <a class="btn-arrow arrow-secondary" href="#">
+                    <i class="toprightarrow-secondary fa fa-arrow-up me-2"></i>98.54%
+                </a></span>
+            </h2>
+            <p>Cost Tagihan PLN & BBM Genset Tahun 2023</p>
+        </div>
+        <div class="card-body">
+            <div id="chart-widget4">
+                <VueApexCharts height="350px" type="bar" :options="chartOptions" :series="series" />
             </div>
         </div>
     </div>
