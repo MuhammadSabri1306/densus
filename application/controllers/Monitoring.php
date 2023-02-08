@@ -135,4 +135,15 @@ class Monitoring extends RestController
 
         $this->response($data, 200);
     }
+
+    public function rtudetail_get($rtuCode)
+    {
+        $envPattern = EnvPattern::getPattern();
+        $asoseUrl = "$envPattern->api_osase&rtuid=$rtuCode";
+        $content = json_decode(file_get_contents($asoseUrl));
+        
+        $rtu = (count($content) > 0) ? $content[0] : null;
+        $data = [ 'success' => true, 'rtu' => $rtu ];
+        $this->response($data, 200);
+    }
 }

@@ -1,6 +1,7 @@
 <script setup>
-import { computed } from "vue";
+import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
+import http from "@helpers/http-common";
 import Skeleton from "primevue/skeleton";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 
@@ -19,15 +20,51 @@ import DatatableDashboard2 from "@components/DatatableDashboard2.vue";
 
 const route = useRoute();
 const rtuCode = computed(() => route.params.rtuCode);
+
+const currRtu = ref({});
+const isCurrInfoLoaded = ref(false);
+http.get("/monitoring/rtudetail/" + rtuCode.value)
+    .then(response => {
+        console.log(response.data);
+        const data = response.data.rtu;
+        if(!data)
+            return;
+
+        currRtu.value = {
+            name: data.NAMA_RTU,
+            location: data.LOKASI,
+            datelName: data.DATEL,
+            witelName: data.WITEL,
+            divreName: data.DIVRE
+        };
+        isCurrInfoLoaded.value = true;
+    })
+    .catch(err => console.error(err));
 </script>
 <template>
     <div>
-        <div class="container-fluid">
+        <!-- <div class="container-fluid">
             <div class="">
                 <div class="row">
                     <div class="col-sm-6">
                         <h3>STO BALAI KOTA</h3>
                         <DashboardBreadcrumb :items="['Divisi Telkom Regional VII', 'Witel Makassar', 'STO BALAI KOTA']" />
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="container-fluid">
+            <div class="page-header">
+                <div class="row">
+                    <div class="colsm-12">
+                        <h3 v-if="isCurrInfoLoaded">{{ currRtu.location }}</h3>
+                        <Skeleton v-else height="1.5rem" width="12rem" class="mb-2" />
+                        <div v-if="isCurrInfoLoaded" class="d-inline-flex align-items-center">
+                            <span>{{ currRtu.divreName }}</span>
+                            <VueFeather type="chevrons-right" size="1.2rem" class="mx-2" />
+                            <span>{{ currRtu.witelName }}</span>
+                        </div>
+                        <Skeleton v-else height="1rem" width="20rem" class="" />
                     </div>
                 </div>
             </div>
@@ -38,7 +75,7 @@ const rtuCode = computed(() => route.params.rtuCode);
                     <Suspense>
                         <CardCurrKwh :rtuCode="rtuCode" />
                         <template #fallback>
-                            <Skeleton width="100%" height="5rem" />
+                            <Skeleton width="100%" height="5rem" class="mb-4" />
                         </template>
                     </Suspense>
                 </div>
@@ -46,7 +83,7 @@ const rtuCode = computed(() => route.params.rtuCode);
                     <Suspense>
                         <CardTotalKwh :rtuCode="rtuCode" />
                         <template #fallback>
-                            <Skeleton width="100%" height="5rem" />
+                            <Skeleton width="100%" height="5rem" class="mb-4" />
                         </template>
                     </Suspense>
                 </div>
@@ -54,7 +91,7 @@ const rtuCode = computed(() => route.params.rtuCode);
                     <Suspense>
                         <CardListrikCost :rtuCode="rtuCode" />
                         <template #fallback>
-                            <Skeleton width="100%" height="5rem" />
+                            <Skeleton width="100%" height="5rem" class="mb-4" />
                         </template>
                     </Suspense>
                 </div>
@@ -62,7 +99,7 @@ const rtuCode = computed(() => route.params.rtuCode);
                     <Suspense>
                         <CardSolarCost :rtuCode="rtuCode" />
                         <template #fallback>
-                            <Skeleton width="100%" height="5rem" />
+                            <Skeleton width="100%" height="5rem" class="mb-4" />
                         </template>
                     </Suspense>
                 </div>
@@ -78,7 +115,7 @@ const rtuCode = computed(() => route.params.rtuCode);
                                         <h5>KwH Usage Chart</h5>
                                     </div>
                                     <div class="card-body">
-                                        <Skeleton width="100%" height="380px" />
+                                        <Skeleton width="100%" height="380px" class="mb-4" />
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +128,7 @@ const rtuCode = computed(() => route.params.rtuCode);
                             <Suspense>
                                 <CardKwhUsageToday :rtuCode="rtuCode" />
                                 <template #fallback>
-                                    <Skeleton width="100%" height="10rem" />
+                                    <Skeleton width="100%" height="10rem" class="mb-4" />
                                 </template>
                             </Suspense>
                         </div>
@@ -99,12 +136,17 @@ const rtuCode = computed(() => route.params.rtuCode);
                             <Suspense>
                                 <CardTotalEnergyCost :rtuCode="rtuCode" />
                                 <template #fallback>
-                                    <Skeleton width="100%" height="10rem" />
+                                    <Skeleton width="100%" height="10rem" class="mb-4" />
                                 </template>
                             </Suspense>
                         </div>
-                        <div class="col-xl-12 col-md box-col-12 des-xl-50">
-                            <CardMonitoringAlert :rtuCode="rtuCode" />
+                        <div v-if="isCurrInfoLoaded" class="col-xl-12 col-md box-col-12 des-xl-50">
+                            <Suspense>
+                                <CardMonitoringAlert :rtuCode="rtuCode" :rtuLocation="currRtu.location" />
+                                <template #fallback>
+                                    <Skeleton width="100%" height="20rem" class="mb-4" />
+                                </template>
+                            </Suspense>
                         </div>
                     </div>
                 </div>
@@ -114,7 +156,7 @@ const rtuCode = computed(() => route.params.rtuCode);
                     <Suspense>
                         <ChartSavingEnergyResult :rtuCode="rtuCode" />
                         <template #fallback>
-                            <Skeleton width="100%" height="10rem" />
+                            <Skeleton width="100%" height="30rem" />
                         </template>
                     </Suspense>
                 </div>
@@ -122,7 +164,7 @@ const rtuCode = computed(() => route.params.rtuCode);
                     <Suspense>
                         <ChartEnergyCostEstimation :rtuCode="rtuCode" />
                         <template #fallback>
-                            <Skeleton width="100%" height="10rem" />
+                            <Skeleton width="100%" height="30rem" />
                         </template>
                     </Suspense>
                 </div>

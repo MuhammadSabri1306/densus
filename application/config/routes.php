@@ -63,9 +63,11 @@ $route['api/monitoring/chartdatadaily/(:any)'] = 'monitoring/chartdatadaily/$1';
 $route['api/monitoring/divre'] = 'monitoring/divre';
 $route['api/monitoring/witel/(:any)'] = 'monitoring/witel/$1';
 $route['api/monitoring/rtulist/(:any)/(:any)'] = 'monitoring/rtulist/$1/$2';
+$route['api/monitoring/rtudetail/(:any)'] = 'monitoring/rtudetail/$1';
 
 $route['api/rtu/(:any)']['get'] = 'rtu/index/$1';
 $route['api/rtu/(:any)']['put'] = 'rtu/update/$1';
+$route['api/rtu/(:any)']['delete'] = 'rtu/del/$1';
 $route['api/rtu']['get'] = 'rtu';
 $route['api/rtu']['post'] = 'rtu/add';
 

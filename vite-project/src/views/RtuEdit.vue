@@ -65,11 +65,11 @@ const router = useRouter();
 const isLoading = ref(false);
 const hasSubmitted = ref(false);
 
-const sendReq = (formData) => {
+const sendReq = (body) => {
     isLoading.value = true;
     const headers = { "Authorization": "Bearer 123" };
-
-    http.put("/rtu/" + rtuId.value, formData, { headers })
+    console.log(body);
+    http.put("/rtu/" + rtuId.value, body, { headers })
         .then(response => {
             if(!response.data.success) {
                 console.warn(response);
@@ -77,7 +77,7 @@ const sendReq = (formData) => {
             }
             isLoading.value = false;
             viewStore.showToast("Data RTU", "Berhasil menyimpan data.", true);
-            router.push("/rtu");
+            console.log(response.data);
         })
         .catch(err => {
             isLoading.value = false;
@@ -93,8 +93,34 @@ const onSubmit = async () => {
     if(!isValid)
         return;
 
-    const formData = buildFormData(data, ["rtuCode", "rtuName", "location", "stoCode", "divreCode", "divreName", "witelCode", "witelName", "portKwh", "portGenset", "kvaGenset"]);
-    sendReq(formData);
+    const { rtuCode, rtuName, location, stoCode, divreCode, divreName, witelCode, witelName, portKwh, portGenset, kvaGenset } = data;
+    const body = { rtuCode, rtuName, location, stoCode, divreCode, divreName, witelCode, witelName, portKwh, portGenset, kvaGenset };
+    // console.log(body);
+    // const formData = buildFormData(data, ["rtuCode", "rtuName", "location", "stoCode", "divreCode", "divreName", "witelCode", "witelName", "portKwh", "portGenset", "kvaGenset"]);
+    sendReq(body);
+    // window.f = formData;
+};
+
+const onDelete = () => {
+    const deleteRtu = confirm("Anda akan menghapus data RTU. Lanjutkan?");
+    if(!deleteRtu)
+        return;
+    http.delete("/rtu/" + rtuId.value)
+        .then(response => {
+            if(!response.data.success) {
+                console.warn(response);
+                return;
+            }
+            isLoading.value = false;
+            viewStore.showToast("Data RTU", "Data RTU berhasil dihapus.", true);
+            router.push("/rtu");
+        })
+        .catch(err => {
+            isLoading.value = false;
+            viewStore.showToast("Koneksi gagal", "Terjadi masalah saat menghubungi server.", false);
+            console.error(err);
+        });
+    // rtuId
 };
 </script>
 <template>
@@ -113,8 +139,13 @@ const onSubmit = async () => {
             <div class="row">
                 <div class="col-sm-12 col-lg-10">
                     <div class="card">
-                        <div class="card-header pb-0">
+                        <div class="card-header d-flex pb-0">
                             <h5 class="card-title">Form Registrasi RTU</h5>
+                            <div class="position-absolute end-0 top-0 p-2">
+                                <button type="button" @click="onDelete" class="btn btn-danger btn-pill p-0 tw-w-10 tw-h-10 tw-transition-opacity tw-opacity-50 hover:tw-opacity-70">
+                                    <VueFeather type="trash-2" size="1.2rem" class="middle" />
+                                </button>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div v-if="isFetching">

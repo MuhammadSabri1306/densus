@@ -58,9 +58,17 @@ class Rtu extends RestController
 			'kva_genset' => $this->put('kvaGenset'),
 		];
         
-        // $success = $this->rtu_map_model->save($body, $id);
-		$success = true;
+        $success = $this->rtu_map_model->save($body, $id);
+		// $success = true;
         $data = [ 'success' => $success, 'data' => $body ];
         $this->response($data, 200);
     }
+
+	public function del_delete($id)
+	{
+		$this->load->model("rtu_map_model");
+		$success = $this->rtu_map_model->delete($id);
+		$data = [ 'success' => $success ];
+		$this->response($data, 200);
+	}
 }
