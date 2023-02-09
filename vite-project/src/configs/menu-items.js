@@ -10,5 +10,6 @@ export default [
             { key: "add", to: "/rtu/add", title: "Registrasi RTU Baru" },
             { key: "backup", to: "/", title: "Buat Backup" }
         ]
-    }
+    },
+    { key: "user", to: "/user", title: "Manajemen User", icon: "airplay" }
 ];

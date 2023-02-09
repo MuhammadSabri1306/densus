@@ -6,6 +6,7 @@ import MonitoringDetail from "@views/MonitoringDetail.vue";
 import Rtu from "@views/Rtu.vue";
 import RtuAdd from "@views/RtuAdd.vue";
 import RtuEdit from "@views/RtuEdit.vue";
+import User from "@views/User.vue";
 
 const useBuildPath = true;
 
@@ -39,6 +40,11 @@ const routes = [
         path: "/rtu/add",
         component: RtuAdd,
         meta: { menuKey: ["rtu", "add"] }
+    },
+    {
+        path: "/user",
+        component: User,
+        meta: { menuKey: ["user", "list"] }
     }
 ];
 

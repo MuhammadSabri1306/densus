@@ -1,11 +1,13 @@
 <script setup>
 import { ref, computed } from "vue";
-// import { FilterMatchMode } from "primevue/api";
+import { FilterMatchMode } from "primevue/api";
 import http from "@/helpers/http-common";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 
-const filter = ref(null);
+const filter = ref({
+    'global': {value: null, matchMode: FilterMatchMode.CONTAINS}
+});
 const dataRtu = ref([]);
 const tableRtu = computed(() => {
     return dataRtu.value.map((item, index) => {
@@ -26,7 +28,7 @@ try {
     <div>
         <div class="row mb-4">
             <div class="col-6 col-md-4 ms-auto">
-                <input type="search" v-model="filter" id="rtuSearch" class="form-control form-control-lg" placeholder="Cari" aria-label="Cari" />
+                <input type="search" v-model="filter['global'].value" id="rtuSearch" class="form-control form-control-lg" placeholder="Cari" aria-label="Cari" />
             </div>
         </div>
         <DataTable :value="tableRtu" showGridlines :paginator="true" :rows="10"

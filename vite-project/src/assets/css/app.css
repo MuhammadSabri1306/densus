@@ -62,3 +62,21 @@
 .is-invalid {
     animation: justshake 0.3s forwards;
 }
+
+.btn-circle {
+    @apply tw-w-10 tw-h-10 tw-flex tw-justify-center tw-items-center tw-rounded-full;
+}
+
+.span-circle {
+    @apply tw-w-8 tw-h-8 tw-inline-flex tw-justify-center tw-items-center tw-rounded-full;
+}
+
+.p-datatable-table thead th {
+    background-color: #24695c!important;
+    color: #fff!important;
+    border-color: #24695c!important;
+}
+
+.p-datatable-table thead .p-sortable-column-icon {
+    color: #fff!important;
+}
