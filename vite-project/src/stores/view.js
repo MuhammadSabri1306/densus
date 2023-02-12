@@ -14,7 +14,7 @@ export const useViewStore = defineStore("view", {
             const activeKey = state.menuActiveKey;
             if(activeKey.length < 1)
                 return [state.menuItems[0].key];
-            return activeKey.split("/");
+            return activeKey.split(",");
         }
     },
     actions: {

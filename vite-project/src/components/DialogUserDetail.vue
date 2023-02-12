@@ -30,11 +30,11 @@ const props = defineProps({
                 <b>Divre</b>
                 <div class="d-flex">
                     <span class="me-1">:</span>
-                    <span class="text-break">{{ data.divre || "-" }}</span></div>
+                    <span class="text-break">{{ data.divre_name || "-" }}</span></div>
                 <b>Witel</b>
                 <div class="d-flex">
                     <span class="me-1">:</span>
-                    <span class="text-break">{{ data.witel || "-" }}</span></div>
+                    <span class="text-break">{{ data.witel_name || "-" }}</span></div>
                 <b>LDAP</b>
                 <div class="d-flex">
                     <span class="me-2">:</span>
@@ -68,8 +68,8 @@ const props = defineProps({
                 <b>Status Akun</b>
                 <div class="d-flex">
                     <span class="me-2">:</span>
-                    <span v-if="data.is_active" class="px-2 py-1 bg-primary rounded-pill">Aktif <VueFeather type="check" size="0.9em" class="mt-1 ms-1" /></span>
-                    <span v-else class="px-2 py-1 bg-danger rounded-pill">Tidak Aktif <VueFeather type="x" size="0.9em" class="mt-1 ms-1" /></span>
+                    <span v-if="data.is_active" class="ps-2 pe-3 py-1 bg-primary rounded-pill"><VueFeather type="check" size="0.9em" class="mt-1 me-1" />Aktif</span>
+                    <span v-else class="ps-2 pe-3 py-1 bg-danger rounded-pill"><VueFeather type="x" size="0.9em" class="mt-1 me-1" />Tidak Aktif</span>
                 </div>
             </div>
         </div>

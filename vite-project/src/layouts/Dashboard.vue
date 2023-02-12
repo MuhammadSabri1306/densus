@@ -1,8 +1,9 @@
 <script setup>
 import { computed, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
+import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
-import Footer from "./DashboardFooter.vue";
+import Footer from "./Footer.vue";
 import SidebarUser from "./DashboardSidebarUser.vue";
 import SidebarMenu from "./DashboardSidebarMenu.vue";
 
@@ -22,9 +23,17 @@ onMounted(() => window.addEventListener("resize", setupSidebarVisibility));
 onUnmounted(() => window.addEventListener("resize", setupSidebarVisibility));
 
 viewStore.resetSidebarVisibility();
+
+const userStore = useUserStore();
+const logout = () => {
+    if(!confirm("Anda akan keluar dari DENSUS. Lanjutkan?"))
+        return;
+    userStore.logout();
+    router.push("/login");
+};
 </script>
 <template>
-    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+    <div class="page-wrapper compact-wrapper viho-theme" id="pageWrapper">
         <!-- Page Header Start-->
         <div :class="{ 'close_icon': hideSidebar }" class="page-main-header">
             <div class="main-header-right row m-0">
@@ -117,7 +126,7 @@ viewStore.resetSidebarVisibility();
                             </ul>
                         </li>
                         <li class="onhover-dropdown p-0">
-                            <a href="#" class="btn btn-primary-light btn-icon"><vue-feather type="log-out" />Log out</a>
+                            <button @click="logout" class="btn btn-primary-light btn-icon"><vue-feather type="log-out" />Log out</button>
                         </li>
                     </ul>
                 </div>
@@ -146,35 +155,6 @@ viewStore.resetSidebarVisibility();
 
 .brand-logo {
     max-width: 5.2rem;
-}
-
-:global(#mainnav .vue-feather) {
-    vertical-align: middle;
-	margin-bottom: 3px;
-}
-
-:global(#mainnav .according-menu svg) {
-    width: 14px!important;
-    margin: 0!important;
-    transform: rotate(0deg);
-    transition: transform 0.3s;
-}
-
-:global(#mainnav .dropdown.expand .according-menu svg) {
-    transform: rotate(90deg);
-}
-
-:global(#mainnav .nav-submenu) {
-    display: block!important;;
-    opacity: 1;
-    max-height: 0;
-    overflow-y: hidden;
-    transition: opacity 0.3s, max-height 0.3s;
-}
-
-:global(#mainnav .dropdown.expand .nav-submenu) {
-    opacity: 1;
-    max-height: 100vh;
 }
 
 /* :global(i.vue-feather) {

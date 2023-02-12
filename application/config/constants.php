@@ -83,3 +83,12 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+/* 
+ * CUSTOM CONSTANTS
+ */
+defined('REST_ERR_AUTH_DATA') OR define('REST_ERR_AUTH_DATA', [ 'success' => false, 'message' => 'Unauthorized' ]);
+defined('REST_ERR_AUTH_CODE') OR define('REST_ERR_AUTH_CODE', 401);
+defined('REST_ERR_EXP_DATA') OR define('REST_ERR_EXP_DATA', [ 'success' => false, 'message' => 'Expired token' ]);
+defined('REST_ERR_EXP_CODE') OR define('REST_ERR_EXP_CODE', 401);
+defined('REST_ERR_BAD_REQ') OR define('REST_ERR_BAD_REQ', 400);

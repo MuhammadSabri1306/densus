@@ -7,7 +7,7 @@ export const useDataForm = fields => {
 
 	for(let key in fields) {
 		const { value, ...validationItem } = fields[key];
-		state[key] = value || null;
+		state[key] = (value !== undefined) ? value : null;
 		validations[key] = validationItem;
 	}
 

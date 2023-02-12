@@ -1,0 +1,275 @@
+/**=====================
+     09. Error-page  CSS Start
+==========================**/
+.error-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	text-align: center;
+}
+
+.error-wrapper.maintenance-bg {
+	background-image: url(../images/other-images/maintenance-bg.jpg);
+	background-blend-mode: overlay;
+}
+
+.error-wrapper .maintenance-icons li i {
+	color: rgba(36, 105, 92, 0.5);
+	font-size: 50px;
+	animation: rotate-effect 40s infinite linear reverse;
+}
+
+.error-wrapper .maintenance-icons li:nth-child(2) i {
+	font-size: 100px;
+	margin-left: 110px;
+	margin-top: -25px;
+	animation: rotate-effect 40s linear infinite reverse;
+}
+
+.error-wrapper .maintenance-icons li:nth-child(3) i {
+	animation: rotate-effect 30s infinite linear;
+	font-size: 150px;
+	margin-top: -85px;
+	margin-right: 120px;
+}
+
+.error-wrapper .maintenance-heading {
+	margin-top: 70px;
+}
+
+.error-wrapper .maintenance-heading .headline {
+	font-size: 99px;
+	font-weight: 900;
+	letter-spacing: 10px;
+	color: #ba895d;
+	z-index: 2;
+	position: relative;
+	margin-top: -70px;
+}
+
+.error-wrapper .error-heading {
+	margin-top: 115px;
+}
+
+.error-wrapper .error-heading .headline {
+	font-size: 285px;
+	font-weight: 700;
+	letter-spacing: 1px;
+	margin-top: -130px;
+}
+
+.error-wrapper .sub-content {
+	font-size: 18px;
+	color: #999;
+	letter-spacing: 1px;
+	font-weight: normal;
+	line-height: 35px;
+	z-index: 3;
+	position: relative;
+	margin-top: 30px;
+	margin-bottom: 0;
+	font-weight: 600;
+}
+
+.error-wrapper .btn {
+	margin-top: 40px;
+}
+
+.error {
+	margin: 70px 0 100px;
+	color: #000;
+}
+
+.error .error-title {
+	font-size: 9.5rem;
+	color: #fff;
+	text-shadow: 6px 6px 7px rgba(0, 0, 0, 0.32);
+}
+
+.error .line-bottom {
+	width: 10%;
+	height: 5px;
+	background-color: #e2c636;
+	border: none;
+}
+
+.error .c-white {
+	color: #fff;
+}
+
+.error .error-btn {
+	text-align: center;
+}
+
+.error .padd {
+	padding: 10px 30px 10px 30px;
+}
+
+.error .btn-back-home {
+	background-color: #e6edef;
+	color: #000;
+}
+
+.error .btn-back-home:hover {
+	background-color: #e2c636;
+	color: #fff;
+	box-shadow: 0 20px 35px 0 rgba(0, 0, 0, 0.21);
+}
+
+.error .btn-adnc-serc {
+	background-color: #2c323f;
+	color: #fff;
+}
+
+.error .btn-adnc-serc:hover {
+	background-color: #e2c636;
+	color: #fff;
+	box-shadow: 0 20px 35px 0 rgba(0, 0, 0, 0.21);
+}
+
+.maintenance-sec .error-wrapper .maintenance-heading .headline {
+	margin-bottom: 0;
+}
+
+.maintenance-sec .error-wrapper .sub-content {
+	margin-top: 15px;
+}
+
+/**=====================
+       09. Error-page CSS Ends
+  ==========================**/
+@keyframes wheel-rotate {
+	50% {
+		transform: rotate(360deg);
+		animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+	}
+
+	100% {
+		transform: rotate(960deg);
+	}
+}
+
+@keyframes bicycle-run {
+	0% {
+		transform: translateX(-1300px);
+	}
+
+	50% {
+		transform: translateX(0);
+		animation-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
+	}
+
+	100% {
+		transform: translateX(1300px);
+	}
+}
+
+@keyframes move-1 {
+	0% {
+		transform: translateY(-10px);
+	}
+
+	50% {
+		transform: translateX(0);
+	}
+
+	100% {
+		transform: translateY(-10px);
+	}
+}
+
+.error-page1 .danger-color {
+	fill: #d22d3d;
+}
+
+.error-page1 .warning-color {
+	fill: #e2c636;
+}
+
+.error-page1 .primary-color {
+	fill: #24695c;
+}
+
+.error-page1 .primary-color.opacity-05 {
+	fill: rgba(36, 105, 92, 0.5);
+}
+
+.error-page1 .secondary-color {
+	fill: #ba895d;
+}
+
+.error-page1 .secondary-color.opacity-o6 {
+	opacity: 0.6;
+}
+
+.error-page1 .secondary-color.opacity-o4 {
+	opacity: 0.4;
+}
+
+.error-page1 .secondary-color.lighten-5 {
+	fill: #b27c4c;
+}
+
+.error-page1 .svg-wrraper {
+	margin-bottom: 35px;
+}
+
+.error-page1 .svg-wrraper svg.svg-45 {
+	width: 45%;
+}
+
+.error-page1 .svg-wrraper svg.svg-60 {
+	width: 60%;
+}
+
+.error-page1 .svg-wrraper svg.svg-40 {
+	width: 40%;
+}
+
+.error-page1 .wheel {
+	animation: wheel-rotate 6s ease infinite;
+	transform-origin: center;
+	transform-box: fill-box;
+}
+
+.error-page1 .bicycle {
+	animation: bicycle-run 15s ease infinite;
+}
+
+.error-page1 .circle {
+	animation: circle-anim ease infinite;
+	transform-origin: center;
+	transform-box: fill-box;
+	perspective: 0;
+}
+
+.error-page1 .rocket, .error-page1 .jacket-man {
+	animation: move-1 6s linear infinite;
+}
+
+.error-page1 h3 {
+	font-weight: 700;
+	text-transform: capitalize;
+}
+
+.error-page1 .btn-primary-gradien {
+	color: #fff;
+	font-weight: 700;
+}
+
+@media (max-width: 767px) {
+	.error-page1 h3 {
+		font-size: 22px;
+	}
+}
+
+@media (max-width: 575px) {
+	.error-page1 .svg-wrraper {
+		margin-bottom: 10px;
+	}
+
+	.error-page1 .svg-wrraper svg.svg-40 {
+		width: 50%;
+	}
+}

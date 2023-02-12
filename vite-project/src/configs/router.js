@@ -8,43 +8,45 @@ import RtuAdd from "@views/RtuAdd.vue";
 import RtuEdit from "@views/RtuEdit.vue";
 import User from "@views/User.vue";
 
-const useBuildPath = true;
+import Login from "@views/Login.vue";
+import ErrorNotFound from "@views/ErrorNotFound.vue";
 
 const routes = [
     {
-        path: "/",
-        component: Landing,
-        meta: { menuKey: ["landing"] }
+        path: "/", component: Landing,
+        meta: { menuKey: ["landing"], requiresAuth: true }
     },
     {
-        path: "/monitoring",
-        component: Monitoring,
-        meta: { menuKey: ["monitoring"] }
+        path: "/monitoring", component: Monitoring,
+        meta: { menuKey: ["monitoring"], requiresAuth: true }
     },
     {
-        path: "/monitoring/:rtuCode",
-        component: MonitoringDetail,
-        meta: { menuKey: ["monitoring"] }
+        path: "/monitoring/:rtuCode", component: MonitoringDetail,
+        meta: { menuKey: ["monitoring"], requiresAuth: true }
     },
     {
-        path: "/rtu",
-        component: Rtu,
-        meta: { menuKey: ["rtu", "list"] }
+        path: "/rtu", component: Rtu,
+        meta: { menuKey: ["rtu", "list"], requiresAuth: true }
     },
     {
-        path: "/rtu/detail/:rtuId",
-        component: RtuEdit,
-        meta: { menuKey: ["rtu", "list"] }
+        path: "/rtu/detail/:rtuId", component: RtuEdit,
+        meta: { menuKey: ["rtu", "list"], requiresAuth: true }
     },
     {
-        path: "/rtu/add",
-        component: RtuAdd,
-        meta: { menuKey: ["rtu", "add"] }
+        path: "/rtu/add", component: RtuAdd,
+        meta: { menuKey: ["rtu", "add"], requiresAuth: true }
     },
     {
-        path: "/user",
-        component: User,
-        meta: { menuKey: ["user", "list"] }
+        path: "/user", component: User,
+        meta: { menuKey: ["user"], requiresAuth: true }
+    },
+    {
+        path: "/login", name: "login", component: Login,
+        meta: { requiresAuth: false }
+    },
+    {
+        path: "/:pathMatch(.*)*", name: "e404", component: ErrorNotFound,
+        meta: { requiresAuth: false }
     }
 ];
 

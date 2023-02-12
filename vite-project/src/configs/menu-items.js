@@ -11,5 +11,5 @@ export default [
             { key: "backup", to: "/", title: "Buat Backup" }
         ]
     },
-    { key: "user", to: "/user", title: "Manajemen User", icon: "airplay" }
+    { key: "user", to: "/user", title: "Manajemen User", icon: "users" }
 ];

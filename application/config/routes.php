@@ -50,6 +50,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 
+$route['api/login/(:any)/(:any)/(:any)']['get'] = 'auth/login/$1/$2/$3';
+$route['api/login']['post'] = 'auth/login';
+
 $route['api/monitoring/costbbm/(:any)'] = 'monitoring/costbbm/$1';
 $route['api/monitoring/performance/(:any)'] = 'monitoring/performance/$1';
 $route['api/monitoring/kwhreal/(:any)'] = 'monitoring/kwhreal/$1';
@@ -71,12 +74,21 @@ $route['api/rtu/(:any)']['delete'] = 'rtu/del/$1';
 $route['api/rtu']['get'] = 'rtu';
 $route['api/rtu']['post'] = 'rtu/add';
 
+$route['api/user/(:any)']['get'] = 'user/index/$1';
+$route['api/user/(:any)']['put'] = 'user/index/$1';
+$route['api/user/(:any)']['delete'] = 'user/index/$1';
+$route['api/user']['get'] = 'user';
+$route['api/user']['post'] = 'user';
+
+$route['login'] = 'vue';
 $route['monitoring/(:any)/(:any)'] = 'vue';
 $route['monitoring/(:any)'] = 'vue';
 $route['monitoring'] = 'vue';
 $route['rtu/(:any)/(:any)'] = 'vue';
 $route['rtu/(:any)'] = 'vue';
 $route['rtu'] = 'vue';
+$route['user/(:any)'] = 'vue';
+$route['user'] = 'vue';
 
 $route['default_controller'] = 'vue';
 // $route['(.*)'] = 'vue/index';

@@ -3,7 +3,6 @@ import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import http from "@helpers/http-common";
 import Skeleton from "primevue/skeleton";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 
 import CardCurrKwh from "@components/CardCurrKwh.vue";
 import CardTotalKwh from "@components/CardTotalKwh.vue";
@@ -95,7 +94,7 @@ http.get("/monitoring/rtudetail/" + rtuCode.value)
                         </template>
                     </Suspense>
                 </div>
-                <div class="col-md">
+                <div class="col-md-4">
                     <Suspense>
                         <CardCurrKwh :rtuCode="rtuCode" />
                         <template #fallback>

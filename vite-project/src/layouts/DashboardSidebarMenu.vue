@@ -51,3 +51,10 @@ const setMenuExpanded = index => {
         </div>
     </nav>
 </template>
+<style scoped>
+
+.main-navbar .nav-submenu .active {
+    font-weight: 600!important;
+}
+
+</style>

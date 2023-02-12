@@ -1,13 +1,16 @@
 <script setup>
 import { ref } from "vue";
+import Skeleton from "primevue/skeleton";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import DatatableUser from "@components/DatatableUser.vue";
 import DialogUserDetail from "@components/DialogUserDetail.vue";
 import DialogUserEdit from "@components/DialogUserEdit.vue";
+import DialogUserAdd from "@components/DialogUserAdd.vue";
 
 const currUser = ref({});
 const showDetailDialog = ref(false);
 const showEditDialog = ref(false);
+const showAddDialog = ref(false);
 
 const onView = dataRow => {
     currUser.value = dataRow;
@@ -19,13 +22,12 @@ const onEdit = dataRow => {
     showEditDialog.value = true;
 };
 
-const onDelete = dataRow => {
-    console.log(dataRow);
-};
+const onAdd = () => showAddDialog.value = true;
 
 const onDialogClose = () => {
     showDetailDialog.value = false;
     showEditDialog.value = false;
+    showAddDialog.value = false;
     currUser.value = {};
 };
 </script>
@@ -44,14 +46,43 @@ const onDialogClose = () => {
         <div class="container-fluid dashboard-default-sec">
             <div class="card">
                 <div class="card-body">
-                    <div>
-                        <DatatableUser @view="onView" @edit="onEdit" @delete="onDelete" />
-                    </div>
+                    <Suspense>
+                        <DatatableUser @view="onView" @edit="onEdit" @add="onAdd" />
+                        <template #fallback>
+                            <div>
+                                <div class="row mb-2">
+                                    <div class="col"><Skeleton /></div>
+                                    <div class="col"><Skeleton /></div>
+                                    <div class="col"><Skeleton /></div>
+                                    <div class="col"><Skeleton /></div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col"><Skeleton /></div>
+                                    <div class="col"><Skeleton /></div>
+                                    <div class="col"><Skeleton /></div>
+                                    <div class="col"><Skeleton /></div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col"><Skeleton /></div>
+                                    <div class="col"><Skeleton /></div>
+                                    <div class="col"><Skeleton /></div>
+                                    <div class="col"><Skeleton /></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col"><Skeleton /></div>
+                                    <div class="col"><Skeleton /></div>
+                                    <div class="col"><Skeleton /></div>
+                                    <div class="col"><Skeleton /></div>
+                                </div>
+                            </div>
+                        </template>
+                    </Suspense>
                 </div>
             </div>
         </div>
         <DialogUserDetail v-model:visible="showDetailDialog" :data="currUser" @close="onDialogClose" />
-        <DialogUserEdit v-model:visible="showEditDialog" :data="currUser" @die="onDialogClose" />
+        <DialogUserEdit v-model:visible="showEditDialog" :data="currUser" @die="onDialogClose" @save="onDialogClose" />
+        <DialogUserAdd v-model:visible="showAddDialog" @die="onDialogClose" @save="onDialogClose" />
     </div>
 </template>
 <style>
