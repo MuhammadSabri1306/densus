@@ -1,37 +1,24 @@
 <script setup>
-import http from "@/helpers/http-common";
+import { useMonitoringStore } from "@stores/monitoring";
 import VueApexCharts from "vue3-apexcharts";
+import { dtColors } from "@/configs/datatable";
 
 const props = defineProps({
     rtuCode: { required: true }
 });
 
-const colors = {
-    primary: "#24695c",
-    secondary: "#ba895d"
-};
+const monitoringStore = useMonitoringStore();
+const tableData = await monitoringStore.getTableData(props.rtuCode);
+const degTableData = await monitoringStore.getDegTableData(props.rtuCode);
 
-let dataEstimation = null;
-let degtabledata = null;
-let tabledata = null;
-try {
-    let response = await http.get("/monitoring/degtabledata/" + props.rtuCode);
-    degtabledata = response.data.degtabledata;
-    const totalGenset = degtabledata.chart["Total_genset"];
-    
-    response = await http.get("/monitoring/tabledata/" + props.rtuCode);
-    tabledata = response.data.tabledata;
-    const totalPln = tabledata.chart["Total_pln"];
-    
-    dataEstimation = totalGenset + totalPln;
-} catch(err) {
-    console.error(err);
-}
+const totalPln = tableData.chart["Total_pln"] || 0;
+const totalGenset = degTableData.chart["Total_genset"] || 0;
+const dataEstimation = totalGenset + totalPln;
 
 const monthKeys = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const series = [
-    { name: "Tagihan PLN", data: monthKeys.map(item => tabledata.chart[item]) },
-    { name: "BBM Genset", data: monthKeys.map(item => degtabledata.chart[item]) }
+    { name: "Tagihan PLN", data: monthKeys.map(item => tableData.chart[item]) },
+    { name: "BBM Genset", data: monthKeys.map(item => degTableData.chart[item]) }
 ];
 
 const chartOptions = {
@@ -54,7 +41,7 @@ const chartOptions = {
     },
     fill: {
         opacity: 1,
-        colors: [colors.primary, colors.secondary],
+        colors: [dtColors.primary, dtColors.secondary],
         type: 'gradient',
         gradient: {
             shade: 'light',
@@ -66,7 +53,7 @@ const chartOptions = {
             stops: [0, 100]
         }
     },  
-    colors: [colors.primary, colors.secondary],
+    colors: [dtColors.primary, dtColors.secondary],
     tooltip: {
         y: {
             formatter: function (val) {

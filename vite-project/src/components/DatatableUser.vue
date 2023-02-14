@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useListUserStore } from "@stores/list-user";
+import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
@@ -33,8 +34,10 @@ const isLoading = ref(null);
 const viewStore = useViewStore();
 
 const changeIsActive = ({ id, is_active }) => {
-    const body = { is_active: !is_active };
+    is_active = !is_active;
+    const body = { is_active };
     isLoading.value = id;
+    
     listUserStore.update(id, body, response => {
         isLoading.value = null;
         if(!response.success)
@@ -109,7 +112,7 @@ const onDelete = id => {
             </Column>
             <Column field="is_active" header="Aktif">
                 <template #body="slotProps">
-                    <InputSwitch :modelValue="slotProps.data.is_active" @click="changeIsActive(slotProps.data)" :disabled="showActionOnId === slotProps.data.id || isLoading === slotProps.data.id" />
+                    <InputSwitch :modelValue="slotProps.data.is_active" @click="changeIsActive(slotProps.data)" :disabled="showActionOnId === slotProps.data.id || isLoading === slotProps.data.id || slotProps.data.isReadonly" />
                 </template>
             </Column>
             <Column header="Action">
@@ -122,10 +125,10 @@ const onDelete = id => {
                             <button type="button" @click.stop="onCallAction('view', slotProps.data)" class="btn-circle btn btn-primary shadow p-0">
                                 <VueFeather type="eye" />
                             </button>
-                            <button type="button" @click.stop="onCallAction('edit', slotProps.data)" class="btn-circle btn btn-secondary shadow p-0">
+                            <button type="button" @click.stop="onCallAction('edit', slotProps.data)" class="btn-circle btn btn-secondary shadow p-0" :disabled="slotProps.data.isReadonly">
                                 <VueFeather type="edit-2" />
                             </button>
-                            <button type="button" @click.stop="onDelete(slotProps.data.id)" class="btn-circle btn btn-danger shadow p-0">
+                            <button type="button" @click.stop="onDelete(slotProps.data.id)" class="btn-circle btn btn-danger shadow p-0" :disabled="slotProps.data.isReadonly">
                                 <VueFeather type="trash" />
                             </button>
                         </div>

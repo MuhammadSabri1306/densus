@@ -29,4 +29,16 @@ class Rtu_list_model extends CI_Model {
 
 		return $query->result_array();
 	}
+
+	public function get_divre_by_witel($witelCode)
+	{
+        $query = $this->db
+			->select('divre AS divre_code, divre_name, witel AS witel_code, witel_name')
+			->from('rtu')
+			->where('witel', $witelCode)
+			->group_by('witel')
+            ->get();
+
+		return $query->row();
+	}
 }

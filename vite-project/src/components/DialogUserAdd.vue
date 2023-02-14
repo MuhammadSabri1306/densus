@@ -1,15 +1,21 @@
 <script setup>
-import { ref, computed } from "vue";
-import { useRouter } from "vue-router";
-import { useViewStore } from "@stores/view";
+import { ref, computed, watch } from "vue";
+import { useUserStore } from "@stores/user";
+import { useLocationStore } from "@stores/location";
 import { useListUserStore } from "@stores/list-user";
+import { useViewStore } from "@stores/view";
 import { useDataForm } from "@helpers/data-form";
 import { required } from "@vuelidate/validators";
 import Dialog from "primevue/dialog";
 import InputSwitch from "primevue/inputswitch";
-import ListboxRegWitel from "@components/ListboxRegWitel.vue";
+import ListboxRegional from "@components/ListboxRegional.vue";
+import ListboxWitel from "@components/ListboxWitel.vue";
 
 const emit = defineEmits(["saved", "die"]);
+
+const userStore = useUserStore();
+const userLevel = computed(() => userStore.level);
+
 const { data, v$ } = useDataForm({
     nama: { required },
     organisasi: { value: "witel", required },
@@ -23,41 +29,60 @@ const { data, v$ } = useDataForm({
     witel_name: {},
     divre_code: {},
     divre_name: {},
-    username: {},
+    username: { required },
     password1: {},
     password2: {}
 });
 
-const listboxRegWitel = ref(null);
+const locationStore = useLocationStore();
+const listboxRegional = ref(null);
+const listboxWitel = ref(null);
+const showLbRegional = ref(true);
+const showLbWitel = ref(true);
 
-const onDivreChange = val => {
-    data.divre_code = val.divreCode;
-    data.divre_name = val.divreName;
+watch(() => data.organisasi, org => {
+    if(org == "witel") {
+        showLbRegional.value = true;
+        showLbWitel.value = true;
+    } else if(org == "divre") {
+        showLbRegional.value = true;
+        showLbWitel.value = false;
+    } else {
+        showLbRegional.value = false;
+        showLbWitel.value = false;
+    }
+});
+
+const onDivreChange = ({ code, name }) => {
+    data.divre_code = code;
+    data.divre_name = name;
+    console.log(code);
+    locationStore.fetchWitel(code);
 };
 
-const onWitelChange = val => {
-    data.witel_code = val.witelCode;
-    data.witel_name = val.witelName;
+const onWitelChange = ({ code, name }) => {
+    data.witel_code = code;
+    data.witel_name = name;
 };
 
 const listUserStore = useListUserStore();
 const viewStore = useViewStore();
-const router = useRouter();
 const isLoading = ref(false);
 const hasSubmitted = ref(false);
 
 const isPassEqual = computed(() => data.password1 === data.password2);
 
 const optValidation = () => {
-    if(data.organisasi == "witel") {
-        listboxRegWitel.value.validate();
+    if(data.organisasi != "nasional") {
+        if(listboxRegional.value)
+            listboxRegional.value.validate();
+        if(listboxWitel.value)
+            listboxWitel.value.validate();
         if(!data.divre_code || !data.witel_code)
             return false;
     }
 
     if(!data.is_ldap) {
-        if(!data.username)
-            return false;
         if(!data.password1)
             return false;
         if(!data.password2)
@@ -70,7 +95,6 @@ const optValidation = () => {
 const onSubmit = async () => {
     hasSubmitted.value = true;
     let isValid = await v$.value.$validate();
-    console.log(data)
     isValid = isValid && optValidation();
 
     if(!isValid)
@@ -128,6 +152,7 @@ const resetComp = () => {
 
     emit("die");
 };
+
 </script>
 <template>
     <Dialog header="Buat User Baru" modal maximizable draggable @hide="resetComp">
@@ -155,11 +180,11 @@ const resetComp = () => {
                 <div class="col-auto col-md mb-4">
                     <label>Organisasi <span class="text-danger">*</span></label>
                     <div class="ms-4 my-2">
-                        <input type="radio" v-model="data.organisasi" value="nasional" id="radioOrgNasional" class="radio_animated" />
+                        <input type="radio" v-model="data.organisasi" value="nasional" :disabled="userLevel != 'nasional'" id="radioOrgNasional" class="radio_animated" />
                         <label for="radioOrgNasional">Nasional</label>
                     </div>
                     <div class="ms-4 my-2">
-                        <input type="radio" v-model="data.organisasi" value="divre" id="radioOrgDivre" class="radio_animated" />
+                        <input type="radio" v-model="data.organisasi" value="divre" :disabled="userLevel == 'witel'" id="radioOrgDivre" class="radio_animated" />
                         <label for="radioOrgDivre">Divre</label>
                     </div>
                     <div class="ms-4 my-2">
@@ -168,7 +193,24 @@ const resetComp = () => {
                     </div>
                 </div>
             </div>
-            <ListboxRegWitel ref="listboxRegWitel" fieldRequired :defaultDivre="data.divre_code" :defaultWitel="data.witel_code" @divreChange="onDivreChange" @witelChange="onWitelChange" class="mb-4" />
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <label for="inputRegional" class="col-form-label">Regional</label>
+                        <ListboxRegional v-if="showLbRegional" ref="listboxRegional" isRequired @change="onDivreChange" />
+                        <input type="text" v-else id="inputRegional" placeholder="Pilih Regional" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <label for="inputWitel" class="col-form-label">Regional</label>
+                        <ListboxWitel v-if="showLbWitel && data.divre_code" ref="listboxWitel" :divre="data.divre_code" isRequired @change="onWitelChange" />
+                        <input type="text" v-else :divre="data.divre_code" id="inputWitel" placeholder="Pilih Witel" disabled class="form-control" />
+                    </div>
+                </div>
+            </div>
+
             <div class="mb-4">
                 <label for="inputEmail">Email <span class="text-danger">*</span></label>
                 <input type="email" v-model="data.email" :class="{ 'is-invalid': hasSubmitted && v$.email.$invalid }" id="inputEmail" class="form-control" />
@@ -190,7 +232,7 @@ const resetComp = () => {
                     <label for="switchLdap" class="d-block">LDAP</label>
                     <InputSwitch v-model="data.is_ldap" inputId="switchLdap" />
                 </div>
-                <div v-if="!data.is_ldap" class="col-12 col-md mb-4">
+                <div class="col-12 col-md mb-4">
                     <label for="inputUsername">Username <span class="text-danger">*</span></label>
                     <input type="text" v-model="data.username" :class="{ 'is-invalid': hasSubmitted && !data.username }" id="inputUsername" class="form-control" />
                 </div>

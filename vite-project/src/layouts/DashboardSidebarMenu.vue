@@ -1,9 +1,13 @@
 <script setup>
 import { computed } from "vue";
+import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
 
+const userStore = useUserStore();
+const userRole = computed(() => userStore.role);
+
 const viewStore = useViewStore();
-const menuItems = viewStore.menuItems;
+const menuItems = computed(() => viewStore.menuItems);
 const menuActKeys = computed(() => viewStore.menuActKeys);
 
 const menuExpanded = computed(() => viewStore.menuExpanded);
@@ -28,20 +32,20 @@ const setMenuExpanded = index => {
                         </div>
                     </li>
                     <li v-for="(item, index) in menuItems" :class="{ 'dropdown': item.child, 'expand': index === menuExpanded || item.key === menuActKeys[0] }">
-                        <RouterLink v-if="!item.child" :to="item.to" :class="{ 'active': item.key == menuActKeys[0] }" class="nav-link">
+                        <RouterLink v-if="!item.child && item.roles.indexOf(userRole) >= 0" :to="item.to" :class="{ 'active': item.key == menuActKeys[0] }" class="nav-link">
                             <vue-feather :type="item.icon" size="1.2rem" class="me-2" />
                             <span>{{ item.title }}</span>
                         </RouterLink>
-                        <a v-else @click="setMenuExpanded(index)" :class="{ 'active': item.key === menuActKeys[0] }" class="nav-link menu-title" role="button">
+                        <a v-if="item.child && item.roles.indexOf(userRole) >= 0" @click="setMenuExpanded(index)" :class="{ 'active': item.key === menuActKeys[0] }" class="nav-link menu-title" role="button">
                             <vue-feather :type="item.icon" size="1.2rem" class="me-2" />
                             <span>{{ item.title }}</span>
                             <div class="according-menu">
                                 <vue-feather type="chevron-right" />
                             </div>
                         </a>
-                        <ul v-if="item.child" class="nav-submenu menu-content">
+                        <ul v-if="item.child && item.roles.indexOf(userRole) >= 0" class="nav-submenu menu-content">
                             <li v-for="childItem in item.child">
-                                <RouterLink :to="childItem.to" :class="{ 'active': childItem.key === menuActKeys[1] }">{{ childItem.title }}</RouterLink>
+                                <RouterLink v-if="(childItem.roles && childItem.roles.indexOf(userRole) >= 0) || item.roles.indexOf(userRole) >= 0" :to="childItem.to" :class="{ 'active': childItem.key === menuActKeys[1] }">{{ childItem.title }}</RouterLink>
                             </li>
                         </ul>
                     </li>

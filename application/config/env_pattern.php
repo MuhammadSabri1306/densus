@@ -76,6 +76,8 @@ class EnvPattern {
         'cloud' => 'https://opnimus.telkom.co.id/api/osasenewapi/getrtulist?token=xg7DT34vE7'
     ];
 
+    public static $api_ldap = 'https://juarayya.telkom.co.id/api/ldap/';
+
     public static function getPattern()
     {
         $key = EnvPattern::$isLocally ? 'local' : 'cloud';

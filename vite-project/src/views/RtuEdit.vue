@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useRtuStore } from "@stores/rtu";
 import { useViewStore } from "@stores/view";
 import { useDataForm, buildFormData } from "@helpers/data-form";
 import { required } from "@vuelidate/validators";
@@ -10,6 +11,7 @@ import ListboxRegWitel from "@components/ListboxRegWitel.vue";
 import Skeleton from "primevue/skeleton";
 
 const route = useRoute();
+const router = useRouter();
 const rtuId = computed(() => route.params.rtuId);
 
 const { data, v$ } = useDataForm({
@@ -26,28 +28,35 @@ const { data, v$ } = useDataForm({
     kvaGenset: { required }
 });
 
+const rtuStore = useRtuStore();
+const rtuList = computed(() => rtuStore.list);
+
 const isFetching = ref(true);
-http.get("/rtu/" + rtuId.value)
-    .then(response => {
-        const currRtu = response.data.rtu;
-        if(!currRtu) {
-            console.warn(response.data);
-            return;
-        }
-        data.rtuCode = currRtu.rtu_kode;
-        data.rtuName = currRtu.rtu_name;
-        data.location = currRtu.lokasi;
-        data.stoCode = currRtu.sto_kode;
-        data.divreCode = currRtu.divre_kode;
-        data.divreName = currRtu.divre_name;
-        data.witelCode = currRtu.witel_kode;
-        data.witelName = currRtu.witel_name;
-        data.portKwh = currRtu.port_kwh;
-        data.portGenset = currRtu.port_genset;
-        data.kvaGenset = currRtu.kva_genset;
+rtuStore.fetchList(false, response => {
+    if(!response.success) {
         isFetching.value = false;
-    })
-    .catch(err => console.error(err));
+        return;
+    }
+
+    const currRtu = rtuList.value.find(item => item.id == rtuId.value);
+    if(!currRtu) {
+        router.push("/e404");
+        return;
+    }
+    console.log(currRtu);
+    data.rtuCode = currRtu.rtu_kode;
+    data.rtuName = currRtu.rtu_name;
+    data.location = currRtu.lokasi;
+    data.stoCode = currRtu.sto_kode;
+    data.divreCode = currRtu.divre_kode;
+    data.divreName = currRtu.divre_name;
+    data.witelCode = currRtu.witel_kode;
+    data.witelName = currRtu.witel_name;
+    data.portKwh = currRtu.port_kwh;
+    data.portGenset = currRtu.port_genset;
+    data.kvaGenset = currRtu.kva_genset;
+    isFetching.value = false;
+});
 
 const onDivreChange = val => {
     data.divreCode = val.divreCode;
@@ -60,67 +69,56 @@ const onWitelChange = val => {
 
 const listboxRegWitel = ref(null);
 const viewStore = useViewStore();
-const router = useRouter();
 
 const isLoading = ref(false);
 const hasSubmitted = ref(false);
-
-const sendReq = (body) => {
-    isLoading.value = true;
-    const headers = { "Authorization": "Bearer 123" };
-    console.log(body);
-    http.put("/rtu/" + rtuId.value, body, { headers })
-        .then(response => {
-            if(!response.data.success) {
-                console.warn(response);
-                return;
-            }
-            isLoading.value = false;
-            viewStore.showToast("Data RTU", "Berhasil menyimpan data.", true);
-            console.log(response.data);
-        })
-        .catch(err => {
-            isLoading.value = false;
-            viewStore.showToast("Koneksi gagal", "Terjadi masalah saat menghubungi server.", false);
-            console.error(err);
-        });
-};
 
 const onSubmit = async () => {
     hasSubmitted.value = true;
     listboxRegWitel.value.validate();
     const isValid = await v$.value.$validate();
+
     if(!isValid)
         return;
-
-    const { rtuCode, rtuName, location, stoCode, divreCode, divreName, witelCode, witelName, portKwh, portGenset, kvaGenset } = data;
-    const body = { rtuCode, rtuName, location, stoCode, divreCode, divreName, witelCode, witelName, portKwh, portGenset, kvaGenset };
+    const body = {
+        rtu_kode: data.rtuCode,
+        rtu_name: data.rtuName,
+        lokasi: data.location,
+        sto_kode: data.stoCode,
+        divre_kode: data.divreCode,
+        divre_name: data.divreName,
+        witel_kode: data.witelCode,
+        witel_name: data.witelName,
+        port_kwh: data.portKwh,
+        port_genset: data.portGenset,
+        kva_genset: data.kvaGenset
+    };
     // console.log(body);
     // const formData = buildFormData(data, ["rtuCode", "rtuName", "location", "stoCode", "divreCode", "divreName", "witelCode", "witelName", "portKwh", "portGenset", "kvaGenset"]);
-    sendReq(body);
-    // window.f = formData;
+    isLoading.value = true;
+    rtuStore.update(rtuId.value, body, response => {
+        isLoading.value = false;
+        if(!response.success)
+            return;
+
+        viewStore.showToast("Data RTU", "Berhasil menyimpan data.", true);
+        rtuStore.fetchList(true);
+    });
 };
 
 const onDelete = () => {
     const deleteRtu = confirm("Anda akan menghapus data RTU. Lanjutkan?");
     if(!deleteRtu)
         return;
-    http.delete("/rtu/" + rtuId.value)
-        .then(response => {
-            if(!response.data.success) {
-                console.warn(response);
-                return;
-            }
-            isLoading.value = false;
-            viewStore.showToast("Data RTU", "Data RTU berhasil dihapus.", true);
-            router.push("/rtu");
-        })
-        .catch(err => {
-            isLoading.value = false;
-            viewStore.showToast("Koneksi gagal", "Terjadi masalah saat menghubungi server.", false);
-            console.error(err);
-        });
-    // rtuId
+    isLoading.value = true;
+    rtuStore.delete(rtuId.value, response => {
+        isLoading.value = false;
+        if(!response.success)
+            return;
+
+        viewStore.showToast("Data RTU", "Data RTU berhasil dihapus.", true);
+        rtuStore.fetchList(true, () => router.push("/rtu"));
+    });
 };
 </script>
 <template>

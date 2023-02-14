@@ -4,6 +4,6 @@ export default {
     defaultMessage: "Terjadi masalah saat menghubungi server.",
     route: {
         "401": "/login",
-        "404": "/not-found"
+        "404": "/e404"
     }
 };

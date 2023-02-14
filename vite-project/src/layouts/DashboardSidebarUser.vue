@@ -18,6 +18,6 @@ const userLocation = computed(() => userStore.location);
         <a href="user-profile.html">
             <h6 class="mt-3 f-14 f-w-600">{{ userName }}</h6>
         </a>
-        <p class="mb-0 font-roboto">{{ userLocation }}</p>
+        <p class="mb-0 font-roboto text-uppercase">{{ userLocation }}</p>
     </div>
 </template>

@@ -1,21 +1,13 @@
 <script setup>
-import http from "@/helpers/http-common";
+import { useMonitoringStore } from "@stores/monitoring";
 import { toIdrCurrency } from "@helpers/number-format";
 
 const props = defineProps({
     rtuCode: { required: true }
 });
 
-let dataBbmCost = 0;
-try {
-    let response =  await http.get("/monitoring/costbbm/" + props.rtuCode);
-    const wrapper = response.data["bbm_cost"];
-    if(wrapper && wrapper.bbm_cost)
-        dataBbmCost = wrapper.bbm_cost;
-    console.log(dataBbmCost)
-} catch(err) {
-    console.error(err);
-}
+const monitoringStore = useMonitoringStore();
+const dataBbmCost = await monitoringStore.getBbmCost(props.rtuCode);
 </script>
 <template>
     <div class="card o-hidden border-0">

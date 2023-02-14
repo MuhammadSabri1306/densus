@@ -33,6 +33,18 @@ const layout = computed(() => {
 	const routeName = route.name;
 	return ["login", "e404"].indexOf(routeName) < 0 ? LayoutDashboard : LayoutSingle;
 });
+
+// LOCAL TESTING
+window.setAuthManually = token => {
+	userStore.sync({
+		id: 5,
+		name: "Developer",
+		role: "dev123",
+		level: "nasional",
+		location: null,
+		token
+	});
+};
 </script>
 <template>
 	<Suspense @fallback="hideLoader">

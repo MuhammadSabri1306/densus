@@ -1,5 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
+import { useRtuStore } from "@stores/rtu";
+import { useUserStore } from "@stores/user";
 import { FilterMatchMode } from "primevue/api";
 import http from "@/helpers/http-common";
 import DataTable from "primevue/datatable";
@@ -8,21 +10,13 @@ import Column from "primevue/column";
 const filter = ref({
     'global': {value: null, matchMode: FilterMatchMode.CONTAINS}
 });
-const dataRtu = ref([]);
-const tableRtu = computed(() => {
-    return dataRtu.value.map((item, index) => {
-        const no = index + 1;
-        return { no, ...item };
-    });
-});
+const rtuStore = useRtuStore();
+const tableRtu = computed(() => rtuStore.datatable);
 
-try {
-    const response = await http.get("/rtu");
-    if(response.data.rtu)
-        dataRtu.value = response.data.rtu;
-} catch(err) {
-    console.error(err);
-}
+await rtuStore.fetchList();
+
+const userStore = useUserStore();
+const userRole = computed(() => userStore.role);
 </script>
 <template>
     <div>
@@ -33,7 +27,7 @@ try {
         </div>
         <DataTable :value="tableRtu" showGridlines :paginator="true" :rows="10"
             v-model:filters="filter" dataKey="id" stateStorage="session"
-            stateKey="dt-state-rtu" class="table-sm">
+            stateKey="dt-state-rtu" responsiveLayout="scroll" class="table-sm">
             <Column field="no" header="No" :sortable="true" />
             <Column field="rtu_kode" header="KODE RTU" :sortable="true" />
             <Column field="rtu_name" header="NAMA RTU" :sortable="true" />
@@ -41,7 +35,7 @@ try {
             <Column field="sto_kode" header="STO" :sortable="true" />
             <Column field="witel_name" header="WITEL" :sortable="true" />
             <Column field="divre_name" header="DIVRE" :sortable="true" />
-            <Column header="">
+            <Column v-if="userRole == 'admin'" header="">
                 <template #body="slotProps">
                     <RouterLink :to="'/rtu/detail/'+slotProps.data.id" class="btn btn-sm btn-success">Detail</RouterLink>
                 </template>

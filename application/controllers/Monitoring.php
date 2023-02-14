@@ -12,6 +12,7 @@ class Monitoring extends RestController
     public function __construct()
     {
         parent::__construct();
+        $this->load->library('auth_jwt');
     }
 
     public function costbbm_get($rtu)
@@ -21,8 +22,8 @@ class Monitoring extends RestController
         $port_genset = $lokasidata['port_genset'];
         $kva_genset = $lokasidata['kva_genset'];
 
-        $data['bbm_cost'] = $this->rtu_chart_model->get_bbmcost($rtu, $kva_genset, $port_genset, $this->bbmprice);
-
+        $data = $this->rtu_chart_model->get_bbmcost($rtu, $kva_genset, $port_genset, $this->bbmprice);
+        // $data [ 'status' => 200 ]
         $this->response($data, 200);
     }
 
@@ -108,8 +109,30 @@ class Monitoring extends RestController
 
     public function witel_get($divreCode)
     {
+        $status = $this->auth_jwt->auth('admin');
+		if($status === 200) {
+            
+            $this->load->model('rtu_list_model');
+            $data = [ 'witel' => $this->rtu_list_model->get_witel_by_divre($divreCode) ];
+            $this->response($data, 200);
+
+        } else {
+
+            switch($status) {
+                case REST_ERR_AUTH_CODE: $data = REST_ERR_AUTH_DATA; break;
+                case REST_ERR_EXP_CODE: $data = REST_ERR_EXP_DATA; break;
+                default: $data = null;
+            }
+            $this->response($data, $status);
+
+        }
+    }
+
+    public function location_get($witelCode)
+    {
         $this->load->model('rtu_list_model');
-        $data = [ 'witel' => $this->rtu_list_model->get_witel_by_divre($divreCode) ];
+        $location = $this->rtu_list_model->get_divre_by_witel($witelCode);
+        $data = [ 'location' => $location ];
         $this->response($data, 200);
     }
 

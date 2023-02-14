@@ -9,7 +9,7 @@ dns.setDefaultResultOrder("verbatim");
 export default defineConfig(({ command }) => {
 	return {
 		plugins: [vue()],
-		base: command == "serve" ? "/" : "/",
+		base: command == "serve" ? "/" : "/densus/",
 		resolve: {
 			alias: {
 				"@components": fileURLToPath(new URL("./src/components", import.meta.url)),

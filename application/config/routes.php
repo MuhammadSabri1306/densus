@@ -65,6 +65,7 @@ $route['api/monitoring/degtabledata/(:any)'] = 'monitoring/degtabledata/$1';
 $route['api/monitoring/chartdatadaily/(:any)'] = 'monitoring/chartdatadaily/$1';
 $route['api/monitoring/divre'] = 'monitoring/divre';
 $route['api/monitoring/witel/(:any)'] = 'monitoring/witel/$1';
+$route['api/monitoring/location/(:any)'] = 'monitoring/location/$1';
 $route['api/monitoring/rtulist/(:any)/(:any)'] = 'monitoring/rtulist/$1/$2';
 $route['api/monitoring/rtudetail/(:any)'] = 'monitoring/rtudetail/$1';
 
@@ -92,5 +93,5 @@ $route['user'] = 'vue';
 
 $route['default_controller'] = 'vue';
 // $route['(.*)'] = 'vue/index';
-$route['404_override'] = '';
+$route['404_override'] = 'vue';
 $route['translate_uri_dashes'] = FALSE;

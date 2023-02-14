@@ -1,19 +1,18 @@
 <script setup>
-import http from "@/helpers/http-common";
+import { useMonitoringStore } from "@stores/monitoring";
 import { toIdrCurrency } from "@helpers/number-format";
 
 const props = defineProps({
     rtuCode: { required: true }
 });
 
-let dataTotalCost = null;
+const monitoringStore = useMonitoringStore();
+const tableData = await monitoringStore.getTableData(props.rtuCode);
+let dataTotalCost;
 try {
-    
-    let response = await http.get("/monitoring/tabledata/" + props.rtuCode);
-    dataTotalCost = response.data["tabledata"].table[0]["total_biaya"];
-
-} catch(err) {
-    console.error(err);
+    dataTotalCost = tableData.table[0]["total_biaya"];
+} catch(e) {
+    dataTotalCost = 0;
 }
 </script>
 <template>

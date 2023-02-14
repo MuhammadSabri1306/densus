@@ -1,20 +1,24 @@
 <script setup>
-import http from "@/helpers/http-common";
+import { useMonitoringStore } from "@stores/monitoring";
 import VueApexCharts from "vue3-apexcharts";
 
 const props = defineProps({
     rtuCode: { required: true }
 });
 
-let dataSavingPercent = null;
-try {
-    const response = await http.get("/monitoring/savingpercent/" + props.rtuCode);
-    dataSavingPercent = response.data.savingpercent;
-} catch(err) {
-    console.error(err);
-}
+const monitoringStore = useMonitoringStore();
+const dataSavingPercent = await monitoringStore.getSavingPercent(props.rtuCode);
 
-const series = [dataSavingPercent.savingmonthly_percent];
+const savingMonthly = dataSavingPercent.savingmonthly || 0;
+const savingMonthlyPercent = dataSavingPercent.savingmonthly_percent || 0;
+
+const savingYearly = dataSavingPercent.savingyearly || 0;
+const savingYearlyPercent = dataSavingPercent.savingyearly_percent || 0;
+
+const savingDaily = dataSavingPercent.savingdaily || 0;
+const savingDailyPercent = dataSavingPercent.savingdaily_percent || 0;
+
+const series = [savingMonthlyPercent];
 
 const chartOptions = {
     plotOptions: {
@@ -22,7 +26,7 @@ const chartOptions = {
             hollow: {
                 margin: 15,
                 size: '70%',
-                image: dataSavingPercent.savingmonthly_percent > 10 ? "/densus/assets/img/success.png" : "/densus/assets/img/alert.png",
+                image: (savingMonthlyPercent > 10) ? "/densus/assets/img/success.png" : "/densus/assets/img/alert.png",
                 imageWidth: 64,
                 imageHeight: 64,
                 imageClipped: false
@@ -34,7 +38,7 @@ const chartOptions = {
                 },
                 value: {
                     show: true,
-                    color: dataSavingPercent.savingmonthly_percent > 10 ? "#24695c" : "#D9534F",
+                    color: savingMonthlyPercent > 10 ? "#24695c" : "#D9534F",
                     offsetY: 70,
                     fontSize: '22px',
                     fontWeight: 'bold',
@@ -64,23 +68,23 @@ const chartOptions = {
                 <div class="row text-center">
                     <div class="col-4 b-r-light">
                         <div>
-                            <span class="font-primary">{{ dataSavingPercent.savingyearly_percent }}%<i class="icon-angle-up f-12 ms-1"></i></span>
+                            <span class="font-primary">{{ savingYearlyPercent }}%<i class="icon-angle-up f-12 ms-1"></i></span>
                             <span class="text-muted block-bottom">Year</span>
-                            <h5 class="num m-0"><span class="counter color-bottom">{{ dataSavingPercent.savingyearly }}</span>Kwh</h5>
+                            <h5 class="num m-0"><span class="counter color-bottom">{{ savingYearly }}</span>Kwh</h5>
                         </div>
                     </div>
                     <div class="col-4 b-r-light">
                         <div>
-                            <span class="font-primary">{{ dataSavingPercent.savingmonthly_percent }}%<i class="icon-angle-up f-12 ms-1"></i></span>
+                            <span class="font-primary">{{ savingMonthlyPercent }}%<i class="icon-angle-up f-12 ms-1"></i></span>
                             <span class="text-muted block-bottom">Month</span>
-                            <h4 class="num m-0"><span class="counter color-bottom">{{ dataSavingPercent.savingmonthly }}</span>Kwh</h4>
+                            <h4 class="num m-0"><span class="counter color-bottom">{{ savingMonthly }}</span>Kwh</h4>
                         </div>
                     </div>
                     <div class="col-4">
                         <div>
-                            <span class="font-primary">{{ dataSavingPercent.savingdaily_percent }} }}%<i class="icon-angle-up f-12 ms-1"></i></span>
+                            <span class="font-primary">{{ savingDailyPercent }}%<i class="icon-angle-up f-12 ms-1"></i></span>
                             <span class="text-muted block-bottom">Today</span>
-                            <h4 class="num m-0"><span class="counter color-bottom">{{ dataSavingPercent.savingdaily }}</span>Kwh</h4>
+                            <h4 class="num m-0"><span class="counter color-bottom">{{ savingDaily }}</span>Kwh</h4>
                         </div>
                     </div>
                 </div>

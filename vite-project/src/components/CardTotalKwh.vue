@@ -1,17 +1,12 @@
 <script setup>
-import http from "@/helpers/http-common";
+import { useMonitoringStore } from "@stores/monitoring";
 
 const props = defineProps({
     rtuCode: { required: true }
 });
 
-let dataKwhTotal = null;
-try {
-    const response = await http.get("/monitoring/kwhtotal/" + props.rtuCode);
-    dataKwhTotal = response.data["kwh_total"]["kwh_value"];
-} catch(err) {
-    console.error(err);
-}
+const monitoringStore = useMonitoringStore();
+const dataKwhTotal = await monitoringStore.getKwhTotal(props.rtuCode);
 </script>
 <template>
     <div class="card o-hidden border-0">

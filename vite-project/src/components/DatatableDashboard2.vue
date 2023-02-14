@@ -1,6 +1,5 @@
 <script setup>
-import { ref } from "vue";
-import http from "@/helpers/http-common";
+import { useMonitoringStore } from "@stores/monitoring";
 import { toIdrCurrency } from "@helpers/number-format";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
@@ -8,17 +7,11 @@ import Column from "primevue/column";
 const props = defineProps({
     rtuCode: { required: true }
 });
-const filter = ref(null);
 
-let degtabledata = null;
-try {
-    const response = await http.get("/monitoring/degtabledata/" + props.rtuCode);
-    degtabledata = response.data.degtabledata.table;
-} catch(err) {
-    console.error(err);
-}
+const monitoringStore = useMonitoringStore();
+const data = await monitoringStore.getDegTableData(props.rtuCode);
 
-degtabledata = degtabledata.map((item, index) => {
+const degtabledata = data.table.map((item, index) => {
     const no = index + 1;
     return { no, ...item };
 });
@@ -30,7 +23,7 @@ degtabledata = degtabledata.map((item, index) => {
         </div>
         <div class="card-body">
             <DataTable :value="degtabledata" showGridlines :paginator="true" :rows="10"
-            v-model:filters="filter" dataKey="id" responsiveLayout="scroll" class="table-sm">
+            dataKey="id" responsiveLayout="scroll" class="table-sm">
                 <Column field="no" header="No" :sortable="true"></Column>
                 <Column field="periode" header="Periode"></Column>
                 <Column field="rtu_port" header="Data RTU" :sortable="true"></Column>

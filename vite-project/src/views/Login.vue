@@ -5,9 +5,10 @@ import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
 import { useDataForm } from "@helpers/data-form";
 import { required } from "@vuelidate/validators";
+import InputSwitch from "primevue/inputswitch";
 
 const { data, v$ } = useDataForm({
-    is_ldap: { value: 0 },
+    is_ldap: { value: false, required },
     username: { required },
     password: { required }
 });
@@ -57,18 +58,26 @@ const onSubmit = async () => {
                         <form @submit.prevent="onSubmit" class="theme-form login-form">
                             <h4>Login ke DENSUS Dashboard</h4>
                             <h6>Welcome ! Log in to your account.</h6>
-                            <div class="form-group">
-                                <label>NIK/Username</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><VueFeather type="mail" size="1em" /></span>
-                                    <input v-model="data.username" :class="{ 'is_invalid': hasSubmitted && v$.username.$invalid }" class="form-control" type="text" placeholder="950022">
+                            <div class="row align-items-center my-4">
+                                <div class="col-auto mb-2">
+                                    <label for="switchIsLdap">Gunakan LDAP</label>
+                                </div>
+                                <div class="col-auto mb-2">
+                                    <InputSwitch v-model="data.is_ldap" inputId="switchIsLdap" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Password LDAP</label>
+                                <label>{{ data.is_ldap ? "NIK" : "Username" }}</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><VueFeather type="mail" size="1em" /></span>
+                                    <input v-model="data.username" :class="{ 'is-invalid': hasSubmitted && v$.username.$invalid }" class="form-control" type="text" placeholder="950022">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><VueFeather type="lock" size="1em" /></span>
-                                    <input v-model="data.password" :class="{ 'is_invalid': hasSubmitted && v$.password.$invalid }" class="form-control" type="password" name="password" placeholder="*********">
+                                    <input v-model="data.password" :class="{ 'is-invalid': hasSubmitted && v$.password.$invalid }" class="form-control" type="password" name="password" placeholder="*********">
                                 </div>
                             </div>
                             <div class="form-group">

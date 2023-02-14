@@ -561,6 +561,12 @@ $config['allowed_cors_headers'] = [
     'Content-Type',
     'Accept',
     'Access-Control-Request-Method',
+    // 'Origin',
+    // 'X-Api-Key',
+    // 'X-Requested-With',
+    // 'Content-Type',
+    // 'Accept',
+    'Authorization'
 ];
 
 /*
@@ -576,8 +582,8 @@ $config['allowed_cors_methods'] = [
     'POST',
     'PUT',
     'DELETE',
-    // 'OPTIONS',
-    // 'PATCH',
+    'OPTIONS',
+    'PATCH',
 ];
 
 /*
@@ -602,7 +608,7 @@ $config['allow_any_cors_domain'] = TRUE;
 | e.g. $config['allowed_origins'] = ['http://www.example.com', 'https://spa.example.com']
 |
 */
-$config['allowed_cors_origins'] = [];
+$config['allowed_cors_origins'] = ['http://localhost:5173'];
 
 /*
 |--------------------------------------------------------------------------
@@ -623,4 +629,4 @@ $config['allowed_cors_origins'] = [];
 | http://docs.sencha.com/extjs/6.5.2/classic/Ext.data.proxy.Rest.html#cfg-withCredentials
 |
 */
-$config['forced_cors_headers'] = [];
+$config['forced_cors_headers'] = ['Access-Control-Allow-Credentials' => 'true'];

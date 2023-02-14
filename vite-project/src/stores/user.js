@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
 import http from "@helpers/http-common";
-import { handlingFetchErr } from "@helpers/error-handler";
 import { getCookie, setCookie, deleteCookie } from "@helpers/app-cookie";
+import { useListUserStore } from "@stores/list-user";
+import { useRtuStore } from "@stores/rtu";
 
 export const useUserStore = defineStore("user", {
     state: () => ({
@@ -10,6 +11,7 @@ export const useUserStore = defineStore("user", {
         role: null,
         level: null,
         location: null,
+        locationId: null,
         token: null
     }),
     getters: {
@@ -25,11 +27,7 @@ export const useUserStore = defineStore("user", {
     actions: {
         async login(body, callback = null) {
             try {
-                const { is_ldap, username, password } = body;
-                const url_get = `/login/${ is_ldap }/${ username }/${ password }`;
-                const response = await http.get(url_get);
-
-                // const response = await http.post("/login", body);
+                const response = await http.post("/login", body);
                 if(!response.data.success) {
                     console.warn(response.data);
                     callback && callback({ success: false, status: response.status });
@@ -43,6 +41,7 @@ export const useUserStore = defineStore("user", {
                     role: data.role,
                     level: data.level,
                     location: data.location || null,
+                    locationId: data.locationId || null,
                     token: data.token
                 });
                 callback && callback({ success: true, status: response.status });
@@ -54,12 +53,21 @@ export const useUserStore = defineStore("user", {
 
 		logout(callback = null) {
 			deleteCookie("user");
-			this.id = null;
-			this.name = null;
-			this.role = null;
-			this.level = null;
-			this.location = null;
-			this.token = null;
+			// this.id = null;
+			// this.name = null;
+			// this.role = null;
+			// this.level = null;
+			// this.location = null;
+			// this.locationId = null;
+			// this.token = null;
+            this.$reset();
+
+            const listUserStore = useListUserStore();
+            listUserStore.$reset();
+
+            const rtuStore = useRtuStore();
+            rtuStore.$reset();
+
 			callback && callback();
 		},
 
@@ -74,6 +82,8 @@ export const useUserStore = defineStore("user", {
                 this.level = params.level;
             if(params.location && params.location !== undefined)
                 this.location = params.location;
+            if(params.locationId && params.locationId !== undefined)
+                this.locationId = params.locationId;
             if(params.token && params.token !== undefined)
                 this.token = params.token;
 
@@ -85,8 +95,9 @@ export const useUserStore = defineStore("user", {
 				role: this.role,
 				level: this.level,
 				location: this.location,
+				locationId: this.locationId,
 				token: this.token
-			});
+			}, 2);
 		},
 
 		readUserCookie() {
@@ -105,9 +116,81 @@ export const useUserStore = defineStore("user", {
                 params.level = data.level;
             if(data.location)
                 params.location = data.location;
+            if(data.locationId)
+                params.locationId = data.locationId;
             if(data.token)
                 params.token = data.token;
             this.sync(params, false);
-		}
+		},
+
+        async getDivre(callback = null) {
+            const data = { success: true, status: 200 };
+            if(this.level == "nasional")
+                data.divre = null;
+            else if(this.level == "divre")
+                data.divre = this.locationId;
+            else {
+                try {
+                    const response = await http.get("/monitoring/location/" + this.locationId, this.fetchHeader);
+                    if(!response.data.location) {
+                        console.warn(response.data);
+                        data.success = false;
+                        data.status = response.status;
+                    }
+                    const location = response.data.location;
+                    if(location.divre_code) {
+                        data.divre = location.divre_code;
+                    }
+                } catch(err) {
+                    handlingFetchErr(err);
+                    data.success = false;
+                    data.status = err.response.status;
+                }
+            }
+            callback && callback(data);
+        },
+
+        async getLocation(callback = null) {
+            const data = { success: true, status: 200 };
+            if(this.level == "nasional") {
+                
+                data.location = {
+                    divre_code: null,
+                    divre_name: null,
+                    witel_code: null,
+                    witel_name: null
+                };
+
+            } else if(this.level == "divre") {
+                
+                data.location = {
+                    divre_code: this.locationId,
+                    divre_name: this.location,
+                    witel_code: null,
+                    witel_name: null
+                };
+                
+            } else {
+                try {
+                    const response = await http.get("/monitoring/location/" + this.locationId, this.fetchHeader);
+                    if(!response.data.location) {
+
+                        console.warn(response.data);
+                        data.success = false;
+                        data.status = response.status;
+
+                    } else {
+
+                        data.location = response.data.location;
+                        
+                    }
+                } catch(err) {
+                    handlingFetchErr(err);
+                    data.success = false;
+                    data.status = err.response.status;
+                }
+            }
+            callback && callback(data);
+        }
     }
 });

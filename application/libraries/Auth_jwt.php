@@ -13,10 +13,10 @@ class Auth_jwt
 
     public $id;
     public $name;
-    public $role;
-    public $level;
-    public $location;
-    public $locationId;
+    public $role; // admin / viewer / teknisi
+    public $level; // nasional / divre / witel
+    public $location; // nasional / divre_name / witel_name
+    public $locationId; // null / divre_code / witel_code
 
     public function __construct()
     {
@@ -38,16 +38,25 @@ class Auth_jwt
     public function auth(...$allowedRole)
     {
         $rawToken = $this->CI->head('Authorization');
-        dd($this->CI->head('Authorization'));
         if(!$this->is_role($rawToken, $allowedRole)) {
-            
+
             return REST_ERR_AUTH_CODE;
 
-        } elseif($this->is_expired($token)) {
+        } elseif($this->is_expired($rawToken)) {
 
             return REST_ERR_EXP_CODE;
             
         } else {
+
+            $payload = $this->decrypt_token(str_replace('Bearer ', '', $rawToken));
+            if($payload) {
+                $this->id = $payload->id;
+                $this->name = $payload->name;
+                $this->role = $payload->role;
+                $this->level = $payload->level;
+                $this->location = $payload->location;
+                $this->locationId = $payload->locationId;
+            }
             
             return 200;
 
@@ -95,8 +104,6 @@ class Auth_jwt
         if(!$this->name) return null;
         if(!$this->role) return null;
         if(!$this->level) return null;
-        if(!$this->location) return null;
-        if(!$this->locationId) return null;
 
         return [
             'id' => $this->id,

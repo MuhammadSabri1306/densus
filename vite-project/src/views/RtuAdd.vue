@@ -1,10 +1,10 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useRtuStore } from "@stores/rtu";
 import { useViewStore } from "@stores/view";
-import { useDataForm, buildFormData } from "@helpers/data-form";
+import { useDataForm } from "@helpers/data-form";
 import { required } from "@vuelidate/validators";
-import http from "@helpers/http-common";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import ListboxRegWitel from "@components/ListboxRegWitel.vue";
 
@@ -34,30 +34,9 @@ const onWitelChange = val => {
 const listboxRegWitel = ref(null);
 const viewStore = useViewStore();
 const router = useRouter();
-
 const isLoading = ref(false);
 const hasSubmitted = ref(false);
-
-const sendReq = (formData) => {
-    isLoading.value = true;
-    const headers = { "Authorization": "Bearer 123" };
-
-    http.post("/rtu", formData, { headers })
-        .then(response => {
-            if(!response.data.success) {
-                console.warn(response);
-                return;
-            }
-            isLoading.value = false;
-            viewStore.showToast("Data RTU", "Berhasil menyimpan data.", true);
-            router.push("/rtu");
-        })
-        .catch(err => {
-            isLoading.value = false;
-            viewStore.showToast("Koneksi gagal", "Terjadi masalah saat menghubungi server.", false);
-            console.error(err);
-        });
-};
+const rtuStore = useRtuStore();
 
 const onSubmit = async () => {
     hasSubmitted.value = true;
@@ -66,8 +45,30 @@ const onSubmit = async () => {
     if(!isValid)
         return;
 
-    const formData = buildFormData(data, ["rtuCode", "rtuName", "location", "stoCode", "divreCode", "divreName", "witelCode", "witelName", "portKwh", "portGenset", "kvaGenset"]);
-    sendReq(formData);
+    // const formData = buildFormData(data, ["rtuCode", "rtuName", "location", "stoCode", "divreCode", "divreName", "witelCode", "witelName", "portKwh", "portGenset", "kvaGenset"]);
+    const body = {
+        rtu_kode: data.rtuCode,
+        rtu_name: data.rtuName,
+        lokasi: data.location,
+        sto_kode: data.stoCode,
+        divre_kode: data.divreCode,
+        divre_name: data.divreName,
+        witel_kode: data.witelCode,
+        witel_name: data.witelName,
+        port_kwh: data.portKwh,
+        port_genset: data.portGenset,
+        kva_genset: data.kvaGenset
+    };
+    isLoading.value = true;
+    rtuStore.create(body, response => {
+        isLoading.value = false;
+        hasSubmitted.value = true;
+        if(!response.success)
+            return;
+
+        viewStore.showToast("Data RTU", "Berhasil menyimpan data.", true);
+        rtuStore.fetchList(true, () => router.push("/rtu"));
+    });
 };
 </script>
 <template>

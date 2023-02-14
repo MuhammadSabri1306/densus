@@ -61,22 +61,50 @@ class Auth extends RestController
 
     public function login_post()
     {
-        $isLdap = $this->post('is_ldap');
-        $username = $this->post('username');
-        $password = $this->post('password');
+        $this->load->library('input_handler');
+        $this->input_handler->set_fields('username', 'password', 'is_ldap');
+        $this->input_handler->set_required('username', 'password', 'is_ldap');
+        $this->input_handler->set_boolean_fields('is_ldap');
 
-        // if($isLdap) {}
-
+        $input = $this->input_handler->get_body('post');
         $this->load->model('user_model');
-        $dataUser = $this->user_model->get_by_username($username);
+        $dataUser = null;
+        $status = 200;
 
-        if($dataUser && password_verify($password, $dataUser->password)) {
+        
+        if(!$input['valid']) {
+            
+            $data = [ 'success' => false, 'message' => $input['msg'] ];
+            $status = REST_ERR_BAD_REQ;
+            
+        } elseif($input['body']['is_ldap']) {
+            
+            $ldapurl = EnvPattern::$api_ldap . 'login.php?username=' . $input['body']['username'] . '&password=$password' . $input['body']['password'];
+            $content = file_get_contents($ldapurl);
+            $authdata = json_decode($content, TRUE);
+            
+            if ($authdata['status'] === "success") {
+                $dataUser = $this->user_model->get_by_username($authdata['nik']);
+            } else {
+                $status = REST_ERR_BAD_REQ;
+            }
+
+        } else {
+            
+            $dataUser = $this->user_model->get_by_username($input['body']['username']);
+            if($dataUser && !password_verify($input['body']['password'], $dataUser->password)) {
+                $status = REST_ERR_BAD_REQ;
+            }
+
+        }
+
+        if($dataUser && $status === 200) {
 
             $this->auth_jwt->id = $dataUser->id;
             $this->auth_jwt->name = $dataUser->nama;
             $this->auth_jwt->role = $dataUser->role;
             $this->auth_jwt->level = $dataUser->organisasi;
-
+            
             if($dataUser->organisasi == 'divre') {
                 $this->auth_jwt->location = $dataUser->divre_name;
                 $this->auth_jwt->locationId = $dataUser->divre_code;
@@ -84,23 +112,26 @@ class Auth extends RestController
                 $this->auth_jwt->location = $dataUser->witel_name;
                 $this->auth_jwt->locationId = $dataUser->witel_code;
             } else {
-                $this->auth_jwt->location = null;
+                $this->auth_jwt->location = 'nasional';
                 $this->auth_jwt->locationId = null;
             }
-
+            
             $data = [
                 'success' => true,
                 'user' => $this->auth_jwt->get_payload()
             ];
+            
             $data['user']['token'] = $this->auth_jwt->create_token();
             $this->response($data, 200);
 
         } else {
 
-            $data = [
-                'success' => false,
-                'message' => 'Username or password not matched'
-            ];
+            if(!isset($data)) {
+                $data = [
+                    'success' => false,
+                    'message' => 'Username or password not matched'
+                ];
+            }
             $this->response($data, REST_ERR_BAD_REQ);
             
         }

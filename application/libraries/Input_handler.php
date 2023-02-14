@@ -9,6 +9,7 @@ class Input_handler
     private $required = [];
     private $is_boolean = [];
     private $is_hashstring = [];
+    private $is_string = [];
 
     private $hash_algo = PASSWORD_DEFAULT;
     private $body = [];
@@ -20,34 +21,41 @@ class Input_handler
 
     public function set_fields(...$fields)
     {
-        // foreach($fields as $item) {
-        //     array_push($this->fields, $item);
-        // }
-        $this->fields = $fields;
+        foreach($fields as $item) {
+            array_push($this->fields, $item);
+        }
+        // $this->fields = $fields;
     }
     
     public function set_required(...$fields)
     {
-        // foreach($fields as $item) {
-        //     array_push($this->required, $item);
-        // }
-        $this->required = $fields;
+        foreach($fields as $item) {
+            array_push($this->required, $item);
+        }
+        // $this->required = $fields;
     }
 
     public function set_boolean_fields(...$fields)
     {
-        // foreach($fields as $item) {
-        //     array_push($this->is_boolean, $item);
-        // }
-        $this->is_boolean = $fields;
+        foreach($fields as $item) {
+            array_push($this->is_boolean, $item);
+        }
+        // $this->is_boolean = $fields;
     }
 
     public function set_hashstring_fields(...$fields)
     {
-        // foreach($fields as $item) {
-        //     array_push($this->is_hashstring, $item);
-        // }
-        $this->is_hashstring = $fields;
+        foreach($fields as $item) {
+            array_push($this->is_hashstring, $item);
+        }
+        // $this->is_hashstring = $fields;
+    }
+
+    public function set_string_fields(...$fields)
+    {
+        foreach($fields as $item) {
+            array_push($this->is_string, $item);
+        }
     }
 
     private function get_input($type, $key)
@@ -67,15 +75,11 @@ class Input_handler
     {
         foreach($this->fields as $key) {
             $val = $this->get_input($type, $key);
-            if(in_array($key, $this->is_boolean)) {
-                $val = boolval($val);
-            } elseif(is_numeric($val)) {
+            if(in_array($key, $this->is_boolean) && $val !== null) {
+                $val = (int) $val;
+            } elseif(!in_array($key, $this->is_string) && is_numeric($val)) {
                 $val = count(explode('.', $val)) > 1 ? (double) $val : (int) $val;
             }
-
-            // if($key == 'is_ldap') {
-            //     dd($val);
-            // }
 
             $is_empty = empty($val) && $val !== 0;
             if(in_array($key, $this->required) && $is_empty) {
@@ -94,7 +98,7 @@ class Input_handler
 
         $body = $this->body;
         $this->reset_fields();
-
+        
         return [
             'valid' => true,
             'msg' => null,

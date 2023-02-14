@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
-import http from "@helpers/http-common";
+import { useMonitoringStore } from "@stores/monitoring";
 import Skeleton from "primevue/skeleton";
 
 import CardCurrKwh from "@components/CardCurrKwh.vue";
@@ -20,14 +20,12 @@ import DatatableDashboard2 from "@components/DatatableDashboard2.vue";
 const route = useRoute();
 const rtuCode = computed(() => route.params.rtuCode);
 
+const monitoringStore = useMonitoringStore();
 const currRtu = ref({});
 const isCurrInfoLoaded = ref(false);
-http.get("/monitoring/rtudetail/" + rtuCode.value)
-    .then(response => {
-        const data = response.data.rtu;
-        if(!data)
-            return;
 
+monitoringStore.getRtuDetail(rtuCode.value)
+    .then(data => {
         currRtu.value = {
             name: data.NAMA_RTU,
             location: data.LOKASI,
@@ -36,21 +34,10 @@ http.get("/monitoring/rtudetail/" + rtuCode.value)
             divreName: data.DIVRE
         };
         isCurrInfoLoaded.value = true;
-    })
-    .catch(err => console.error(err));
+    });
 </script>
 <template>
     <div>
-        <!-- <div class="container-fluid">
-            <div class="">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h3>STO BALAI KOTA</h3>
-                        <DashboardBreadcrumb :items="['Divisi Telkom Regional VII', 'Witel Makassar', 'STO BALAI KOTA']" />
-                    </div>
-                </div>
-            </div>
-        </div> -->
         <div class="container-fluid">
             <div class="page-header">
                 <div class="row">
@@ -138,93 +125,92 @@ http.get("/monitoring/rtudetail/" + rtuCode.value)
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md">
-                        <Suspense>
-                            <ChartSavingEnergyResult :rtuCode="rtuCode" />
-                            <template #fallback>
-                                <Skeleton width="100%" height="30rem" />
-                            </template>
-                        </Suspense>
-                    </div>
-                    <div class="col-md">
-                        <Suspense>
-                            <ChartEnergyCostEstimation :rtuCode="rtuCode" />
-                            <template #fallback>
-                                <Skeleton width="100%" height="30rem" class="mb-4" />
-                            </template>
-                        </Suspense>
-                    </div>
+                <div class="col-md-6">
+                    <Suspense>
+                        <ChartSavingEnergyResult :rtuCode="rtuCode" />
+                        <template #fallback>
+                            <Skeleton width="100%" height="30rem" />
+                        </template>
+                    </Suspense>
                 </div>
-                <div class="row">
-                    
+                <div class="col-md-6">
+                    <Suspense>
+                        <ChartEnergyCostEstimation :rtuCode="rtuCode" />
+                        <template #fallback>
+                            <Skeleton width="100%" height="30rem" class="mb-4" />
+                        </template>
+                    </Suspense>
                 </div>
-                <Suspense>
-                    <DatatableDashboard1 :rtuCode="rtuCode" />
-                    <template #fallback>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row mb-2">
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
+                <div class="col-12">
+                    <Suspense>
+                        <DatatableDashboard1 :rtuCode="rtuCode" />
+                        <template #fallback>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row mb-2">
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </template>
-                </Suspense>
-                <Suspense>
-                    <DatatableDashboard2 :rtuCode="rtuCode" />
-                    <template #fallback>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row mb-2">
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                </div>
-                                <div class="row mb-2">
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
-                                    <div class="col"><Skeleton /></div>
+                        </template>
+                    </Suspense>
+                </div>
+                <div class="col-12">
+                    <Suspense>
+                        <DatatableDashboard2 :rtuCode="rtuCode" />
+                        <template #fallback>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row mb-2">
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                        <div class="col"><Skeleton /></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </template>
-                </Suspense>
+                        </template>
+                    </Suspense>
+                </div>
             </div>
         </div>
     </div>

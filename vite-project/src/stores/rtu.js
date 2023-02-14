@@ -3,25 +3,20 @@ import http from "@helpers/http-common";
 import { handlingFetchErr } from "@helpers/error-handler";
 import { useUserStore } from "@stores/user";
 
-export const useListUserStore = defineStore("listUser", {
+export const useRtuStore = defineStore("rtu", {
     state: () => ({
         list: []
     }),
     getters: {
-        datatable: state => {
-            const list = state.list;
-            const userStore = useUserStore();
-
-            return list.map((item, index) => {
-                const no = index + 1;
-                const isReadonly = userStore.role == item.role && item.role != "admin";
-
-                return { no, ...item, isReadonly };
-            });
-        },
         fetchHeader: () => {
             const userStore = useUserStore();
             return userStore.axiosAuthConfig;
+        },
+        datatable: state => {
+            return state.list.map((item, index) => {
+                const no = index + 1;
+                return { no, ...item };
+            });
         }
     },
     actions: {
@@ -32,15 +27,14 @@ export const useListUserStore = defineStore("listUser", {
 			}
 
             try {
-                console.log(this.fetchHeader);
-                const response = await http.get("/user", this.fetchHeader);
-                if(!response.data.user) {
+                const response = await http.get("/rtu", this.fetchHeader);
+                if(!response.data.rtu) {
                     console.warn(response.data);
                     callback && callback({ success: false, status: response.status });
                     return;
                 }
 
-                this.list = response.data.user;
+                this.list = response.data.rtu;
                 callback && callback({ success: true, status: response.status });
             } catch(err) {
                 handlingFetchErr(err);
@@ -49,9 +43,8 @@ export const useListUserStore = defineStore("listUser", {
         },
 
         async create(body, callback = null) {
-            body.is_ldap = body.is_ldap ? 1 : 0;
             try {
-                const response = await http.post("/user", body, this.fetchHeader);
+                const response = await http.post("/rtu", body, this.fetchHeader);
                 if(!response.data.success) {
                     console.warn(response.data);
                     callback && callback({ success: false, status: response.status });
@@ -65,10 +58,8 @@ export const useListUserStore = defineStore("listUser", {
         },
 
         async update(id, body, callback = null) {
-            if(body.is_active !== undefined)
-                body.is_active = body.is_active ? 1 : 0;
             try {
-                const response = await http.put("/user/" + id, body, this.fetchHeader);
+                const response = await http.put("/rtu/" + id, body, this.fetchHeader);
                 if(!response.data.success) {
                     console.warn(response.data);
                     callback && callback({ success: false, status: response.status });
@@ -83,7 +74,7 @@ export const useListUserStore = defineStore("listUser", {
 
         async delete(id, callback = null) {
             try {
-                const response = await http.delete("/user/" + id, this.fetchHeader);
+                const response = await http.delete("/rtu/" + id, this.fetchHeader);
                 if(!response.data.success) {
                     console.warn(response.data);
                     callback && callback({ success: false, status: response.status });

@@ -1,20 +1,15 @@
 <script setup>
-import { computed } from "vue";
-import http from "@helpers/http-common";
+import { useMonitoringStore } from "@stores/monitoring";
 
 const props = defineProps({
     rtuCode: { required: true },
     rtuLocation: String
 });
 
-let dataSavingMonthly = 0;
-try {
-    const response = await http.get("/monitoring/savingpercent/" + props.rtuCode);
-    if(response.data.savingpercent)
-        dataSavingMonthly = response.data.savingpercent.savingmonthly_percent;
-} catch (err) {
-    console.error(err);
-}
+const monitoringStore = useMonitoringStore();
+const dataSaving = await monitoringStore.getSavingPercent(props.rtuCode);
+
+const dataSavingMonthly = dataSaving.savingmonthly_percent || 0;
 </script>
 <template>
     <div class="card profile-greeting">

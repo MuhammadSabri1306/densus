@@ -1,17 +1,14 @@
 <script setup>
+import { useMonitoringStore } from "@stores/monitoring";
 import http from "@/helpers/http-common";
 
 const props = defineProps({
     rtuCode: { required: true }
 });
 
-let dataKwh = null;
-try {
-    let response = await http.get("/monitoring/kwhtoday/" + props.rtuCode);
-    dataKwh = response.data["kwh_today"]["kwh_value"] || 0;
-} catch(err) {
-    console.error(err);
-}
+
+const monitoringStore = useMonitoringStore();
+const dataKwh = await monitoringStore.getKwhToday(props.rtuCode);
 </script>
 <template>
     <div class="card income-card card-primary">                                 

@@ -1,27 +1,23 @@
 <script setup>
-import http from "@/helpers/http-common";
+import { useMonitoringStore } from "@stores/monitoring";
 import { toIdrCurrency } from "@helpers/number-format";
 
 const props = defineProps({
     rtuCode: { required: true }
 });
 
-let dataEnergyCost = null;
+const monitoringStore = useMonitoringStore();
+const dataBbmCost = await monitoringStore.getBbmCost(props.rtuCode);
+const tableData = await monitoringStore.getTableData(props.rtuCode);
+
+let dataTotalCost;
 try {
-    let response =  await http.get("/monitoring/costbbm/" + props.rtuCode);
-    let bbmCost = 0;
-    if(response.data["bbm_cost"] && response.data["bbm_cost"]["bbm_cost"]) {
-        bbmCost = response.data["bbm_cost"]["bbm_cost"];
-    }
-    
-    response = await http.get("/monitoring/tabledata/" + props.rtuCode);
-    const tableData = response.data.tabledata.table[0]["total_biaya"];
-    
-    dataEnergyCost = bbmCost + tableData;
-    console.log(dataEnergyCost);
-} catch(err) {
-    console.error(err);
+    dataTotalCost = tableData.table[0]["total_biaya"];
+} catch(e) {
+    dataTotalCost = 0;
 }
+
+const dataEnergyCost = dataBbmCost + dataTotalCost;
 </script>
 <template>
     <div class="card income-card card-primary">

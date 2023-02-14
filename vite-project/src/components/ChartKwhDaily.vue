@@ -1,15 +1,11 @@
 <script setup>
-import http from "@/helpers/http-common";
+import { useMonitoringStore } from "@stores/monitoring";
 import VueApexCharts from "vue3-apexcharts";
+import { dtColors } from "@/configs/datatable";
 
 const props = defineProps({
     rtuCode: { required: true }
 });
-
-const colors = {
-    primary: "#24695c",
-    secondary: "#ba895d"
-};
 
 const chartOptions = {
     chart: {
@@ -23,19 +19,14 @@ const chartOptions = {
         align: "left"
     },
     curve: "smooth",
-    colors: [colors.primary],
+    colors: [dtColors.primary],
     dataLabels: {
         enabled: false
     }
 };
 
-let dataChart = null;
-try {
-    let response = await http.get("/monitoring/chartdatadaily/" + props.rtuCode);
-    dataChart = response.data["chartdata_daily"];
-} catch(err) {
-    console.error(err);
-}
+const monitoringStore = useMonitoringStore();
+const dataChart = await monitoringStore.getChartDataDaily(props.rtuCode);
 
 const series = [{
     data: dataChart.map(item => {

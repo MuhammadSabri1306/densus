@@ -6,9 +6,24 @@ class User_model extends CI_Model
             $this->load->database('densus');
     }
 
-    public function get_all($id = null)
+    private function filter_for_curr_user($currUser)
+    {
+        if($currUser && $currUser['level'] == 'witel') {
+            $this->db->where('organisasi', 'witel');
+            $this->db->where('witel_code', $currUser['locationId']);
+            $this->db->where('id !=', $currUser['id']);
+        } elseif($currUser && $currUser['level'] == 'divre') {
+            $this->db->where('organisasi !=', 'nasional');
+            $this->db->where('divre_code', $currUser['locationId']);
+            $this->db->where('id !=', $currUser['id']);
+        }
+    }
+
+    public function get_all($id = null, $currUser = null)
     {
         $select = 'id, username, nama, organisasi, role, no_hp, email, is_ldap, telegram_id, telegram_username, witel_code, witel_name, divre_code, divre_name, is_active';
+        $this->filter_for_curr_user($currUser);
+
         if(is_null($id)) {
             $query = $this->db
                 ->select($select)
@@ -31,26 +46,31 @@ class User_model extends CI_Model
             ->get();
             
         $result = $query->row();
-        $result->is_ldap = $result->is_ldap == 1;
-        $result->is_active = $result->is_active == 1;
+        if($result) {
+            $result->is_ldap = $result->is_ldap == 1;
+            $result->is_active = $result->is_active == 1;
+        }
         return $result;
     }
 
-    public function save($body, $id = null)
+    public function save($body, $id = null, $currUser = null)
     {
         if(is_null($id)) {
             $success = $this->db->insert('user', $body);
         } else {
-            $success = $this->db
-                ->where('id', $id)
-                ->update('user', $body);
+            $this->filter_for_curr_user($currUser);
+            $this->db->where('id', $id);
+
+            $success = $this->db->update('user', $body);
         }
         return $success;
     }
 
-    public function delete($id)
+    public function delete($id, $currUser = null)
     {
-        return $this->db->delete('user', [ 'id' => $id ]);
+        $this->filter_for_curr_user($currUser);
+        $this->db->where('id', $id);
+        return $this->db->delete('user');
     }
 
     public function get_by_username($username)

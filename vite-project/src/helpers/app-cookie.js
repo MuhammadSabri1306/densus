@@ -21,5 +21,5 @@ export const setCookie = (key, val, expires = null) => {
 };
 
 export const deleteCookie = key => {
-	Cookies.remove(getName(key), { path: "" });
+	Cookies.remove(getName(key));
 };
