@@ -90,5 +90,27 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 defined('REST_ERR_AUTH_DATA') OR define('REST_ERR_AUTH_DATA', [ 'success' => false, 'message' => 'Unauthorized' ]);
 defined('REST_ERR_AUTH_CODE') OR define('REST_ERR_AUTH_CODE', 401);
 defined('REST_ERR_EXP_DATA') OR define('REST_ERR_EXP_DATA', [ 'success' => false, 'message' => 'Expired token' ]);
-defined('REST_ERR_EXP_CODE') OR define('REST_ERR_EXP_CODE', 401);
+defined('REST_ERR_EXP_CODE') OR define('REST_ERR_EXP_CODE', 417);
 defined('REST_ERR_BAD_REQ') OR define('REST_ERR_BAD_REQ', 400);
+
+defined('UPLOAD_ACTIVITY_EVIDENCE_PATH') OR define('UPLOAD_ACTIVITY_EVIDENCE_PATH', 'upload/activity_evidence/');
+
+$err_response = [
+    'default' => [ 'code' => 400, 'success' => false, 'message' => 'Terjadi masalah saat menghubungi server.' ],
+    'bad_req' => [ 'code' => 400, 'success' => false, 'message' => 'Request tidak dapat diproses di server.' ],
+    'exp_token' => [ 'code' => 417, 'success' => false, 'message' => 'Masa berlaku token telah habis.' ],
+    'unauth' => [ 'code' => 401, 'success' => false, 'message' => 'Anda perlu login terlebih dahulu.' ],
+    'unmatch_old_pass' => [ 'code' => 400, 'success' => false, 'message' => 'Harap memasukkan password lama anda dengan benar.' ]
+];
+
+foreach($err_response as $key => $val) {
+    // exp: REST_ERR_DEFAULT_STATUS
+    $defCodeKey = 'REST_ERR_'. strtoupper($key) . '_STATUS';
+    // exp: REST_ERR_DEFAULT_DATA
+    $defDataKey = 'REST_ERR_'. strtoupper($key) . '_DATA';
+
+    defined($defCodeKey) OR define($defCodeKey, $val['code']);
+    unset($val['code']);
+    
+    defined($defDataKey) OR define($defDataKey, $val);
+}

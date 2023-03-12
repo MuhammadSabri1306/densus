@@ -10,11 +10,11 @@ const props = defineProps({
 
 const monitoringStore = useMonitoringStore();
 const data = await monitoringStore.getDegTableData(props.rtuCode);
-
 const degtabledata = data.table.map((item, index) => {
     const no = index + 1;
     return { no, ...item };
 });
+
 </script>
 <template>
     <div class="card">
@@ -25,15 +25,35 @@ const degtabledata = data.table.map((item, index) => {
             <DataTable :value="degtabledata" showGridlines :paginator="true" :rows="10"
             dataKey="id" responsiveLayout="scroll" class="table-sm">
                 <Column field="no" header="No" :sortable="true"></Column>
-                <Column field="periode" header="Periode"></Column>
+                <Column field="periode" header="Periode">
+                    <template #body="slotProps">
+                        <b>{{ slotProps.data.periode }}</b>
+                    </template>
+                </Column>
                 <Column field="rtu_port" header="Data RTU" :sortable="true"></Column>
-                <Column field="genset_on" header="Genset ON Count" :sortable="true"></Column>
-                <Column field="hours" header="Jam Jalan" :sortable="true"></Column>
-                <Column field="minutes" header="Menit Jalan" :sortable="true"></Column>
-                <Column field="liter" header="Liter Dikonsumsi" :sortable="true"></Column>
+                <Column field="genset_on" header="Genset ON Count" :sortable="true">
+                    <template #body="slotProps">
+                        {{ toIdrCurrency(slotProps.data.genset_on) }}
+                    </template>
+                </Column>
+                <Column field="hours" header="Jam Jalan" :sortable="true">
+                    <template #body="slotProps">
+                        {{ toIdrCurrency(slotProps.data.hours) }}
+                    </template>
+                </Column>
+                <Column field="minutes" header="Menit Jalan" :sortable="true">
+                    <template #body="slotProps">
+                        {{ toIdrCurrency(slotProps.data.minutes) }}
+                    </template>
+                </Column>
+                <Column field="liter" header="Liter Dikonsumsi" :sortable="true">
+                    <template #body="slotProps">
+                        {{ toIdrCurrency(slotProps.data.liter) }}
+                    </template>
+                </Column>
                 <Column field="bbm_cost" header="Total Biaya" :sortable="true">
                     <template #body="slotProps">
-                        {{ 'Rp' + toIdrCurrency(slotProps.data.bbm_cost || 0) }}
+                        <b>{{ 'Rp' + toIdrCurrency(slotProps.data.bbm_cost || 0) }}</b>
                     </template>
                 </Column>
             </DataTable>

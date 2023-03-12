@@ -19,7 +19,8 @@ const { data, v$ } = useDataForm({
     witelName: { required },
     portKwh: { required },
     portGenset: { required },
-    kvaGenset: { required }
+    kvaGenset: { required },
+    portPue: {}
 });
 
 const onDivreChange = val => {
@@ -57,7 +58,8 @@ const onSubmit = async () => {
         witel_name: data.witelName,
         port_kwh: data.portKwh,
         port_genset: data.portGenset,
-        kva_genset: data.kvaGenset
+        kva_genset: data.kvaGenset,
+        port_pue: data.portPue
     };
     isLoading.value = true;
     rtuStore.create(body, response => {
@@ -77,8 +79,11 @@ const onSubmit = async () => {
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>Registrasi RTU Baru</h3>
-                        <DashboardBreadcrumb :items="['Master RTU', 'Registrasi']" />
+                        <h3>
+                            <VueFeather type="hard-drive" size="1.2em" class="font-primary middle" />
+                            <span class="middle ms-3">Registrasi RTU Baru</span>
+                        </h3>
+                        <DashboardBreadcrumb :items="['Master RTU', 'Registrasi']" class="ms-4" />
                     </div>
                 </div>
             </div>
@@ -111,27 +116,33 @@ const onSubmit = async () => {
                                 
                                 <ListboxRegWitel ref="listboxRegWitel" fieldRequired @divreChange="onDivreChange" @witelChange="onWitelChange" class="mb-4" />
 
-                                <div class="row">
-                                    <div class="col-7 col-md-6 col-lg-4">
+                                <div class="row mb-5">
+                                    <div class="col-6 col-lg-3">
                                         <div class="form-group">
                                             <label for="portKwh">Port KWH <span class="text-danger">*</span></label>
                                             <input v-model="v$.portKwh.$model" :class="{ 'is-invalid': hasSubmitted && v$.portKwh.$invalid }" class="form-control" id="portKwh" name="portKwh" type="text" placeholder="Cth. A-16">
                                         </div>
                                     </div>
-                                    <div class="col-7 col-md-6 col-lg-4">
+                                    <div class="col-6 col-lg-3">
                                         <div class="form-group">
                                             <label for="portGenset">Port Genset <span class="text-danger">*</span></label>
                                             <input v-model="v$.portGenset.$model" :class="{ 'is-invalid': hasSubmitted && v$.portGenset.$invalid }" class="form-control" id="portGenset" name="portGenset" type="text" placeholder="Cth. D-02">
                                         </div>
                                     </div>
-                                    <div class="col-7 col-md-6 col-lg-4">
+                                    <div class="col-6 col-lg-3">
                                         <div class="form-group">
                                             <label for="kvaGenset">KVA Genset <span class="text-danger">*</span></label>
                                             <input v-model="v$.kvaGenset.$model" :class="{ 'is-invalid': hasSubmitted && v$.kvaGenset.$invalid }" class="form-control" id="kvaGenset" name="kvaGenset" type="text" placeholder="Cth. 500">
                                         </div>
                                     </div>
+                                    <div class="col-6 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="portPue">Port PUE</label>
+                                            <input v-model="v$.portPue.$model" class="form-control" id="portPue" name="portPue" type="text" placeholder="">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="d-flex justify-content-end py-3 px-4">
+                                <div class="d-flex justify-content-end pb-3 px-4">
                                     <button type="submit" :class="{ 'btn-loading': isLoading }" class="btn btn-primary btn-lg">Simpan</button>
                                 </div>
                             </form>

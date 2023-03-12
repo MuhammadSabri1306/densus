@@ -9,6 +9,7 @@ class Rtu extends RestController
     {
         parent::__construct();
 		$this->load->library('auth_jwt');
+        $this->load->library('user_log');
     }
 
     public function index_get($id = null)
@@ -19,6 +20,13 @@ class Rtu extends RestController
             $currUser = $this->auth_jwt->get_payload();
             $this->load->model("rtu_map_model");
 			$dataRtu = $this->rtu_map_model->get($id, $currUser);
+
+            $this->user_log
+                ->userId($currUser['id'])
+                ->username($currUser['username'])
+                ->name($currUser['name'])
+                ->activity('get RTU list')
+                ->log();
 
 			$data = [ 'rtu' => $dataRtu ];
 			$this->response($data, 200);
@@ -40,7 +48,7 @@ class Rtu extends RestController
         $this->load->library('input_handler');
 		$status = $this->auth_jwt->auth('admin');
 		if($status === 200) {
-			$this->input_handler->set_fields('rtu_kode', 'rtu_name', 'lokasi', 'sto_kode', 'divre_kode', 'divre_name', 'witel_kode', 'witel_name', 'port_kwh', 'port_genset', 'kva_genset');
+			$this->input_handler->set_fields('rtu_kode', 'rtu_name', 'lokasi', 'sto_kode', 'divre_kode', 'divre_name', 'witel_kode', 'witel_name', 'port_kwh', 'port_genset', 'kva_genset', 'port_pue');
             $this->input_handler->set_required('rtu_kode', 'rtu_name', 'lokasi', 'sto_kode', 'divre_kode', 'divre_name', 'witel_kode', 'witel_name', 'port_kwh', 'port_genset', 'kva_genset');
 
 			$input = $this->input_handler->get_body('post');
@@ -63,6 +71,13 @@ class Rtu extends RestController
             if($status == 200){
                 $this->load->model("rtu_map_model");
 				$success = $this->rtu_map_model->save($input['body']);
+
+                $this->user_log
+                    ->userId($currUser['id'])
+                    ->username($currUser['username'])
+                    ->name($currUser['name'])
+                    ->activity('input new RTU')
+                    ->log();
                 $data = [ 'success' => $success ];
 			}
             
@@ -85,7 +100,7 @@ class Rtu extends RestController
         $this->load->library('input_handler');
 		$status = $this->auth_jwt->auth('admin');
 		if($status === 200) {
-			$this->input_handler->set_fields('rtu_kode', 'rtu_name', 'lokasi', 'sto_kode', 'divre_kode', 'divre_name', 'witel_kode', 'witel_name', 'port_kwh', 'port_genset', 'kva_genset');
+			$this->input_handler->set_fields('rtu_kode', 'rtu_name', 'lokasi', 'sto_kode', 'divre_kode', 'divre_name', 'witel_kode', 'witel_name', 'port_kwh', 'port_genset', 'kva_genset', 'port_pue');
             $this->input_handler->set_required('rtu_kode', 'rtu_name', 'lokasi', 'sto_kode', 'divre_kode', 'divre_name', 'witel_kode', 'witel_name', 'port_kwh', 'port_genset', 'kva_genset');
 
 			$input = $this->input_handler->get_body('put');
@@ -96,6 +111,14 @@ class Rtu extends RestController
                 $this->load->model("rtu_map_model");
                 $currUser = $this->auth_jwt->get_payload();
 				$success = $this->rtu_map_model->save($input['body'], $id, $currUser);
+
+                $this->user_log
+                    ->userId($currUser['id'])
+                    ->username($currUser['username'])
+                    ->name($currUser['name'])
+                    ->activity('update RTU')
+                    ->log();
+
 				$this->response([ 'success' => $success ], 200);
 			}
 
@@ -119,6 +142,13 @@ class Rtu extends RestController
 			$this->load->model("rtu_map_model");
             $currUser = $this->auth_jwt->get_payload();
 			$success = $this->rtu_map_model->delete($id, $currUser);
+
+            $this->user_log
+                ->userId($currUser['id'])
+                ->username($currUser['username'])
+                ->name($currUser['name'])
+                ->activity('delete RTU item')
+                ->log();
 			$data = [ 'success' => $success ];
 			$this->response($data, 200);
 

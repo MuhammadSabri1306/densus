@@ -556,17 +556,17 @@ $config['check_cors'] = TRUE;
 |
 */
 $config['allowed_cors_headers'] = [
-    'Origin',
     'X-Requested-With',
+    'Authorization',
     'Content-Type',
-    'Accept',
-    'Access-Control-Request-Method',
+    // 'Origin',
+    // 'Accept',
+    // 'Access-Control-Request-Method',
     // 'Origin',
     // 'X-Api-Key',
     // 'X-Requested-With',
     // 'Content-Type',
     // 'Accept',
-    'Authorization'
 ];
 
 /*
@@ -583,7 +583,7 @@ $config['allowed_cors_methods'] = [
     'PUT',
     'DELETE',
     'OPTIONS',
-    'PATCH',
+    // 'PATCH',
 ];
 
 /*

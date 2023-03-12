@@ -42,14 +42,17 @@ monitoringStore.getRtuDetail(rtuCode.value)
             <div class="page-header">
                 <div class="row">
                     <div class="colsm-12">
-                        <h3 v-if="isCurrInfoLoaded">{{ currRtu.location }}</h3>
+                        <h3 v-if="isCurrInfoLoaded">
+                            <VueFeather type="airplay" size="1.2em" class="font-primary middle" />
+                            <span class="middle ms-3">{{ currRtu.location }}</span>
+                        </h3>
                         <Skeleton v-else height="1.5rem" width="12rem" class="mb-2" />
-                        <div v-if="isCurrInfoLoaded" class="d-inline-flex align-items-center">
+                        <div v-if="isCurrInfoLoaded" class="d-inline-flex align-items-center ms-4">
                             <span>{{ currRtu.divreName }}</span>
                             <VueFeather type="chevrons-right" size="1.2rem" class="mx-2" />
                             <span>{{ currRtu.witelName }}</span>
                         </div>
-                        <Skeleton v-else height="1rem" width="20rem" class="" />
+                        <Skeleton v-else height="1rem" width="20rem" />
                     </div>
                 </div>
             </div>

@@ -3,16 +3,19 @@ import http from "@helpers/http-common";
 import { getCookie, setCookie, deleteCookie } from "@helpers/app-cookie";
 import { useListUserStore } from "@stores/list-user";
 import { useRtuStore } from "@stores/rtu";
+import { handlingFetchErr } from "@helpers/error-handler";
 
 export const useUserStore = defineStore("user", {
     state: () => ({
         id: null,
         name: null,
+        username: null,
         role: null,
         level: null,
         location: null,
         locationId: null,
-        token: null
+        token: null,
+        userData: {}
     }),
     getters: {
         hasToken: state => state.token && state.token.length > 0,
@@ -38,6 +41,7 @@ export const useUserStore = defineStore("user", {
                 this.sync({
                     id: data.id,
                     name: data.name,
+                    username: data.username,
                     role: data.role,
                     level: data.level,
                     location: data.location || null,
@@ -52,14 +56,9 @@ export const useUserStore = defineStore("user", {
         },
 
 		logout(callback = null) {
+            http.get("/logout", this.axiosAuthConfig);
+            
 			deleteCookie("user");
-			// this.id = null;
-			// this.name = null;
-			// this.role = null;
-			// this.level = null;
-			// this.location = null;
-			// this.locationId = null;
-			// this.token = null;
             this.$reset();
 
             const listUserStore = useListUserStore();
@@ -76,6 +75,8 @@ export const useUserStore = defineStore("user", {
 				this.id = params.id;
 			if(params.name && params.name !== undefined)
 				this.name = params.name;
+			if(params.username && params.username !== undefined)
+				this.username = params.username;
             if(params.role && params.role !== undefined)
                 this.role = params.role;
             if(params.level && params.level !== undefined)
@@ -92,6 +93,7 @@ export const useUserStore = defineStore("user", {
 			setCookie("user", {
                 id: this.id,
 				name: this.name,
+				username: this.username,
 				role: this.role,
 				level: this.level,
 				location: this.location,
@@ -110,6 +112,8 @@ export const useUserStore = defineStore("user", {
                 params.id = data.id;
             if(data.name)
                 params.name = data.name;
+            if(data.username)
+                params.username = data.username;
             if(data.role)
                 params.role = data.role;
             if(data.level)
@@ -131,7 +135,7 @@ export const useUserStore = defineStore("user", {
                 data.divre = this.locationId;
             else {
                 try {
-                    const response = await http.get("/monitoring/location/" + this.locationId, this.fetchHeader);
+                    const response = await http.get("/monitoring/location/" + this.locationId, this.axiosAuthConfig);
                     if(!response.data.location) {
                         console.warn(response.data);
                         data.success = false;
@@ -172,7 +176,7 @@ export const useUserStore = defineStore("user", {
                 
             } else {
                 try {
-                    const response = await http.get("/monitoring/location/" + this.locationId, this.fetchHeader);
+                    const response = await http.get("/monitoring/location/" + this.locationId, this.axiosAuthConfig);
                     if(!response.data.location) {
 
                         console.warn(response.data);
@@ -191,6 +195,56 @@ export const useUserStore = defineStore("user", {
                 }
             }
             callback && callback(data);
+        },
+
+        async updatePassword(body, callback = null) {
+            try {
+                const response = await http.put("/change_password", body, this.axiosAuthConfig);
+                if(!response.data.success) {
+                    console.warn(response.data);
+                    callback && callback({ success: false, status: response.status });
+                    return;
+                }
+
+                const data = response.data.user;
+                this.sync({
+                    id: data.id,
+                    name: data.name,
+                    username: data.username,
+                    role: data.role,
+                    level: data.level,
+                    location: data.location || null,
+                    locationId: data.locationId || null,
+                    token: data.token
+                });
+                callback && callback({ success: true, status: response.status });
+            } catch(err) {
+                handlingFetchErr(err);
+                callback && callback({ success: false, status: err.response.status });
+            }
+        },
+
+        async fetchUserData(force = false, callback = null) {
+            if(this.userData.id && !force) {
+				callback && callback({ success: true, status: 200 });
+				return;
+			}
+
+            try {
+                console.log(this.axiosAuthConfig);
+                const response = await http.get("/profile", this.axiosAuthConfig);
+                if(!response.data.user) {
+                    console.warn(response.data);
+                    callback && callback({ success: false, status: response.status });
+                    return;
+                }
+
+                this.userData = response.data.user;
+                callback && callback({ success: true, status: response.status });
+            } catch(err) {
+                handlingFetchErr(err);
+                callback && callback({ success: false, status: err.response.status });
+            }
         }
     }
 });

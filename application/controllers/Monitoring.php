@@ -169,4 +169,95 @@ class Monitoring extends RestController
         $data = [ 'success' => true, 'rtu' => $rtu ];
         $this->response($data, 200);
     }
+
+    public function rtu_list_by_pue_get()
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        $divreCode = $this->input->get('divre');
+        $witelCode = $this->input->get('witel');
+        if($status === 200) {
+            
+            $currUser = $this->auth_jwt->get_payload();
+            $filter = [];
+            if($divreCode) $filter['divre'] = $divreCode;
+            if($witelCode) $filter['witel'] = $witelCode;
+
+            $this->load->model('rtu_map_model');
+            $rtuMap = $this->rtu_map_model->getByPue($filter, $currUser);
+
+            $this->load->library('user_log');
+            $this->user_log
+                ->userId($currUser['id'])
+                ->username($currUser['username'])
+                ->name($currUser['name'])
+                ->activity('get rtu:list by pue')
+                ->log();
+            
+            $availableRtu = array_map(function($item) {
+                return $item->rtu_kode;
+            }, $rtuMap);
+            
+            $envPattern = EnvPattern::getPattern();
+            $asoseUrl = "$envPattern->api_osase&divre=$divreCode&witel=$witelCode";
+            $content = json_decode(file_get_contents($asoseUrl));
+            
+            $data = [ 'rtu' => [], 'success' => true ];
+            foreach($content as $item) {
+                $temp = $item;
+                $temp->AVAILABLE = in_array($item->RTU_ID, $availableRtu);
+                array_push($data['rtu'], $temp);
+            }
+            $this->response($data, 200);
+        
+        } else {
+
+            switch($status) {
+                case REST_ERR_AUTH_CODE: $data = REST_ERR_AUTH_DATA; break;
+                case REST_ERR_EXP_CODE: $data = REST_ERR_EXP_DATA; break;
+                default: $data = null;
+            }
+            $this->response($data, $status);
+
+        }
+    }
+
+    public function pue_get($rtuCode)
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        if($status === 200) {
+            
+            $currUser = $this->auth_jwt->get_payload();
+            $this->load->model('pue_counter_model');
+
+            $valueOnYear = $this->pue_counter_model->get_on_curr_year($rtuCode); // 1 & 4
+            $averages = $this->pue_counter_model->get_avg_value($rtuCode); // 2
+            $maxValue = $this->pue_counter_model->get_max_value($rtuCode); // 3
+			$currValue = $this->pue_counter_model->get_curr_value($rtuCode); // 5
+            $performances = $this->pue_counter_model->get_performance_value($rtuCode); // 6
+
+            $this->load->library('user_log');
+            $this->user_log
+                ->userId($currUser['id'])
+                ->username($currUser['username'])
+                ->name($currUser['name'])
+                ->activity('get rtu:list by pue')
+                ->log();
+            
+			$data = [
+                'pue' => compact('valueOnYear', 'averages', 'maxValue', 'currValue', 'performances'),
+                'success' => true
+            ];
+			$this->response($data, 200);
+
+        } else {
+
+            switch($status) {
+                case REST_ERR_AUTH_CODE: $data = REST_ERR_AUTH_DATA; break;
+                case REST_ERR_EXP_CODE: $data = REST_ERR_EXP_DATA; break;
+                default: $data = null;
+            }
+            $this->response($data, $status);
+
+        }
+    }
 }

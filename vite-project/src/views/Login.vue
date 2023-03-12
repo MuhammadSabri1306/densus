@@ -1,11 +1,12 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
 import { useDataForm } from "@helpers/data-form";
 import { required } from "@vuelidate/validators";
 import InputSwitch from "primevue/inputswitch";
+import Checkbox from "primevue/checkbox";
 
 const { data, v$ } = useDataForm({
     is_ldap: { value: false, required },
@@ -45,6 +46,9 @@ const onSubmit = async () => {
             setTimeout(() => router.push(route.query.redirect || '/'), 500);
     });
 };
+
+const showPass = ref(false);
+const typePass = computed(() => showPass.value ? "text" : "password");
 </script>
 <template>
     <section>
@@ -54,7 +58,7 @@ const onSubmit = async () => {
                     <img class="d-none" src="/assets/img/2.png" alt="login page">
                 </div>
                 <div class="col-xl-5 p-0">
-                    <div class="login-card">
+                    <div class="login-card flex-column">
                         <form @submit.prevent="onSubmit" class="theme-form login-form">
                             <h4>Login ke DENSUS Dashboard</h4>
                             <h6>Welcome ! Log in to your account.</h6>
@@ -77,13 +81,29 @@ const onSubmit = async () => {
                                 <label>Password</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><VueFeather type="lock" size="1em" /></span>
-                                    <input v-model="data.password" :class="{ 'is-invalid': hasSubmitted && v$.password.$invalid }" class="form-control" type="password" name="password" placeholder="*********">
+                                    <input v-model="data.password" :class="{ 'is-invalid': hasSubmitted && v$.password.$invalid }" class="form-control" :type="typePass" name="password" placeholder="*********">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <button :class="{ 'btn-loading': isLoading }" class="btn btn-primary btn-block" type="submit">Sign in</button>
+                            <div class="row align-items-center">
+                                <div class="col-auto mt-4">
+                                    <div class="d-flex align-items-center">
+                                        <Checkbox v-model="showPass" inputId="cbShowPass" :binary="true" />
+                                        <label for="cbShowPass" class="ms-2 mb-0">Tampilkan Password</label>
+                                    </div>
+                                </div>
+                                <div class="col-auto ms-auto mt-4">
+                                    <button :class="{ 'btn-loading': isLoading }" class="btn btn-primary btn-block" type="submit">Sign in</button>
+                                </div>
                             </div>
                         </form>
+                        <div class="row align-items-center justify-content-center mt-5">
+                            <div class="col-auto logo-support">
+                                <img src="/assets/img/WeCare-logo.webp" class="img-fluid" alt="logo we care" />
+                            </div>
+                            <div class="col-auto logo-support">
+                                <img src="/assets/img/Gepee-logo.webp" class="img-fluid" alt="logo gepee" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -97,6 +117,14 @@ const onSubmit = async () => {
     background-size: cover;
     background-position: center center;
     display: block;
+}
+
+.logo-support:first-child img {
+    width: 4.5rem;
+}
+
+.logo-support:nth-child(2) img {
+    width: 10rem;
 }
 
 </style>

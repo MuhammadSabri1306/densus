@@ -8,13 +8,13 @@ import { useDataForm } from "@helpers/data-form";
 import { required } from "@vuelidate/validators";
 import Dialog from "primevue/dialog";
 import InputSwitch from "primevue/inputswitch";
-import ListboxRegional from "@components/ListboxRegional.vue";
-import ListboxWitel from "@components/ListboxWitel.vue";
+import InputGroupLocation from "@components/InputGroupLocation.vue";
 
 const emit = defineEmits(["saved", "die"]);
 
 const userStore = useUserStore();
 const userLevel = computed(() => userStore.level);
+const showDialog = ref(true);
 
 const { data, v$ } = useDataForm({
     nama: { required },
@@ -34,58 +34,31 @@ const { data, v$ } = useDataForm({
     password2: {}
 });
 
-const locationStore = useLocationStore();
-const listboxRegional = ref(null);
-const listboxWitel = ref(null);
-const showLbRegional = ref(true);
-const showLbWitel = ref(true);
-
-watch(() => data.organisasi, org => {
-    if(org == "witel") {
-        showLbRegional.value = true;
-        showLbWitel.value = true;
-    } else if(org == "divre") {
-        showLbRegional.value = true;
-        showLbWitel.value = false;
-    } else {
-        showLbRegional.value = false;
-        showLbWitel.value = false;
-    }
-});
-
-const onDivreChange = ({ code, name }) => {
-    data.divre_code = code;
-    data.divre_name = name;
-    console.log(code);
-    locationStore.fetchWitel(code);
-};
-
-const onWitelChange = ({ code, name }) => {
-    data.witel_code = code;
-    data.witel_name = name;
+const inputLocation = ref(null);
+const onLocationChange = (loc) => {
+    data.divre_code = loc.divre_kode;
+    data.divre_name = loc.divre_name;
+    data.witel_code = loc.witel_kode;
+    data.witel_name = loc.witel_name;
 };
 
 const listUserStore = useListUserStore();
 const viewStore = useViewStore();
+
 const isLoading = ref(false);
 const hasSubmitted = ref(false);
-
 const isPassEqual = computed(() => data.password1 === data.password2);
 
 const optValidation = () => {
-    if(data.organisasi != "nasional") {
-        if(listboxRegional.value)
-            listboxRegional.value.validate();
-        if(listboxWitel.value)
-            listboxWitel.value.validate();
-        if(!data.divre_code || !data.witel_code)
-            return false;
-    }
+    if(!inputLocation.value.validate())
+        return false;
 
     if(!data.is_ldap) {
         if(!data.password1)
             return false;
         if(!data.password2)
+            return false;
+        if(!isPassEqual.value)
             return false;
     }
 
@@ -96,6 +69,7 @@ const onSubmit = async () => {
     hasSubmitted.value = true;
     let isValid = await v$.value.$validate();
     isValid = isValid && optValidation();
+    console.log(optValidation());
 
     if(!isValid)
         return;
@@ -119,43 +93,19 @@ const onSubmit = async () => {
     
     isLoading.value = true;
     listUserStore.create(body, response => {
-        isLoading.value = null;
+        isLoading.value = false;
         hasSubmitted.value = false;
         if(!response.success)
             return;
 
         viewStore.showToast("Buat User", "Berhasil menyimpan data user.", true);
         listUserStore.fetchList(true);
-        emit("saved");
+        showDialog.value = false;
     });
 };
-
-const resetComp = () => {
-    isLoading.value = false;
-    hasSubmitted.value = false;
-
-    data.nama = null;
-    data.organisasi = "witel";
-    data.role = "teknisi";
-    data.no_hp = null;
-    data.email = null;
-    data.is_ldap = false;
-    data.telegram_id = null;
-    data.telegram_username = null;
-    data.witel_code = null;
-    data.witel_name = null;
-    data.divre_code = null;
-    data.divre_name = null;
-    data.username = null;
-    data.password1 = null;
-    data.password2 = null;
-
-    emit("die");
-};
-
 </script>
 <template>
-    <Dialog header="Buat User Baru" modal maximizable draggable @hide="resetComp">
+    <Dialog header="Buat User Baru" v-model:visible="showDialog" modal maximizable draggable @afterHide="$emit('die')">
         <form @submit.prevent="onSubmit" class="p-4">
             <div class="mb-4">
                 <label for="inputNama">Nama <span class="text-danger">*</span></label>
@@ -194,22 +144,7 @@ const resetComp = () => {
                 </div>
             </div>
             
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="mb-2">
-                        <label for="inputRegional" class="col-form-label">Regional</label>
-                        <ListboxRegional v-if="showLbRegional" ref="listboxRegional" isRequired @change="onDivreChange" />
-                        <input type="text" v-else id="inputRegional" placeholder="Pilih Regional" disabled class="form-control" />
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-2">
-                        <label for="inputWitel" class="col-form-label">Regional</label>
-                        <ListboxWitel v-if="showLbWitel && data.divre_code" ref="listboxWitel" :divre="data.divre_code" isRequired @change="onWitelChange" />
-                        <input type="text" v-else :divre="data.divre_code" id="inputWitel" placeholder="Pilih Witel" disabled class="form-control" />
-                    </div>
-                </div>
-            </div>
+            <InputGroupLocation ref="inputLocation" useLevel :level="data.organisasi" :divreValue="data.divre_code" :witelValue="data.witel_code" @change="onLocationChange" />
 
             <div class="mb-4">
                 <label for="inputEmail">Email <span class="text-danger">*</span></label>

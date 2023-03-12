@@ -2036,5 +2036,8 @@ class RestController extends \CI_Controller
             }
             exit;
         }
+
+        // header('Access-Control-Max-Age: 86400');
+        header('Access-Control-Max-Age: 172800');
     }
 }

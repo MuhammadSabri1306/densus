@@ -25,7 +25,8 @@ const { data, v$ } = useDataForm({
     witelName: { required },
     portKwh: { required },
     portGenset: { required },
-    kvaGenset: { required }
+    kvaGenset: { required },
+    portPue: {}
 });
 
 const rtuStore = useRtuStore();
@@ -43,7 +44,6 @@ rtuStore.fetchList(false, response => {
         router.push("/e404");
         return;
     }
-    console.log(currRtu);
     data.rtuCode = currRtu.rtu_kode;
     data.rtuName = currRtu.rtu_name;
     data.location = currRtu.lokasi;
@@ -55,6 +55,7 @@ rtuStore.fetchList(false, response => {
     data.portKwh = currRtu.port_kwh;
     data.portGenset = currRtu.port_genset;
     data.kvaGenset = currRtu.kva_genset;
+    data.portPue = currRtu.port_pue;
     isFetching.value = false;
 });
 
@@ -91,7 +92,8 @@ const onSubmit = async () => {
         witel_name: data.witelName,
         port_kwh: data.portKwh,
         port_genset: data.portGenset,
-        kva_genset: data.kvaGenset
+        kva_genset: data.kvaGenset,
+        port_pue: data.portPue
     };
     // console.log(body);
     // const formData = buildFormData(data, ["rtuCode", "rtuName", "location", "stoCode", "divreCode", "divreName", "witelCode", "witelName", "portKwh", "portGenset", "kvaGenset"]);
@@ -127,8 +129,11 @@ const onDelete = () => {
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>Detail Data RTU</h3>
-                        <DashboardBreadcrumb :items="['Master RTU', 'Detail']" />
+                        <h3>
+                            <VueFeather type="hard-drive" size="1.2em" class="font-primary middle" />
+                            <span class="middle ms-3">Detail Data RTU</span>
+                        </h3>
+                        <DashboardBreadcrumb :items="['Master RTU', 'Detail']" class="ms-4" />
                     </div>
                 </div>
             </div>
@@ -175,22 +180,28 @@ const onDelete = () => {
                                 <ListboxRegWitel ref="listboxRegWitel" fieldRequired :defaultDivre="data.divreCode" :defaultWitel="data.witelCode" @divreChange="onDivreChange" @witelChange="onWitelChange" class="mb-4" />
 
                                 <div class="row">
-                                    <div class="col-7 col-md-6 col-lg-4">
+                                    <div class="col-6 col-lg-3">
                                         <div class="form-group">
                                             <label for="portKwh">Port KWH <span class="text-danger">*</span></label>
                                             <input v-model="v$.portKwh.$model" :class="{ 'is-invalid': hasSubmitted && v$.portKwh.$invalid }" class="form-control" id="portKwh" name="portKwh" type="text" placeholder="Cth. A-16">
                                         </div>
                                     </div>
-                                    <div class="col-7 col-md-6 col-lg-4">
+                                    <div class="col-6 col-lg-3">
                                         <div class="form-group">
                                             <label for="portGenset">Port Genset <span class="text-danger">*</span></label>
                                             <input v-model="v$.portGenset.$model" :class="{ 'is-invalid': hasSubmitted && v$.portGenset.$invalid }" class="form-control" id="portGenset" name="portGenset" type="text" placeholder="Cth. D-02">
                                         </div>
                                     </div>
-                                    <div class="col-7 col-md-6 col-lg-4">
+                                    <div class="col-6 col-lg-3">
                                         <div class="form-group">
                                             <label for="kvaGenset">KVA Genset <span class="text-danger">*</span></label>
                                             <input v-model="v$.kvaGenset.$model" :class="{ 'is-invalid': hasSubmitted && v$.kvaGenset.$invalid }" class="form-control" id="kvaGenset" name="kvaGenset" type="text" placeholder="Cth. 500">
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-lg-3">
+                                        <div class="form-group">
+                                            <label for="portPue">Port PUE</label>
+                                            <input v-model="v$.portPue.$model" class="form-control" id="portPue" name="portPue" type="text" placeholder="Cth. A-16">
                                         </div>
                                     </div>
                                 </div>

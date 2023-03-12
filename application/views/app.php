@@ -17,10 +17,15 @@
     <meta name="msapplication-config" content="/assets/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <title>DENSUS Dashboard</title>
-    <script type="module" crossorigin src="/densus/assets/index-aaaa0b5d.js"></script>
-    <link rel="stylesheet" href="/densus/assets/index-ef90aa5e.css">
+    <script type="module" crossorigin src="/densus/assets/index-218a909d.js"></script>
+    <link rel="stylesheet" href="/densus/assets/index-02af7053.css">
   </head>
   <body>
+    <div id="loader" class="loader-wrapper">
+        <div class="theme-loader">
+            <div class="loader-p"></div>
+        </div>
+    </div>
     <div id="app"></div>
     
   </body>

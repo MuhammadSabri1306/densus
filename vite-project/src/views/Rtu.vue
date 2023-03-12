@@ -9,8 +9,11 @@ import DatatableRtuList from "@components/DatatableRtuList.vue";
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>List RTU Tersedia</h3>
-                        <DashboardBreadcrumb :items="['Master RTU', 'RTU Tersedia']" />
+                        <h3>
+                            <VueFeather type="hard-drive" size="1.2em" class="font-primary middle" />
+                            <span class="middle ms-3">List RTU Tersedia</span>
+                        </h3>
+                        <DashboardBreadcrumb :items="['Master RTU', 'RTU Tersedia']" class="ms-4" />
                     </div>
                 </div>
             </div>

@@ -25,13 +25,29 @@ const tabledata = data.table.map((item, index) => {
             <DataTable :value="tabledata" showGridlines :paginator="true" :rows="10"
             dataKey="id" responsiveLayout="scroll" class="table-sm">
                 <Column field="no" header="No" :sortable="true"></Column>
-                <Column field="periode" header="Periode"></Column>
-                <Column field="total_kwh" header="Total Nilai KwH" :sortable="true"></Column>
-                <Column field="total_lwbp" header="LWBP" :sortable="true"></Column>
-                <Column field="total_wbp" header="WBP" :sortable="true"></Column>
+                <Column field="periode" header="Periode">
+                    <template #body="slotProps">
+                        <b>{{ slotProps.data.periode }}</b>
+                    </template>
+                </Column>
+                <Column field="total_kwh" header="Total Nilai KwH" :sortable="true">
+                    <template #body="slotProps">
+                        {{ toIdrCurrency(slotProps.data.total_kwh) }}
+                    </template>
+                </Column>
+                <Column field="total_lwbp" header="LWBP" :sortable="true">
+                    <template #body="slotProps">
+                        {{ toIdrCurrency(slotProps.data.total_lwbp) }}
+                    </template>
+                </Column>
+                <Column field="total_wbp" header="WBP" :sortable="true">
+                    <template #body="slotProps">
+                        {{ toIdrCurrency(slotProps.data.total_wbp) }}
+                    </template>
+                </Column>
                 <Column field="total_biaya" header="Total Tagihan" :sortable="true">
                     <template #body="slotProps">
-                        {{ 'Rp' + toIdrCurrency(slotProps.data.total_biaya) }}
+                        <b>{{ 'Rp' + toIdrCurrency(slotProps.data.total_biaya) }}</b>
                     </template>
                 </Column>
             </DataTable>

@@ -12,7 +12,10 @@ const location = computed(() => userStore.location);
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>Dashboard</h3>
+                        <h3>
+                            <VueFeather type="home" size="1.2em" class="font-primary middle" />
+                            <span class="middle ms-3">Dashboard</span>
+                        </h3>
                     </div>
                 </div>
             </div>
@@ -25,7 +28,7 @@ const location = computed(() => userStore.location);
                             <h2>DENSUS TR VII</h2><span><h4><b>Mari Mulai Perjalanan {{ name }} dari {{ location }}</b></h4></span>
                         </div>
                         <div class="card-body btn-showcase">
-                            <RouterLink to="/monitoring/RTU-BALA" class="btn btn-primary btn-lg">Mulai</RouterLink>
+                            <RouterLink to="/monitoring" class="btn btn-primary btn-lg">Mulai</RouterLink>
                         </div>
                     </div>
                 </div>

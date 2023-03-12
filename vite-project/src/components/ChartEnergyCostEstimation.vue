@@ -1,6 +1,7 @@
 <script setup>
 import { useMonitoringStore } from "@stores/monitoring";
 import VueApexCharts from "vue3-apexcharts";
+import { toIdrCurrency } from "@helpers/number-format";
 import { dtColors } from "@/configs/datatable";
 
 const props = defineProps({
@@ -88,7 +89,7 @@ const chartOptions = {
             </div>
         </div>
         <div class="transaction-totalbal">
-            <h2> Rp {{ dataEstimation }} <span class="ms-3">
+            <h2> Rp {{ toIdrCurrency(dataEstimation) }} <span class="ms-3">
                 <a class="btn-arrow arrow-secondary" href="#">
                     <i class="toprightarrow-secondary fa fa-arrow-up me-2"></i>98.54%
                 </a></span>

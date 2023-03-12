@@ -1,10 +1,7 @@
 import axios from "axios";
+import { apiEndpoint, apiHeaders } from "@/configs/base";
 
 export default axios.create({
-	baseURL: "https://juarayya.telkom.co.id/densus/api",
-	headers: {
-		// 'Access-Control-Allow-Origin': '*',
-		'Content-Type': 'application/json',
-		"Accept": "application/json"
-	}
+	baseURL: apiEndpoint,
+	headers: apiHeaders
 });

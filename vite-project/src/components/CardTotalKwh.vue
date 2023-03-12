@@ -1,5 +1,6 @@
 <script setup>
 import { useMonitoringStore } from "@stores/monitoring";
+import { toIdrCurrency } from "@helpers/number-format";
 
 const props = defineProps({
     rtuCode: { required: true }
@@ -18,7 +19,7 @@ const dataKwhTotal = await monitoringStore.getKwhTotal(props.rtuCode);
                 </div>
                 <div class="media-body">
                     <span class="m-0">KwH Total Feb 2023</span>
-                    <h4 class="mb-0 counter">{{ dataKwhTotal }}</h4>
+                    <h4 class="mb-0 counter">{{ toIdrCurrency(dataKwhTotal) }}</h4>
                     <VueFeather type="battery-charging" class="icon-bg" />
                 </div>
             </div>

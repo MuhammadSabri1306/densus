@@ -9,6 +9,7 @@ class User extends RestController
     {
         parent::__construct();
         $this->load->library('auth_jwt');
+        $this->load->library('user_log');
     }
 
     public function index_get($id = null)
@@ -23,6 +24,12 @@ class User extends RestController
             if($id && !$dataUser) {
                 show_404();
             } else {
+                $this->user_log
+                    ->userId($currUser['id'])
+                    ->username($currUser['username'])
+                    ->name($currUser['name'])
+                    ->activity('get user list')
+                    ->log();
                 $data = [ 'success' => true, 'user' => $dataUser ];
                 $this->response($data, 200);
             }
@@ -38,6 +45,38 @@ class User extends RestController
             $this->response($data, $status);
 
         }
+    }
+
+    public function profile_get()
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+
+        if($status === 200) {
+
+            $currUser = $this->auth_jwt->get_payload();
+            $this->load->model('user_model');
+            $dataUser = $this->user_model->get_own($currUser);
+
+            if($id && !$dataUser) {
+                show_404();
+                exit();
+            } else {
+                $this->user_log
+                    ->userId($currUser['id'])
+                    ->username($currUser['username'])
+                    ->name($currUser['name'])
+                    ->activity('get user list')
+                    ->log();
+                $data = [ 'success' => true, 'user' => $dataUser ];
+            }
+        }
+        
+        $this->response($data, $status);
     }
 
     public function index_post()
@@ -101,6 +140,15 @@ class User extends RestController
                     $status = REST_ERR_BAD_REQ;
                 } else {
                     $success = $this->user_model->save($input['body']);
+                    if($success) {
+                        $this->user_log
+                            ->userId($currUser['id'])
+                            ->username($currUser['username'])
+                            ->name($currUser['name'])
+                            ->activity('input new user')
+                            ->log();
+                    }
+
                     $data = [ 'success' => $success ];
                     $status = 200;
                 }
@@ -159,8 +207,16 @@ class User extends RestController
                 $currUser = $this->auth_jwt->get_payload();
                 $success = $this->user_model->save($input['body'], $id, $currUser);
                 $data = [ 'success' => $success ];
+
                 if(!$success) {
                     $status = REST_ERR_BAD_REQ;
+                } else {
+                    $this->user_log
+                        ->userId($currUser['id'])
+                        ->username($currUser['username'])
+                        ->name($currUser['name'])
+                        ->activity('update user')
+                        ->log();
                 }
             }
 
@@ -178,6 +234,123 @@ class User extends RestController
         }
     }
 
+    public function update_put($id)
+    {
+        $status = $this->auth_jwt->auth('admin');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+
+        if($status === 200) {
+            $this->load->library('input_custom');
+            $fields = [
+                'nama' => ['string', 'required'],
+                'role' => ['string', 'required'],
+                'organisasi' => ['string', 'required'],
+                'email' => ['string', 'required'],
+                'no_hp' => ['string', 'required'],
+                'telegram_id' => ['string', 'nullable'],
+                'telegram_username' => ['string', 'nullable']
+            ];
+
+            $this->input_custom->set_fields($fields);
+			$input = $this->input_custom->get_body('put');
+            if(!$input['valid']) {
+                $data = [ 'success' => false, 'message' => $input['msg'] ];
+                $status = REST_ERR_BAD_REQ_STATUS;
+            }
+        }
+
+        if($status === 200) {
+            $fields = [];
+
+            if($input['body']['organisasi'] != 'nasional') {
+                $fields['divre_code'] = ['string', 'required'];
+                $fields['divre_name'] = ['string', 'required'];
+                $read = true;
+            } else {
+                $fields['divre_code'] = ['string', 'nullable'];
+                $fields['divre_name'] = ['string', 'nullable'];
+            }
+
+            if($input['body']['organisasi'] == 'witel') {
+                $fields['witel_code'] = ['string', 'required'];
+                $fields['witel_name'] = ['string', 'required'];
+            } else {
+                $fields['witel_code'] = ['string', 'nullable'];
+                $fields['witel_name'] = ['string', 'nullable'];
+            }
+
+            $this->input_custom->set_fields($fields);
+            $input = $this->input_custom->get_body('put');
+            if(!$input['valid']) {
+                $data = [ 'success' => false, 'message' => $input['msg'] ];
+                $status = REST_ERR_BAD_REQ_STATUS;
+            }
+        }
+
+        if($status === 200) {
+            $this->load->model("user_model");
+            $currUser = $this->auth_jwt->get_payload();
+            $success = $this->user_model->save($input['body'], $id, $currUser);
+            $data = [ 'success' => $success ];
+        }
+        
+        if($status === 200 && $data['success']) {
+            $this->user_log
+                ->userId($currUser['id'])
+                ->username($currUser['username'])
+                ->name($currUser['name'])
+                ->activity('update user')
+                ->log();
+        }
+
+        $this->response($data, $status);
+    }
+
+    public function update_active_put($id)
+    {
+        $status = $this->auth_jwt->auth('admin');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+
+        if($status === 200) {
+            $this->load->library('input_custom');
+            $fields = [ 'is_active' => ['bool', 'required'] ];
+
+            $this->input_custom->set_fields($fields);
+			$input = $this->input_custom->get_body('put');
+
+            if(!$input['valid']) {
+                $data = [ 'success' => false, 'message' => $input['msg'] ];
+                $status = REST_ERR_BAD_REQ_STATUS;
+            }
+        }
+
+        if($status === 200) {
+            $this->load->model("user_model");
+            $currUser = $this->auth_jwt->get_payload();
+            $success = $this->user_model->save($input['body'], $id, $currUser);
+            $data = [ 'success' => $success ];
+        }
+        
+        if($status === 200 && $data['success']) {
+            $this->user_log
+                ->userId($currUser['id'])
+                ->username($currUser['username'])
+                ->name($currUser['name'])
+                ->activity('update user:is_active')
+                ->log();
+        }
+
+        $this->response($data, $status);
+    }
+
     public function index_delete($id)
 	{
         $status = $this->auth_jwt->auth('admin');
@@ -186,6 +359,16 @@ class User extends RestController
             $this->load->model("user_model");
             $currUser = $this->auth_jwt->get_payload();
             $success = $this->user_model->delete($id, $currUser);
+            
+            if($success) {
+                $this->user_log
+                    ->userId($currUser['id'])
+                    ->username($currUser['username'])
+                    ->name($currUser['name'])
+                    ->activity('delete user')
+                    ->log();
+            }
+            
             $data = [ 'success' => $success ];
             $this->response($data, 200);
 

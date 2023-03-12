@@ -1,6 +1,6 @@
 <script setup>
 import { useMonitoringStore } from "@stores/monitoring";
-import http from "@/helpers/http-common";
+import { toIdrCurrency } from "@helpers/number-format";
 
 const props = defineProps({
     rtuCode: { required: true }
@@ -16,7 +16,7 @@ const dataKwh = await monitoringStore.getKwhToday(props.rtuCode);
             <div class="round-box">
                 <VueFeather type="zap" style="enable-background:new 0 0 448.057 448.057;color:#24695c;" xml:space="preserve" />
             </div>
-            <h5>{{ dataKwh }} KwH</h5>
+            <h5>{{ toIdrCurrency(dataKwh) }} KwH</h5>
             <p>KwH Usage Hari ini</p>
             <a class="btn-arrow arrow-primary" href="#"><i class="toprightarrow-primary me-2"><VueFeather type="arrow-up-right" strokeWidth="4" style="width:0.8rem" class="ms-1 mt-1" /></i>5.54% </a>
             <div class="parrten">

@@ -32,7 +32,6 @@ export const useListUserStore = defineStore("listUser", {
 			}
 
             try {
-                console.log(this.fetchHeader);
                 const response = await http.get("/user", this.fetchHeader);
                 if(!response.data.user) {
                     console.warn(response.data);
@@ -68,7 +67,23 @@ export const useListUserStore = defineStore("listUser", {
             if(body.is_active !== undefined)
                 body.is_active = body.is_active ? 1 : 0;
             try {
-                const response = await http.put("/user/" + id, body, this.fetchHeader);
+                const response = await http.put(`/user/${ id }/general`, body, this.fetchHeader);
+                if(!response.data.success) {
+                    console.warn(response.data);
+                    callback && callback({ success: false, status: response.status });
+                    return;
+                }
+                callback && callback({ success: true, status: response.status });
+            } catch(err) {
+                handlingFetchErr(err);
+                callback && callback({ success: false, status: err.response.status });
+            }
+        },
+
+        async updateActive(id, value, callback = null) {
+            const body = { is_active: value ? 1 : 0 };
+            try {
+                const response = await http.put(`/user/${ id }/active`, body, this.fetchHeader);
                 if(!response.data.success) {
                     console.warn(response.data);
                     callback && callback({ success: false, status: response.status });

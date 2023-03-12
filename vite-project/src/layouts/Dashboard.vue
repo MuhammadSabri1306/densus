@@ -1,14 +1,16 @@
 <script setup>
-import { computed, onMounted, onUnmounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
 import Footer from "./Footer.vue";
 import SidebarUser from "./DashboardSidebarUser.vue";
 import SidebarMenu from "./DashboardSidebarMenu.vue";
+import DialogUpdatePassword from "@components/DialogUpdatePassword.vue";
+import DialogUserEdit from "@components/DialogUserEdit.vue";
 
-await import("@/assets/css/theme.css");
-await import("@/assets/css/responsive.css");
+import "@/assets/css/theme.css";
+import "@/assets/css/responsive.css";
 
 const viewStore = useViewStore();
 const hideSidebar = computed(() => viewStore.hideSidebar);
@@ -31,6 +33,9 @@ const logout = () => {
     userStore.logout();
     router.push("/login");
 };
+
+const showPassForm = ref(false);
+const profileUpdateData = ref(null);
 </script>
 <template>
     <div class="page-wrapper compact-wrapper viho-theme" id="pageWrapper">
@@ -141,14 +146,16 @@ const logout = () => {
         <div class="page-body-wrapper">
             <!-- Page Sidebar Start-->
             <header :class="{ 'close_icon': !hideSidebar }" class="main-nav">
-                <SidebarUser />
+                <SidebarUser @updateUser="val => profileUpdateData = val" @updatePassword="showPassForm = true" @logout="logout" />
                 <SidebarMenu />
             </header>
             <main class="page-body">
-                <slot name="main"></slot>
+                <RouterView />
             </main>
             <Footer />
-        </div>
+        </div>        
+        <DialogUpdatePassword v-if="showPassForm" @close="showPassForm = false" />
+        <DialogUserEdit v-if="profileUpdateData" isCurrUser :data="profileUpdateData" @die="profileUpdateData = null" />
     </div>
 </template>
 <style scoped>
@@ -156,10 +163,5 @@ const logout = () => {
 .brand-logo {
     max-width: 5.2rem;
 }
-
-/* :global(i.vue-feather) {
-    width: 1em;
-    height: 1em;
-} */
 
 </style>

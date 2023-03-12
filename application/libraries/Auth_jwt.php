@@ -9,9 +9,10 @@ class Auth_jwt
     private $CI;
     private $key = 'juarayya_densus_jwt_KEY@08/02/2023/11:20_inikunciutkJWTnya_ci3_vue3';
     private $alg = 'HS256';
-    private $expireTime = 24 * 60 * 7;
+    private $expireTime = 60 * 60 * 24 * 2;
 
     public $id;
+    public $username;
     public $name;
     public $role; // admin / viewer / teknisi
     public $level; // nasional / divre / witel
@@ -51,6 +52,7 @@ class Auth_jwt
             $payload = $this->decrypt_token(str_replace('Bearer ', '', $rawToken));
             if($payload) {
                 $this->id = $payload->id;
+                $this->username = $payload->username;
                 $this->name = $payload->name;
                 $this->role = $payload->role;
                 $this->level = $payload->level;
@@ -101,12 +103,14 @@ class Auth_jwt
     public function get_payload()
     {
         if(!$this->id) return null;
+        if(!$this->username) return null;
         if(!$this->name) return null;
         if(!$this->role) return null;
         if(!$this->level) return null;
 
         return [
             'id' => $this->id,
+            'username' => $this->username,
             'name' => $this->name,
             'role' => $this->role,
             'level' => $this->level,

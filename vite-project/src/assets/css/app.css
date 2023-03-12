@@ -10,14 +10,85 @@
 @tailwind base;
 
 @layer base {
-    h1 {
-        @apply tw-text-2xl;
+    body {
+        margin: 0;
+        font-family: var(--bs-body-font-family);
+        font-size: var(--bs-body-font-size);
+        font-weight: var(--bs-body-font-weight);
+        line-height: var(--bs-body-line-height);
+        color: var(--bs-body-color);
+        text-align: var(--bs-body-text-align);
+        background-color: var(--bs-body-bg);
+        -webkit-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent
     }
-    h2 {
-        @apply tw-text-xl;
+    
+    hr {
+        margin: 1rem 0;
+        color: inherit;
+        border: 0;
+        border-top: 1px solid;
+        opacity: .25
     }
-    h3 {
-        @apply tw-text-lg;
+    
+    .h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6 {
+        margin-top: 0;
+        margin-bottom: .5rem;
+        font-weight: 500;
+        line-height: 1.2
+    }
+    
+    .h1,h1 {
+        font-size: calc(1.375rem + 1.5vw)
+    }
+    
+    @media (min-width: 1200px) {
+        .h1,h1 {
+            font-size:2.5rem
+        }
+    }
+    
+    .h2,h2 {
+        font-size: calc(1.325rem + .9vw)
+    }
+    
+    @media (min-width: 1200px) {
+        .h2,h2 {
+            font-size:2rem
+        }
+    }
+    
+    .h3,h3 {
+        font-size: calc(1.3rem + .6vw)
+    }
+    
+    @media (min-width: 1200px) {
+        .h3,h3 {
+            font-size:1.75rem
+        }
+    }
+    
+    .h4,h4 {
+        font-size: calc(1.275rem + .3vw)
+    }
+    
+    @media (min-width: 1200px) {
+        .h4,h4 {
+            font-size:1.5rem
+        }
+    }
+    
+    .h5,h5 {
+        font-size: 1.25rem
+    }
+    
+    .h6,h6 {
+        font-size: 1rem
+    }
+    
+    p {
+        margin-top: 0;
+        margin-bottom: 1rem
     }
 }
 
@@ -114,12 +185,133 @@
     @apply tw-w-8 tw-h-8 tw-inline-flex tw-justify-center tw-items-center tw-rounded-full;
 }
 
+.table-head-primary thead th,
 .p-datatable-table thead th {
     background-color: #24695c!important;
-    color: #fff!important;
-    border-color: #24695c!important;
 }
 
+.table-head-primary thead th {
+    text-align: center;
+}
+
+.table-head-primary thead th,
+.p-datatable-table thead th,
 .p-datatable-table thead .p-sortable-column-icon {
     color: #fff!important;
+}
+
+.table-gepee tr.row-collapsed {
+    display: none;
+}
+
+.table-gepee .btn-collapse-row {
+    @apply tw-rotate-90 tw-transition-transform tw-duration-300;
+}
+
+.table-gepee .btn-collapse-row.child-collapsed {
+    @apply tw-rotate-0;
+}
+
+.table-gepee .table thead th {
+    text-align: center;
+}
+
+.table-gepee .form-check-input {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-info,
+.btn-warning,
+.btn-danger,
+.btn-light {
+    transition: background-color 0.3s;
+    -webkit-transition: background-color 0.3s;
+    -moz-transition: background-color 0.3s;
+    -ms-transition: background-color 0.3s;
+    -o-transition: background-color 0.3s;
+}
+
+.btn-primary:hover:not([disabled]) {
+    background-color: #1c5248!important;
+}
+
+.btn-secondary:hover:not([disabled]) {
+    background-color: #956d4a!important;
+}
+
+.btn-success:hover:not([disabled]) {
+    background-color: #102c27!important;
+}
+
+.btn-info:hover:not([disabled]) {
+    background-color: #7c7c7c!important;
+}
+
+.btn-warning:hover:not([disabled]) {
+    background-color: #c9af2a!important;
+}
+
+.btn-danger:hover:not([disabled]) {
+    background-color: #b52533!important;
+}
+
+.btn-light:hover:not([disabled]) {
+    background-color: #d1d7d9!important;
+}
+
+.table-freeze {
+    position: relative;
+}
+
+.table-freeze .sticky-column {
+    position: -webkit-sticky;
+    position: sticky;
+    left: -1px;
+    z-index: 8;
+    background-color: white;
+}
+
+.form-check-input {
+    cursor: pointer;
+}
+
+.animated-card {
+    -webkit-box-shadow: 0 0 37px rgb(36 105 92 / 5%);
+    box-shadow: 0 0 37px rgb(36 105 92 / 5%);
+}
+
+.animated-card:hover {
+    -webkit-box-shadow: 0 0 37px rgb(36 105 92 / 15%);
+    box-shadow: 0 0 37px rgb(36 105 92 / 15%);
+}
+
+.animated-card .img-wrapper img {
+    width: 100%;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.animated-card .img-wrapper:hover img {
+    -webkit-transform: rotate3d(1, 1, 1, -3deg);
+    transform: rotate3d(1, 1, 1, -3deg);
+}
+
+.text-shadow-white {
+    text-shadow: 0 0 0.2em rgba(255,255,255,0.5);
+}
+
+@media (max-width: 991px) {
+
+    footer {
+        margin-left: 0!important;
+    }
+
+    footer p {
+        margin-bottom: 0;
+    }
+
 }

@@ -33,12 +33,11 @@ onUnmounted(() => document.body.addEventListener("click", hideDtAction));
 const isLoading = ref(null);
 const viewStore = useViewStore();
 
-const changeIsActive = ({ id, is_active }) => {
+const updateUserActive = ({ id, is_active }) => {
     is_active = !is_active;
-    const body = { is_active };
     isLoading.value = id;
     
-    listUserStore.update(id, body, response => {
+    listUserStore.updateActive(id, is_active, response => {
         isLoading.value = null;
         if(!response.success)
             return;
@@ -112,7 +111,7 @@ const onDelete = id => {
             </Column>
             <Column field="is_active" header="Aktif">
                 <template #body="slotProps">
-                    <InputSwitch :modelValue="slotProps.data.is_active" @click="changeIsActive(slotProps.data)" :disabled="showActionOnId === slotProps.data.id || isLoading === slotProps.data.id || slotProps.data.isReadonly" />
+                    <InputSwitch :modelValue="slotProps.data.is_active" @click="updateUserActive(slotProps.data)" :disabled="showActionOnId === slotProps.data.id || isLoading === slotProps.data.id || slotProps.data.isReadonly" />
                 </template>
             </Column>
             <Column header="Action">

@@ -28,6 +28,7 @@ class User_model extends CI_Model
             $query = $this->db
                 ->select($select)
                 ->from('user')
+                ->order_by('id', 'DESC')
                 ->get();
             $result = $query->result();
 
@@ -81,5 +82,27 @@ class User_model extends CI_Model
             ->where('username', $username)
             ->get();
         return $query->row();
+    }
+
+    public function get_own($currUser)
+    {
+        $query = $this->db
+            ->select('id, username, nama, organisasi, role, no_hp, email, is_ldap, telegram_id, telegram_username, witel_code, witel_name, divre_code, divre_name, is_active')
+            ->from('user')
+            ->where('id', $currUser['id'])
+            ->get();
+            
+        $result = $query->row();
+        if($result) {
+            $result->is_ldap = $result->is_ldap == 1;
+            $result->is_active = $result->is_active == 1;
+        }
+        return $result;
+    }
+
+    public function update_pass($id, $password)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update('user', [ 'password' => $password ]);
     }
 }

@@ -37,8 +37,11 @@ const onDialogClose = () => {
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3>Manajemen User</h3>
-                        <DashboardBreadcrumb :items="['Manajemen User', 'List User']" />
+                        <h3>
+                            <VueFeather type="users" size="1.2em" class="font-primary middle" />
+                            <span class="middle ms-3">Manajemen User</span>
+                        </h3>
+                        <DashboardBreadcrumb :items="['Manajemen User', 'List User']" class="ms-4" />
                     </div>
                 </div>
             </div>
@@ -81,8 +84,8 @@ const onDialogClose = () => {
             </div>
         </div>
         <DialogUserDetail v-model:visible="showDetailDialog" :data="currUser" @close="onDialogClose" />
-        <DialogUserEdit v-model:visible="showEditDialog" :data="currUser" @die="onDialogClose" @save="onDialogClose" />
-        <DialogUserAdd v-model:visible="showAddDialog" @die="onDialogClose" @save="onDialogClose" />
+        <DialogUserEdit v-if="showEditDialog" :data="currUser" @die="onDialogClose" />
+        <DialogUserAdd v-if="showAddDialog" @die="onDialogClose" />
     </div>
 </template>
 <style>
@@ -91,7 +94,7 @@ const onDialogClose = () => {
     @apply md:tw-min-w-[40rem] tw-max-w-[90vw];
 }
 
-.p-dialog span {
+.p-dialog span:not(.f-w-700) {
     font-weight: normal;
 }
 

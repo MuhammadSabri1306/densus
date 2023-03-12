@@ -64,4 +64,18 @@ class Rtu_map_model extends CI_Model {
         return $this->db->delete('rtu_map');
     }
 
+    public function getByPue($filter, $currUser = null)
+    {
+        $this->filter_for_curr_user($currUser);
+        if(isset($filter['divre'])) $this->db->where('divre_kode', $filter['divre']);
+        if(isset($filter['witel'])) $this->db->where('witel_kode', $filter['witel']);
+
+        $query = $this->db
+            ->select('*')
+            ->from('rtu_map')
+            ->where('port_pue!=""')
+            ->get();
+        return $query->result();
+    }
+
 }

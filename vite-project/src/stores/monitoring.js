@@ -3,6 +3,10 @@ import http from "@helpers/http-common";
 import { handlingFetchErr } from "@helpers/error-handler";
 import { useUserStore } from "@stores/user";
 
+import { allowSampleData } from "@/configs/base";
+import sampleRtuDetail from "@helpers/sample-data/monitoring/rtu-detail";
+import samplePueDetail from "@helpers/sample-data/monitoring/pue-detail";
+
 export const useMonitoringStore = defineStore("monitoring", {
     state: () => null,
     getters: {
@@ -24,9 +28,9 @@ export const useMonitoringStore = defineStore("monitoring", {
                 return {};
         
             } catch(err) {
-        
+                
                 handlingFetchErr(err);
-                return {};
+                return allowSampleData ? sampleRtuDetail.rtu : {};
                 
             }
         },
@@ -128,7 +132,7 @@ export const useMonitoringStore = defineStore("monitoring", {
 
                 const response = await http.get("/monitoring/costbbm/" + rtuCode, this.fetchHeader);
                 if(response.data.bbm_cost)
-                    return response.data.bbm_cost;
+                    return Number(response.data.bbm_cost);
         
                 console.warn(response.data);
                 return 0;
@@ -173,6 +177,53 @@ export const useMonitoringStore = defineStore("monitoring", {
         
                 handlingFetchErr(err);
                 return {};
+                
+            }
+        },
+
+        async getRtuListPue(filter = {}) {
+            let url = "/monitoring/pue";
+            if(filter.divre) {
+                url += "?divre=" + filter.divre;
+                if(filter.witel)
+                    url += "&witel=" + filter.witel;
+            }
+            
+            try {
+
+                const response = await http.get(url, this.fetchHeader);
+                if(response.data.rtu)
+                    return response.data.rtu;
+        
+                console.warn(response.data);
+                return [];
+        
+            } catch(err) {
+        
+                handlingFetchErr(err);
+                return [];
+                
+            }
+        },
+
+        async getPueDetail(rtuCode, callback) {
+            try {
+
+                const response = await http.get("/monitoring/pue/" + rtuCode, this.fetchHeader);
+                if(response.data.pue) {
+                    callback(response.data.pue);
+                    return;
+                }
+        
+                console.warn(response.data);
+                callback({});
+        
+            } catch(err) {
+        
+                handlingFetchErr(err);
+                if(allowSampleData)
+                    callback(samplePueDetail.pue);
+                else callback({});
                 
             }
         }
