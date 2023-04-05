@@ -66,7 +66,7 @@ class Activity_schedule extends RestController
         $params = []; $filter = [];
 
         if($status === 200) {
-            $this->input_handler->set_fields('schedule', 'divreCode');
+            $this->input_handler->set_fields('schedule', 'divreCode', 'witelCode');
             $this->input_handler->set_required('schedule', 'divreCode');
 
 			$input = $this->input_handler->get_body('post');
@@ -76,6 +76,10 @@ class Activity_schedule extends RestController
             } else {
 
                 $filter = [ 'divre' => $input['body']['divreCode'] ];
+                if(isset($input['body']['witelCode'])) {
+                    $filter['witel'] = $input['body']['witelCode'];
+                }
+
                 foreach($input['body']['schedule'] as $item) {
                     $temp = explode('&', $item);
                     if(count($temp) != 3) {
@@ -104,9 +108,9 @@ class Activity_schedule extends RestController
             $success = false;
 
             if($isUpdate) {
-                $success = $this->activity_schedule_model->update($params, $filter['month'], $filter['divre'], $currUser);
+                $success = $this->activity_schedule_model->update($params, $filter, $currUser);
             } else {
-                $success = $this->activity_schedule_model->store($params, $filter['month'], $filter['divre'], $currUser);
+                $success = $this->activity_schedule_model->store($params, $filter, $currUser);
                 $logActivityTitle = 'input new activity:penjadwalan';
             }
 
@@ -134,4 +138,141 @@ class Activity_schedule extends RestController
 
         }
     }
+
+    public function index_v2_post()
+    {
+        $status = $this->auth_jwt->auth('admin');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+
+        if($status === 200) {
+            $filter = [
+                'divre' => $this->input->get('divre'),
+                'witel' => $this->input->get('witel'),
+                'month' => $this->input->get('month')
+            ];
+            
+            $this->load->library('input_custom');
+            $this->input_custom->set_fields([ 'schedule' => ['required'] ]);
+            $input = $this->input_custom->get_body('post');
+
+            if(!$input['valid']) {
+                $data = [ 'success' => false, 'message' => $input['msg'] ];
+                $status = REST_ERR_BAD_REQ_STATUS;
+            }
+        }
+
+        if($status === 200) {
+            $schedule = [];
+            foreach($input['body']['schedule'] as $key => $value) {
+                $temp = explode('&', $key);
+                if(count($temp) != 3) {
+                    $data = [ 'success' => false, 'message' => 'Params store as wrong format.' ];
+                    $status = REST_ERR_BAD_REQ;
+                } else {
+                    array_push($schedule, [
+                        'id_category' => $temp[2],
+                        'month' => $temp[1],
+                        'id_lokasi' => $temp[0],
+                        'value' => $value
+                    ]);
+                }
+            }
+        }
+
+        if($status === 200) {
+            $this->load->model('activity_schedule_model');
+            
+            $currUser = $this->auth_jwt->get_payload();
+            $this->activity_schedule_model->currUser = $currUser;
+            $success = $this->activity_schedule_model->save($schedule, $filter);
+            if($success == 'successfull') {
+                $data = [ 'success' => true ];
+            } elseif($success == 'some_error') {
+                $status = REST_ERR_BAD_REQ_STATUS;
+                $data = [
+                    'success' => false,
+                    'message' => 'Beberapa data mungkin tidak tersimpan. Harap ulangi beberapa saat lagi'
+                ];
+            } else {
+                $status = REST_ERR_BAD_REQ_STATUS;
+                $data = REST_ERR_BAD_REQ_DATA;
+            }
+
+            if($success != 'error') {
+                $data = [ 'success' => true ];
+                $this->user_log
+                    ->userId($currUser['id'])
+                    ->username($currUser['username'])
+                    ->name($currUser['name'])
+                    ->activity('save activity:penjadwalan')
+                    ->log();
+            }
+        }
+        
+        $this->response($data, $status);
+    }
+
+    public function index_v2_get()
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+
+        if($status === 200) {
+            $this->load->model('activity_schedule_model');
+
+            $currUser = $this->auth_jwt->get_payload();
+            $this->activity_schedule_model->currUser = $currUser;
+
+            $filter = [
+                'divre' => $this->input->get('divre'),
+                'witel' => $this->input->get('witel'),
+                'month' => $this->input->get('month')
+            ];
+
+            $data = [
+                'schedule' => $this->activity_schedule_model->get($filter),
+                'success' => true
+            ];
+
+            $this->user_log
+                ->userId($currUser['id'])
+                ->username($currUser['username'])
+                ->name($currUser['name'])
+                ->activity('get activity:penjadwalan')
+                ->log();
+        }
+        
+        $this->response($data, $status);
+    }
 }
+
+// {
+    // "schedule": [
+    //     "211&4&1",
+    //     "211&4&2",
+    //     "211&4&3",
+    //     "211&4&4",
+    //     "211&4&5",
+    //     "211&4&6",
+    //     "211&4&7",
+    //     "211&4&8",
+    //     "212&4&8",
+    //     "212&4&7",
+    //     "212&4&6",
+    //     "212&4&5",
+    //     "212&4&4",
+    //     "212&4&3",
+    //     "212&4&2",
+    //     "212&4&1"
+    // ],
+//     "divreCode": "TLK-r1000000",
+//     "witelCode": "DTB-bi200000"
+// }

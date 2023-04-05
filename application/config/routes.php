@@ -55,15 +55,7 @@ $route['api/login']['post'] = 'auth/login';
 $route['api/logout']['get'] = 'auth/logout';
 $route['api/change_password']['put'] = 'auth/update_password';
 
-$route['api/location/gepee/divre']['get'] = 'location/gepee_divre';
-$route['api/location/gepee/divre/(:any)/witel']['get'] = 'location/gepee_witel_by_divre/$1';
-$route['api/location/gepee/witel/(:any)']['get'] = 'location/gepee_witel/$1';
-$route['api/location/gepee/witel']['get'] = 'location/gepee_witel';
-$route['api/location/divre']['get'] = 'location/divre';
-$route['api/location/divre/(:any)/witel']['get'] = 'location/witel_by_divre/$1';
-$route['api/location/witel/(:any)']['get'] = 'location/witel/$1';
-$route['api/location/witel']['get'] = 'location/witel';
-
+/* ENDPOINT MONITORING RTU */
 $route['api/monitoring/costbbm/(:any)'] = 'monitoring/costbbm/$1';
 $route['api/monitoring/performance/(:any)'] = 'monitoring/performance/$1';
 $route['api/monitoring/kwhreal/(:any)'] = 'monitoring/kwhreal/$1';
@@ -77,16 +69,80 @@ $route['api/monitoring/chartdatadaily/(:any)'] = 'monitoring/chartdatadaily/$1';
 $route['api/monitoring/divre'] = 'monitoring/divre';
 $route['api/monitoring/witel/(:any)'] = 'monitoring/witel/$1';
 $route['api/monitoring/location/(:any)'] = 'monitoring/location/$1';
-$route['api/monitoring/pue'] = 'monitoring/rtu_list_by_pue';
+$route['api/monitoring/pue_v2'] = 'monitoring/pue_v2';
 $route['api/monitoring/pue/(:any)'] = 'monitoring/pue/$1';
+$route['api/monitoring/pue'] = 'monitoring/rtu_list_by_pue';
 $route['api/monitoring/rtulist/(:any)/(:any)'] = 'monitoring/rtulist/$1/$2';
 $route['api/monitoring/rtudetail/(:any)'] = 'monitoring/rtudetail/$1';
 
+/* ENDPOINT MONITORING ENERGY (PLN PALING BARU) */
+$route['api/monitoring/pln/bill/location']['get'] = 'pln/bill_location';
+$route['api/monitoring/pln/bill/location']['post'] = 'pln/bill_location';
+$route['api/monitoring/pln/bill/location/(:any)']['put'] = 'pln/bill_location/$1';
+$route['api/monitoring/pln/bill/location/(:any)']['delete'] = 'pln/bill_location/$1';
+$route['api/monitoring/pln/bill']['get'] = 'pln/bill';
+$route['api/monitoring/pln/bill']['post'] = 'pln/bill';
+$route['api/monitoring/pln/bill/(:any)']['put'] = 'pln/bill/$1';
+$route['api/monitoring/pln/bill/(:any)']['delete'] = 'pln/bill/$1';
+$route['api/monitoring/pln/params']['get'] = 'pln/params';
+$route['api/monitoring/pln/params']['post'] = 'pln/params';
+$route['api/monitoring/pln/params/(:any)']['put'] = 'pln/params/$1';
+$route['api/monitoring/pln/params/(:any)']['delete'] = 'pln/params/$1';
+$route['api/monitoring/fuel/invoice/location']['get'] = 'fuel/invoice_location';
+$route['api/monitoring/fuel/invoice/location']['post'] = 'fuel/invoice_location';
+$route['api/monitoring/fuel/invoice/location/(:any)']['put'] = 'fuel/invoice_location/$1';
+$route['api/monitoring/fuel/invoice/location/(:any)']['delete'] = 'fuel/invoice_location/$1';
+$route['api/monitoring/fuel/invoice']['get'] = 'fuel/invoice';
+$route['api/monitoring/fuel/invoice']['post'] = 'fuel/invoice';
+$route['api/monitoring/fuel/invoice/(:any)']['put'] = 'fuel/invoice/$1';
+$route['api/monitoring/fuel/invoice/(:any)']['delete'] = 'fuel/invoice/$1';
+$route['api/monitoring/fuel/params']['get'] = 'fuel/params';
+$route['api/monitoring/fuel/params']['post'] = 'fuel/params';
+$route['api/monitoring/fuel/params/(:any)']['put'] = 'fuel/params/$1';
+$route['api/monitoring/fuel/params/(:any)']['delete'] = 'fuel/params/$1';
+
+/* ENDPOINT RTU MAP */
 $route['api/rtu/(:any)']['get'] = 'rtu/index/$1';
 $route['api/rtu/(:any)']['put'] = 'rtu/update/$1';
 $route['api/rtu/(:any)']['delete'] = 'rtu/del/$1';
 $route['api/rtu']['get'] = 'rtu';
 $route['api/rtu']['post'] = 'rtu/add';
+
+/* ENDPOINT MONITORING PLN YG LAMA */
+$route['api/pln']['get'] = 'pln_billing';
+$route['api/pln']['post'] = 'pln_billing';
+$route['api/pln/(:any)']['put'] = 'pln_billing/index/$1';
+$route['api/pln/(:any)']['delete'] = 'pln_billing/index/$1';
+
+/* ENDPOINT MONITORING PLN YG BARU */
+$route['api/pln/billing']['get'] = 'pln/billing';
+$route['api/pln/billing']['post'] = 'pln/billing';
+$route['api/pln/billing/(:any)']['put'] = 'pln/billing/$1';
+$route['api/pln/billing/(:any)']['delete'] = 'pln/billing/$1';
+$route['api/pln/params']['get'] = 'pln/monitoring_params';
+$route['api/pln/params']['post'] = 'pln/monitoring_params';
+$route['api/pln/params/(:any)']['put'] = 'pln/monitoring_params/$1';
+$route['api/pln/params/(:any)']['delete'] = 'pln/monitoring_params/$1';
+
+$route['api/fuel/invoice']['get'] = 'fuel/invoice';
+$route['api/fuel/invoice']['post'] = 'fuel/invoice';
+$route['api/fuel/invoice/(:any)']['put'] = 'fuel/invoice/$1';
+$route['api/fuel/invoice/(:any)']['delete'] = 'fuel/invoice/$1';
+// perlu update
+$route['api/fuel/params']['get'] = 'fuel/monitoring_params';
+$route['api/fuel/params']['post'] = 'fuel/monitoring_params';
+$route['api/fuel/params/(:any)']['put'] = 'fuel/monitoring_params/$1';
+$route['api/fuel/params/(:any)']['delete'] = 'fuel/monitoring_params/$1';
+
+$route['api/location/gepee/divre']['get'] = 'location/gepee_divre';
+$route['api/location/gepee/divre/(:any)/witel']['get'] = 'location/gepee_witel_by_divre/$1';
+$route['api/location/gepee/witel/(:any)']['get'] = 'location/gepee_witel/$1';
+$route['api/location/gepee/witel']['get'] = 'location/gepee_witel';
+$route['api/location/divre']['get'] = 'location/divre';
+$route['api/location/divre/(:any)/witel']['get'] = 'location/witel_by_divre/$1';
+$route['api/location/witel/(:any)']['get'] = 'location/witel/$1';
+$route['api/location/witel']['get'] = 'location/witel';
+$route['api/location/gepee']['post'] = 'location/gepee';
 
 $route['api/activity/divre']['get'] = 'activity/divre';
 $route['api/activity/divre/(:any)/witel']['get'] = 'activity/witel_by_divre/$1';
@@ -101,8 +157,8 @@ $route['api/activity/chart']['get'] = 'activity/chart';
 
 $route['api/activity/availablemonth']['get'] = 'activity_schedule/available_month';
 $route['api/activity/schedule/(.*)']['get'] = 'activity_schedule';
-$route['api/activity/schedule']['get'] = 'activity_schedule';
-$route['api/activity/schedule']['post'] = 'activity_schedule';
+$route['api/activity/schedule']['get'] = 'activity_schedule/index_v2';
+$route['api/activity/schedule']['post'] = 'activity_schedule/index_v2';
 
 $route['api/activity/execution/(:any)']['get'] = 'activity_execution/index/$1';
 $route['api/activity/execution/(:any)']['post'] = 'activity_execution/index/$1';

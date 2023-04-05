@@ -6,9 +6,44 @@ class Activity_schedule_model extends CI_Model
     private $tableCategoryName = 'activity_category';
     private $tableLocationName = 'master_lokasi_gepee';
 
+    public $currUser;
+
     public function __construct()
     {
             $this->load->database('densus');
+    }
+
+    private function get_filter($filter, $exclude = [])
+    {
+        $appliedFilter = [];
+        if(count($exclude) > 0) {
+            $temp = [];
+            foreach($filter as $key => $val) {
+                if(!in_array($key, $exclude)) $temp[$key] = $val;
+            }
+            $filter = $temp;
+        }
+        
+        if(is_array($filter)) {
+            if($filter['witel']) $appliedFilter['l.witel_kode'] = $filter['witel'];
+            if($filter['divre']) $appliedFilter['l.divre_kode'] = $filter['divre'];
+            if($filter['id']) $appliedFilter['s.id'] = $filter['id'];
+            if($filter['month']) $appliedFilter['MONTH(s.created_at)'] = $filter['month'];
+        }
+
+        if(is_array($this->currUser)) {
+            $locationId = $this->currUser['locationId'];
+            if($this->currUser['level'] == 'witel') $appliedFilter['l.witel_kode'] = $locationId;
+            elseif($this->currUser['level'] == 'divre') $appliedFilter['l.divre_kode'] = $locationId;
+        }
+
+        return $appliedFilter;
+    }
+
+    private function apply_filter($filter, $exclude = [])
+    {
+        $appliedFilter = $this->get_filter($filter, $exclude);
+        $this->db->where($appliedFilter);
     }
 
     private function filter_for_curr_user($currUser)
@@ -42,10 +77,7 @@ class Activity_schedule_model extends CI_Model
             ->select($query)
             ->from($this->tableName.' AS s')
             ->join('master_lokasi_gepee AS l', 'l.id=s.id_lokasi');
-
         $query = $this->db->get();
-        // $query = $this->db->get_compiled_select();
-        // dd($query);
 
         return $query->result_array();
     }
@@ -70,8 +102,11 @@ class Activity_schedule_model extends CI_Model
         return $query->row_array();
     }
 
-    public function store($params, $month, $divreCode, $currUser)
+    public function store($params, $filter, $currUser)
     {
+        $month = $filter['month'];
+        $divreCode = $filter['divre'];
+
         $timeStr = implode('-', [date('d'), $month, date('Y')]) . ' ' . date('H:i:s');
         $timestamp = date('Y-m-d H:i:s', strtotime($timeStr));
         $body = [];
@@ -81,6 +116,11 @@ class Activity_schedule_model extends CI_Model
             ->select('id')
             ->from($this->tableLocationName)
             ->where('divre_kode', $divreCode);
+        
+        if(isset($filter['witel'])) {
+            $this->db->where('witel_kode', $filter['witel']);
+        }
+
         $this->filter_for_curr_user($currUser);
 
         $locations = $this->db->get()->result_array();
@@ -128,8 +168,11 @@ class Activity_schedule_model extends CI_Model
         return $this->db->affected_rows() > 0;
     }
 
-    public function update($params, $month, $divreCode, $currUser)
+    public function update($params, $filter, $currUser)
     {
+        $month = $filter['month'];
+        $divreCode = $filter['divre'];
+
         $timeStr = implode('-', [date('d'), $month, date('Y')]) . ' ' . date('H:i:s');
         $timestamp = date('Y-m-d H:i:s', strtotime($timeStr));
 
@@ -141,42 +184,47 @@ class Activity_schedule_model extends CI_Model
             ->where($this->tableLocationName.'.divre_kode', $divreCode)
             ->where('MONTH(created_at)', $month);
         
+        if(isset($filter['witel'])) {
+            $this->db->where($this->tableLocationName.'.witel_kode', $filter['witel']);
+        }
+        
         $savedSchedule = $this->db->get()->result_array();
-        $checked = []; $unchecked = [];
+        $checked = []; $unchecked = []; $matchedParamsIndex = [];
 
         foreach($savedSchedule AS $saved) {
-            $paramsIndex = -1;
-            
             $isExists = in_array($saved['id_category'], array_column($params, 'id_category')) && in_array($saved['id_lokasi'], array_column($params, 'id_lokasi'));
             if($isExists) {
+
+                $paramsIndex = -1;
                 for($i=0; $i<count($params); $i++) {
                     if($params[$i]['id_category'] == $saved['id_category'] && $params[$i]['id_lokasi'] == $saved['id_lokasi']) {
                         $paramsIndex = $i;
                         $i = count($params);
+
+                        array_push($matchedParamsIndex, $paramsIndex);
                     }
+                }
+                
+                if($paramsIndex < 0) {
+                    array_push($unchecked, [
+                        'id' => $saved['id'],
+                        'value' => FALSE,
+                        'updated_at' => $timestamp
+                    ]);
+                } else {
+                    array_push($checked, [
+                        'id' => $saved['id'],
+                        'value' => TRUE,
+                        'updated_at' => $timestamp
+                    ]);
                 }
             }
 
-            if($paramsIndex < 0) {
-                array_push($unchecked, [
-                    'id' => $saved['id'],
-                    'value' => FALSE,
-                    'updated_at' => $timestamp
-                ]);
-            } else {
-                array_push($checked, [
-                    'id' => $saved['id'],
-                    'value' => TRUE,
-                    'updated_at' => $timestamp
-                ]);
-            }
 
         }
 
         $checkedSuccess = false;
         $uncheckedSuccess = false;
-
-        // dd($checked);
 
         // UPDATE CHECKED
         if(count($checked) > 0) {
@@ -190,6 +238,130 @@ class Activity_schedule_model extends CI_Model
             $uncheckedSuccess = $this->db->update_batch($this->tableName, $unchecked, 'id');
         }
 
+        $newChecked = [];
+        for($i=0; $i<count($params); $i++) {
+            if(!in_array($i, $matchedParamsIndex)) {
+                array_push($newChecked, [
+                    'id_category' => $params[$i]['id_category'],
+                    'id_lokasi' => $params[$i]['id_lokasi'],
+                    'value' => TRUE,
+                    'created_at' => $timestamp,
+                    'updated_at' => $timestamp
+                ]);
+            }
+        }
+
+        if(count($newChecked) > 0) {
+            $this->db->insert_batch($this->tableName, $newChecked);
+        }
+
         return $checkedSuccess && $uncheckedSuccess;
+    }
+
+    public function save($schedule, $filter)
+    {
+        $this->apply_filter($filter);
+        $savedSchedule = $this->db
+            ->select('s.*, MONTH(s.created_at) AS month')
+            ->from("$this->tableName AS s")
+            ->join("$this->tableLocationName AS l", 'l.id=s.id_lokasi')
+            ->get()
+            ->result_array();
+            
+        $this->apply_filter($filter, ['id', 'month']);
+        $locationList = $this->db
+            ->select()
+            ->from("$this->tableLocationName AS l")
+            ->get()
+            ->result_array();
+        
+        // SET ITEM TIMESTAMP
+        $currTimestamp = date('Y-m-d H:i:s');
+        $currMonth = date('n');
+        
+        // UPDATE WHEN EXISTS
+        $updateData = [];
+        foreach($savedSchedule as $sItem) {
+            $savedItem = $sItem;
+            $matchIndex = -1;
+
+            for($i=0; $i<count($schedule); $i++) {
+                $isUpdatable = $schedule[$i]['month'] == $currMonth;
+                if($isUpdatable) {
+                    $isMatch = $savedItem['id_lokasi'] == $schedule[$i]['id_lokasi'];
+                    $isMatch = $isMatch && $savedItem['month'] == $schedule[$i]['month'];
+                    $isMatch = $isMatch && $savedItem['id_category'] == $schedule[$i]['id_category'];
+                    if($isMatch) {
+                        $matchIndex = $i;
+                        $i = count($schedule);
+                    }
+                }
+            }
+
+            if($matchIndex >= 0) {
+                $updateItem = [
+                    'id' => (int) $savedItem['id'],
+                    'value' => $schedule[$matchIndex]['value'],
+                    'updated_at' => $currTimestamp
+                ];
+
+                array_push($updateData, $updateItem);
+                array_splice($schedule, $matchIndex, 1);
+            }
+        }
+        
+        $this->db->update_batch($this->tableName, $updateData, 'id');
+        $isUpdateSuccess = $this->db->affected_rows() > 0;
+        
+        // INSERT UNEXISTS
+        $isInsertSuccess = true;
+        if($isUpdateSuccess && count($schedule) > 0) {
+            $isInsertSuccess = false;
+
+            $insertData = [];
+            foreach($schedule as $insertItem) {
+                $isInsertable = $insertItem['month'] == $currMonth;
+                $isInsertable = $isInsertable && in_array($schedule['id_lokasi'], array_column($locationList, 'id'));
+                if($isInsertable) {
+                    array_push($insertData, [
+                        'id_category' => $insertItem['id_category'],
+                        'id_lokasi' => $insertItem['id_lokasi'],
+                        'value' => $insertItem['value'],
+                        'created_at' => $timestamp,
+                        'updated_at' => $timestamp
+                    ]);
+                }
+            }
+            
+            $this->db->reset_query();
+            $this->db->update_batch($this->tableName, $updateData, 'id');
+            $isInsertSuccess = $this->db->affected_rows() > 0;
+            
+        }
+
+        $result = $isInsertSuccess ? 'successfull'
+            : ($isUpdateSuccess ? 'some_error' : 'error');
+        return $result;
+    }
+
+    public function get($filter)
+    {
+        $currMonth = date('n');
+        $query = "s.*,
+            IF(MONTH(s.created_at)='$currMonth', 1, 0) AS is_enabled,
+            (SELECT COUNT(*) FROM $this->tableExecutionName WHERE id_schedule=s.id) AS execution_count,
+            (SELECT COUNT(*) FROM $this->tableExecutionName WHERE id_schedule=s.id AND status='approved') AS approved_count";
+
+        $this->apply_filter($filter);
+        $this->db
+            ->select($query)
+            ->from($this->tableName.' AS s')
+            ->join('master_lokasi_gepee AS l', 'l.id=s.id_lokasi');
+
+        // $query = $this->db->get_compiled_select();
+        // dd($filter);
+        $query = $this->db->get();
+
+        return $query->result_array();
     }
 }

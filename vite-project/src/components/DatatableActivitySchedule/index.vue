@@ -23,11 +23,10 @@ defineExpose({ fetch });
 
 const viewStore = useViewStore();
 const isSaving = ref(false);
-const disableSave = computed(() => !activityStore.hasScheduleChanged || isSaving.value);
 
-const onSave = () => {
+const onSave = schedule => {
     isSaving.value = true;
-    activityStore.saveSchedule(response => {
+    activityStore.saveSchedule(schedule, response => {
         isSaving.value = false;
         if(!response.success)
             return;
@@ -46,7 +45,7 @@ const onSave = () => {
                     <span class="ms-2">Keterangan Activity Categories</span>
                 </button>
             </div>
-            <Datatable />
+            <Datatable @update="onSave" />
         </div>
         <div v-else class="card">
             <div class="card-body">
@@ -56,13 +55,6 @@ const onSave = () => {
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="d-flex justify-content-end py-5">
-            <button type="button" :disabled="disableSave" @click="onSave" :class="{ 'btn-loading': isSaving }"
-                class="btn btn-lg btn-icon btn-primary d-inline-flex justify-content-center align-items-center">
-                <VueFeather type="check-circle" size="1.2em" />
-                <span class="ms-2">Simpan</span>
-            </button>
         </div>
         <DialogActivityCategory v-model:visible="showCategory" />
     </div>

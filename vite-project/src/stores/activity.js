@@ -1,8 +1,9 @@
 import { defineStore } from "pinia";
-import http from "@helpers/http-common";
-import { handlingFetchErr } from "@helpers/error-handler";
 import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
+import http from "@helpers/http-common";
+import { handlingFetchErr } from "@helpers/error-handler";
+import { getApiPath } from "@helpers/get-api-path";
 
 import { allowSampleData } from "@/configs/base";
 import sampleSchedule from "@helpers/sample-data/schedule";
@@ -174,12 +175,14 @@ export const useActivityStore = defineStore("activity", {
 				return;
 			}
 
-            let url = "/activity/schedule/?ischecked=1";
+            let url = "/activity/schedule";
             if(this.filters.divre) {
-                url += "&divre=" + this.filters.divre;
+                url += "/?divre=" + this.filters.divre;
 
                 if(this.filters.witel)
                     url += "&witel=" + this.filters.witel;
+                if(this.filters.month)
+                    url += "&month=" + this.filters.month;
             }
 
             try {
@@ -249,18 +252,19 @@ export const useActivityStore = defineStore("activity", {
                 this.hasScheduleChanged = true;
         },
 
-        async saveSchedule(callback = null) {
-            const divreCode = this.filters.divre;
-            const schedule = this.userSchedule
-                .filter(item => item.value == 1)
-                .map(item => {
-                    return `${ item.id_lokasi }&${ item.createdAt.getMonth() + 1 }&${ item.id_category }`;
-                });
+        async saveSchedule(schedule, callback = null) {
+            // const divre = this.filters.divre;
+            // const witel = this.filters.witel;
+            // const schedule = this.userSchedule
+            //     .filter(item => item.value == 1)
+            //     .map(item => {
+            //         return `${ item.id_lokasi }&${ item.createdAt.getMonth() + 1 }&${ item.id_category }`;
+            //     });
 
-            const body = { schedule, divreCode };
-            console.log(body);
+            const body = { schedule };
+            const url = getApiPath("/activity/schedule", this.filters);
             try {
-                const response = await http.post("/activity/schedule", body, this.fetchHeader);
+                const response = await http.post(url, body, this.fetchHeader);
                 if(!response.data.success) {
                     console.warn(response.data);
                     callback && callback({ success: false, status: response.status });
