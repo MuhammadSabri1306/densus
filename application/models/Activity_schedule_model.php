@@ -13,9 +13,18 @@ class Activity_schedule_model extends CI_Model
             $this->load->database('densus');
     }
 
+    private function is_time_updatable($dateTimeString)
+    {
+        $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $dateTimeString);
+        $itemEpoch = $dateTime->getTimestamp();
+        
+        $updatableTime = EnvPattern::getUpdatableActivityTime();
+        return $itemEpoch >= $updatableTime->start && $itemEpoch <= $updatableTime->end;
+    }
+
     private function get_filter($filter, $exclude = [])
     {
-        $appliedFilter = [];
+        // $appliedFilter = [ $appliedFilter['YEAR(s.created_at)'] = date('Y') ];
         if(count($exclude) > 0) {
             $temp = [];
             foreach($filter as $key => $val) {
@@ -310,33 +319,34 @@ class Activity_schedule_model extends CI_Model
             }
         }
         
-        $this->db->update_batch($this->tableName, $updateData, 'id');
-        $isUpdateSuccess = $this->db->affected_rows() > 0;
+        $isUpdateSuccess = true;
+        if(count($updateData) > 0) {
+            $this->db->update_batch($this->tableName, $updateData, 'id');
+            $isUpdateSuccess = $this->db->affected_rows() > 0;
+        }
         
         // INSERT UNEXISTS
         $isInsertSuccess = true;
         if($isUpdateSuccess && count($schedule) > 0) {
-            $isInsertSuccess = false;
-
             $insertData = [];
             foreach($schedule as $insertItem) {
                 $isInsertable = $insertItem['month'] == $currMonth;
-                $isInsertable = $isInsertable && in_array($schedule['id_lokasi'], array_column($locationList, 'id'));
+                $isInsertable = $isInsertable && in_array($insertItem['id_lokasi'], array_column($locationList, 'id'));
                 if($isInsertable) {
                     array_push($insertData, [
-                        'id_category' => $insertItem['id_category'],
-                        'id_lokasi' => $insertItem['id_lokasi'],
+                        'id_category' => (int) $insertItem['id_category'],
+                        'id_lokasi' => (int) $insertItem['id_lokasi'],
                         'value' => $insertItem['value'],
-                        'created_at' => $timestamp,
-                        'updated_at' => $timestamp
+                        'created_at' => $currTimestamp,
+                        'updated_at' => $currTimestamp
                     ]);
                 }
             }
             
-            $this->db->reset_query();
-            $this->db->update_batch($this->tableName, $updateData, 'id');
-            $isInsertSuccess = $this->db->affected_rows() > 0;
-            
+            if(count($insertData) > 0) {
+                $this->db->insert_batch($this->tableName, $insertData);
+                $isInsertSuccess = $this->db->affected_rows() > 0;
+            }
         }
 
         $result = $isInsertSuccess ? 'successfull'
@@ -357,11 +367,22 @@ class Activity_schedule_model extends CI_Model
             ->select($query)
             ->from($this->tableName.' AS s')
             ->join('master_lokasi_gepee AS l', 'l.id=s.id_lokasi');
+        
+        if(isset($filter['id'])) {
+            $data = $this->db->get()->row_array();
+            $data['is_enabled'] = $this->is_time_updatable($data['created_at']);
+            
+            return $data;
+        }
+            
+        $result = $this->db->get()->result_array();
+        $data = [];
+        foreach($result as $row) {
+            $temp = $row;
+            $temp['is_enabled'] = $this->is_time_updatable($row['created_at']);
+            array_push($data, $temp);
+        }
 
-        // $query = $this->db->get_compiled_select();
-        // dd($filter);
-        $query = $this->db->get();
-
-        return $query->result_array();
+        return $data;
     }
 }
