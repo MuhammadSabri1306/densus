@@ -1,15 +1,17 @@
 import { fileURLToPath, URL } from "url";
 import dns from "dns";
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
-import { devBaseUrl, prodBaseUrl, resolveAlias, cors } from "./src/configs/base";
+import { resolveAlias, cors } from "./src/configs/server";
 
 dns.setDefaultResultOrder("verbatim");
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command }) => {
+export default defineConfig(({ mode }) => {
+	const env = loadEnv(mode, process.cwd());
+
 	const plugins = [vue()];
-	const base = (command == "serve") ? devBaseUrl : prodBaseUrl;
+	const base = env.VITE_BASE_URL;
 	const server = { cors };
 
 	const resolve = {

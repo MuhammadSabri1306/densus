@@ -23,11 +23,14 @@ export const useActivityStore = defineStore("activity", {
     state: () => ({
         location: [],
         category: [],
+
         schedule: [],
-        availableMonth: new Date().getMonth() + 1,
-        hasAvailableMonthFetched: false,
-        userSchedule: [],
         hasScheduleChanged: false,
+        updatableTime: {
+            start: null,
+            end: null
+        },
+
         execution: [],
         chart: null
     }),
@@ -142,32 +145,6 @@ export const useActivityStore = defineStore("activity", {
                 callback && callback({ success: false, status: err.response?.status });
             }
         },
-        
-        async fetchAvailableMonth(force = false, callback = null) {
-            if(this.hasAvailableMonthFetched && !force) {
-				callback && callback({ success: true, status: 200 });
-				return;
-			}
-            try {
-                const response = await http.get("/activity/availablemonth");
-                if(!response.data.month) {
-                    console.warn(response.data);
-                    callback && callback({ success: false, status: response.status });
-                    return;
-                }
-
-                this.availableMonth = response.data.month;
-                this.hasAvailableMonthFetched = true;
-                callback && callback({ success: true, status: response.status });
-            } catch(err) {
-                if(allowSampleData) {
-                    this.availableMonth = sampleAvailableMonth.month;
-                    this.hasAvailableMonthFetched = true;
-                }
-                handlingFetchErr(err);
-                callback && callback({ success: false, status: err.response?.status });
-            }
-        },
 
         async fetchSchedule(force = false, callback = null) {
             if(this.schedule.length > 0 && !force) {
@@ -187,6 +164,7 @@ export const useActivityStore = defineStore("activity", {
 
             try {
                 const response = await http.get(url, this.fetchHeader);
+                this.initUpdatableTime(response.data);
                 if(!response.data.schedule) {
                     console.warn(response.data);
                     callback && callback({ success: false, status: response.status });
@@ -209,58 +187,11 @@ export const useActivityStore = defineStore("activity", {
             }
         },
 
-        updateSheduleItem(id) {
-            const index = this.userSchedule.findIndex(item => item.id == id);
-            if(index < 0)
-                return;
-                
-            const schedule = this.userSchedule;
-            schedule[index] = schedule[index].value == 1 ? 0 : 1;
-            this.userSchedule = schedule;
-
-            if(!this.hasScheduleChanged)
-                this.hasScheduleChanged = true;
-        },
-
-        addScheduleItem(categoryId, locationId) {
-            const currDate = new Date();
-            const iso = currDate.toISOString().match(/(\d{4}\-\d{2}\-\d{2})T(\d{2}:\d{2}:\d{2})/);
-            const dateStr = iso[1] + " " + iso[2];
-
-            const scheduleItem = {
-                id_category: categoryId,
-                id_lokasi: locationId,
-                value: 1,
-                created_at: dateStr,
-                createdAt: currDate,
-                updated_at: dateStr,
-                updatedAt: currDate,
-                is_enabled: 1
-            };
-
-            this.userSchedule = [...this.userSchedule, scheduleItem];
-            if(!this.hasScheduleChanged)
-                this.hasScheduleChanged = true;
-        },
-
-        removeScheduleItem(categoryId, locationId) {
-            this.userSchedule = this.userSchedule.filter(item => {
-                return item.id_category != categoryId != item.id_lokasi != locationId;
-            });
-
-            if(!this.hasScheduleChanged)
-                this.hasScheduleChanged = true;
+        setHasScheduleChanged(val) {
+            this.hasScheduleChanged = val;
         },
 
         async saveSchedule(schedule, callback = null) {
-            // const divre = this.filters.divre;
-            // const witel = this.filters.witel;
-            // const schedule = this.userSchedule
-            //     .filter(item => item.value == 1)
-            //     .map(item => {
-            //         return `${ item.id_lokasi }&${ item.createdAt.getMonth() + 1 }&${ item.id_category }`;
-            //     });
-
             const body = { schedule };
             const url = getApiPath("/activity/schedule", this.filters);
             try {
@@ -277,8 +208,32 @@ export const useActivityStore = defineStore("activity", {
             }
         },
 
+        async getPerformance(callback) {
+            const url = getApiPath("/activity/performance", this.filters);
+            const data = { month_list: [], category_list: [], performance: [] };
+            try {
+                const response = await http.get(url, this.fetchHeader);
+                const success = response.data.success;
+                const status = response.status;
+
+                if(!response.data.success) {
+                    console.warn(response.data);
+                } else {
+                    data.month_list = response.data.month_list;
+                    data.category_list = response.data.category_list;
+                    data.performance = response.data.performance;
+                }
+
+                callback({ success, status, data });
+
+            } catch(err) {
+                handlingFetchErr(err);
+                callback({ success: false, status: err.response?.status, data });
+            }
+        },
+
         async fetchExecution(scheduleId, force = false, callback = null) {
-            if(this.schedule.length > 0 && !force) {
+            if(this.execution.length > 0 && !force) {
 				callback && callback({ success: true, status: 200 });
 				return;
 			}
@@ -298,6 +253,31 @@ export const useActivityStore = defineStore("activity", {
                     
                 handlingFetchErr(err);
                 callback && callback({ success: false, status: err.response?.status });
+            }
+        },
+
+        async getExecution(scheduleId, callback) {
+            const data = { schedule: null, executionList: [] };
+            try {
+                const response = await http.get("/activity/execution/" + scheduleId, this.fetchHeader);
+                this.initUpdatableTime(response.data);
+                if(!response.data.executionList) {
+                    console.warn(response.data);
+                    callback({ success: false, status: response.status, data });
+                    return;
+                }
+
+                data.executionList = response.data.executionList;
+                data.schedule = response.data.schedule;
+                callback({ success: true, status: response.status, data });
+            } catch(err) {
+                if(allowSampleData) {
+                    data.executionList = sampleExecution.executionList;
+                    data.schedule = sampleExecution.schedule;
+                }
+                
+                handlingFetchErr(err);
+                callback({ success: false, status: err.response?.status, data });
             }
         },
 
@@ -431,6 +411,13 @@ export const useActivityStore = defineStore("activity", {
                 handlingFetchErr(err);
                 callback && callback({ success: false, status: err.response?.status });
                 
+            }
+        },
+
+        initUpdatableTime(data) {
+            if(!this.updatableTime.start && data.updatableTime) {
+                this.updatableTime.start = new Date(data.updatableTime.start);
+                this.updatableTime.end = new Date(data.updatableTime.end);
             }
         }
 

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, reactive, computed, onMounted, watch } from "vue";
 import { useViewStore } from "@stores/view";
 import { useUserStore } from "@stores/user";
 import ListboxFilter from "@components/ListboxFilter.vue";
@@ -8,8 +8,23 @@ const emit = defineEmits(["apply"]);
 const props = defineProps({
     requireDivre: { type: Boolean, default: true },
     requireWitel: { type: Boolean, default: false },
-    requireMonth: { type: Boolean, default: false }
+    requireMonth: { type: Boolean, default: false },
+    autoApply: { type: Function, default: () => false }
 });
+
+const viewStore = useViewStore();
+const tempFilters = reactive({
+    divre: viewStore.filters.divre,
+    witel: viewStore.filters.witel,
+    month: viewStore.filters.month
+});
+
+const getFiltersValue = () => {
+    const divre = tempFilters.divre;
+    const witel = tempFilters.witel;
+    const month = tempFilters.month;
+    return { divre, witel, month };
+};
 
 const userStore = useUserStore();
 const currUser = computed(() => {
@@ -19,11 +34,10 @@ const currUser = computed(() => {
     return { level, location, locationId };
 });
 
-const viewStore = useViewStore();
 const disableSubmit = computed(() => {
-    const divre = viewStore.filters.divre;
-    const witel = viewStore.filters.witel;
-    const month = viewStore.filters.month;
+    const divre = tempFilters.divre;
+    const witel = tempFilters.witel;
+    const month = tempFilters.month;
 
     if(props.requireDivre)
         return props.requireDivre && !divre;
@@ -38,36 +52,42 @@ const listboxWitel = ref(null);
 const listboxMonth = ref(null);
 
 const onDivreChange = val => {
-    viewStore.setFilter({ divre: val });
+    tempFilters.divre = val;
     listboxWitel.value.fetch(() => viewStore.getWitelByDivre(val, "gepee"));
 };
 
-const onWitelChange = val => viewStore.setFilter({ witel: val });
-const onMonthChange = val => viewStore.setFilter({ month: val });
+const onWitelChange = val => tempFilters.witel = val;
+const onMonthChange = val => tempFilters.month = val;
 
-onMounted(() => {
-    listboxMonth.value.fetch(() => viewStore.monthList);
-    if(!viewStore.filters.month) {
-        const month = new Date().getMonth() + 1;
-        viewStore.setFilter({ month });
-        listboxMonth.value.setValue(month);
+const runAutoApply = () => {
+    if(typeof props.autoApply == "function" && props.autoApply(getFiltersValue())) {
+        emit("apply", getFiltersValue());
     }
+};
+
+const setupFilter = () => {
+    listboxMonth.value.fetch(() => viewStore.monthList);
+
+    if(!tempFilters.month)
+        tempFilters.month = new Date().getMonth() + 1;
+
+    listboxMonth.value.setValue(tempFilters.month);
 
     if(currUser.value.level == "divre") {
 
-        viewStore.setFilter({ divre: currUser.value.locationId });
+        tempFilters.divre = currUser.value.locationId;
         listboxDivre.value.setValue(currUser.value.locationId);
         listboxDivre.value.setDisabled(true);
 
         listboxWitel.value.fetch(() => viewStore.getWitelByDivre(currUser.value.locationId, "gepee"));
         listboxDivre.value.fetch(() => viewStore.getDivre("gepee"));
 
-        if(viewStore.filters.witel)
-            listboxWitel.value.setValue(viewStore.filters.witel);
+        if(tempFilters.witel)
+            listboxWitel.value.setValue(tempFilters.witel);
         
     } else if(currUser.value.level == "witel") {
         
-        viewStore.setFilter({ witel: currUser.value.locationId });
+        tempFilters.witel = currUser.value.locationId;
         listboxWitel.value.setValue(currUser.value.locationId);
         listboxWitel.value.setDisabled(true);
 
@@ -80,25 +100,44 @@ onMounted(() => {
                     return;
 
                 const { divre_kode } = data[1];
-                viewStore.setFilter({ divre: divre_kode });
+                tempFilters.divre = divre_kode;
                 listboxDivre.value.setValue(divre_kode)
-                listboxDivre.value.fetch(
-                    () => viewStore.getDivre("gepee"),
-                    () => emit("apply")
-                );
+                listboxDivre.value.fetch(() => viewStore.getDivre("gepee"));
             }
         );
 
     } else {
 
         listboxDivre.value.fetch(() => viewStore.getDivre());
-        if(viewStore.filters.divre)
-            listboxDivre.value.setValue(viewStore.filters.divre);
-        if(viewStore.filters.witel)
-            listboxWitel.value.setValue(viewStore.filters.witel);
+        if(tempFilters.divre) {
+            listboxDivre.value.setValue(tempFilters.divre);
+            listboxWitel.value.fetch(() => viewStore.getWitelByDivre(tempFilters.divre));
+        }
+        if(tempFilters.witel)
+            listboxWitel.value.setValue(tempFilters.witel);
 
     }
+
+    runAutoApply();
+};
+
+onMounted(() => {
+    setupFilter();
 });
+
+// watch(() => viewStore.filters, appliedFilter => {
+//     const hasDivreApplied = tempFilters.divre != appliedFilter.divre;
+//     const hasWitelApplied = tempFilters.witel != appliedFilter.witel;
+//     const hasMonthApplied = tempFilters.month != appliedFilter.month;
+//     console.log(hasDivreApplied, hasWitelApplied, hasMonthApplied);
+//     if(hasDivreApplied && hasWitelApplied && hasMonthApplied)
+//         return;
+
+//     tempFilters.divre = appliedFilter.divre;
+//     tempFilters.witel = appliedFilter.witel;
+//     tempFilters.month = appliedFilter.month;
+//     setupFilter();
+// });
 </script>
 <template>
     <div class="row">
@@ -108,7 +147,7 @@ onMounted(() => {
                     <h5 class="card-title">Filter</h5>
                 </div>
                 <div class="card-body">
-                    <form @submit.prevent="$emit('apply')">
+                    <form @submit.prevent="$emit('apply', getFiltersValue())">
                         <div class="row justify-content-end align-items-end">
                             <div class="col-12 col-md-4 col-xl-6">
                                 <div class="mb-2">

@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * LOAD ENV PATTERN
  *
  */
-require_once APPPATH . 'config/env_pattern.php';
 $envPattern = EnvPattern::getPattern();
 
 /*
@@ -501,7 +500,9 @@ $config['compress_output'] = FALSE;
 | helper' page of the user guide for information regarding date handling.
 |
 */
-$config['time_reference'] = 'local';
+$config['time_reference'] = $envPattern->timezone->refefrence;
+$config['time_zone'] = $envPattern->timezone->location;
+$config['date.timezone'] = $envPattern->timezone->location;
 
 /*
 |--------------------------------------------------------------------------

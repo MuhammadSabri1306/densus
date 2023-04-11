@@ -254,4 +254,37 @@ class Activity extends RestController
 
         }
     }
+
+    public function performance_get()
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+
+        if($status === 200) {
+            $this->load->model('activity_execution_model');
+
+            $currUser = $this->auth_jwt->get_payload();
+            $this->activity_execution_model->currUser = $currUser;
+
+            $filter = [
+                'divre' => $this->input->get('divre'),
+                'witel' => $this->input->get('witel'),
+                'month' => $this->input->get('month')
+            ];
+
+            $data = $this->activity_execution_model->get_performance_v2($filter);
+            if(is_array($data)) {
+                $data['success'] = true;
+            } else {
+                $data = REST_ERR_BAD_REQ_DATA;
+                $status = REST_ERR_BAD_REQ_STATUS;
+            }
+        }
+        
+        $this->response($data, $status);
+    }
 }

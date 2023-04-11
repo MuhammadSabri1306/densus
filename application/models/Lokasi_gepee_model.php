@@ -97,4 +97,17 @@ class Lokasi_gepee_model extends CI_Model
             ->get();
         return $query->result();
     }
+
+    public function save($body, $id = null, $currUser = null)
+    {
+        if(is_null($id)) {
+            $success = $this->db->insert($this->tableName, $body);
+        } else {
+            if($currUser) $this->apply_filter(null, $currUser);
+            $this->db->where('id', $id);
+
+            $success = $this->db->update($this->tableName, $body);
+        }
+        return $success;
+    }
 }

@@ -1,5 +1,6 @@
 <script setup>
-import { computed } from "vue";
+import { ref, computed } from "vue";
+import Image from "primevue/image";
 defineEmits(["close"]);
 
 const props = defineProps({
@@ -12,6 +13,14 @@ const evidenceFileName = computed(() => {
     const pathSection = rawText.split("/");
     return pathSection[pathSection.length - 1];
 });
+
+const evidenceExt = computed(() => {
+    const nameArr = (props.data.evidence || "").split(".");
+    return nameArr[nameArr.length - 1];
+});
+
+const isEvidenceImg = computed(() => evidenceExt.value == "jpg" || evidenceExt.value == "jpeg" || evidenceExt.value == "png");
+console.log(isEvidenceImg.value);
 </script>
 <template>
     <section>
@@ -37,7 +46,11 @@ const evidenceFileName = computed(() => {
                     <tr>
                         <th>Evidence</th>
                         <td>
-                            <a :href="data.evidence_url" target="_blank">{{ data.evidence }}</a>
+                            <div v-if="isEvidenceImg" class="position-relative">
+                                <span>{{ data.evidence }}</span>
+                                <Image :src="data.evidence_url" alt="gambar evidence" preview class="evidence-img" />
+                            </div>
+                            <a v-else :href="data.evidence_url" target="_blank">{{ data.evidence }}</a>
                         </td>
                     </tr>
                     <tr>
@@ -66,3 +79,14 @@ const evidenceFileName = computed(() => {
         </div>
     </section>
 </template>
+<style scoped>
+
+.evidence-img {
+    @apply tw-absolute tw-inset-0 tw-opacity-0;
+}
+
+.evidence-img :deep(img) {
+    @apply tw-w-full tw-h-full;
+}
+
+</style>

@@ -6,9 +6,17 @@ class Activity_execution_model extends CI_Model
     private $tableCategoryName = 'activity_category';
     private $tableLocationName = 'master_lokasi_gepee';
 
+    public $currUser;
+
     public function __construct()
     {
             $this->load->database('densus');
+    }
+
+    private function mysql_updatable_time($fieldName)
+    {
+        $updatableTime = EnvPattern::getUpdatableActivityTime();
+        return "UNIX_TIMESTAMP(e.created_at)>=$updatableTime->start AND UNIX_TIMESTAMP(e.created_at)<=$updatableTime->end";
     }
 
     private function filter_for_curr_user($currUser)
@@ -24,8 +32,14 @@ class Activity_execution_model extends CI_Model
     {
         $this->filter_for_curr_user($currUser);
 
+        $selectFields = [
+            'e.*',
+            "IF(e.evidence>'', CONCAT('".base_url(UPLOAD_ACTIVITY_EVIDENCE_PATH)."', e.evidence), '#') AS evidence_url"
+        ];
+        $selectQuery = implode(', ', $selectFields);
+
         $this->db
-            ->select("e.*, IF(e.evidence>'', CONCAT('".base_url(UPLOAD_ACTIVITY_EVIDENCE_PATH)."', e.evidence), '#') AS evidence_url")
+            ->select($selectQuery)
             ->from("$this->tableName AS e")
             ->join("$this->tableScheduleName AS s", 's.id=e.id_schedule')
             ->join("$this->tableLocationName AS l", 'l.id=s.id_lokasi')
@@ -231,4 +245,150 @@ class Activity_execution_model extends CI_Model
         $data = $query->result();
         return $data;
     }
+
+    public function get_performance($filter)
+    {
+        $selectScheduleId = 'SELECT s.id FROM activity_schedule AS s WHERE s.id_category=c.id AND s.id_lokasi=loc.id
+            AND MONTH(s.created_at)=m.month AND YEAR(s.created_at)="2023" AND s.value=1';
+        $selectExecCount = 'SELECT COUNT(*) FROM activity_execution AS e JOIN activity_schedule AS s ON s.id=e.id_schedule
+            WHERE s.id_category=c.id AND s.id_lokasi=loc.id AND MONTH(s.created_at)=m.month AND YEAR(s.created_at)="'.date('Y').'"';
+        $selectApprovedCount = $selectExecCount . ' AND e.status="approved"';
+
+        $selectList = [ 'loc.id AS id_lokasi', 'loc.alamat_pel_pln', 'loc.divre_kode', 'loc.divre_name',
+            'loc.witel_kode', 'loc.witel_name', 'loc.sto_kode', 'loc.sto_name', 'm.month', 'c.id AS category_id',
+            'c.alias AS category_alias', 'c.activity AS category_name', "($selectScheduleId) AS id_schedule",
+            "($selectExecCount) AS exec_count", "($selectApprovedCount) AS approved_count" ];
+        $querySelect = implode(', ', $selectList);
+
+        $appliedMonth = $filter['month'] ? [$filter['month']] : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+        $monthQueryList = array_map(function($item) {
+            return "SELECT $item AS month";
+        }, $appliedMonth);
+        $tableMonth = '('.implode(' UNION ALL ', $monthQueryList).')';
+
+        $appliedLocation = [];
+        if(is_array($filter)) {
+            if($filter['witel']) $appliedLocation['loc.witel_kode'] = $filter['witel'];
+            if($filter['divre']) $appliedLocation['loc.divre_kode'] = $filter['divre'];
+        }
+        if(is_array($this->currUser)) {
+            if($this->currUser['level'] == 'witel') $appliedLocation['loc.witel_kode'] = $this->currUser['locationId'];
+            if($this->currUser['level'] == 'divre') $appliedLocation['loc.divre_kode'] = $this->currUser['locationId'];
+        }
+        $whereQueryList = [];
+        foreach($appliedLocation as $key => $val) {
+            array_push($whereQueryList, "$key='$val'");
+        }
+        $queryWhere = count($whereQueryList) > 0 ? 'WHERE '.implode(' AND ', $whereQueryList) : '';
+
+        $query = "SELECT $querySelect FROM $this->tableLocationName AS loc
+            CROSS JOIN $this->tableCategoryName AS c
+            CROSS JOIN $tableMonth AS m
+            $queryWhere
+            ORDER BY loc.id, m.month, c.id";
+        
+        $data = $this->db
+            ->query($query)
+            ->result_array();
+
+        $data = array_map(function($item) {
+            $item['exec_count'] = (int) $item['exec_count'];
+            $item['approved_count'] = (int) $item['approved_count'];
+            $item['percent'] = $item['exec_count'] > 0 ? $item['approved_count'] / $item['exec_count'] * 100 : 0;
+            return $item;
+        }, $data);
+        return $data;
+    }
+
+    public function get_performance_v2($filter)
+    {
+        $locationFilter = [];
+        if(is_array($filter)) {
+            if($filter['witel']) $locationFilter['witel_kode'] = $filter['witel'];
+            if($filter['divre']) $locationFilter['divre_kode'] = $filter['divre'];
+        }
+        if(is_array($this->currUser)) {
+            if($this->currUser['level'] == 'witel') $locationFilter['witel_kode'] = $this->currUser['locationId'];
+            if($this->currUser['level'] == 'divre') $locationFilter['divre_kode'] = $this->currUser['locationId'];
+        }
+        foreach($locationFilter as $lfKey => $lfVal) {
+            $this->db->where($lfKey, $lfVal);
+        }
+        $locationList = $this->db
+            ->select()
+            ->from($this->tableLocationName)
+            ->get()
+            ->result_array();
+
+        $categoryList = $this->db
+            ->select()
+            ->from($this->tableCategoryName)
+            ->get()
+            ->result_array();
+        
+        $startMonth = $filter['month'] ? (int) $filter['month'] : 1;
+        $endMonth = $filter['month'] ? (int) $filter['month'] : 12;
+        $currYear = date('Y');
+        $result = [ 'month_list' => [], 'category_list' => $categoryList, 'performance' => [] ];
+        foreach($locationList as $locData) {
+
+            $item = [ 'location' => $locData, 'item' => [] ];
+
+            for($month=$startMonth; $month<=$endMonth; $month++) {
+
+                if(!in_array($month, $result['month_list'])) {
+                    array_push($result['month_list'], $month);
+                }
+
+                foreach($categoryList as $catgData) {
+                    
+                    $locId = $locData['id'];
+                    $catgId = $catgData['id'];
+                    $selectScheduleId = "SELECT s.id FROM activity_schedule AS s WHERE s.id_category=$catgId AND s.id_lokasi=$locId
+                        AND MONTH(s.created_at)='$month' AND YEAR(s.created_at)='$currYear' AND s.value=1
+                        ORDER BY UNIX_TIMESTAMP(s.created_at) DESC LIMIT 1";
+                    $selectExecCount = "SELECT COUNT(*) FROM activity_execution AS e JOIN activity_schedule AS s ON s.id=e.id_schedule
+                        WHERE s.id_category=$catgId AND s.id_lokasi=$locId AND MONTH(s.created_at)='$month' AND YEAR(s.created_at)='$currYear'";
+                    $selectApprovedCount = $selectExecCount . ' AND e.status="approved"';
+
+                    $querySelect = "SELECT ($selectScheduleId) AS id_schedule, ($selectExecCount) AS exec_count,
+                        ($selectApprovedCount) AS approved_count";
+                    $queryResult = $this->db->query($querySelect)->row_array();
+
+                    $colItem = null;
+                    if(is_array($queryResult)) {
+                        $colItem = $queryResult;
+                        $colItem['percent'] = $queryResult['exec_count'] < 1 ? 0 : $queryResult['approved_count'] / $queryResult['exec_count'] * 100;
+                        $colItem['isExists'] = $queryResult['id_schedule'] ? true : false;
+                    }
+                    array_push($item['item'], $colItem);
+                                    
+                }
+            }
+
+            array_push($result['performance'], $item);
+
+        }
+        
+        return $result;
+    }
 }
+
+// SELECT
+// 	loc.id AS id_lokasi,
+//     m.month,
+// 	c.id AS id_category,
+//     (SELECT COUNT(*) FROM activity_schedule AS s
+//      	WHERE s.id_category=c.id AND s.id_lokasi=loc.id AND MONTH(s.created_at)=m.month) AS schedule_count,
+//     (SELECT COUNT(*) FROM activity_execution AS e JOIN activity_schedule AS s ON s.id=e.id_schedule
+//      	WHERE s.id_category=c.id AND s.id_lokasi=loc.id AND MONTH(s.created_at)=m.month) AS exec_count,
+//     (SELECT COUNT(*) FROM activity_execution AS e JOIN activity_schedule AS s ON s.id=e.id_schedule
+//      	WHERE s.id_category=c.id AND s.id_lokasi=loc.id AND MONTH(s.created_at)=m.month) AS approved_count
+// FROM master_lokasi_gepee AS loc
+// CROSS JOIN activity_category AS c
+// CROSS JOIN (
+//     SELECT 3 AS month UNION ALL
+//     SELECT 4 AS month
+// ) AS m
+// WHERE loc.witel_kode='DTT-ka200000'
+// ORDER BY loc.id, m.month, c.id

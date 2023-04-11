@@ -18,8 +18,14 @@ class Activity_execution extends RestController
         if($status === 200) {
             
             $currUser = $this->auth_jwt->get_payload();
+
             $this->load->model('activity_execution_model');
 			$executionList = $this->activity_execution_model->get_filtered($scheduleId, $currUser);
+
+            $this->load->model('activity_schedule_model');
+            $this->activity_schedule_model->currUser = $currUser;
+            $schedule = $this->activity_schedule_model->get([ 'id' => $scheduleId ]);
+
             $this->user_log
                 ->userId($currUser['id'])
                 ->username($currUser['username'])
@@ -27,7 +33,11 @@ class Activity_execution extends RestController
                 ->activity('get activity:pelaksanaan')
                 ->log();
             
-			$data = [ 'executionList' => $executionList, 'success' => true ];
+			$data = [
+                'schedule' => $schedule,
+                'executionList' => $executionList,
+                'success' => true
+            ];
 			$this->response($data, 200);
 
         } else {
@@ -44,6 +54,13 @@ class Activity_execution extends RestController
 
     public function index_post($scheduleId)
     {
+        // $status = REST_ERR_BAD_REQ_STATUS;
+        // $data = [
+        //     'success' => false,
+        //     'message' => 'Penambahan data pada fitur ini ditutup untuk sementara waktu. Mohon maaf atas ketidaknyamanannya.'
+        // ];
+        // $this->response($data, $status);
+        
         $this->load->library('input_handler');
         $status = $this->auth_jwt->auth('viewer', 'teknisi');
 
@@ -67,7 +84,7 @@ class Activity_execution extends RestController
                 $filename .= '_' . time() . '.' . $fileInfo['extension'];
 
                 $config['upload_path'] = FCPATH . UPLOAD_ACTIVITY_EVIDENCE_PATH;
-                $config['allowed_types'] = 'jpg|jpeg|pdf|xls|xlsx';
+                $config['allowed_types'] = 'jpg|jpeg|png|pdf';
                 $config['file_name'] = $filename;
 
                 $this->load->library('upload', $config);
@@ -206,9 +223,16 @@ class Activity_execution extends RestController
         $status = $this->auth_jwt->auth('admin');
 		if($status === 200) {
 			$currUser = $this->auth_jwt->get_payload();
+            $body = [
+                'status' => 'approved',
+                'user_id' => $currUser['id'],
+                'user_username' => $currUser['username'],
+                'user_name' => $currUser['name'],
+                'updated_at' => date('Y-m-d H:i:s')
+            ];
 
             $this->load->model("activity_execution_model");
-            $success = $this->activity_execution_model->approve($execId, $currUser);
+            $success = $this->activity_execution_model->save($body, $execId, $currUser);
             $data = [ 'success' => $success ];
 
             $this->user_log
@@ -250,9 +274,17 @@ class Activity_execution extends RestController
             
             if($status == 200){
                 $rejectDesc = $input['body']['reject_description'];
-
+                $body = [
+                    'status' => 'rejected',
+                    'reject_description' => $rejectDesc,
+                    'user_id' => $currUser['id'],
+                    'user_username' => $currUser['username'],
+                    'user_name' => $currUser['name'],
+                    'updated_at' => date('Y-m-d H:i:s')
+                ];
+    
                 $this->load->model("activity_execution_model");
-				$success = $this->activity_execution_model->reject($execId, $rejectDesc, $currUser);
+                $success = $this->activity_execution_model->save($body, $execId, $currUser);
                 $data = [ 'success' => $success ];
 
                 $this->user_log

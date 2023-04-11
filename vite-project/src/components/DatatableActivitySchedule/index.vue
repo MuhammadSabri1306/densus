@@ -11,11 +11,9 @@ const isLoading = ref(true);
 const showCategory = ref(false);
 
 const activityStore = useActivityStore();
-const fetch = async () => {
+const fetch = () => {
     show.value = true;
     isLoading.value = true;
-    await activityStore.fetchAvailableMonth();
-
     activityStore.fetchLocation(true, () => isLoading.value = false);
 };
 

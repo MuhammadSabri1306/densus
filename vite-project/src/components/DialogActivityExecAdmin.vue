@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useActivityStore } from "@stores/activity";
 import { useViewStore } from "@stores/view";
@@ -7,11 +7,13 @@ import Dialog from "primevue/dialog";
 import Skeleton from "primevue/skeleton";
 import SectionActivityExecDetail from "@components/SectionActivityExecDetail.vue";
 
+const emit = defineEmits(["update", "loaded"]);
+
 const route = useRoute();
 const scheduleId = computed(() => route.params.scheduleId);
 
 const activityStore = useActivityStore();
-const currSchedule = computed(() => activityStore.schedule.find(item => item.id == scheduleId.value)|| null);
+const currSchedule = ref(null);
 const currDateString = () => new Intl.DateTimeFormat('id', { dateStyle: 'long'}).format() || null;
 
 const currLocation = computed(() => {
@@ -33,23 +35,38 @@ const title = computed(() => {
     return `${ currCategory.no }. ${ currCategory.activity } (${ currCategory.alias })`;
 });
 
-const executionList = computed(() => activityStore.execution);
+const executionList = ref([]);
 activityStore.fetchCategory();
 
+const viewStore = useViewStore();
 const isLoading = ref(false);
 const fetch = () => {
     isLoading.value = true;
-    activityStore.fetchExecution(scheduleId.value, true, () => isLoading.value = false);
+    activityStore.getExecution(scheduleId.value, ({ data }) => {
+
+        executionList.value = data.executionList;
+        currSchedule.value = data.schedule;
+
+        if(data.schedule) {
+            viewStore.setFilter({
+                divre: data.schedule.divre_kode,
+                witel: data.schedule.witel_kode
+            });
+            nextTick(() => emit("loaded"));
+        }
+
+        isLoading.value = false;
+    });
 };
 fetch();
 
-const viewStore = useViewStore();
 const router = useRouter();
 const currDetail = ref(null);
 
 const showDialogList = ref(true);
-const showDialogDetail = ref(false);
 const showRejectSection = ref(false);
+const showDialogDetail = ref(false);
+const showDialogEvidence = ref(false);
 
 const dialog = {
     onListHide: () => {
@@ -64,6 +81,14 @@ const dialog = {
         currDetail.value = currItem;
         showDialogDetail.value = true;
         showDialogList.value = false;
+    },
+    onEvidenceHide: () => {
+        showDialogDetail.value = true;
+        showDialogEvidence.value = false;
+    },
+    showEvidence: () => {
+        showDialogEvidence.value = true;
+        showDialogDetail.value = false;
     }
 };
 
@@ -78,6 +103,7 @@ const onApproved = () => {
         viewStore.showToast("Approve Activity", "Berhasil melakukan Approve pada Activity", true);
         showDialogDetail.value = false;
         fetch();
+        emit("update");
     });
 };
 
@@ -105,6 +131,7 @@ const onReject = () => {
         showDialogDetail.value = false;
         fetch();
         hideRejectSection();
+        emit("update");
     });
 };
 </script>
@@ -144,10 +171,10 @@ const onReject = () => {
                                 <td>
                                     <b v-if="item.status == 'submitted'" class="text-capitalize text-muted">submitted</b>
                                     <span v-else-if="item.status == 'approved'">
-                                        Telah di-<b class="text-capitalize font-primary">approve</b> oleh <b>{{ item.user_username }}/{{ item.user_name }}</b>
+                                        <b class="text-capitalize font-primary">approve</b> oleh <b>{{ item.user_username }}/{{ item.user_name }}</b>
                                     </span>
                                     <span v-else>
-                                        Telah di-<b class="text-capitalize font-danger">reject</b> oleh <b>{{ item.user_username }}/{{ item.user_name }}</b>
+                                        <b class="text-capitalize font-danger">reject</b> oleh <b>{{ item.user_username }}/{{ item.user_name }}</b>
                                     </span>
                                 </td>
                                 <td>

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useActivityStore } from "@stores/activity";
 import { useViewStore } from "@stores/view";
@@ -10,11 +10,13 @@ import FormActivityExecAdd from "@components/FormActivityExecAdd.vue";
 import FormActivityExecEdit from "@components/FormActivityExecEdit.vue";
 import SectionActivityExecDetail from "@components/SectionActivityExecDetail.vue";
 
+const emit = defineEmits(["update", "loaded"]);
+
 const route = useRoute();
 const scheduleId = computed(() => route.params.scheduleId);
 
 const activityStore = useActivityStore();
-const currSchedule = computed(() => activityStore.schedule.find(item => item.id == scheduleId.value)|| null);
+const currSchedule = ref(null);
 
 const currLocation = computed(() => {
     const location = activityStore.location;
@@ -39,13 +41,28 @@ const currDateString = () => {
     return new Intl.DateTimeFormat('id', { dateStyle: 'long'}).format() || null;
 };
 
-const executionList = computed(() => activityStore.execution);
+const executionList = ref([]);
 activityStore.fetchCategory();
 
+const viewStore = useViewStore();
 const isLoading = ref(false);
 const fetch = () => {
     isLoading.value = true;
-    activityStore.fetchExecution(scheduleId.value, true, () => isLoading.value = false);
+    activityStore.getExecution(scheduleId.value, ({ data }) => {
+
+        executionList.value = data.executionList;
+        currSchedule.value = data.schedule;
+        
+        if(data.schedule) {
+            viewStore.setFilter({
+                divre: data.schedule.divre_kode,
+                witel: data.schedule.witel_kode
+            });
+            nextTick(() => emit("loaded"));
+        }
+
+        isLoading.value = false;
+    });
 };
 fetch();
 
@@ -58,7 +75,6 @@ const resetReactiveData = () => {
 };
 
 const router = useRouter();
-const viewStore = useViewStore();
 
 const showDialogList = ref(true);
 const showDialogDetail = ref(false);
@@ -101,11 +117,13 @@ const dialog = {
         viewStore.showToast("Input Activity", "Berhasil menyimpan Checklist Activity baru.", true);
         fetch();
         showDialogAdd.value = false;
+        emit("update");
     },
     onFormEditSave: () => {
         viewStore.showToast("Update Activity", "Berhasil menyimpan Checklist Activity.", true);
         fetch();
         showDialogEdit.value = false;
+        emit("update");
     }
 };
 
@@ -120,8 +138,11 @@ const onDelete = execId => {
         viewStore.showToast("Hapus Activity", "Berhasil menghapus Checklist Activity.", true);
         fetch();
         resetReactiveData();
+        emit("update");
     });
 };
+
+const isEnabled = computed(() => currSchedule.value && currSchedule.value.is_enabled);
 </script>
 <template>
     <div>
@@ -137,7 +158,7 @@ const onDelete = execId => {
                             <p class="mb-0">Check Activity {{ currDateString() }}</p>
                             <p class="mb-0">{{ currLocation.sto_name }}</p>
                         </div>
-                        <div v-if="!isLoading" class="col-auto ms-auto mt-4 mt-md-auto">
+                        <div v-if="!isLoading && isEnabled" class="col-auto ms-auto mt-4 mt-md-auto">
                             <button type="button" @click="dialog.showFormAdd" class="btn btn-lg btn-primary shadow-sm">
                                 <VueFeather type="plus" size="1.2em" class="middle" />
                                 <span class="ms-1 middle">Tambah</span>
@@ -172,7 +193,7 @@ const onDelete = execId => {
                                     </span>
                                 </td>
                                 <td>
-                                    <button v-if="item.status == 'approved'" type="button" @click="dialog.showDetail(item)" class="btn btn-primary">Detail</button>
+                                    <button v-if="item.status == 'approved' || !isEnabled" type="button" @click="dialog.showDetail(item)" class="btn btn-primary">Detail</button>
                                     <ButtonGroupAction v-else @detail="dialog.showDetail(item)" @edit="dialog.showFormEdit(item)" @delete="onDelete(item.id)" />
                                 </td>
                             </tr>

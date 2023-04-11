@@ -78,6 +78,11 @@ class EnvPattern {
 
     public static $api_ldap = 'https://juarayya.telkom.co.id/api/ldap/';
 
+    public static $timezone = [
+        'reference' => 'gmt',
+        'location' => 'Asia/Jakarta'
+    ];
+
     public static function getPattern()
     {
         $key = EnvPattern::$isLocally ? 'local' : 'cloud';
@@ -87,7 +92,29 @@ class EnvPattern {
             'db_densus' => (object) EnvPattern::$db_densus[$key],
             'db_opnimus' => (object) EnvPattern::$db_opnimus[$key],
             'db_mockapi' => (object) EnvPattern::$db_mockapi[$key],
-            'api_osase' => EnvPattern::$api_osase[$key]
+            'api_osase' => EnvPattern::$api_osase[$key],
+            'timezone' => (object) EnvPattern::$timezone
+        ];
+    }
+
+    public static function getUpdatableActivityTime($toString = false)
+    {
+        $startTime = new DateTime('now');
+        $startTime->setTime(0, 0, 0);
+
+        $endTime = new DateTime('now');
+        $endTime->setTime(23, 59, 59);
+
+        // First time on this month
+        // $startTime->modify('first day of this month');
+        // First time on this year
+        $startTime->modify('first day of January ' . $startTime->format('Y'));
+        // Last time on this month
+        $endTime->modify('last day of this month');
+
+        return (object) [
+            'start' => $toString ? $startTime->format('Y-m-d H:i:s') : $startTime->getTimestamp(),
+            'end' => $toString ? $endTime->format('Y-m-d H:i:s') : $endTime->getTimestamp()
         ];
     }
 

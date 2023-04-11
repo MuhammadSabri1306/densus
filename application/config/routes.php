@@ -154,6 +154,7 @@ $route['api/activity/lokasi']['get'] = 'activity/lokasi';
 $route['api/activity/category']['get'] = 'activity/category';
 $route['api/activity/dashboard']['get'] = 'activity/dashboard';
 $route['api/activity/chart']['get'] = 'activity/chart';
+$route['api/activity/performance']['get'] = 'activity/performance';
 
 $route['api/activity/availablemonth']['get'] = 'activity_schedule/available_month';
 $route['api/activity/schedule/(.*)']['get'] = 'activity_schedule';

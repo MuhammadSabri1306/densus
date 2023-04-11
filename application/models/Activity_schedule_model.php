@@ -22,6 +22,12 @@ class Activity_schedule_model extends CI_Model
         return $itemEpoch >= $updatableTime->start && $itemEpoch <= $updatableTime->end;
     }
 
+    private function mysql_updatable_time($fieldName)
+    {
+        $updatableTime = EnvPattern::getUpdatableActivityTime();
+        return "UNIX_TIMESTAMP($fieldName)>=$updatableTime->start AND UNIX_TIMESTAMP($fieldName)<=$updatableTime->end";
+    }
+
     private function get_filter($filter, $exclude = [])
     {
         // $appliedFilter = [ $appliedFilter['YEAR(s.created_at)'] = date('Y') ];
@@ -274,6 +280,7 @@ class Activity_schedule_model extends CI_Model
             ->select('s.*, MONTH(s.created_at) AS month')
             ->from("$this->tableName AS s")
             ->join("$this->tableLocationName AS l", 'l.id=s.id_lokasi')
+            ->where($this->mysql_updatable_time('s.created_at'))
             ->get()
             ->result_array();
             
@@ -286,36 +293,41 @@ class Activity_schedule_model extends CI_Model
         
         // SET ITEM TIMESTAMP
         $currTimestamp = date('Y-m-d H:i:s');
-        $currMonth = date('n');
         
         // UPDATE WHEN EXISTS
         $updateData = [];
-        foreach($savedSchedule as $sItem) {
-            $savedItem = $sItem;
-            $matchIndex = -1;
+        for($j=0; $j<count($savedSchedule); $j++) {
 
-            for($i=0; $i<count($schedule); $i++) {
-                $isUpdatable = $schedule[$i]['month'] == $currMonth;
-                if($isUpdatable) {
-                    $isMatch = $savedItem['id_lokasi'] == $schedule[$i]['id_lokasi'];
-                    $isMatch = $isMatch && $savedItem['month'] == $schedule[$i]['month'];
-                    $isMatch = $isMatch && $savedItem['id_category'] == $schedule[$i]['id_category'];
+            $isUpdatable = $this->is_time_updatable($savedSchedule[$j]['created_at']);
+            if($isUpdatable) {
+                
+                $savedItem = $savedSchedule[$j];
+                $matchIndex = -1;
+                for($i=0; $i<count($schedule); $i++) {
+
+                    if(isset($schedule[$i]['id'])) {
+                        $isMatch = $savedItem['id'] == $schedule[$i]['id'];
+                    } else {
+                        $isMatch = $savedItem['id_lokasi'] == $schedule[$i]['location'];
+                        $isMatch = $isMatch && $savedItem['month'] == $schedule[$i]['month'];
+                        $isMatch = $isMatch && $savedItem['id_category'] == $schedule[$i]['category'];
+                    }
                     if($isMatch) {
                         $matchIndex = $i;
                         $i = count($schedule);
                     }
                 }
-            }
-
-            if($matchIndex >= 0) {
-                $updateItem = [
-                    'id' => (int) $savedItem['id'],
-                    'value' => $schedule[$matchIndex]['value'],
-                    'updated_at' => $currTimestamp
-                ];
-
-                array_push($updateData, $updateItem);
-                array_splice($schedule, $matchIndex, 1);
+    
+                if($matchIndex >= 0) {
+                    $updateItem = [
+                        'id' => (int) $savedItem['id'],
+                        'value' => $schedule[$matchIndex]['value'],
+                        'updated_at' => $currTimestamp
+                    ];
+    
+                    array_push($updateData, $updateItem);
+                    array_splice($schedule, $matchIndex, 1);
+                }
             }
         }
         
@@ -328,17 +340,22 @@ class Activity_schedule_model extends CI_Model
         // INSERT UNEXISTS
         $isInsertSuccess = true;
         if($isUpdateSuccess && count($schedule) > 0) {
+            
             $insertData = [];
+            list($currYear, $currDate, $currTime) = explode('-', date('Y-d-H:i:s'));
+            $currDateTime = new DateTime('now');
             foreach($schedule as $insertItem) {
-                $isInsertable = $insertItem['month'] == $currMonth;
-                $isInsertable = $isInsertable && in_array($insertItem['id_lokasi'], array_column($locationList, 'id'));
+
+                $itemDateTimeStr = "$currYear-".$insertItem['month']."-$currDate $currTime";
+                $isInsertable = $this->is_time_updatable($itemDateTimeStr);
+                $isInsertable = $isInsertable && in_array($insertItem['location'], array_column($locationList, 'id'));
                 if($isInsertable) {
                     array_push($insertData, [
-                        'id_category' => (int) $insertItem['id_category'],
-                        'id_lokasi' => (int) $insertItem['id_lokasi'],
+                        'id_category' => (int) $insertItem['category'],
+                        'id_lokasi' => (int) $insertItem['location'],
                         'value' => $insertItem['value'],
-                        'created_at' => $currTimestamp,
-                        'updated_at' => $currTimestamp
+                        'created_at' => $itemDateTimeStr,
+                        'updated_at' => $itemDateTimeStr
                     ]);
                 }
             }
@@ -357,7 +374,7 @@ class Activity_schedule_model extends CI_Model
     public function get($filter)
     {
         $currMonth = date('n');
-        $query = "s.*,
+        $query = "s.*, l.divre_kode, l.witel_kode,
             IF(MONTH(s.created_at)='$currMonth', 1, 0) AS is_enabled,
             (SELECT COUNT(*) FROM $this->tableExecutionName WHERE id_schedule=s.id) AS execution_count,
             (SELECT COUNT(*) FROM $this->tableExecutionName WHERE id_schedule=s.id AND status='approved') AS approved_count";

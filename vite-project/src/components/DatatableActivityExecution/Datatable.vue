@@ -1,80 +1,118 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useActivityStore } from "@stores/activity";
+import { useUserStore } from "@stores/user";
+import { useCollapseRow } from "@helpers/collapse-row";
+import { groupByLocation } from "@helpers/location-group";
 import Skeleton from "primevue/skeleton";
 import CheckColumn from "./CheckColumn.vue";
 import DialogActivityCategory from "@components/DialogActivityCategory.vue";
 
+const { collapsedDivre, collapsedWitel, toggleRowCollapse } = useCollapseRow();
+const showCategory = ref(false);
+
 const activityStore = useActivityStore();
-const collapsedDivre = ref([]);
-const collapsedWitel = ref([]);
+const userStore = useUserStore();
+
+const level = computed(() => {
+    const userLevel = userStore.level;
+    const filters = activityStore.filters;
+    return filters.witel ? "witel" : filters.divre ? "divre" : userLevel;
+});
+
+const isAdmin = computed(() => userStore.role == "admin");
 
 const monthList = computed(() => {
     const filterMonth = activityStore.filters.month;
     const list = activityStore.monthList;
+    const category = activityStore.category;
 
-    if(!filterMonth)
-        return list;
-    return [list.find(item => item.number === filterMonth)];
+    return list
+        .filter(monthItem => !filterMonth || monthItem.number === filterMonth)
+        .map(monthItem => ({ ...monthItem, category }));
 });
 
-const showCategory = ref(false);
+const dataSchedule = ref([]);
+const setupData = () => {
+    const schedule = activityStore.schedule;
+    const location = activityStore.location;
+    
+    const dataSetup = location.map(locItem => {
+        const col = monthList.value.reduce((monthCol, monthItem) => {
+            let category = monthItem.category;
+            for(let i=0; i<category.length; i++) {
 
-const collapseRow = (type, code) => {
-    if(type == "divre")
-        collapsedDivre.value = [...collapsedDivre.value, code];
-    if(type == "witel")
-        collapsedWitel.value = [...collapsedWitel.value, code];
-};
+                const categoryItem = { number: i+1, ...category[i] };
+                const scheduleCol = schedule.find(scheItem => {
+                    const isLocationMatch = scheItem.id_lokasi == locItem.id;
+                    const isMonthMatch = (scheItem.createdAt.getMonth() + 1) == monthItem.number;
+                    const isCategoryMatch = scheItem.id_category == categoryItem.id;
+                    return isLocationMatch && isMonthMatch && isCategoryMatch;
+                });
+                
+                const dataItem = { isExists: false };
+                if(scheduleCol && scheduleCol.value == 1) {
+                    dataItem.isExists = true;
+                    dataItem.isChecked = scheduleCol.execution_count > 0;
+                    dataItem.scheduleId = scheduleCol.id;
+                    dataItem.isDisabled = !isAdmin.value && scheduleCol.is_enabled == 0;
+                    dataItem.label = `${ categoryItem.activity } bulan ${ monthItem.number }`;
+                    dataItem.execCount = scheduleCol.execution_count || 0;
+                    dataItem.apprCount = scheduleCol.approved_count || 0;
+                }
 
-const expandRow = (type, code) => {
-    if(type == "divre")
-        collapsedDivre.value = collapsedDivre.value.filter(item => item !== code);
-    if(type == "witel")
-        collapsedWitel.value = collapsedWitel.value.filter(item => item !== code);
-};
+                monthCol.push(dataItem);
+            }
+            return monthCol;
+        }, []);
+        return { ...locItem, col };
+    });
 
-const toggleRowCollapse = (type, code) => {
-    const isExpand = (type == "divre") ? collapsedDivre.value.indexOf(code) < 0 : collapsedWitel.value.indexOf(code) < 0;
-    if(isExpand)
-        collapseRow(type, code);
-    else
-        expandRow(type, code);
+    dataSchedule.value = dataSetup;
 };
 
 const tableData = computed(() => {
-    const data = activityStore.scheduleTable;
-    let witelCode = "";
-
-    return data.reduce((res, item) => {
-        
-        let type = null;
-        let title = null;
-        
-        if(witelCode !== item.location.witel_kode) {
-            type = "witel";
-            title = "Witel " + item.location.witel_name;
-            res.push({ type, title, ...item });
-            witelCode = item.location.witel_kode;
-        }
-        
-        type = "sto";
-        title = item.location.sto_name;
-        
-        res.push({ type, title, ...item });
-        return res;
-        
-    }, []);
+    const list = dataSchedule.value;
+    return groupByLocation({
+        data: list,
+        divre: {
+            groupKey: "divre_kode",
+            checker: isMatch => isMatch && level.value == "nasional",
+            formatTitle: item => item.divre_name
+        },
+        witel: {
+            groupKey: "witel_kode",
+            checker: isMatch => isMatch && level.value != "witel",
+            formatTitle: item => "WILAYAH " + item.witel_name
+        },
+        sto: { formatTitle: item => item.sto_name }
+    });
 });
 
 const isCategoryLoading = ref(true);
 const isScheduleLoading = ref(true);
+
 activityStore.fetchCategory(false, () => {
     isCategoryLoading.value = false;
-    activityStore.fetchSchedule(true, () => isScheduleLoading.value = false);
+
+    activityStore.fetchSchedule(true, () => {
+        setupData();
+        isScheduleLoading.value = false;
+    });
 });
 
-const categoryList = computed(() => activityStore.category);
+const getRowClass = item => {
+    let collapsed = false;
+    if(item.type == "sto") {
+        const isWitelCollapsed = collapsedWitel.value.indexOf(item.witel_kode) >= 0;
+        const isDivreCollapsed = collapsedDivre.value.indexOf(item.divre_kode) >= 0;
+        collapsed = isWitelCollapsed || isDivreCollapsed;
+    } else if(item.type == "witel") {
+        collapsed = collapsedDivre.value.indexOf(item.divre_kode) >= 0;
+    }
+    
+    return { "row-collapsed": collapsed };
+};
 </script>
 <template>
     <div class="table-responsive table-freeze bg-white pb-3">
@@ -82,36 +120,45 @@ const categoryList = computed(() => activityStore.category);
             <thead>
                 <tr>
                     <th rowspan="3" class="bg-success sticky-column">Lingkup Kerja</th>
-                    <th v-for="item in monthList" :colspan="categoryList.length" class="bg-success">{{ item.name }}</th>
+                    <th v-for="item in monthList" :colspan="item.category.length" class="bg-success">{{ item.name }}</th>
                 </tr>
                 <tr>
-                    <th v-for="item in monthList" :colspan="categoryList.length">Activity Categories</th>
+                    <th v-for="item in monthList" :colspan="item.category.length">Activity Categories</th>
                 </tr>
                 <tr>
-                    <template v-if="tableData.length > 0 && tableData[0].col">
-                        <th v-for="item in tableData[0].col" @click="showCategory = true" class="tw-cursor-pointer btn-primary">
-                            <p class="text-center mb-0">{{ item.category?.alias }}</p>
+                    <template v-for="mItem in monthList">
+                        <th v-for="cItem in mItem.category" @click="showCategory = true" class="tw-cursor-pointer btn-primary category-tooltip">
+                            <p class="text-center mb-0">{{ cItem.alias }}</p>
+                            <span class="badge badge-light text-dark border-primary">{{ cItem.activity }}</span>
                         </th>
                     </template>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in tableData" :class="{ 'row-collapsed': (item.type == 'sto' && collapsedWitel.indexOf(item.location.witel_kode) >= 0) || (item.type == 'witel' && collapsedDivre.indexOf(item.divre_kode) >= 0) }">
+                <tr v-for="item in tableData" :class="getRowClass(item)">
                     <td class="sticky-column">
-                        <div v-if="item.type == 'witel'" class="d-flex align-items-center px-3">
-                            <button type="button" @click="toggleRowCollapse('witel', item.location.witel_kode)" :class="{ 'child-collapsed': collapsedWitel.indexOf(item.location.witel_kode) >= 0 }" class="btn btn-circle btn-light p-0 btn-collapse-row">
+                        <div v-if="item.type == 'divre'" class="d-flex align-items-center px-3">
+                            <button type="button" @click="toggleRowCollapse('divre', item.divre_kode)" :class="{ 'child-collapsed': collapsedDivre.indexOf(item.divre_kode) >= 0 }" class="btn btn-circle btn-light p-0 btn-collapse-row">
                                 <VueFeather type="chevron-right" size="1rem" />
                             </button>
                             <small class="ms-2 tw-whitespace-nowrap fw-semibold">{{ item.title }}</small>
                         </div>
-                        <div v-else class="px-4 py-1 tw-whitespace-nowrap"><small class="ps-5 fw-semibold">{{ item.title }}</small></div>
+                        <div v-else-if="item.type == 'witel'" class="d-flex align-items-center px-3">
+                            <button type="button" @click="toggleRowCollapse('witel', item.witel_kode)" :class="{ 'child-collapsed': collapsedWitel.indexOf(item.witel_kode) >= 0, 'ms-4': level == 'nasional' }" class="btn btn-circle btn-light p-0 btn-collapse-row">
+                                <VueFeather type="chevron-right" size="1rem" />
+                            </button>
+                            <small class="ms-2 tw-whitespace-nowrap fw-semibold">{{ item.title }}</small>
+                        </div>
+                        <p v-else class="d-block px-4 py-1 tw-whitespace-nowrap mb-0">
+                            <small :class="{ 'ps-5': level != 'witel', 'ms-5': level == 'nasional' }" class="fw-semibold">{{ item.title }}</small>
+                        </p>
                     </td>
                     <template v-if="isCategoryLoading || isScheduleLoading">
                         <td colspan="96">
                             <Skeleton class="mt-3" />
                         </td>
                     </template>
-                    <CheckColumn v-else-if="item.type == 'sto'" :rowData="item.col"  />
+                    <CheckColumn v-else-if="item.type == 'sto'" :key="item.id" :rowData="item.col" />
                     <template v-else>
                         <td colspan="96" class="bg-light"></td>
                     </template>
@@ -121,3 +168,18 @@ const categoryList = computed(() => activityStore.category);
         <DialogActivityCategory v-model:visible="showCategory" />
     </div>
 </template>
+<style scoped>
+
+.category-tooltip {
+    @apply tw-relative;
+}
+
+.category-tooltip .badge {
+    @apply tw-absolute tw-right-0 -tw-top-8 tw-z-[9] tw-transition-opacity tw-opacity-0 tw-pointer-events-none;
+}
+
+.category-tooltip:hover .badge {
+    @apply tw-opacity-100;
+}
+
+</style>

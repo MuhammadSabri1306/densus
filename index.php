@@ -309,9 +309,17 @@ switch (ENVIRONMENT)
 
 /*
  * --------------------------------------------------------------------
+ * LOAD APP CUSTOM ENVIRONTMENT
+ * --------------------------------------------------------------------
+ */
+	require_once 'application/config/env_pattern.php';
+	$envPattern = EnvPattern::getPattern();
+	date_default_timezone_set($envPattern->timezone->location);
+/*
+ * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE
  * --------------------------------------------------------------------
  *
  * And away we go...
  */
-require_once BASEPATH.'core/CodeIgniter.php';
+	require_once BASEPATH.'core/CodeIgniter.php';

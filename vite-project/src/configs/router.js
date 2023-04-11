@@ -2,20 +2,35 @@ import { createRouter, createWebHistory } from "vue-router";
 
 // import Landing from "@views/Landing.vue";
 import Dashboard from "@views/Dashboard.vue";
+import User from "@views/User.vue";
+import Login from "@views/Login.vue";
+import ErrorNotFound from "@views/ErrorNotFound.vue";
+
 import Monitoring from "@views/Monitoring.vue";
 import MonitoringDetail from "@views/MonitoringDetail.vue";
-import MonitoringPue from "@views/MonitoringPue.vue";
-import MonitoringPueDetail from "@views/MonitoringPueDetail.vue";
+
+import Monitoring2 from "@views/Monitoring2.vue";
+import MonitoringPlnParams from "@views/MonitoringPlnParams.vue";
+// import MonitoringPlnParamsDetail from "@views/MonitoringPlnParamsDetail.vue";
+import MonitoringPlnBilling from "@views/MonitoringPlnBilling.vue";
+import MonitoringPlnBillingDetail from "@views/MonitoringPlnBillingDetail.vue";
+import MonitoringFuelParams from "@views/MonitoringFuelParams.vue";
+import MonitoringFuelParamsDetail from "@views/MonitoringFuelParamsDetail.vue";
+import MonitoringFuelInvoice from "@views/MonitoringFuelInvoice.vue";
+import MonitoringFuelInvoiceDetail from "@views/MonitoringFuelInvoiceDetail.vue";
+
+import PueRtu from "@views/PueRtu.vue";
+import PueDivre from "@views/PueDivre.vue";
+import PueWitel from "@views/PueWitel.vue";
+import Pue from "@views/Pue.vue";
+
 import Rtu from "@views/Rtu.vue";
 import RtuAdd from "@views/RtuAdd.vue";
 import RtuEdit from "@views/RtuEdit.vue";
+
 import ActivityDashboard from "@views/ActivityDashboard.vue";
 import ActivitySchedule from "@views/ActivitySchedule.vue";
 import ActivityExecution from "@views/ActivityExecution.vue";
-import User from "@views/User.vue";
-
-import Login from "@views/Login.vue";
-import ErrorNotFound from "@views/ErrorNotFound.vue";
 
 const routes = [
     {
@@ -31,11 +46,51 @@ const routes = [
         meta: { menuKey: ["monitoring"], requiresAuth: true }
     },
     {
-        path: "/pue", component: MonitoringPue,
+        path: "/monitoring-v2", component: Monitoring2,
+        meta: { menuKey: ["energy"], requiresAuth: true }
+    },
+    {
+        path: "/monitoring-pln/billing", component: MonitoringPlnBilling,
+        meta: { menuKey: ["energy"], requiresAuth: true }
+    },
+    {
+        path: "/monitoring-pln/billing/:locationId", component: MonitoringPlnBillingDetail,
+        meta: { menuKey: ["energy"], requiresAuth: true }
+    },
+    {
+        path: "/monitoring-pln/params", component: MonitoringPlnParams,
+        meta: { menuKey: ["energy"], requiresAuth: true }
+    },
+    {
+        path: "/monitoring-fuel/params", component: MonitoringFuelParams,
+        meta: { menuKey: ["energy"], requiresAuth: true }
+    },
+    {
+        path: "/monitoring-fuel/params/:locationId", component: MonitoringFuelParamsDetail,
+        meta: { menuKey: ["energy"], requiresAuth: true }
+    },
+    {
+        path: "/monitoring-fuel/invoice", component: MonitoringFuelInvoice,
+        meta: { menuKey: ["energy"], requiresAuth: true }
+    },
+    {
+        path: "/monitoring-fuel/invoice/:locationId", component: MonitoringFuelInvoiceDetail,
+        meta: { menuKey: ["energy"], requiresAuth: true }
+    },
+    {
+        path: "/pue", component: Pue,
         meta: { menuKey: ["pue"], requiresAuth: true }
     },
     {
-        path: "/pue/:rtuCode", component: MonitoringPueDetail,
+        path: "/pue/divre/:divreCode", component: PueDivre,
+        meta: { menuKey: ["pue"], requiresAuth: true }
+    },
+    {
+        path: "/pue/witel/:witelCode", component: PueWitel,
+        meta: { menuKey: ["pue"], requiresAuth: true }
+    },
+    {
+        path: "/pue/rtu/:rtuCode", component: PueRtu,
         meta: { menuKey: ["pue"], requiresAuth: true }
     },
     {

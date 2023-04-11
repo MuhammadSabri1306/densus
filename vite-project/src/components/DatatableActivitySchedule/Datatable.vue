@@ -2,7 +2,6 @@
 import { ref, computed } from "vue";
 import { useActivityStore } from "@stores/activity";
 import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
 import { useCollapseRow } from "@helpers/collapse-row";
 import { groupByLocation } from "@helpers/location-group";
 import Skeleton from "primevue/skeleton";
@@ -22,7 +21,6 @@ const level = computed(() => {
     return filters.witel ? "witel" : filters.divre ? "divre" : userLevel;
 });
 
-// const categoryList = computed(() => activityStore.category);
 const monthList = computed(() => {
     const filterMonth = activityStore.filters.month;
     const list = activityStore.monthList;
@@ -33,27 +31,14 @@ const monthList = computed(() => {
         .map(monthItem => ({ ...monthItem, category }));
 });
 
-const availableMonth = computed(() => activityStore.availableMonth);
-const isScheduleItemDisabled = (monthNumber, schedule = null) => {
-    let hasData = false;
-    let isCurrMonth = true;
-
-    if(schedule) {
-        hasData = schedule.execution_count > 0;
-        isCurrMonth = monthNumber == schedule.createdAt.getMonth() + 1;
-    } else
-        isCurrMonth = monthNumber == availableMonth.value;
-
-    return hasData || !isCurrMonth;
-};
-
 const dataSchedule = ref([]);
+
 const setupData = () => {
-    const schedule = activityStore.userSchedule;
+    const schedule = activityStore.schedule;
     const location = activityStore.location;
-    // const category = activityStore.category;
+    const updatableTime = activityStore.updatableTime;
     
-    const dataSetup = location.map(locItem => {
+    const dataSetup = location.map((locItem, locationIndex) => {
         const col = monthList.value.reduce((monthCol, monthItem) => {
             let category = monthItem.category;
             for(let i=0; i<category.length; i++) {
@@ -65,17 +50,32 @@ const setupData = () => {
                     const isCategoryMatch = scheItem.id_category == categoryItem.id;
                     return isLocationMatch && isMonthMatch && isCategoryMatch;
                 });
+                
+                const colItem = {
+                    location: locItem.id,
+                    month: monthItem.number,
+                    category: categoryItem.id,
+                    fieldKey: `${ locItem.id }&${ monthItem.number }&${ categoryItem.id }`,
+                    label: `${ categoryItem.activity } bulan ${ monthItem.number }`,
+                    value: scheduleCol ? scheduleCol.value == 1 : false,
+                    isDisabled: false
+                };
 
-                const fieldKey = `${ locItem.id }&${ monthItem.number }&${ categoryItem.id }`;
-                const value = scheduleCol ? scheduleCol.value == 1 : false;
-                const label = `${ categoryItem.activity } bulan ${ monthItem.number }`;
-                const isDisabled = isScheduleItemDisabled(monthItem.number, scheduleCol);
+                if(scheduleCol) {
+                    colItem.scheduleId = scheduleCol.id;
+                    colItem.value = scheduleCol.value == 1;
+                    colItem.isDisabled = scheduleCol.is_enabled == 1 ? false : true;
+                } else if(updatableTime.start) {
+                    const itemDate = new Date();
+                    itemDate.setMonth(monthItem.number - 1);
+                    colItem.isDisabled = itemDate.getTime() < updatableTime.start || itemDate.getTime() > updatableTime.end;
+                }
 
-                monthCol.push({ fieldKey, value, label, isDisabled });
+                monthCol.push(colItem);
             }
             return monthCol;
         }, []);
-        return { ...locItem, col };
+        return { ...locItem, col, locationIndex };
     });
 
     dataSchedule.value = dataSetup;
@@ -99,32 +99,6 @@ const tableData = computed(() => {
     });
 });
 
-// const tableData = computed(() => {
-//     const data = activityStore.scheduleTable;
-//     let witelCode = "";
-
-//     return data.reduce((res, item) => {
-        
-//         let type = null;
-//         let title = null;
-        
-//         if(witelCode !== item.location.witel_kode) {
-//             type = "witel";
-//             title = "Witel " + item.location.witel_name;
-//             res.push({ type, title, ...item });
-//             witelCode = item.location.witel_kode;
-//         }
-        
-//         type = "sto";
-//         title = item.location.sto_name;
-        
-//         res.push({ type, title, ...item });
-//         return res;
-        
-//     }, []);
-// });
-
-
 const isCategoryLoading = ref(true);
 const isScheduleLoading = ref(true);
 
@@ -146,25 +120,41 @@ const onCheckChanged = data => {
 
     temp[rowIndex].col[colIndex].value = value;
     dataSchedule.value = temp;
-    if(!hasChanged.value)
-        hasChanged.value = true;
+
+    if(!hasScheduleChanged.value)
+        activityStore.setHasScheduleChanged(true);
 };
 
 const getRowClass = item => {
-    const isSto = item.type == "sto" && collapsedWitel.value.indexOf(item.witel_kode) >= 0;
-    const isWitel = item.type == "witel" && collapsedDivre.value.indexOf(item.divre_kode) >= 0;
-    return { "row-collapsed": isSto || isWitel };
+    let collapsed = false;
+    if(item.type == "sto") {
+        const isWitelCollapsed = collapsedWitel.value.indexOf(item.witel_kode) >= 0;
+        const isDivreCollapsed = collapsedDivre.value.indexOf(item.divre_kode) >= 0;
+        collapsed = isWitelCollapsed || isDivreCollapsed;
+    } else if(item.type == "witel") {
+        collapsed = collapsedDivre.value.indexOf(item.divre_kode) >= 0;
+    }
+    
+    return { "row-collapsed": collapsed };
 };
 
 const isSaving = ref(false);
-const hasChanged = ref(false);
-const disableSave = computed(() => !hasChanged.value || isSaving.value);
+const hasScheduleChanged = computed(() => activityStore.hasScheduleChanged);
+const disableSave = computed(() => !hasScheduleChanged.value || isSaving.value);
 
-const viewStore = useViewStore();
 const onSave = () => {
-    const body = {};
+    const body = [];
     dataSchedule.value.forEach(item => {
-        item.col.forEach(({ fieldKey, value }) => body[fieldKey] = value ? 1 : 0);
+        item.col.forEach(colItem => {
+            const { location, month, category, value } = colItem;
+            const bodyItem = { location, month, category };
+            
+            bodyItem.value = colItem.value ? 1 : 0;
+            if(colItem.scheduleId)
+                bodyItem.id = colItem.scheduleId;
+
+            body.push(bodyItem);
+        });
     });
     emit("update", body);
 };
@@ -182,16 +172,16 @@ const onSave = () => {
                         <th v-for="item in monthList" :colspan="item.category.length">Activity Categories</th>
                     </tr>
                     <tr>
-                        <template v-if="monthList.length > 0 && monthList[0].category">
-                            <th v-for="item in monthList[0].category" @click="showCategory = true" class="tw-cursor-pointer btn-primary category-tooltip">
-                                <p class="text-center mb-0">{{ item.alias }}</p>
-                                <span class="badge badge-light text-dark border-primary">{{ item.activity }}</span>
+                        <template v-for="mItem in monthList">
+                            <th v-for="cItem in mItem.category" @click="showCategory = true" class="tw-cursor-pointer btn-primary category-tooltip">
+                                <p class="text-center mb-0">{{ cItem.alias }}</p>
+                                <span class="badge badge-light text-dark border-primary">{{ cItem.activity }}</span>
                             </th>
                         </template>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in tableData" :class="getRowClass(item)">
+                    <tr v-for="item in tableData" :class="getRowClass(item)">
                         <td class="sticky-column">
                             <div v-if="item.type == 'divre'" class="d-flex align-items-center px-3">
                                 <button type="button" @click="toggleRowCollapse('divre', item.divre_kode)" :class="{ 'child-collapsed': collapsedDivre.indexOf(item.divre_kode) >= 0 }" class="btn btn-circle btn-light p-0 btn-collapse-row">
@@ -214,7 +204,7 @@ const onSave = () => {
                                 <Skeleton class="mt-3" />
                             </td>
                         </template>
-                        <CheckColumn v-else-if="item.type == 'sto'" :key="item.id" :rowIndex="index" :rowData="item.col" @change="onCheckChanged"  />
+                        <CheckColumn v-else-if="item.type == 'sto'" :key="item.id" :rowIndex="item.locationIndex" :rowData="item.col" @change="onCheckChanged" />
                         <template v-else>
                             <td colspan="96" class="bg-light"></td>
                         </template>
@@ -239,7 +229,7 @@ const onSave = () => {
 }
 
 .category-tooltip .badge {
-    @apply tw-absolute tw-right-0 -tw-top-8 tw-z-[9] tw-transition-opacity tw-opacity-0;
+    @apply tw-absolute tw-right-0 -tw-top-8 tw-z-[9] tw-transition-opacity tw-opacity-0 tw-pointer-events-none;
 }
 
 .category-tooltip:hover .badge {

@@ -11,30 +11,13 @@ const isLoading = ref(true);
 const showCategory = ref(false);
 
 const activityStore = useActivityStore();
-const fetch = async () => {
+const fetch = () => {
     show.value = true;
     isLoading.value = true;
-    await activityStore.fetchAvailableMonth();
-
     activityStore.fetchLocation(true, () => isLoading.value = false);
 };
 
 defineExpose({ fetch });
-
-const viewStore = useViewStore();
-const isSaving = ref(false);
-const disableSave = computed(() => !activityStore.hasScheduleChanged || isSaving.value);
-
-const onSave = () => {
-    activityStore.saveSchedule(response => {
-        isSaving.value = false;
-        if(!response.success)
-            return;
-
-        viewStore.showToast("Jadwal Activity", "Berhasil menyimpan jadwal bulan ini.", true);
-        fetch();
-    });
-};
 </script>
 <template>
     <div v-if="show">
@@ -55,13 +38,6 @@ const onSave = () => {
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="d-flex justify-content-end py-5">
-            <button type="button" :disabled="disableSave" @click="onSave" :class="{ 'btn-loading': isLoading }"
-                class="btn btn-lg btn-icon btn-primary d-inline-flex justify-content-center align-items-center">
-                <VueFeather type="check-circle" size="1.2em" />
-                <span class="ms-2">Simpan</span>
-            </button>
         </div>
         <DialogActivityCategory v-model:visible="showCategory" />
     </div>
