@@ -1,12 +1,12 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useListUserStore } from "@stores/list-user";
-import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import InputSwitch from "primevue/inputswitch";
 import { FilterMatchMode } from "primevue/api";
+import ButtonGroupAction from "@/components/ButtonGroupAction.vue";
 
 const listUserStore = useListUserStore();
 const listUser = computed(() => listUserStore.datatable);
@@ -116,22 +116,7 @@ const onDelete = id => {
             </Column>
             <Column header="Action">
                 <template #body="slotProps">
-                    <div class="d-flex">
-                        <button type="button" class="btn-circle btn-dt-action" @click.stop="toggleDtAction(slotProps.data.id)">
-                            <VueFeather type="chevron-left" size="1rem" class="me-1" />
-                        </button>
-                        <div :class="{ 'show': showActionOnId === slotProps.data.id }" class="dt-dropdown">
-                            <button type="button" @click.stop="onCallAction('view', slotProps.data)" class="btn-circle btn btn-primary shadow p-0">
-                                <VueFeather type="eye" />
-                            </button>
-                            <button type="button" @click.stop="onCallAction('edit', slotProps.data)" class="btn-circle btn btn-secondary shadow p-0" :disabled="slotProps.data.isReadonly">
-                                <VueFeather type="edit-2" />
-                            </button>
-                            <button type="button" @click.stop="onDelete(slotProps.data.id)" class="btn-circle btn btn-danger shadow p-0" :disabled="slotProps.data.isReadonly">
-                                <VueFeather type="trash" />
-                            </button>
-                        </div>
-                    </div>
+                    <ButtonGroupAction @detail="onCallAction('view', slotProps.data)" @edit="onCallAction('edit', slotProps.data)" @delete="onDelete(slotProps.data.id)" :disableBtnDelete="slotProps.data.isReadonly" />
                 </template>
             </Column>
         </DataTable>

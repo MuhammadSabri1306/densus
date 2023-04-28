@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed, watch, onMounted } from "vue";
+import { ref, reactive, computed, watch, onMounted, nextTick } from "vue";
 import { useViewStore } from "@stores/view";
 import { useUserStore } from "@stores/user";
 import ListboxFilter from "@components/ListboxFilter.vue";
@@ -36,20 +36,33 @@ const location = reactive({
 const listboxDivre = ref(null);
 const listboxWitel = ref(null);
 
+const divreName = computed(() => {
+    const list = divreList.value;
+    const code = location.divre;
+    const index = list.findIndex(item => item.divre_kode && item.divre_kode == code);
+    return index < 0 ? null : list[index].divre_name;
+});
+
+const witelName = computed(() => {
+    const list = witelList.value;
+    const code = location.witel;
+    const index = list.findIndex(item => item.witel_kode && item.witel_kode == code);
+    
+    return index < 0 ? null : list[index].witel_name;
+});
+
 const onChange = () => {
     const data = {};
     if(!props.useLevel || level.value != "nasional" || currUser.value.level != "nasional") {
         data.divre_kode = location.divre;
-        const divreIndex = divreList.value.findIndex(item => item.divre_kode && item.divre_kode == data.divre_kode);
-        data.divre_name = divreIndex < 0 ? null : divreList.value[divreIndex].divre_name;
+        data.divre_name = divreName.value;
     }
 
     if(!props.useLevel || level.value == "witel" || currUser.value.level == "witel") {
         data.witel_kode = location.witel;
-        const witelIndex = witelList.value.findIndex(item => item.witel_kode && item.witel_kode == data.witel_kode);
-        data.witel_name = witelIndex < 0 ? null : witelList.value[witelIndex].witel_name;
+        data.witel_name = witelName.value;
     }
-
+    
     emit("change", data);
 };
 
@@ -57,7 +70,12 @@ watch(() => level.value, onChange);
 
 const onDivreChange = val => {
     location.divre = val;
-    listboxWitel.value.fetch(() => viewStore.getWitelByDivre(val));
+    listboxWitel.value.fetch(
+        () => viewStore.getWitelByDivre(val),
+        list => {
+            witelList.value = list;
+        }
+    );
     onChange();
 };
 
@@ -80,9 +98,6 @@ onMounted(() => {
 
     if(currLevel == "divre") {
 
-        listboxDivre.value.setValue(location.divre);
-        onChange();
-
         listboxWitel.value.fetch(
             () => viewStore.getWitelByDivre(location.divre),
             list => {
@@ -91,11 +106,8 @@ onMounted(() => {
             }
         );
         
-    } else if(currLevel == "witel" && location.witel) {
+    } else if(currLevel == "witel" || location.witel) {
         
-        listboxWitel.value.setValue(location.witel);
-        onChange();
-
         listboxWitel.value.fetch(
             () => viewStore.getWitel(location.witel),
             data => {
@@ -121,6 +133,11 @@ onMounted(() => {
         }
     );
 
+    if(location.divre)
+        listboxDivre.value.setValue(location.divre);
+    if(location.witel)
+        listboxWitel.value.setValue(location.witel);
+
     if(currUser.value.level != "nasional")
         listboxDivre.value.setDisabled(true);
     if(currUser.value.level == "witel")
@@ -138,15 +155,16 @@ const validate = () => {
 
     if(showListbox.value.divre) {
         listboxDivre.value.validate();
-        isValid = !props.requireDivre || location.divre;
+        isValid = props.requireDivre && !location.divre ? false : true;
     }
 
     if(showListbox.value.witel) {
         listboxWitel.value.validate();
-        isValid = (isValid && props.requireWitel) || (isValid && location.witel);
+        if(isValid)
+            isValid = props.requireWitel && !location.witel ? false : true;
     }
 
-    return isValid;
+    return isValid ? true : false;
 };
 
 defineExpose({ validate });
@@ -157,14 +175,14 @@ defineExpose({ validate });
             <div class="mb-4">
                 <label for="inputDivre" class="col-form-label">Regional<span v-if="requireDivre" class="text-danger"> *</span></label>
                 <ListboxFilter ref="listboxDivre" inputId="inputDivre" inputPlaceholder="Pilih Divre"
-                    isRequired valueKey="divre_kode" labelKey="divre_name" @change="onDivreChange" />
+                    :isRequired="requireDivre" valueKey="divre_kode" labelKey="divre_name" @change="onDivreChange" />
             </div>
         </div>
         <div v-show="showListbox.witel" :class="{ 'col-md-6': showListbox.divre }">
             <div class="mb-4">
                 <label for="inputWitel" class="col-form-label">Witel<span v-if="requireWitel" class="text-danger"> *</span></label>
                 <ListboxFilter ref="listboxWitel" inputId="inputWitel" inputPlaceholder="Pilih Witel"
-                    valueKey="witel_kode" labelKey="witel_name" @change="onWitelChange" />
+                    :isRequired="requireWitel" valueKey="witel_kode" labelKey="witel_name" @change="onWitelChange" />
             </div>
         </div>
     </div>

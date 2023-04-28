@@ -1,27 +1,9 @@
 
-export const allowSampleData = true;
+export const allowSampleData = import.meta.env.VITE_ALLOW_SAMPLE_DATA == 1;
+export const baseUrl = import.meta.env.VITE_BASE_URL;
+export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-export const devBaseUrl =  "/";
-export const prodBaseUrl =  "/densus/";
-
-export const resolveAlias = [
-    { key: "@components", url: "./src/components" },
-    { key: "@views", url: "./src/views" },
-    { key: "@stores", url: "./src/stores" },
-    { key: "@helpers", url: "./src/helpers" },
-    { key: "@layouts", url: "./src/layouts" },
-    { key: "@", url: "./src" }
-];
-
-export const cors = {
-    "origin": "*",
-    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "preflightContinue": false,
-    "optionsSuccessStatus": 204,
-    "allowedHeaders": ['Origin', "X-Requested-With", "Content-Type", "Accept", "Access-Control-Request-Method", "Authorization"]
-};
-
-export const apiEndpoint = "https://juarayya.telkom.co.id/densus/api";
+export const apiEndpoint = import.meta.env.VITE_APP_ENDPOINT;
 export const apiHeaders = {
     "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/json",

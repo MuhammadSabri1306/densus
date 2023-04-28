@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * LOAD ENV PATTERN
  *
  */
-require_once APPPATH . 'config/env_pattern.php';
 $envPattern = EnvPattern::getPattern();
 
 

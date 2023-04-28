@@ -19,6 +19,14 @@ const datetime = computed(() => {
 const currMonth = computed(() => props.value.currMonth ? toFixedNumber(props.value.currMonth, 2) : 0);
 const currWeek = computed(() => props.value.currWeek ? toFixedNumber(props.value.currWeek, 2) : 0);
 const currDay = computed(() => props.value.currDay ? toFixedNumber(props.value.currDay, 2) : 0);
+
+const getPerformanceColor = val => {
+    return {
+        "text-danger": val < 0,
+        "font-success": val > 0,
+        "text-muted": val === 0
+    };
+};
 </script>
 <template>
     <div class="card">
@@ -30,15 +38,15 @@ const currDay = computed(() => props.value.currDay ? toFixedNumber(props.value.c
             <div class="row">
                 <div class="col-6 col-md-4 mb-4 border-">
                     <p class="text-center mb-0 small">Hari ini</p>
-                    <h5 class="num m-0 text-center">{{ currDay }}%</h5>
+                    <h5 :class="getPerformanceColor(currDay)" class="num m-0 text-center f-w-700">{{ currDay }}%</h5>
                 </div>
                 <div class="col-6 col-md-4 mb-4">
                     <p class="text-center mb-0 small">Minggu ini</p>
-                    <h5 class="num m-0 text-center">{{ currWeek }}%</h5>
+                    <h5 :class="getPerformanceColor(currWeek)" class="num m-0 text-center f-w-700">{{ currWeek }}%</h5>
                 </div>
                 <div class="col-6 col-md-4 mb-4">
                     <p class="text-center mb-0 small">Bulan ini</p>
-                    <h5 class="num m-0 text-center">{{ currMonth }}%</h5>
+                    <h5 :class="getPerformanceColor(currMonth)" class="num m-0 text-center f-w-700">{{ currMonth }}%</h5>
                 </div>
             </div>
         </div>

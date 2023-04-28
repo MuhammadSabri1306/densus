@@ -61,8 +61,9 @@ class Rtu extends RestController
             $levelValidations = [
                 $currUser['level'] == 'nasional',
                 ($currUser['level'] == 'divre' && $input['body']['divre_kode'] == $currUser['locationId']),
-                ($currUser['level'] == 'witre' && $input['body']['witel_kode'] == $currUser['locationId'])
+                ($currUser['level'] == 'witel' && $input['body']['witel_kode'] == $currUser['locationId'])
             ];
+            
             if(!in_array(true, $levelValidations)) {
                 $data = [ 'success' => false ];
                 $status = REST_ERR_BAD_REQ;

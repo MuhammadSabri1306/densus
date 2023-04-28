@@ -6,7 +6,6 @@ const props = defineProps({
     rtuCode: { required: true }
 });
 
-
 const monitoringStore = useMonitoringStore();
 const dataKwh = await monitoringStore.getKwhToday(props.rtuCode);
 </script>

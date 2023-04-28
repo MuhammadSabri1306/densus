@@ -74,8 +74,8 @@ const chartOptions = computed(() => {
             <div class="bottom-content card-body pt-0">
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="w-100">
-                        <Skeleton v-if="isLoading" height="141px" size="100%" />
-                        <VueApexCharts width="100%" height="141px" :options="chartOptions" :series="series" />
+                        <Skeleton v-if="isLoading" height="400px" size="100%" />
+                        <VueApexCharts width="100%" height="400px" :options="chartOptions" :series="series" />
                     </div>
                 </div>
             </div>

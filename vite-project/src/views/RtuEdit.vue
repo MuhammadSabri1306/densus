@@ -9,6 +9,7 @@ import http from "@helpers/http-common";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import ListboxRegWitel from "@components/ListboxRegWitel.vue";
 import Skeleton from "primevue/skeleton";
+import InputGroupLocation from "@components/InputGroupLocation.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -56,31 +57,28 @@ rtuStore.fetchList(false, response => {
     data.portGenset = currRtu.port_genset;
     data.kvaGenset = currRtu.kva_genset;
     data.portPue = currRtu.port_pue;
+    
     isFetching.value = false;
 });
 
-const onDivreChange = val => {
-    data.divreCode = val.divreCode;
-    data.divreName = val.divreName;
-};
-const onWitelChange = val => {
-    data.witelCode = val.witelCode;
-    data.witelName = val.witelName;
+const inputLocation = ref(null);
+const onLocationChange = (loc) => {
+    data.divreCode = loc.divre_kode;
+    data.divreName = loc.divre_name;
+    data.witelCode = loc.witel_kode;
+    data.witelName = loc.witel_name;
 };
 
-const listboxRegWitel = ref(null);
 const viewStore = useViewStore();
-
 const isLoading = ref(false);
 const hasSubmitted = ref(false);
 
 const onSubmit = async () => {
     hasSubmitted.value = true;
-    listboxRegWitel.value.validate();
     const isValid = await v$.value.$validate();
-
-    if(!isValid)
+    if(!isValid || !inputLocation.value.validate())
         return;
+
     const body = {
         rtu_kode: data.rtuCode,
         rtu_name: data.rtuName,
@@ -95,8 +93,7 @@ const onSubmit = async () => {
         kva_genset: data.kvaGenset,
         port_pue: data.portPue
     };
-    // console.log(body);
-    // const formData = buildFormData(data, ["rtuCode", "rtuName", "location", "stoCode", "divreCode", "divreName", "witelCode", "witelName", "portKwh", "portGenset", "kvaGenset"]);
+    
     isLoading.value = true;
     rtuStore.update(rtuId.value, body, response => {
         isLoading.value = false;
@@ -177,35 +174,35 @@ const onDelete = () => {
                                     <input v-model="v$.stoCode.$model" :class="{ 'is-invalid': hasSubmitted && v$.stoCode.$invalid }" class="form-control" id="stoCode" name="stoCode" type="text" placeholder="Cth. BAL">
                                 </div>
                                 
-                                <ListboxRegWitel ref="listboxRegWitel" fieldRequired :defaultDivre="data.divreCode" :defaultWitel="data.witelCode" @divreChange="onDivreChange" @witelChange="onWitelChange" class="mb-4" />
+                                <InputGroupLocation ref="inputLocation" :divreValue="data.divreCode" :witelValue="data.witelCode" @change="onLocationChange" />
 
-                                <div class="row">
-                                    <div class="col-6 col-lg-3">
+                                <div class="row mb-5">
+                                    <div class="col-md-6 col-lg-3">
                                         <div class="form-group">
-                                            <label for="portKwh">Port KWH <span class="text-danger">*</span></label>
+                                            <label for="portKwh" class="required">Analog Port KW</label>
                                             <input v-model="v$.portKwh.$model" :class="{ 'is-invalid': hasSubmitted && v$.portKwh.$invalid }" class="form-control" id="portKwh" name="portKwh" type="text" placeholder="Cth. A-16">
                                         </div>
                                     </div>
-                                    <div class="col-6 col-lg-3">
+                                    <div class="col-md-6 col-lg-3">
                                         <div class="form-group">
-                                            <label for="portGenset">Port Genset <span class="text-danger">*</span></label>
+                                            <label for="portGenset" class="required">Digital Port Status Genset</label>
                                             <input v-model="v$.portGenset.$model" :class="{ 'is-invalid': hasSubmitted && v$.portGenset.$invalid }" class="form-control" id="portGenset" name="portGenset" type="text" placeholder="Cth. D-02">
                                         </div>
                                     </div>
-                                    <div class="col-6 col-lg-3">
+                                    <div class="col-md-6 col-lg-3">
                                         <div class="form-group">
-                                            <label for="kvaGenset">KVA Genset <span class="text-danger">*</span></label>
+                                            <label for="kvaGenset" class="required">Kapasitas Genset Terpasang (KVA)</label>
                                             <input v-model="v$.kvaGenset.$model" :class="{ 'is-invalid': hasSubmitted && v$.kvaGenset.$invalid }" class="form-control" id="kvaGenset" name="kvaGenset" type="text" placeholder="Cth. 500">
                                         </div>
                                     </div>
-                                    <div class="col-6 col-lg-3">
+                                    <div class="col-md-6 col-lg-3">
                                         <div class="form-group">
-                                            <label for="portPue">Port PUE</label>
+                                            <label for="portPue">Analog Port PUE</label>
                                             <input v-model="v$.portPue.$model" class="form-control" id="portPue" name="portPue" type="text" placeholder="Cth. A-16">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-end py-3 px-4">
+                                <div class="d-flex justify-content-end pb-3 px-4">
                                     <button type="submit" :class="{ 'btn-loading': isLoading }" class="btn btn-primary btn-lg">Simpan Perubahan</button>
                                 </div>
                             </form>

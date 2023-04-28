@@ -154,4 +154,80 @@ class Location extends RestController
 
         }
     }
+
+    public function gepee_post()
+    {
+		$status = $this->auth_jwt->auth('admin');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+
+        if($status === 200) {
+            $this->load->library('input_custom');
+            $fields = [
+                'id_pel_pln' => ['string', 'required'],
+                'nama_pel_pln' => ['string', 'required'],
+                'tarif_pel_pln' => ['string', 'required'],
+                'daya_pel_pln' => ['int', 'required'],
+                'lokasi_pel_pln' => ['string', 'nullable'],
+                'alamat_pel_pln' => ['string', 'nullable'],
+                'gedung' => ['string', 'nullable'],
+                'divre_kode' => ['string', 'required'],
+                'divre_name' => ['string', 'required'],
+                'witel_kode' => ['string', 'required'],
+                'witel_name' => ['string', 'required'],
+                'sto_kode' => ['string', 'nullable'],
+                'sto_name' => ['string', 'nullable'],
+                'tipe' => ['string', 'nullable'],
+                'rtu_kode' => ['string', 'nullable'],
+            ];
+
+            $this->input_custom->set_fields($fields);
+			$input = $this->input_custom->get_body('post');
+            if(!$input['valid']) {
+                $data = [ 'success' => false, 'message' => $input['msg'] ];
+                $status = REST_ERR_BAD_REQ_STATUS;
+            }
+        }
+
+        if($status === 200) {
+            $currUser = $this->auth_jwt->get_payload();
+            $levelValidations = [
+                $currUser['level'] == 'nasional',
+                ($currUser['level'] == 'divre' && $input['body']['divre_kode'] == $currUser['locationId']),
+                ($currUser['level'] == 'witre' && $input['body']['witel_kode'] == $currUser['locationId'])
+            ];
+            if(!in_array(true, $levelValidations)) {
+                $data = REST_ERR_BAD_REQ_DATA;
+                $status = REST_ERR_BAD_REQ_STATUS;
+            }
+        }
+
+		if($status === 200) {
+            $this->load->model('lokasi_gepee_model');
+            $success = $this->lokasi_gepee_model->save($input['body']);
+
+            if($success) {
+                $data = [ 'success' => true ];
+            } else {
+                $status = REST_ERR_BAD_REQ_STATUS;
+                $data = REST_ERR_BAD_REQ_DATA;
+            }
+        }
+
+        
+        if($status === 200) {
+            $this->load->library('user_log');
+            $this->user_log
+                ->userId($currUser['id'])
+                ->username($currUser['username'])
+                ->name($currUser['name'])
+                ->activity('input new pln billing')
+                ->log();
+        }
+
+        $this->response($data, $status);
+    }
 }

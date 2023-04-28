@@ -51,7 +51,7 @@ export const useUserStore = defineStore("user", {
                 callback && callback({ success: true, status: response.status });
             } catch(err) {
                 console.error(err);
-                callback && callback({ success: false, status: err.response.status });
+                callback && callback({ success: false, status: err.response?.status });
             }
         },
 

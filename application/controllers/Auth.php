@@ -106,9 +106,9 @@ class Auth extends RestController
             $currUser = $this->auth_jwt->get_payload();
             $this->user_log
                 ->userId($currUser['id'])
-                ->username($dataUser['username'])
-                ->name($dataUser['name'])
-                ->activity('login')
+                ->username($currUser['username'])
+                ->name($currUser['name'])
+                ->activity('logout')
                 ->log();
         }
         $this->response([ 'success' => true ], 200);

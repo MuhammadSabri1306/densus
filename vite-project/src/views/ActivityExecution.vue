@@ -2,6 +2,7 @@
 import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useUserStore } from "@stores/user";
+import { useViewStore } from "@stores/view";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import FilterActivity from "@components/FilterActivity.vue";
 import DataTableActivityExecution from "@components/DataTableActivityExecution/index.vue";
@@ -9,12 +10,23 @@ import DialogActivityExec from "@components/DialogActivityExec.vue";
 import DialogActivityExecAdmin from "@components/DialogActivityExecAdmin.vue";
 
 const datatableExecution = ref(null);
-const onFilterApply = () => {
-    datatableExecution.value.fetch();
+const hasTableFetched = ref(false);
+const fetchData = () => {
+    if(!hasTableFetched.value) {
+        datatableExecution.value.fetch();
+        hasTableFetched.value = true;
+    }
 };
 
-const route = useRoute();
+const viewStore = useViewStore();
+const filterAutoApply = appliedFilter => appliedFilter.divre ? true : false;
+const applyFilter = filterValue => {
+    viewStore.setFilter(filterValue);
+    hasTableFetched.value = false;
+    fetchData();
+}
 
+const route = useRoute();
 const userStore = useUserStore();
 const userRole = computed(() => userStore.role);
 
@@ -28,6 +40,16 @@ const checkDialogShow = scheduleId => {
 
 checkDialogShow(route.params.scheduleId);
 watch(() => route.params.scheduleId, checkDialogShow);
+
+const onDialogUpdated = () => {
+    hasTableFetched.value = false;
+    fetchData();
+};
+
+const isDialogLoaded = ref(false);
+const showDataTable = computed(() => {
+    return hasTableFetched.value || (!showDialogExec.value && !showDialogExecAdmin.value) || isDialogLoaded.value;
+});
 </script>
 <template>
     <div>
@@ -44,13 +66,13 @@ watch(() => route.params.scheduleId, checkDialogShow);
                 </div>
             </div>
         </div>
-        <div class="container-fluid dashboard-default-sec">
-            <FilterActivity @apply="onFilterApply" />
+        <div v-if="showDataTable" class="container-fluid dashboard-default-sec">
+            <FilterActivity @apply="applyFilter" :autoApply="filterAutoApply" />
+            <div class="pb-5">
+                <DataTableActivityExecution ref="datatableExecution" />
+            </div>
         </div>
-        <div class="container-fluid dashboard-default-sec pb-5">
-            <DataTableActivityExecution ref="datatableExecution" />
-        </div>
-        <DialogActivityExec v-if="showDialogExec" />
-        <DialogActivityExecAdmin v-if="showDialogExecAdmin" />
+        <DialogActivityExec v-if="showDialogExec" @loaded="isDialogLoaded = true" @update="onDialogUpdated" />
+        <DialogActivityExecAdmin v-if="showDialogExecAdmin" @loaded="isDialogLoaded = true" @update="onDialogUpdated" />
     </div>
 </template>

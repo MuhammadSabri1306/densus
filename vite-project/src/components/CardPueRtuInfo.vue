@@ -1,27 +1,23 @@
 <script setup>
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
-import { useMonitoringStore } from "@stores/monitoring";
 import Skeleton from "primevue/skeleton";
 
+const props = defineProps({
+    data: { type: Object, default: {} }
+});
+
 const route = useRoute();
-const rtuCode = computed(() => route.params.rtuCode);
+const level = computed(() => route.params.rtuCode ? "rtu" : route.params.witelCode ? "witel" : route.params.divreCode ? "divre" : "nasional");
 
-const monitoringStore = useMonitoringStore();
-const currRtu = ref({});
-const isLoaded = ref(false);
+const divreName = computed(() => props.data.divre_name ? props.data.divre_name : null);
+const witelName = computed(() => props.data.witel_name ? props.data.witel_name : null);
+const rtuName = computed(() => props.data.rtu_name ? props.data.rtu_name : null);
 
-monitoringStore.getRtuDetail(rtuCode.value)
-    .then(data => {
-        currRtu.value = {
-            name: data.NAMA_RTU,
-            location: data.LOKASI,
-            datelName: data.DATEL,
-            witelName: data.WITEL,
-            divreName: data.DIVRE
-        };
-        isLoaded.value = true;
-    });
+const firstHeading = computed(() => level.value == "rtu" ? rtuName.value : level.value == "witel" ? witelName.value : divreName.value);
+const secondTitle = computed(() => level.value == "rtu" ? witelName.value : level.value == "witel" ? divreName.value : null);
+
+const isLoaded = computed(() => props.data && props.data.divre_name ? true : false);
 </script>
 <template>
     <div class="card income-card card-primary">                                 
@@ -29,10 +25,12 @@ monitoringStore.getRtuDetail(rtuCode.value)
             <div class="round-box">
                 <VueFeather type="zap" style="enable-background:new 0 0 448.057 448.057;color:#24695c;" xml:space="preserve" />
             </div>
-            <div v-if="isLoaded" class="d-flex flex-column justify-content-center">
-                <h5>{{ currRtu.location }}</h5>
-                <p class="small">{{ currRtu.divreName }}<br>{{ currRtu.witelName }}</p>
+            <div v-if="isLoaded && level != 'nasional'" class="d-flex flex-column justify-content-center">
+                <h5 v-if="firstHeading">{{ firstHeading }}</h5>
+                <p v-if="secondTitle" class="small mb-0">{{ secondTitle }}</p>
+                <p v-if="rtuName" class="small">{{ divreName }}</p>
             </div>
+            <h5 v-else-if="level == 'nasional'">Nasional</h5>
             <div v-else class="d-flex flex-column justify-content-center">
                 <Skeleton height="1.5rem" width="12rem" class="mb-2" />
                 <Skeleton height="1rem" width="20rem" />

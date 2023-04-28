@@ -8,6 +8,28 @@ class Pue_Counter_model extends CI_Model {
         $this->load->database('densus');
     }
 
+    private function get_filter($filter)
+    {
+        if(isset($filter['rtu'])) {
+            $rtuCode = $filter['rtu'];
+            return "rtu_kode='$rtuCode'";
+        } elseif(isset($filter['witel'])) {
+            $witelCode = $filter['witel'];
+            return "witel_kode='$witelCode'";
+        } elseif(isset($filter['divre'])) {
+            $divreCode = $filter['divre'];
+            return "divre_kode='$divreCode'";
+        } elseif($filter['currUser']['level'] == 'witel') {
+            $witelCode = $filter['currUser']['locationId'];
+            return "witel_kode='$witelCode'";
+        } elseif($filter['currUser']['level'] == 'divre') {
+            $divreCode = $filter['currUser']['locationId'];
+            return "divre_kode='$divreCode'";
+        } else {
+            return false;
+        }
+    }
+
     public function get_rtu_detail($rtuCode)
     {
         $this->db

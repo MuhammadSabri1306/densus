@@ -315,6 +315,14 @@ switch (ENVIRONMENT)
 	require_once 'application/config/env_pattern.php';
 	$envPattern = EnvPattern::getPattern();
 	date_default_timezone_set($envPattern->timezone->location);
+
+/*
+ * --------------------------------------------------------------------
+ * Load Composer autoloader
+ * --------------------------------------------------------------------
+ */
+	require_once FCPATH . 'vendor/autoload.php';
+
 /*
  * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE

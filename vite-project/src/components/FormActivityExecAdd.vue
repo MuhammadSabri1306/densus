@@ -6,6 +6,7 @@ import { useUserStore } from "@stores/user";
 import { required } from "@vuelidate/validators";
 import { useDataForm } from "@/helpers/data-form";
 import FileUpload from "primevue/fileupload";
+// import FileUpload from "@components/FileUpload.vue";
 
 const emit = defineEmits(["save", "cancel"]);
 
@@ -20,12 +21,18 @@ const { data, v$ } = useDataForm({
     evidence: { value: null }
 });
 
+const hideUploadBtnBar = ref(false);
 const onUpload = event => {
     const file = event.files[event.files.length - 1];
     console.log(file, event);
     if(file) {
         data.evidence = file;
+        hideUploadBtnBar.value = true;
     }
+};
+
+const onUploadRemove = () => {
+    data.evidence = null;
 };
 
 const activityStore = useActivityStore();
@@ -80,16 +87,24 @@ const inputerName = computed(() => userStore.name);
         </div>
         <div class="mb-5">
             <label for="inputEvidence">Evidence <span class="text-danger">*</span></label>
-            <FileUpload :customUpload="true" @select="onUpload($event)" accept=".jpg, .jpeg, .pdf, .xls, .xlsx" :showUploadButton="false" :showCancelButton="false" uploadLabel="inputEvidence">
+            <FileUpload :customUpload="true" :fileLimit="1" @select="onUpload($event)" @clear="onUploadRemove" @remove="onUploadRemove" accept=".jpg, .jpeg, .png, .pdf" :showUploadButton="false" :showCancelButton="false" uploadLabel="inputEvidence">
                 <template #empty>
                     <p>Drag dan drop file anda disini.</p>
                 </template>
             </FileUpload>
-            <p class="text-muted ms-4"><small><b>(*.jpg, *.jpeg, *.pdf, *.xls, *.xlsx)</b></small></p>
+            <p class="text-muted ms-4"><small><b>(*.jpg, *.jpeg, *.png, *.pdf)</b></small></p>
         </div>
+        <!-- <FileUpload class="mb-5" isRequired label="Evidence" accept=".jpg, .jpeg, .png, .pdf" acceptText="(*.jpg, *.jpeg, *.png, *.pdf)" /> -->
         <div class="d-flex justify-content-between align-items-end">
-            <button type="submit" :class="{ 'btn-loading': isLoading }" class="btn btn-lg btn-primary">Save</button>
-            <button type="button" @click="$emit('cancel')" class="btn btn-danger">Cancel</button>
+            <button type="submit" :class="{ 'btn-loading': isLoading }" class="btn btn-lg btn-primary">Simpan</button>
+            <button type="button" @click="$emit('cancel')" class="btn btn-danger">Batalkan</button>
         </div>
     </form>
 </template>
+<style scoped>
+
+.upload-hidden-bar :deep(.p-fileupload-buttonbar) {
+    display: none!important;
+}
+
+</style>

@@ -88,13 +88,13 @@ const onDialogClose = () => {
         <DialogUserAdd v-if="showAddDialog" @die="onDialogClose" />
     </div>
 </template>
-<style>
+<style scoped>
 
-.p-dialog:not(.p-dialog-maximized) .p-dialog-content {
+:deep(.p-dialog):not(.p-dialog-maximized) .p-dialog-content {
     @apply md:tw-min-w-[40rem] tw-max-w-[90vw];
 }
 
-.p-dialog span:not(.f-w-700) {
+:deep(.p-dialog) span:not(.f-w-700) {
     font-weight: normal;
 }
 

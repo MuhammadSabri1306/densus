@@ -459,5 +459,6 @@ return array(
     'SebastianBergmann\\Timer\\TimeSinceStartOfRequestNotAvailableException' => $vendorDir . '/phpunit/php-timer/src/exceptions/TimeSinceStartOfRequestNotAvailableException.php',
     'SebastianBergmann\\Timer\\Timer' => $vendorDir . '/phpunit/php-timer/src/Timer.php',
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
+    'Stringable' => $vendorDir . '/myclabs/php-enum/stubs/Stringable.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
 );

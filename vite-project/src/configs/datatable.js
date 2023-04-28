@@ -5,7 +5,7 @@ export const dtColors = {
     // success: "#51bb25",
     success: "#72a943",
     info: "#09e0b7",
-    warning: "#ff5f24",
+    warning: "#e2c636",
     danger: "#fd2e64",
     light: "#e8ebf2",
     dark: "#2c323f"

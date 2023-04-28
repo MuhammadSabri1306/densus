@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useActivityStore } from "@stores/activity";
-import { toIdrCurrency } from "@helpers/number-format";
+import { toFixedNumber } from "@helpers/number-format";
 import CardModern from "@components/CardModern.vue";
 import Skeleton from "primevue/skeleton";
 import ChartActivityStatusCount from "@components/ChartActivityStatusCount.vue";
@@ -13,7 +13,7 @@ activityStore.fetchChart(false, () => isLoading.value = false);
 const consistencyPercent = computed(() => {
     const chart = activityStore.chart;
     if(chart && chart.consistencyPercent !== undefined && chart.consistencyPercent !== null)
-        return toIdrCurrency(chart.consistencyPercent, 2);
+        return toFixedNumber(chart.consistencyPercent, 2);
     return null;
 });
 

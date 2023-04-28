@@ -2,9 +2,11 @@
 import { computed } from "vue";
 import { toFixedNumber } from "@helpers/number-format";
 import Blobs from "@components/Blobs/index.vue";
+import { getPueTextClass } from "@helpers/pue-color";
 
 const props = defineProps({
-    value: { type: Object, required: true }
+    value: { type: Object, required: true },
+    title: { type: String, default: "" }
 });
 
 const pueValue = computed(() => {
@@ -29,10 +31,9 @@ const datetime = computed(() => {
         <Blobs type="2" width="60%" height="120%" class="text-white position-absolute tw-right-[-20%] tw-bottom-[-30%] tw-opacity-50" />
         <div class="card-body px-4 pt-4 pb-2 tw-z-[1]">
             <p class="mb-0">
-                Nilai PUE tertinggi tahun ini<br>
-                <b>{{ datetime.date }} pukul {{ datetime.time }}</b>
+                {{ title }}<br><b>{{ datetime.date }} pukul {{ datetime.time }}</b>
             </p>
-            <p class="text-end f-36 mb-0">{{ pueValue }}</p>
+            <p :class="getPueTextClass(pueValue)" class="text-end f-36 f-w-700 mb-0">{{ pueValue }}</p>
         </div>
     </div>
 </template>

@@ -19,10 +19,11 @@ import MonitoringFuelParamsDetail from "@views/MonitoringFuelParamsDetail.vue";
 import MonitoringFuelInvoice from "@views/MonitoringFuelInvoice.vue";
 import MonitoringFuelInvoiceDetail from "@views/MonitoringFuelInvoiceDetail.vue";
 
-import PueRtu from "@views/PueRtu.vue";
-import PueDivre from "@views/PueDivre.vue";
-import PueWitel from "@views/PueWitel.vue";
-import Pue from "@views/Pue.vue";
+import PueMonitoringRtu from "@views/PueMonitoringRtu.vue";
+import PueMonitoringDivre from "@views/PueMonitoringDivre.vue";
+import PueMonitoringWitel from "@views/PueMonitoringWitel.vue";
+import PueMonitoring from "@views/PueMonitoring.vue";
+import PueOffline from "@views/PueOffline.vue";
 
 import Rtu from "@views/Rtu.vue";
 import RtuAdd from "@views/RtuAdd.vue";
@@ -31,6 +32,10 @@ import RtuEdit from "@views/RtuEdit.vue";
 import ActivityDashboard from "@views/ActivityDashboard.vue";
 import ActivitySchedule from "@views/ActivitySchedule.vue";
 import ActivityExecution from "@views/ActivityExecution.vue";
+
+import GepeeEvidence from "@views/GepeeEvidence.vue";
+import GepeeEvidenceDivre from "@views/GepeeEvidenceDivre.vue";
+import GepeeEvidenceWitel from "@views/GepeeEvidenceWitel.vue";
 
 const routes = [
     {
@@ -78,19 +83,23 @@ const routes = [
         meta: { menuKey: ["energy"], requiresAuth: true }
     },
     {
-        path: "/pue", component: Pue,
+        path: "/pue/monitoring", component: PueMonitoring,
         meta: { menuKey: ["pue"], requiresAuth: true }
     },
     {
-        path: "/pue/divre/:divreCode", component: PueDivre,
+        path: "/pue/monitoring/divre/:divreCode", component: PueMonitoringDivre,
         meta: { menuKey: ["pue"], requiresAuth: true }
     },
     {
-        path: "/pue/witel/:witelCode", component: PueWitel,
+        path: "/pue/monitoring/witel/:witelCode", component: PueMonitoringWitel,
         meta: { menuKey: ["pue"], requiresAuth: true }
     },
     {
-        path: "/pue/rtu/:rtuCode", component: PueRtu,
+        path: "/pue/monitoring/rtu/:rtuCode", component: PueMonitoringRtu,
+        meta: { menuKey: ["pue"], requiresAuth: true }
+    },
+    {
+        path: "/pue/offline", component: PueOffline,
         meta: { menuKey: ["pue"], requiresAuth: true }
     },
     {
@@ -132,6 +141,22 @@ const routes = [
     {
         path: "/user", component: User,
         meta: { menuKey: ["user"], requiresAuth: true }
+    },
+    {
+        path: "/gepee-evidence", component: GepeeEvidence,
+        meta: { menuKey: ["gepee_evidence"], requiresAuth: true }
+    },
+    {
+        path: "/gepee-evidence/divre/:divreCode", component: GepeeEvidenceDivre,
+        meta: { menuKey: ["gepee_evidence"], requiresAuth: true }
+    },
+    {
+        path: "/gepee-evidence/witel/:witelCode", component: GepeeEvidenceWitel,
+        meta: { menuKey: ["gepee_evidence"], requiresAuth: true }
+    },
+    {
+        path: "/gepee-evidence/witel/:witelCode/:idCategory", component: GepeeEvidenceWitel,
+        meta: { menuKey: ["gepee_evidence"], requiresAuth: true }
     },
     {
         path: "/login", name: "login", component: Login,

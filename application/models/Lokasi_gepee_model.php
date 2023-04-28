@@ -98,6 +98,15 @@ class Lokasi_gepee_model extends CI_Model
         return $query->result();
     }
 
+    public function get_all()
+    {
+        $query = $this->db
+            ->select()
+            ->from($this->tableName)
+            ->get();
+        return $query->result_array();
+    }    
+
     public function save($body, $id = null, $currUser = null)
     {
         if(is_null($id)) {

@@ -76,7 +76,7 @@ const chartOptions = computed(() => {
         <div class="bar-chart-widget">
             <div class="bottom-content card-body">
                 <div class="d-flex justify-content-center align-items-center">
-                    <div class="w-100">
+                    <div class="chart-wrapper">
                         <Skeleton v-if="isLoading" shape="circle" size="100%" />
                         <VueApexCharts v-else :options="chartOptions" :series="series" />
                     </div>

@@ -1,0 +1,271 @@
+<script setup>
+import { ref, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useGepeeEvdStore } from "@stores/gepee-evidence";
+import { useUserStore } from "@stores/user";
+import { useViewStore } from "@stores/view";
+import Dialog from "primevue/dialog";
+import ButtonGroupAction from "@components/ButtonGroupAction.vue";
+import Skeleton from "primevue/skeleton";
+import FormGepeeEvidence from "@components/FormGepeeEvidence.vue";
+import Image from "primevue/image";
+
+const emit = defineEmits(["updated"]);
+
+const route = useRoute();
+const witelCode = computed(() => route.params.witelCode);
+const idCategory = computed(() => route.params.idCategory);
+
+const gepeeEvdStore = useGepeeEvdStore();
+const isLoading = ref(true);
+
+const evdList = ref([]);
+const category = ref(null);
+const location = ref(null);
+const currDetail = ref(null);
+const currUpdate = ref(null);
+
+const currDateString = () => new Intl.DateTimeFormat('id', { dateStyle: 'long'}).format() || null;
+const categoryHeading = computed(() => category.value ? "Kategori " + category.value.category : "Gepee Evidence");
+const categorySubHeading = computed(() => category.value ? category.value.sub_category : "Daftar Gepee Evidence");
+const witelName = computed(() => location.value ? location.value.witel_name : null);
+
+const resetReactiveData = () => {
+    currDetail.value = null;
+    currUpdate.value = null;
+};
+
+const fetchList = () => {
+    gepeeEvdStore.getEvidenceList(witelCode.value, idCategory.value, data => {
+        isLoading.value = false;
+        if(data.evidence)
+            evdList.value = data.evidence;
+        if(data.location)
+            location.value = data.location;
+        if(data.category)
+            category.value = data.category;
+    });
+};
+fetchList();
+
+const router = useRouter();
+const showDialogList = ref(true);
+const showDialogDetail = ref(false);
+const showDialogAdd = ref(false);
+const showDialogEdit = ref(false);
+
+const viewStore = useViewStore();
+const dialog = {
+    onListHide: () => {
+        const isOpenOtherDialog = showDialogDetail.value || showDialogAdd.value || showDialogEdit.value;
+        if(!isOpenOtherDialog)
+            router.push("/gepee-evidence/witel/" + witelCode.value);
+    },
+    onDetailHide: () => {
+        resetReactiveData();
+        showDialogList.value = true;
+    },
+    onFormAddHide: () => {
+        dialog.onDetailHide();
+    },
+    onFormEditHide: () => {
+        dialog.onDetailHide();
+    },
+    showDetail: currItem => {
+        currDetail.value = currItem;
+        showDialogDetail.value = true;
+        showDialogList.value = false;
+    },
+    showFormAdd: () => {
+        showDialogAdd.value = true;
+        showDialogList.value = false;
+    },
+    showFormEdit: currItem => {
+        currUpdate.value = currItem;
+        showDialogEdit.value = true;
+        showDialogList.value = false;
+    },
+    onFormAddSave: () => {
+        viewStore.showToast("Input Gepee Evidence", "Berhasil menyimpan Gepee Evidence baru.", true);
+        fetchList();
+        showDialogAdd.value = false;
+        emit("update");
+    },
+    onFormEditSave: () => {
+        viewStore.showToast("Update Gepee Evidence", "Berhasil menyimpan Gepee Evidence.", true);
+        fetchList();
+        showDialogEdit.value = false;
+        emit("update");
+    }
+};
+
+const onDelete = evidenceId => {
+    if(!confirm("Anda akan menghapus Gepee Evidence. Lanjutkan?"))
+        return false;
+    
+    gepeeEvdStore.delete(evidenceId, response => {
+        if(!response.success)
+            return;
+        
+        viewStore.showToast("Hapus Gepee Evidence", "Berhasil menghapus Gepee Evidence.", true);
+        fetchList();
+        resetReactiveData();
+        emit("update");
+    });
+};
+
+const userStore = useUserStore();
+const hasUpdateAccess = computed(() => userStore.role == "admin");
+
+const getFileExtension = filename => {
+    const nameArr = filename.split(".");
+    return nameArr[nameArr.length - 1];
+};
+
+const isCurrDetailImg = computed(() => {
+    const currDetailData = currDetail.value;
+    if(!currDetailData || !currDetailData.file_url)
+        return false;
+    
+    const fileExt = getFileExtension(currDetailData.file_url);
+    return ["jpg", "jpeg", "png"].indexOf(fileExt) >= 0;
+});
+</script>
+<template>
+    <div>
+        <Dialog :header="categoryHeading" v-model:visible="showDialogList" modal maximizable draggable @afterHide="dialog.onListHide">
+            <div class="pb-4 pt-4 pt-md-0">
+                <div class="card card-body bg-light text-dark p-t-25 p-b-25 p-l-30 p-r-30">
+                    <div class="row">
+                        <div class="col-4 col-md-2 mt-1">
+                            <VueFeather type="award" class="w-100 font-success" />
+                        </div>
+                        <div class="col">
+                            <h6 class="m-b-5 font-success f-w-700">{{ categorySubHeading }}</h6>
+                            <p class="mb-0">
+                                {{ currDateString() }}<br>
+                                {{ witelName }}
+                            </p>
+                        </div>
+                        <div v-if="!isLoading && hasUpdateAccess" class="col-auto ms-auto mt-4 mt-md-auto">
+                            <button type="button" @click="dialog.showFormAdd" class="btn btn-lg btn-primary shadow-sm">
+                                <VueFeather type="plus" size="1.2em" class="middle" />
+                                <span class="ms-1 middle">Input Baru</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="isLoading">
+                    <Skeleton v-for="n in 4" class="block mb-3" />
+                </div>
+                <div v-else-if="evdList.length > 0">
+                    <table class="table table-head-primary">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Deskripsi</th>
+                                <th>Evidence</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item, index) in evdList">
+                                <td>{{ index + 1 }}</td>
+                                <td>{{ item.deskripsi }}</td>
+                                <td>
+                                    <button v-if="!hasUpdateAccess" @click="dialog.showDetail(item)" class="btn btn-primary">Detail</button>
+                                    <ButtonGroupAction v-else @detail="dialog.showDetail(item)" @edit="dialog.showFormEdit(item)" @delete="onDelete(item.id)" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div v-else class="px-4">
+                    <p class="text-center text-muted">
+                        <b>Belum ada Evidence.</b>
+                        <span v-if="hasUpdateAccess"> Silahkan tekan tombol Tambah untuk menambah item.</span>
+                    </p>
+                </div>
+            </div>
+        </Dialog>
+        <Dialog header="Input Gepee Evidence" v-model:visible="showDialogAdd" modal maximizable draggable @afterHide="dialog.onFormAddHide">
+            <div class="pb-4 pt-4 pt-md-0">
+                <div class="card card-body bg-light text-dark p-t-25 p-b-25 p-l-30 p-r-30">
+                    <div class="row">
+                        <div class="col-4 col-md-2 mt-1">
+                            <VueFeather type="award" class="w-100 font-success" />
+                        </div>
+                        <div class="col">
+                            <h6 class="m-b-5 font-success f-w-700">{{ categorySubHeading }}</h6>
+                            <p class="mb-0">
+                                {{ currDateString() }}<br>
+                                {{ witelName }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <FormGepeeEvidence v-if="showDialogAdd" @cancel="showDialogAdd = false" @save="dialog.onFormAddSave" />
+            </div>
+        </Dialog>
+        <Dialog header="Update Gepee Evidence" v-model:visible="showDialogEdit" modal maximizable draggable @afterHide="dialog.onFormEditHide">
+            <div class="pb-4 pt-4 pt-md-0">
+                <div class="card card-body bg-light text-dark p-t-25 p-b-25 p-l-30 p-r-30">
+                    <div class="row">
+                        <div class="col-4 col-md-2 mt-1">
+                            <VueFeather type="award" class="w-100 font-success" />
+                        </div>
+                        <div class="col">
+                            <h6 class="m-b-5 font-success f-w-700">{{ categorySubHeading }}</h6>
+                            <p class="mb-0">
+                                {{ currDateString() }}<br>
+                                {{ witelName }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <FormGepeeEvidence v-if="showDialogEdit" :initData="currUpdate" @cancel="showDialogEdit = false" @save="dialog.onFormEditSave" />
+            </div>
+        </Dialog>
+        <Dialog header="Detail Gepee Evidence" v-model:visible="showDialogDetail" modal maximizable draggable @afterHide="dialog.onDetailHide">
+            <div class="pb-4 pt-4 pt-md-0">
+                <div class="card card-body bg-light text-dark p-t-25 p-b-25 p-l-30 p-r-30">
+                    <div class="row">
+                        <div class="col-4 col-md-2 mt-1">
+                            <VueFeather type="award" class="w-100 font-success" />
+                        </div>
+                        <div class="col">
+                            <h6 class="m-b-5 font-success f-w-700">{{ categorySubHeading }}</h6>
+                            <p class="mb-0">
+                                {{ currDateString() }}<br>
+                                {{ witelName }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <table class="table text-muted">
+                        <tbody>
+                            <tr>
+                                <th>Deskripsi</th>
+                                <td>{{ currDetail.deskripsi }}</td>
+                            </tr>
+                            <tr>
+                                <th>File Evidence</th>
+                                <td>
+                                    <div v-if="isCurrDetailImg" class="position-relative">
+                                        <span>{{ currDetail.file }}</span>
+                                        <Image :src="currDetail.file" alt="gambar evidence" preview class="evidence-img" />
+                                    </div>
+                                    <a v-else :href="currDetail.file_url" target="_blank">{{ currDetail.file }}</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-end mt-5">
+                    <button type="button" @click="showDialogDetail = false" class="btn btn-secondary">Tutup</button>
+                </div>
+            </div>
+        </Dialog>
+    </div>
+</template>

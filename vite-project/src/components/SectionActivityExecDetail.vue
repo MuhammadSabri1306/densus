@@ -8,19 +8,12 @@ const props = defineProps({
     showCloseButton: { type: Boolean, default: true }
 });
 
-const evidenceFileName = computed(() => {
-    const rawText = props.data.evidence || "";
-    const pathSection = rawText.split("/");
-    return pathSection[pathSection.length - 1];
-});
-
 const evidenceExt = computed(() => {
     const nameArr = (props.data.evidence || "").split(".");
     return nameArr[nameArr.length - 1];
 });
 
 const isEvidenceImg = computed(() => evidenceExt.value == "jpg" || evidenceExt.value == "jpeg" || evidenceExt.value == "png");
-console.log(isEvidenceImg.value);
 </script>
 <template>
     <section>

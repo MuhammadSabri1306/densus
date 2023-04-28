@@ -108,13 +108,13 @@ class Rtu_chart_model extends CI_Model {
 
 			return $savingpercent;
 		}
-		public function get_bbmcost($rtu,$kva,$port,$bbmprice)
+		public function get_bbmcost($rtu, $kva, $port, $bbmprice)
 		{
-            $sql="SELECT ROUND(0.21*$kva*SUM(TIMESTAMPDIFF(MINUTE,timestamp,timeended)/60.0)*$bbmprice) as bbm_cost
-			FROM `juan5684_osasemobile`.`rtu_port_status`
-		   WHERE rtu_port_status.rtu_kode='$rtu' AND port='$port' AND MONTH(CURRENT_DATE)=MONTH(timestamp) AND YEAR(CURRENT_DATE)=YEAR(timestamp)
-		   GROUP BY MONTH(timestamp), YEAR(timestamp)
-		   ORDER BY timestamp ASC";    
+            $sql = "SELECT ROUND(0.21*$kva*SUM(TIMESTAMPDIFF(MINUTE,timestamp,timeended)/60.0)*$bbmprice) as bbm_cost
+				FROM `juan5684_osasemobile`.`rtu_port_status`
+				WHERE rtu_port_status.rtu_kode='$rtu' AND port='$port' AND MONTH(CURRENT_DATE)=MONTH(timestamp) AND YEAR(CURRENT_DATE)=YEAR(timestamp)
+				GROUP BY MONTH(timestamp), YEAR(timestamp)
+				ORDER BY timestamp ASC";    
 			$query = $this->db->query($sql);
             
 			return $query->row_array();

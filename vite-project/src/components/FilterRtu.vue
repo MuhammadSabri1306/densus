@@ -58,7 +58,7 @@ onMounted(() => {
         listboxWitel.value.setValue(currUser.value.locationId);
         listboxWitel.value.setDisabled(true);
 
-        listboxDivre.value.setDisabled(true)
+        listboxDivre.value.setDisabled(true);
 
         listboxWitel.value.fetch(
             () => viewStore.getWitel(currUser.value.locationId),
@@ -79,8 +79,10 @@ onMounted(() => {
     } else {
 
         listboxDivre.value.fetch(() => viewStore.getDivre());
-        if(viewStore.filters.divre)
+        if(viewStore.filters.divre) {
             listboxDivre.value.setValue(viewStore.filters.divre);
+            listboxWitel.value.fetch(() => viewStore.getWitelByDivre(viewStore.filters.divre));
+        }
         if(viewStore.filters.witel)
             listboxWitel.value.setValue(viewStore.filters.witel);
 

@@ -121,7 +121,7 @@ class User extends RestController
             $levelValidations = [
                 $currUser['level'] == 'nasional',
                 ($currUser['level'] == 'divre' && $input['body']['divre_code'] == $currUser['locationId']),
-                ($currUser['level'] == 'witre' && $input['body']['witel_code'] == $currUser['locationId'])
+                ($currUser['level'] == 'witel' && $input['body']['witel_code'] == $currUser['locationId'])
             ];
             if(!in_array(true, $levelValidations)) {
                 $data = [ 'success' => false ];
@@ -135,7 +135,7 @@ class User extends RestController
                 if($hasUser) {
                     $data = [
                         'success' => false,
-                        'message' => 'Username is exists'
+                        'message' => 'Username sudah digunakan.'
                     ];
                     $status = REST_ERR_BAD_REQ;
                 } else {

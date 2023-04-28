@@ -1,22 +1,27 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useRouter } from "vue-router";
 import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
 
 const userStore = useUserStore();
 const userRole = computed(() => userStore.role);
+const userLevel = computed(() => userStore.level);
+const userLocId = computed(() => userStore.locationId);
 
 const viewStore = useViewStore();
-const menuItems = computed(() => viewStore.menuItems);
+const menuItems = computed(() => {
+    return viewStore.menuItems.map(item => {
+        if(item.key == "pue" && userLevel.value != "nasional") {
+            if(userLevel.value && userLevel.value != "nasional" && userLocId.value) {
+                const pueItem = JSON.parse(JSON.stringify(item));
+                pueItem.to = item.to + "/" + userLevel.value + "/" + userLocId.value;
+                return pueItem;
+            }
+        }
+        return item;
+    });
+});
 const menuActKeys = computed(() => viewStore.menuActKeys);
-
-const menuExpanded = computed(() => viewStore.menuExpanded);
-const setMenuExpanded = index => {
-    if(index === menuExpanded.value)
-        index = -1;
-    viewStore.setMenuExpanded(index);
-};
 
 const expandedIndexes = ref([]);
 const initExpanded = () => {
@@ -54,11 +59,11 @@ initExpanded();
                         </div>
                     </li>
                     <li v-for="(item, index) in menuItems" :class="{ 'dropdown': item.child, 'expand': expandedIndexes.indexOf(index) >= 0 }" class="py-1">
-                        <RouterLink v-if="!item.child && item.roles.indexOf(userRole) >= 0" :to="item.to" :class="{ 'active': item.key == menuActKeys[0] }" class="nav-link">
+                        <RouterLink v-if="!item.child && item.roles.indexOf(userRole) >= 0" :to="item.to" :class="{ 'active': item.key == menuActKeys[0], 'on-development-menu': item.isDev }" class="nav-link">
                             <vue-feather :type="item.icon" size="1.2rem" class="me-2" />
                             <span>{{ item.title }}</span>
                         </RouterLink>
-                        <a v-if="item.child && item.roles.indexOf(userRole) >= 0" @click="toggleExpand(index)" :class="{ 'active': item.key === menuActKeys[0] }" class="nav-link menu-title" role="button">
+                        <a v-if="item.child && item.roles.indexOf(userRole) >= 0" @click="toggleExpand(index)" :class="{ 'active': item.key === menuActKeys[0], 'on-development-menu': item.isDev }" class="nav-link menu-title" role="button">
                             <vue-feather :type="item.icon" size="1.2rem" class="me-2" />
                             <span>{{ item.title }}</span>
                             <div class="according-menu">
@@ -81,6 +86,12 @@ initExpanded();
 
 .main-navbar .nav-submenu .active {
     font-weight: 600!important;
+}
+
+.on-development-menu::before {
+    content: "</>";
+    @apply tw-text-[11px] tw-w-6 tw-h-6 tw-inline-flex tw-float-right tw-mr-4
+        tw-justify-center tw-items-center tw-bg-danger tw-rounded-full tw-text-white tw-font-semibold;
 }
 
 </style>

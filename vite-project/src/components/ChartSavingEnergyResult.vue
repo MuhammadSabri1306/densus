@@ -1,6 +1,7 @@
 <script setup>
 import { useMonitoringStore } from "@stores/monitoring";
 import VueApexCharts from "vue3-apexcharts";
+import { baseUrl } from "@/configs/base";
 
 const props = defineProps({
     rtuCode: { required: true }
@@ -26,7 +27,7 @@ const chartOptions = {
             hollow: {
                 margin: 15,
                 size: '70%',
-                image: (savingMonthlyPercent > 10) ? "/densus/assets/img/success.png" : "/densus/assets/img/alert.png",
+                image: (savingMonthlyPercent > 10) ? baseUrl + "assets/img/success.png" : baseUrl + "assets/img/alert.png",
                 imageWidth: 64,
                 imageHeight: 64,
                 imageClipped: false

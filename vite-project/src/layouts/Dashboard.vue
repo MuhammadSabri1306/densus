@@ -9,8 +9,11 @@ import SidebarMenu from "./DashboardSidebarMenu.vue";
 import DialogUpdatePassword from "@components/DialogUpdatePassword.vue";
 import DialogUserEdit from "@components/DialogUserEdit.vue";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import "@/assets/css/app.css";
 import "@/assets/css/theme.css";
 import "@/assets/css/responsive.css";
+import "@/assets/css/pue-color.css";
 
 const viewStore = useViewStore();
 const hideSidebar = computed(() => viewStore.hideSidebar);
@@ -162,6 +165,22 @@ const profileUpdateData = ref(null);
 
 .brand-logo {
     max-width: 5.2rem;
+}
+
+.page-wrapper.compact-wrapper .page-body-wrapper header.main-nav,
+:deep(.page-wrapper).compact-wrapper .page-body-wrapper header.main-nav {
+    z-index: 88;
+}
+
+.filter-year-panel,
+:deep(.filter-year-panel) {
+    width: 16rem;
+}
+
+.card-h-full,
+:deep(.card-h-full) {
+    height: calc(100% - 30px);
+    margin-bottom: 30px;
 }
 
 </style>

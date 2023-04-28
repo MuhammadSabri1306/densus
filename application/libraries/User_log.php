@@ -57,7 +57,6 @@ class User_log
 
     public function log()
     {
-        $this->CI->db->reset_query();
         $data = [
             $this->table->field->userId => $this->userId,
             $this->table->field->username => $this->username,
@@ -68,7 +67,5 @@ class User_log
 
         $this->CI->db->insert($this->table->name, $data);
         $this->id = $this->CI->db->insert_id();
-        
-        $this->CI->db->reset_query();
     }
 }

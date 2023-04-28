@@ -1,0 +1,31 @@
+.tc-inefficient {
+    color: #fd2e64!important;
+}
+
+.tc-average {
+    color: #e2c636!important;
+}
+
+.tc-optimize {
+    color: #24695c!important;
+}
+
+.tc-efficient {
+    color: #72a943!important;
+}
+
+.bgc-inefficient {
+    background-color: #ff658d!important;
+}
+
+.bgc-average {
+    background-color: #ffe55c!important;
+}
+
+.bgc-optimize {
+    background-color: #2cb198!important;
+}
+
+.bgc-efficient {
+    background-color: #77d077!important;
+}

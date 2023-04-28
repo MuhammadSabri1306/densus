@@ -90,7 +90,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'dd');
+$autoload['helper'] = array('url', 'dd', 'get_time_range', 'datetime_range_semester');
 
 /*
 | -------------------------------------------------------------------

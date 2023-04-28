@@ -260,4 +260,102 @@ class Monitoring extends RestController
 
         }
     }
+
+    public function pue_v2_get()
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+
+        if($status === 200) {
+            $divreCode = $this->input->get('divre');
+            $witelCode = $this->input->get('witel');
+            $rtuCode = $this->input->get('rtu');
+            $currUser = $this->auth_jwt->get_payload();
+            $this->load->model('pue_counter2_model');
+
+            $pue = [];
+            $pueKeys = ['valueOnYear', 'avgValueOnYear', 'stoValueOnYear', 'averages', 'maxValue', 'latestValue', 'latestAvgValueOnZone', 'performances'];
+            foreach($pueKeys as $key) {
+                $pue[$key] = null;
+            }
+
+            if($rtuCode) {
+
+                $zone = [ 'rtu' => $rtuCode ];
+                $pue['valueOnYear'] = $this->pue_counter2_model->get_curr_year($rtuCode);
+                $pue['latestValue'] = $this->pue_counter2_model->get_latest_value($rtuCode);
+
+            } else {
+
+                $zone = [
+                    'witel' => $currUser['level'] == 'witel' ? $currUser['locationId'] : $witelCode,
+                    'divre' => $currUser['level'] == 'divre' ? $currUser['locationId'] : $divreCode
+                ];
+                
+                $pue['avgValueOnYear'] = $this->pue_counter2_model->get_zone_avg_on_curr_year($zone);
+                $pue['stoValueOnYear'] = $this->pue_counter2_model->get_curr_year_avg_on_sto($zone);
+                $pue['latestAvgValueOnZone'] = $this->pue_counter2_model->get_latest_avg_value_on_zone($zone);
+
+            }
+
+            $pue['averages'] = $this->pue_counter2_model->get_avg_value($zone);
+            $pue['maxValue'] = $this->pue_counter2_model->get_max_value($zone);
+            $pue['performances'] = $this->pue_counter2_model->get_performance_value($zone);
+
+            $dataLevel = $this->pue_counter2_model->get_data_level_by_filter($zone);
+            $pue['req_level'] = $dataLevel;
+
+            $forbiddWitel = $currUser['level'] == 'witel' && $dataLevel['witel_kode'] != $currUser['locationId'];
+            $forbiddDivre = $currUser['level'] == 'divre' && $dataLevel['divre_kode'] != $currUser['locationId'];
+            if($forbiddWitel || $forbiddDivre) {
+                $status = REST_ERR_BAD_REQ_STATUS;
+                $data = REST_ERR_BAD_REQ_DATA;
+            }
+        }
+
+        if($status === 200) {
+            $this->load->library('user_log');
+            $this->user_log
+                ->userId($currUser['id'])
+                ->username($currUser['username'])
+                ->name($currUser['name'])
+                ->activity('get pue monitoring on ' . implode(', ', array_values($dataLevel)))
+                ->log();
+            
+			$data = [
+                'pue' => $pue,
+                'success' => true
+            ];
+        }
+        
+        $this->response($data, $status);
+    }
+
+    public function pue_v2_test_get()
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+
+        if($status === 200) {
+            $divreCode = $this->input->get('divre');
+            $witelCode = $this->input->get('witel');
+            $rtuCode = $this->input->get('rtu');
+            $currUser = $this->auth_jwt->get_payload();
+            $this->load->model('pue_counter2_model');
+
+            $pueAvg = $this->pue_counter2_model->get_avg_value_v2();
+            $data = [ 'pueAvg' => $pueAvg, 'success' => true ];
+        }
+
+        $this->response($data, $status);
+    }
+
 }

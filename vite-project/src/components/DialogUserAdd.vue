@@ -69,7 +69,6 @@ const onSubmit = async () => {
     hasSubmitted.value = true;
     let isValid = await v$.value.$validate();
     isValid = isValid && optValidation();
-    console.log(optValidation());
 
     if(!isValid)
         return;
@@ -87,9 +86,11 @@ const onSubmit = async () => {
         witel_name: data.witel_name,
         divre_code: data.divre_code,
         divre_name: data.divre_name,
-        username: data.username,
-        password: data.password1
+        username: data.username
     };
+
+    if(!data.is_ldap)
+        body.password = data.password1;
     
     isLoading.value = true;
     listUserStore.create(body, response => {

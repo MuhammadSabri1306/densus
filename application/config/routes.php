@@ -69,11 +69,36 @@ $route['api/monitoring/chartdatadaily/(:any)'] = 'monitoring/chartdatadaily/$1';
 $route['api/monitoring/divre'] = 'monitoring/divre';
 $route['api/monitoring/witel/(:any)'] = 'monitoring/witel/$1';
 $route['api/monitoring/location/(:any)'] = 'monitoring/location/$1';
-$route['api/monitoring/pue_v2'] = 'monitoring/pue_v2';
-$route['api/monitoring/pue/(:any)'] = 'monitoring/pue/$1';
-$route['api/monitoring/pue'] = 'monitoring/rtu_list_by_pue';
+$route['api/monitoring/pue_v2'] = 'monitoring/pue_v2'; // jgn lupa hapus
+$route['api/monitoring/pue/(:any)'] = 'monitoring/pue/$1'; // jgn lupa hapus
+$route['api/monitoring/pue'] = 'monitoring/rtu_list_by_pue'; // jgn lupa hapus
 $route['api/monitoring/rtulist/(:any)/(:any)'] = 'monitoring/rtulist/$1/$2';
 $route['api/monitoring/rtudetail/(:any)'] = 'monitoring/rtudetail/$1';
+
+/* ENDPOINT MONITORING PUE */
+// $route['api/pue/value_on_year/(:any)']['get'] = 'monitoring_pue/value_on_year/$1';
+// $route['api/pue/avg_on_year']['get'] = 'monitoring_pue/avg_value_on_year';
+$route['api/pue/chart_data']['get'] = 'monitoring_pue/chart_data'; // jadi satu endpoint
+$route['api/pue/sto_value_on_year']['get'] = 'monitoring_pue/sto_value_on_year';
+// $route['api/pue/latest_value/(:any)']['get'] = 'monitoring_pue/latest_value/$1';
+// $route['api/pue/latest_avg_value']['get'] = 'monitoring_pue/latest_avg_value';
+$route['api/pue/latest_value']['get'] = 'monitoring_pue/latest_value'; // jadi satu endpoint
+$route['api/pue/avg_value']['get'] = 'monitoring_pue/avg_value';
+$route['api/pue/max_value']['get'] = 'monitoring_pue/max_value';
+$route['api/pue/performance']['get'] = 'monitoring_pue/performance';
+$route['export/excel/pue'] = 'excel_export/pue';
+
+/* ENDPOINT GEPEE EVIDENCE */
+$route['api/gepee-evidence/location/info']['get'] = 'gepee_evidence/location_info';
+$route['api/gepee-evidence/location']['get'] = 'gepee_evidence/location';
+$route['api/gepee-evidence/category/(:any)']['get'] = 'gepee_evidence/category/$1';
+$route['api/gepee-evidence/category']['get'] = 'gepee_evidence/category';
+$route['api/gepee-evidence/category-data']['get'] = 'gepee_evidence/category_data';
+$route['api/gepee-evidence/evidence/category/(:any)']['get'] = 'gepee_evidence/evidence_list/$1';
+$route['api/gepee-evidence/evidence/(:any)']['get'] = 'gepee_evidence/evidence/$1';
+$route['api/gepee-evidence/evidence']['post'] = 'gepee_evidence/evidence';
+$route['api/gepee-evidence/evidence/(:any)']['put'] = 'gepee_evidence/evidence/$1';
+$route['api/gepee-evidence/evidence/(:any)']['delete'] = 'gepee_evidence/evidence/$1';
 
 /* ENDPOINT MONITORING ENERGY (PLN PALING BARU) */
 $route['api/monitoring/pln/bill/location']['get'] = 'pln/bill_location';
@@ -168,6 +193,11 @@ $route['api/activity/execution/(:any)']['delete'] = 'activity_execution/index/$1
 $route['api/activity/execution/(:any)/approve']['put'] = 'activity_execution/approve/$1';
 $route['api/activity/execution/(:any)/reject']['put'] = 'activity_execution/reject/$1';
 
+$route['api/pue/offline/location']['post'] = 'pue_offline';
+$route['api/pue/offline/location/(:any)']['put'] = 'pue_offline/index/$1';
+$route['api/pue/offline/location/(:any)']['delete'] = 'pue_offline/index/$1';
+$route['api/pue/offline/location']['get'] = 'pue_offline/location_data';
+
 $route['api/user/(:any)']['get'] = 'user/index/$1';
 $route['api/user/(:any)']['put'] = 'user/index/$1';
 $route['api/user/(:any)/general']['put'] = 'user/update/$1';
@@ -176,6 +206,13 @@ $route['api/user/(:any)']['delete'] = 'user/index/$1';
 $route['api/user']['get'] = 'user';
 $route['api/user']['post'] = 'user';
 $route['api/profile']['get'] = 'user/profile';
+
+$route['api/attachment/activity']['post'] = 'attachment/store_activity_execution';
+$route['api/attachment/activity/(:any)']['delete'] = 'attachment/del_activity_execution/$1';
+$route['api/attachment/gepee-evidence']['post'] = 'attachment/store_gepee_evidence';
+$route['api/attachment/gepee-evidence/(:any)']['delete'] = 'attachment/del_gepee_evidence/$1';
+$route['api/attachment/pue/offline']['post'] = 'attachment/store_pue_evidence';
+$route['api/attachment/pue/offline/(:any)']['delete'] = 'attachment/del_pue_evidence/$1';
 
 $route['login'] = 'vue';
 $route['monitoring/(:any)/(:any)'] = 'vue';

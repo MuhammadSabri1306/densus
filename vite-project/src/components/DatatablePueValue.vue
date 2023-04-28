@@ -3,10 +3,12 @@ import { computed } from "vue";
 import { toIdrCurrency } from "@helpers/number-format";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
+import { getPueBgClass } from "@helpers/pue-color";
 
 const props = defineProps({
     pueValues: { type: Array, required: true }
 });
+console.log(props.pueValues)
 
 const tabledata = computed(() => {
     return props.pueValues.map((item, index) => {
@@ -26,9 +28,11 @@ const getDateTime = timestamp => new Intl.DateTimeFormat('id', { dateStyle: 'lon
                 <b>{{ getDateTime(slotProps.data.timestamp) }}</b>
             </template>
         </Column>
-        <Column field="pue_value" header="Nilai PUE" :sortable="true">
+        <Column field="pue_value" header="Nilai PUE" :sortable="true" bodyClass="p-0 position-relative">
             <template #body="slotProps">
-                {{ toIdrCurrency(slotProps.data.pue_value) }}
+                <div :class="getPueBgClass(slotProps.data.pue_value)" class="px-3 py-1 position-absolute tw-inset-0 d-flex align-items-center f-w-700 text-dark">
+                    {{ toIdrCurrency(slotProps.data.pue_value) }}
+                </div>
             </template>
         </Column>
     </DataTable>
