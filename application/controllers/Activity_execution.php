@@ -57,7 +57,7 @@ class Activity_execution extends RestController
         // $status = REST_ERR_BAD_REQ_STATUS;
         // $data = [
         //     'success' => false,
-        //     'message' => 'Penambahan data pada fitur ini ditutup untuk sementara waktu. Mohon maaf atas ketidaknyamanannya.'
+        //     'message' => 'Fitur ini sedang dalam pemeliharaan dan penambahan data akan ditutup sampai besok pagi. Mohon maaf atas ketidaknyamanannya.'
         // ];
         // $this->response($data, $status);
         

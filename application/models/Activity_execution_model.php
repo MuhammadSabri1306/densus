@@ -72,8 +72,24 @@ class Activity_execution_model extends CI_Model
     public function delete($id, $currUser = null)
     {
         // $this->filter_for_curr_user($currUser);
-        $this->db->where('id', $id);
-        return $this->db->delete($this->tableName);
+        
+        $this->db
+            ->select()
+            ->from($this->tableName)
+            ->where('id', $id);
+        $exec = $this->db->get()->row_array();
+
+        $isFileDeleted = false;
+        if(isset($exec['evidence'])) {
+            $filePath = FCPATH . UPLOAD_ACTIVITY_EVIDENCE_PATH . '/' . $exec['evidence'];
+            $isFileDeleted = unlink($filePath);
+        }
+
+        if($isFileDeleted) {
+            $this->db->where('id', $id);
+            return $this->db->delete($this->tableName);
+        }
+        return false;
     }
     
     public function approve($id, $currUser = null)
@@ -371,6 +387,19 @@ class Activity_execution_model extends CI_Model
         }
         
         return $result;
+    }
+
+    public function get_file_list()
+    {
+        $list = $this->db
+            ->select('evidence')
+            ->from($this->tableName)
+            ->order_by('evidence')
+            ->get()
+            ->result_array();
+        if(count($list) < 1)
+            return [];
+        return array_column($list, 'evidence');
     }
 }
 

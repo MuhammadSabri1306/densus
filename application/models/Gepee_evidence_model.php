@@ -288,7 +288,7 @@ class Gepee_evidence_model extends CI_Model
         $locFields = []; $level = 'nasional';
         
         if(isset($locFilter['witel_kode']) || isset($locFilter['id_location'])) {
-            $locFields = ['divre_kode', 'divre_name', 'witel_kode', 'witel_name'];
+            $locFields = ['id_location', 'divre_kode', 'divre_name', 'witel_kode', 'witel_name'];
             $level = 'witel';
         } elseif(isset($locFilter['divre_kode'])) {
             $locFields = ['divre_kode', 'divre_name'];
@@ -427,8 +427,14 @@ class Gepee_evidence_model extends CI_Model
         $locFilter = $this->get_location_filter($filter, 'loc');
         $dateFilter = $this->get_datetime_filter($filter, 'evd');
 
+        $fileBasicPath = base_url(UPLOAD_GEPEE_EVIDENCE_PATH);
+        $selectedFields = [
+            'evd.*', 'cat.*', 'loc.*',
+            "IF(evd.file>'', CONCAT('$fileBasicPath', evd.file), '#') AS file_url"
+        ];
+
         $this->db
-            ->select('evd.*, cat.*, loc.*')
+            ->select(implode(', ', $selectedFields))
             ->from("$this->tableName AS evd")
             ->join("$this->tableCategoryName AS cat", 'cat.id_category=evd.id_category')
             ->join("$this->tableLocationName AS loc", 'loc.id_location=evd.id_location')
@@ -472,7 +478,22 @@ class Gepee_evidence_model extends CI_Model
 
     public function delete($id)
     {
-        $this->db->where('id', $id);
-        return $this->db->delete($this->tableName);
+        $this->db
+            ->select()
+            ->from($this->tableName)
+            ->where('id', $id);
+        $evd = $this->db->get()->row_array();
+
+        $isFileDeleted = false;
+        if(isset($evd['file'])) {
+            $filePath = FCPATH . UPLOAD_GEPEE_EVIDENCE_PATH . '/' . $evd['file'];
+            $isFileDeleted = unlink($filePath);
+        }
+
+        if($isFileDeleted) {
+            $this->db->where('id', $id);
+            return $this->db->delete($this->tableName);
+        }
+        return false;
     }
 }

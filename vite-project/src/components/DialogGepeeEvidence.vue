@@ -4,6 +4,7 @@ import { useRoute, useRouter } from "vue-router";
 import { useGepeeEvdStore } from "@stores/gepee-evidence";
 import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
+import { limitWords } from "@helpers/text-format";
 import Dialog from "primevue/dialog";
 import ButtonGroupAction from "@components/ButtonGroupAction.vue";
 import Skeleton from "primevue/skeleton";
@@ -29,6 +30,7 @@ const currDateString = () => new Intl.DateTimeFormat('id', { dateStyle: 'long'})
 const categoryHeading = computed(() => category.value ? "Kategori " + category.value.category : "Gepee Evidence");
 const categorySubHeading = computed(() => category.value ? category.value.sub_category : "Daftar Gepee Evidence");
 const witelName = computed(() => location.value ? location.value.witel_name : null);
+const locationId = computed(() => location.value ? Number(location.value.id_location) : 0);
 
 const resetReactiveData = () => {
     currDetail.value = null;
@@ -44,6 +46,7 @@ const fetchList = () => {
             location.value = data.location;
         if(data.category)
             category.value = data.category;
+        console.log(data.location)
     });
 };
 fetchList();
@@ -89,13 +92,13 @@ const dialog = {
         viewStore.showToast("Input Gepee Evidence", "Berhasil menyimpan Gepee Evidence baru.", true);
         fetchList();
         showDialogAdd.value = false;
-        emit("update");
+        emit("updated");
     },
     onFormEditSave: () => {
         viewStore.showToast("Update Gepee Evidence", "Berhasil menyimpan Gepee Evidence.", true);
         fetchList();
         showDialogEdit.value = false;
-        emit("update");
+        emit("updated");
     }
 };
 
@@ -110,7 +113,7 @@ const onDelete = evidenceId => {
         viewStore.showToast("Hapus Gepee Evidence", "Berhasil menghapus Gepee Evidence.", true);
         fetchList();
         resetReactiveData();
-        emit("update");
+        emit("updated");
     });
 };
 
@@ -124,10 +127,10 @@ const getFileExtension = filename => {
 
 const isCurrDetailImg = computed(() => {
     const currDetailData = currDetail.value;
-    if(!currDetailData || !currDetailData.file_url)
+    if(!currDetailData || !currDetailData.file)
         return false;
     
-    const fileExt = getFileExtension(currDetailData.file_url);
+    const fileExt = getFileExtension(currDetailData.file);
     return ["jpg", "jpeg", "png"].indexOf(fileExt) >= 0;
 });
 </script>
@@ -162,19 +165,18 @@ const isCurrDetailImg = computed(() => {
                     <table class="table table-head-primary">
                         <thead>
                             <tr>
-                                <th>No.</th>
-                                <th>Deskripsi</th>
-                                <th>Evidence</th>
+                                <th class="text-start">No.</th>
+                                <th class="text-start">Deskripsi</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(item, index) in evdList">
                                 <td>{{ index + 1 }}</td>
-                                <td>{{ item.deskripsi }}</td>
+                                <td>{{ limitWords(item.deskripsi) }}</td>
                                 <td>
                                     <button v-if="!hasUpdateAccess" @click="dialog.showDetail(item)" class="btn btn-primary">Detail</button>
-                                    <ButtonGroupAction v-else @detail="dialog.showDetail(item)" @edit="dialog.showFormEdit(item)" @delete="onDelete(item.id)" />
+                                    <ButtonGroupAction v-else @detail="dialog.showDetail(item)" @edit="dialog.showFormEdit(item)" @delete="onDelete(item.id)" class="justify-content-center" />
                                 </td>
                             </tr>
                         </tbody>
@@ -204,7 +206,7 @@ const isCurrDetailImg = computed(() => {
                         </div>
                     </div>
                 </div>
-                <FormGepeeEvidence v-if="showDialogAdd" @cancel="showDialogAdd = false" @save="dialog.onFormAddSave" />
+                <FormGepeeEvidence v-if="showDialogAdd" :locationId="locationId" @cancel="showDialogAdd = false" @save="dialog.onFormAddSave" />
             </div>
         </Dialog>
         <Dialog header="Update Gepee Evidence" v-model:visible="showDialogEdit" modal maximizable draggable @afterHide="dialog.onFormEditHide">
@@ -223,7 +225,7 @@ const isCurrDetailImg = computed(() => {
                         </div>
                     </div>
                 </div>
-                <FormGepeeEvidence v-if="showDialogEdit" :initData="currUpdate" @cancel="showDialogEdit = false" @save="dialog.onFormEditSave" />
+                <FormGepeeEvidence v-if="showDialogEdit" :locationId="locationId" :initData="currUpdate" @cancel="showDialogEdit = false" @save="dialog.onFormEditSave" />
             </div>
         </Dialog>
         <Dialog header="Detail Gepee Evidence" v-model:visible="showDialogDetail" modal maximizable draggable @afterHide="dialog.onDetailHide">
@@ -254,7 +256,7 @@ const isCurrDetailImg = computed(() => {
                                 <td>
                                     <div v-if="isCurrDetailImg" class="position-relative">
                                         <span>{{ currDetail.file }}</span>
-                                        <Image :src="currDetail.file" alt="gambar evidence" preview class="evidence-img" />
+                                        <Image :src="currDetail.file_url" alt="gambar evidence" preview class="img-stretched-link" />
                                     </div>
                                     <a v-else :href="currDetail.file_url" target="_blank">{{ currDetail.file }}</a>
                                 </td>

@@ -11,8 +11,8 @@ const userLocId = computed(() => userStore.locationId);
 const viewStore = useViewStore();
 const menuItems = computed(() => {
     return viewStore.menuItems.map(item => {
-        if(item.key == "pue" && userLevel.value != "nasional") {
-            if(userLevel.value && userLevel.value != "nasional" && userLocId.value) {
+        if(userLevel.value && userLevel.value != "nasional" && userLocId.value) {
+            if(["pue", "gepee_evidence"].indexOf(item.key)) {
                 const pueItem = JSON.parse(JSON.stringify(item));
                 pueItem.to = item.to + "/" + userLevel.value + "/" + userLocId.value;
                 return pueItem;

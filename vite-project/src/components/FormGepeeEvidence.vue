@@ -9,22 +9,25 @@ import FileUpload from "@components/FileUpload.vue";
 
 const emit = defineEmits(["save", "cancel"]);
 const props = defineProps({
-    initData: { type: Object, default: {} }
+    initData: { type: Object, default: {} },
+    locationId: { type: Number, required }
 });
 
 const route = useRoute();
 const idCategory = computed(() => route.params.idCategory);
-const idLocation = computed(() => route.params.idLocation);
 const idEvidence = computed(() => props.initData.id || null);
 
 const { data, v$ } = useDataForm({
     description: { value: props.initData.deskripsi, required },
-    file: { value: props.initData.file }
+    file: { value: props.initData.file, required }
 });
 
-const onFileUploaded = uploadedFile => {
-    if(uploadedFile.file_name)
-        data.file = uploadedFile.file_name;
+const onFileUploaded = event => {
+    data.file = event.latestUpload;
+};
+
+const onFileRemoved = event => {
+    data.file = event.latestUpload;
 };
 
 const gepeeEvdStore = useGepeeEvdStore();
@@ -41,7 +44,7 @@ const onSubmit = async () => {
     isLoading.value = true;
     if(!idEvidence.value) {
 
-        body.id_location = idLocation.value;
+        body.id_location = props.locationId;
         body.id_category = idCategory.value;
         gepeeEvdStore.create(body, ({ success }) => success && emit('save'));
         
@@ -58,7 +61,7 @@ const onSubmit = async () => {
             <label for="txtDescription" class="required">Deskripsi</label>
             <textarea v-model="data.description" :class="{ 'is-invalid': hasSubmitted && v$.description.$invalid }" class="form-control" id="txtDescription" rows="5"></textarea>
         </div>
-        <FileUpload isRequired url="/attachment/gepee-evidence" label="File Evidence" accept=".jpg, .jpeg, .png, .pdf" acceptText="(*.jpg, *.jpeg, *.png, *.pdf)" @uploaded="onFileUploaded" class="mb-5" />
+        <FileUpload isRequired url="/attachment/gepee-evidence" label="File Evidence" accept=".jpg, .jpeg, .png, .pdf" acceptText="(*.jpg, *.jpeg, *.png, *.pdf)" @uploaded="onFileUploaded" @removed="onFileRemoved" class="mb-5" />
         <div class="d-flex justify-content-between align-items-end">
             <button type="submit" :class="{ 'btn-loading': isLoading }" class="btn btn-lg btn-primary">Simpan</button>
             <button type="button" @click="$emit('cancel')" class="btn btn-danger">Batalkan</button>

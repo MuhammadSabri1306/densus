@@ -160,7 +160,8 @@ class Pue_offline_model extends CI_Model
 
         $query = $this->db
             ->select('pue.*, loc.*')
-            ->from($this->tableName)
+            ->from("$this->tableName AS pue")
+            ->join("$this->tableLocationName AS loc")
             ->where($pueFilter)
             ->where($dateFilter)
             ->where($locFilter)
@@ -186,8 +187,8 @@ class Pue_offline_model extends CI_Model
 
         } else {
             
-            $filter = $this->get_filter([ 'idLocation' => $id ]);
-            $this->db->where($filter);
+            $mainFilter = $this->get_filter([ 'id' => $id ]);
+            $this->db->where($mainFilter);
             $success = $this->db->update($this->tableName, $body);
 
         }
@@ -196,8 +197,28 @@ class Pue_offline_model extends CI_Model
 
     public function delete($id)
     {
-        $filter = $this->get_filter([ 'idLocation' => $id ]);
-        $this->db->where($filter);
-        return $this->db->delete($this->tableName);
+        $locFilter = $this->get_loc_filter([], 'loc');
+        $mainFilter = $this->get_filter([ 'id' => $id ], 'pue');
+
+        $this->db
+            ->select('loc.*, pue.*')
+            ->from("$this->tableName AS pue")
+            ->join("$this->tableLocationName AS loc")
+            ->where($locFilter)
+            ->where($mainFilter);
+        $pue = $this->db->get()->row_array();
+
+        $isFileDeleted = false;
+        if(isset($pue['evidence'])) {
+            $filePath = FCPATH . UPLOAD_PUE_EVIDENCE_PATH . '/' . $pue['evidence'];
+            $isFileDeleted = unlink($filePath);
+        }
+
+        if($isFileDeleted) {
+            $this->db->where(['id' => $id]);
+            return $this->db->delete($this->tableName);
+        }
+
+        return false;
     }
 }

@@ -330,3 +330,16 @@ label.required:after {
     content: "*";
     @apply tw-text-danger tw-ml-0.5;
 }
+
+.table>:not(caption)>*>* {
+    padding: 0;
+    border-bottom-width: 0;
+}
+
+.img-stretched-link {
+    @apply tw-absolute tw-inset-0 tw-opacity-0;
+}
+
+.img-stretched-link img {
+    @apply tw-w-full tw-h-full;
+}

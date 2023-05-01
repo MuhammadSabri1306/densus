@@ -41,7 +41,7 @@ const isEvidenceImg = computed(() => evidenceExt.value == "jpg" || evidenceExt.v
                         <td>
                             <div v-if="isEvidenceImg" class="position-relative">
                                 <span>{{ data.evidence }}</span>
-                                <Image :src="data.evidence_url" alt="gambar evidence" preview class="evidence-img" />
+                                <Image :src="data.evidence_url" alt="gambar evidence" preview class="img-stretched-link" />
                             </div>
                             <a v-else :href="data.evidence_url" target="_blank">{{ data.evidence }}</a>
                         </td>
@@ -72,14 +72,3 @@ const isEvidenceImg = computed(() => evidenceExt.value == "jpg" || evidenceExt.v
         </div>
     </section>
 </template>
-<style scoped>
-
-.evidence-img {
-    @apply tw-absolute tw-inset-0 tw-opacity-0;
-}
-
-.evidence-img :deep(img) {
-    @apply tw-w-full tw-h-full;
-}
-
-</style>

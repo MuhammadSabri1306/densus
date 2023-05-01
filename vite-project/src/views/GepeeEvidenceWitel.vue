@@ -16,11 +16,16 @@ const onInfoFetched = data => {
 
 const panelInfo = ref(null);
 const panelCategory = ref(null);
+
+const fetchDatatable = () => {
+    if(panelCategory.value)
+        panelCategory.value.fetch();
+};
+
 const onFilterApply = () => {
     if(panelInfo.value)
         panelInfo.value.fetch();
-    if(panelCategory.value)
-        panelCategory.value.fetch();
+    fetchDatatable();
 };
 
 const route = useRoute();
@@ -58,6 +63,6 @@ const showDialog = computed(() => route.params.idCategory ? true : false);
         <div class="container-fluid">
             <SectionGepeeEvidenceCategory ref="panelCategory" />
         </div>
-        <DialogGepeeEvidence v-if="showDialog" />
+        <DialogGepeeEvidence v-if="showDialog" @updated="" />
     </div>
 </template>
