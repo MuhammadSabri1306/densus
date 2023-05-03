@@ -5,7 +5,9 @@ import { useViewStore } from "@stores/view";
 import http from "@helpers/http-common";
 import { apiEndpoint } from "@/configs/base";
 import { fromBytes, fromMb } from "@helpers/byte-unit";
+import { getFileName, getFileExt, isFileImg, getFileRawName } from "@helpers/file";
 import FileUpload from "primevue/fileupload";
+import { DocumentIcon } from "@heroicons/vue/24/solid";
 
 const emit = defineEmits(["uploaded", "removed"]);
 const props = defineProps({
@@ -17,26 +19,90 @@ const props = defineProps({
     label: String,
     accept: String,
     acceptText: String,
-    initUploadedFiles: { type: Array }
+    initUploadedFiles: { type: Array },
+    hasSubmitted: { type: Boolean, default: false },
+    uploadedFile: [String, Array]
 });
 
 const uploadUrl = computed(() => apiEndpoint + props.url);
 const maxFileSize = computed(() => fromMb(props.maxSize).toBytes());
-const formatFileSize = (bytes) => fromBytes(bytes).toAutoText();
+const getFileSize = bytes => bytes ? fromBytes(bytes).toAutoText() : null;
 
-const uploadedFiles = ref([]);
+const createInitItem = filePath => {
+    const fileName = getFileName(filePath);
+    const client_name = fileName;
+    const file_ext = getFileExt(fileName);
+    const file_name = fileName;
+    const is_image = isFileImg(fileName);
+    const raw_name = getFileRawName(fileName);
+    const uploaded_url = filePath;
+
+    return { client_name, file_ext, file_name, is_image, raw_name, uploaded_url };
+};
+
+let initFileList = [];
+if(props.uploadedFile && typeof props.uploadedFile == "string") {
+    initFileList = [ createInitItem(props.uploadedFile) ];
+} else if(props.uploadedFile && Array.isArray(props.uploadedFile)) {
+    initFileList = props.uploadedFile.map(item => createInitItem(item));
+}
+const uploadedFiles = ref(initFileList);
+
 const hasUploaded = ref(false);
+const hasSubmitted = computed(() => props.hasSubmitted);
 const isLoading = ref(false);
-const isInvalid = computed(() => props.isRequired && hasUploaded.value && uploadedFiles.value.length < 1);
+const isInvalid = computed(() => props.isRequired && (hasUploaded.value || hasSubmitted.value) && uploadedFiles.value.length < 1);
 
 const userStore = useUserStore();
 const viewStore = useViewStore();
 
-const getRequestConfig = () => {
-    const config = userStore.axiosAuthConfig;
-    config.headers["Content-Type"] = "multipart/form-data";
-    return config;
-};
+const requestConfig = computed(() => userStore.axiosUploadConfig);
+
+// const uploadFile = async (file) => {
+//     const formData = new FormData();
+//     formData.append(props.name, file);
+//     isLoading.value = true;
+
+//     try {
+//         const response = await http.post(props.url, formData, requestConfig.value);
+//         if(response.data?.uploadedFile) {
+
+//             const { client_name, file_ext, file_name, is_image, raw_name, uploaded_url } = response.data.uploadedFile;
+//             const fileList = uploadedFiles.value;
+//             fileList.push({ client_name, file_ext, file_name, is_image, raw_name, uploaded_url });
+            
+//             uploadedFiles.value = fileList;
+//             isLoading.value = false;
+
+//             emit("uploaded", {
+//                 isInvalid: isInvalid.value,
+//                 files: uploadedFiles.value.map(item => item.file_name),
+//                 latestUpload: response.data.uploadedFile.file_name
+//             });
+//             return true;
+        
+//         }
+//         return false;
+//     } catch(err) {
+
+//         console.error(err);
+//         isLoading.value = false;
+//         if(err.response && err.response.data)
+//             viewStore.showToast("Upload file", err.response.data?.message, false);
+//         return false;
+
+//     }
+// };
+
+// const fileUploader = async ({ files }) => {
+//     const successedFiles = [];
+//     for(let i=0; i<files.length; i++) {
+//         const isSuccess = await uploadFile(files[i]);
+//         if(isSuccess)
+//             successedFiles.push(files[i]);
+//     }
+//     files = successedFiles;
+// };
 
 const uploadFile = async (file) => {
     const formData = new FormData();
@@ -44,11 +110,13 @@ const uploadFile = async (file) => {
     isLoading.value = true;
 
     try {
-        const response = await http.post(props.url, formData, getRequestConfig());
+        const response = await http.post(props.url, formData, requestConfig.value);
         if(response.data?.uploadedFile) {
 
+            const { client_name, file_ext, file_name, is_image, raw_name, uploaded_url } = response.data.uploadedFile;
             const fileList = uploadedFiles.value;
-            fileList.push(response.data.uploadedFile);
+            fileList.push({ client_name, file_ext, file_name, is_image, raw_name, uploaded_url });
+            
             uploadedFiles.value = fileList;
             isLoading.value = false;
 
@@ -59,6 +127,7 @@ const uploadFile = async (file) => {
             });
         
         }
+        return false;
     } catch(err) {
 
         console.error(err);
@@ -69,10 +138,11 @@ const uploadFile = async (file) => {
     }
 };
 
-const fileUploader = async ({ files }) => {
+const onFileSelect = async ({ files }) => {
     for(let i=0; i<files.length; i++) {
         await uploadFile(files[i]);
     }
+    files = [];
 };
 
 const removeFile = async (index) => {
@@ -82,7 +152,7 @@ const removeFile = async (index) => {
     isLoading.value = true;
 
     try {
-        const response = await http.delete(url, getRequestConfig());
+        const response = await http.delete(url, requestConfig.value);
         if(response.data.success) {
 
             const fileList = uploadedFiles.value.filter((i, itemIndex) => itemIndex !== index);
@@ -104,32 +174,32 @@ const removeFile = async (index) => {
     }
 };
 
-const onClearUploadedFile = async () => {
+const clearFiles = async () => {
     for(let i=0; i<uploadedFiles.value.length; i++) {
         await removeFile(i);
     }
 };
 
-const disableBtnChoose = computed(() => uploadedFiles.value.length >= props.fileLimit);
-const disableBtnReset = computed(() => uploadedFiles.value.length < 1);
+const disableUpload = computed(() => uploadedFiles.value.length >= props.fileLimit);
+const disableClear = computed(() => uploadedFiles.value.length < 1);
 </script>
 <template>
     <div>
         <label for="inputFile" :class="{ 'required': isRequired }">{{ label }}</label>
         <div :class="{ 'is-invalid': isInvalid }" class="file-uploader">
-            <FileUpload :url="uploadUrl" :name="name" auto :fileLimit="fileLimit" :maxFileSize="maxFileSize"
-                withCredentials :accept="accept" customUpload @uploader="fileUploader">
-                <template #header="{ chooseCallback }">
+            <FileUpload :url="uploadUrl" :name="name" auto :disabled="disableUpload" :maxFileSize="maxFileSize"
+                withCredentials :accept="accept" customUpload @select="onFileSelect">
+                <template #header="{ chooseCallback, clearCallback }">
                     <div class="w-100">
-                        <div class="row align-items-center">
+                        <div class="row align-items-center g-4">
                             <div class="col-auto">
-                                <button type="button" @click="chooseCallback()" :disabled="disableBtnChoose" class="btn btn-info btn-icon">
+                                <button type="button" @click="chooseCallback()" :disabled="disableUpload" class="btn btn-info btn-icon">
                                     <VueFeather type="plus" size="1.2em" class="middle" />
                                     <span>Pilih File</span>
                                 </button>
                             </div>
                             <div class="col-auto">
-                                <button type="button" @click="onClearUploadedFile" :disabled="disableBtnReset" class="btn btn-secondary btn-icon">
+                                <button type="button" @click="clearFiles() && clearCallback()" :disabled="disableClear" class="btn btn-secondary btn-icon">
                                     <VueFeather type="x" size="1.2em" class="middle" />
                                     <span>Reset</span>
                                 </button>
@@ -140,21 +210,22 @@ const disableBtnReset = computed(() => uploadedFiles.value.length < 1);
                         </div>
                     </div>
                 </template>
-                <template #content>
+                <template #content="{ removeFileCallback }">
                     <div v-if="uploadedFiles.length > 0">
                         <table class="table">
                             <tr v-for="(file, index) of uploadedFiles">
                                 <td class="middle">
-                                    <img role="presentation" :alt="file.file_name" :src="file.uploaded_url" width="50" class="img-fluid" />
+                                    <img v-if="file.is_image" role="presentation" :alt="file.file_name" :src="file.uploaded_url" width="50" class="tw-h-auto" />
+                                    <DocumentIcon v-else class="tw-w-8 tw-h-8 text-muted" />
                                 </td>
                                 <td class="middle font-semibold">
                                     {{ file.file_name }}
                                 </td>
                                 <td class="middle">
-                                    {{ formatFileSize(file.file_size) }}
+                                    {{ getFileSize(file.file_size) }}
                                 </td>
                                 <td class="middle">
-                                    <button type="button" @click="removeFile(index)">
+                                    <button type="button" @click="removeFile(index) && removeFileCallback(index)">
                                         <VueFeather type="x" />
                                     </button>
                                 </td>
