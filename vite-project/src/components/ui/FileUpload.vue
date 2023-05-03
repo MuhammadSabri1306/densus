@@ -55,54 +55,7 @@ const isInvalid = computed(() => props.isRequired && (hasUploaded.value || hasSu
 
 const userStore = useUserStore();
 const viewStore = useViewStore();
-
 const requestConfig = computed(() => userStore.axiosUploadConfig);
-
-// const uploadFile = async (file) => {
-//     const formData = new FormData();
-//     formData.append(props.name, file);
-//     isLoading.value = true;
-
-//     try {
-//         const response = await http.post(props.url, formData, requestConfig.value);
-//         if(response.data?.uploadedFile) {
-
-//             const { client_name, file_ext, file_name, is_image, raw_name, uploaded_url } = response.data.uploadedFile;
-//             const fileList = uploadedFiles.value;
-//             fileList.push({ client_name, file_ext, file_name, is_image, raw_name, uploaded_url });
-            
-//             uploadedFiles.value = fileList;
-//             isLoading.value = false;
-
-//             emit("uploaded", {
-//                 isInvalid: isInvalid.value,
-//                 files: uploadedFiles.value.map(item => item.file_name),
-//                 latestUpload: response.data.uploadedFile.file_name
-//             });
-//             return true;
-        
-//         }
-//         return false;
-//     } catch(err) {
-
-//         console.error(err);
-//         isLoading.value = false;
-//         if(err.response && err.response.data)
-//             viewStore.showToast("Upload file", err.response.data?.message, false);
-//         return false;
-
-//     }
-// };
-
-// const fileUploader = async ({ files }) => {
-//     const successedFiles = [];
-//     for(let i=0; i<files.length; i++) {
-//         const isSuccess = await uploadFile(files[i]);
-//         if(isSuccess)
-//             successedFiles.push(files[i]);
-//     }
-//     files = successedFiles;
-// };
 
 const uploadFile = async (file) => {
     const formData = new FormData();
