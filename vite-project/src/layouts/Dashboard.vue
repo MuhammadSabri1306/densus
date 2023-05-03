@@ -172,11 +172,6 @@ const profileUpdateData = ref(null);
     z-index: 88;
 }
 
-.filter-year-panel,
-:deep(.filter-year-panel) {
-    width: 16rem;
-}
-
 .card-h-full,
 :deep(.card-h-full) {
     height: calc(100% - 30px);

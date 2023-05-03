@@ -63,6 +63,6 @@ const showDialog = computed(() => route.params.idCategory ? true : false);
         <div class="container-fluid">
             <SectionGepeeEvidenceCategory ref="panelCategory" />
         </div>
-        <DialogGepeeEvidence v-if="showDialog" @updated="" />
+        <DialogGepeeEvidence v-if="showDialog" @updated="fetchDatatable" />
     </div>
 </template>

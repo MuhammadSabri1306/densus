@@ -12,7 +12,7 @@ const viewStore = useViewStore();
 const menuItems = computed(() => {
     return viewStore.menuItems.map(item => {
         if(userLevel.value && userLevel.value != "nasional" && userLocId.value) {
-            if(["pue", "gepee_evidence"].indexOf(item.key)) {
+            if(["pue", "gepee_evidence"].indexOf(item.key) >= 0) {
                 const pueItem = JSON.parse(JSON.stringify(item));
                 pueItem.to = item.to + "/" + userLevel.value + "/" + userLocId.value;
                 return pueItem;

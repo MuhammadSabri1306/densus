@@ -19,7 +19,7 @@ const getCurrentSemester = () => {
     return Math.ceil(currMonth / 6);
 };
 
-export const useGepeeEvdStore = defineStore("pue", {
+export const useGepeeEvdStore = defineStore("gepee", {
     state: () => ({
 
         filters: {

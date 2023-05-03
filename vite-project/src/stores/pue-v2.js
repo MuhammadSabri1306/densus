@@ -6,6 +6,7 @@ import { useViewStore } from "@stores/view";
 import { backendUrl } from "@/configs/base";
 
 import { allowSampleData } from "@/configs/base";
+import pueOfflineByLocation from "@helpers/sample-data/pue/offline_by_location";
 
 export const usePueV2Store = defineStore("pueV2", {
     state: () => {
@@ -15,13 +16,7 @@ export const usePueV2Store = defineStore("pueV2", {
             currDivre: null,
             currWitel: null,
             currRtu: null,
-            filters: {
-                divre: null,
-                witel: null,
-                idLocation: null,
-                year: currDate.getFullYear(),
-                month: currDate.getMonth() + 1
-            }
+            idLocation: null
         };
 
     },
@@ -30,11 +25,6 @@ export const usePueV2Store = defineStore("pueV2", {
         fetchHeader: () => {
             const userStore = useUserStore();
             return userStore.axiosAuthConfig;
-        },
-
-        filters: () => {
-            const viewStore = useViewStore();
-            return viewStore.filters;
         },
 
         zoneUrlParams: state => {
@@ -47,23 +37,31 @@ export const usePueV2Store = defineStore("pueV2", {
             return "";
         },
 
-        offlineUrlParams: state => {
-            const divre = state.filters.divre;
-            const witel = state.filters.witel;
-            const idLocation = state.filters.idLocation;
-            const year = state.filters.year;
-            const month = state.filters.month;
+        filters: state => {
+            const viewStore = useViewStore();
+            const divre = viewStore.filters.divre;
+            const witel = viewStore.filters.witel;
+            const year = viewStore.filters.year;
+            const month = viewStore.filters.month;
+            const idLocation = state.idLocation;
+            
+            return { divre, witel, idLocation, year, month };
+        },
+        
+        offlineUrlParams() {
+            const filters = this.filters;
 
-            if(state.filters.divre)
-                params.push("divre=" + divre);
-            if(state.filters.witel)
-                params.push("witel=" + witel);
-            if(state.filters.idLocation)
-                params.push("idLocation=" + idLocation);
-            if(state.filters.month)
-                params.push("month=" + month);
-            if(state.filters.year)
-                params.push("year=" + year);
+            const params = [];
+            if(filters.divre)
+                params.push("divre=" + filters.divre);
+            if(filters.witel)
+                params.push("witel=" + filters.witel);
+            if(filters.month)
+                params.push("month=" + filters.month);
+            if(filters.year)
+                params.push("year=" + filters.year);
+            if(filters.idLocation)
+                params.push("idLocation=" + filters.idLocation);
 
             return params.length < 1 ? "" : "/?" + params.join("&");
         },
@@ -86,10 +84,13 @@ export const usePueV2Store = defineStore("pueV2", {
             this.currRtu = null;
             this.currWitel = null;
             this.currDivre = null;
+            this.idLocation = null;
 
             if(zone.rtu) this.currRtu = zone.rtu;
             else if(zone.witel) this.currWitel = zone.witel;
             else if(zone.divre) this.currDivre = zone.divre;
+
+            if(zone.idLocation) this.idLocation = zone.idLocation;
         },
 
         async getChartData(callback) {
@@ -140,6 +141,115 @@ export const usePueV2Store = defineStore("pueV2", {
             } catch(err) {
                 handlingFetchErr(err);
                 callback({ success: false, status: err.response?.status, data: {} });
+            }
+        },
+
+        async createOfflineLocation(body, callback = null) {
+            try {
+                const response = await http.post("/pue/offline/location", body, this.fetchHeader);
+                if(!response.data.success) {
+                    console.warn(response.data);
+                    callback && callback({ success: false, status: response.status });
+                    return;
+                }
+                callback && callback({ success: true, status: response.status });
+            } catch(err) {
+                handlingFetchErr(err);
+                callback && callback({ success: false, status: err.response?.status });
+            }
+        },
+
+        async updateOfflineLocation(idLocation, body, callback = null) {
+            try {
+                const response = await http.put("/pue/offline/location" + idLocation, body, this.fetchHeader);
+                if(!response.data.success) {
+                    console.warn(response.data);
+                    callback && callback({ success: false, status: response.status });
+                    return;
+                }
+                callback && callback({ success: true, status: response.status });
+            } catch(err) {
+                handlingFetchErr(err);
+                callback && callback({ success: false, status: err.response?.status });
+            }
+        },
+
+        async deleteOfflineLocation(idLocation, callback = null) {
+            try {
+                const response = await http.delete("/pue/offline/location/" + idLocation, this.fetchHeader);
+                if(!response.data.success) {
+                    console.warn(response.data);
+                    callback && callback({ success: false, status: response.status });
+                    return;
+                }
+                callback && callback({ success: true, status: response.status });
+            } catch(err) {
+                handlingFetchErr(err);
+                callback && callback({ success: false, status: err.response?.status });
+            }
+        },
+
+        async getOfflinePue(callback) {
+            try {
+                const response = await http.get("/pue/offline/" + this.idLocation, this.fetchHeader);
+                if(!response.data.pue) {
+                    console.warn(response.data);
+                    callback({ success: false, status: response.status, data: {} });
+                    return;
+                }
+
+                callback({ success: true, status: response.status, data: response.data });
+            } catch(err) {
+                handlingFetchErr(err);
+                if(allowSampleData)
+                    callback({ success: true, status: err.response?.status, data: pueOfflineByLocation });
+                else
+                    callback({ success: false, status: err.response?.status, data: {} });
+            }
+        },
+
+        async createOffline(body, callback = null) {
+            try {
+                const response = await http.post("/pue/offline", body, this.fetchHeader);
+                if(!response.data.success) {
+                    console.warn(response.data);
+                    callback && callback({ success: false, status: response.status });
+                    return;
+                }
+                callback && callback({ success: true, status: response.status });
+            } catch(err) {
+                handlingFetchErr(err);
+                callback && callback({ success: false, status: err.response?.status });
+            }
+        },
+
+        async updateOffline(id, body, callback = null) {
+            try {
+                const response = await http.put("/pue/offline/" + id, body, this.fetchHeader);
+                if(!response.data.success) {
+                    console.warn(response.data);
+                    callback && callback({ success: false, status: response.status });
+                    return;
+                }
+                callback && callback({ success: true, status: response.status });
+            } catch(err) {
+                handlingFetchErr(err);
+                callback && callback({ success: false, status: err.response?.status });
+            }
+        },
+
+        async deleteOffline(id, callback = null) {
+            try {
+                const response = await http.delete("/pue/offline/" + id, this.fetchHeader);
+                if(!response.data.success) {
+                    console.warn(response.data);
+                    callback && callback({ success: false, status: response.status });
+                    return;
+                }
+                callback && callback({ success: true, status: response.status });
+            } catch(err) {
+                handlingFetchErr(err);
+                callback && callback({ success: false, status: err.response?.status });
             }
         }
 

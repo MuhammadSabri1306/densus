@@ -25,6 +25,15 @@ export const useUserStore = defineStore("user", {
             const token = this.token;
             const headers = { "Authorization": "Bearer " + token };
             return { headers };
+        },
+        axiosUploadConfig(useToken = true) {
+            const headers = { "Content-Type": "multipart/form-data" };
+            if(!this.hasToken || !useToken)
+                return { headers };
+                
+            const token = this.token;
+            headers["Authorization"] = "Bearer " + token;
+            return { headers };
         }
     },
     actions: {

@@ -24,6 +24,7 @@ import PueMonitoringDivre from "@views/PueMonitoringDivre.vue";
 import PueMonitoringWitel from "@views/PueMonitoringWitel.vue";
 import PueMonitoring from "@views/PueMonitoring.vue";
 import PueOffline from "@views/PueOffline.vue";
+import PueOfflineDetail from "@views/PueOfflineDetail.vue";
 
 import Rtu from "@views/Rtu.vue";
 import RtuAdd from "@views/RtuAdd.vue";
@@ -83,23 +84,27 @@ const routes = [
         meta: { menuKey: ["energy"], requiresAuth: true }
     },
     {
-        path: "/pue/monitoring", component: PueMonitoring,
+        path: "/pue/online", component: PueMonitoring,
         meta: { menuKey: ["pue"], requiresAuth: true }
     },
     {
-        path: "/pue/monitoring/divre/:divreCode", component: PueMonitoringDivre,
+        path: "/pue/online/divre/:divreCode", component: PueMonitoringDivre,
         meta: { menuKey: ["pue"], requiresAuth: true }
     },
     {
-        path: "/pue/monitoring/witel/:witelCode", component: PueMonitoringWitel,
+        path: "/pue/online/witel/:witelCode", component: PueMonitoringWitel,
         meta: { menuKey: ["pue"], requiresAuth: true }
     },
     {
-        path: "/pue/monitoring/rtu/:rtuCode", component: PueMonitoringRtu,
+        path: "/pue/online/rtu/:rtuCode", component: PueMonitoringRtu,
         meta: { menuKey: ["pue"], requiresAuth: true }
     },
     {
         path: "/pue/offline", component: PueOffline,
+        meta: { menuKey: ["pue"], requiresAuth: true }
+    },
+    {
+        path: "/pue/offline/:locationId", component: PueOfflineDetail,
         meta: { menuKey: ["pue"], requiresAuth: true }
     },
     {

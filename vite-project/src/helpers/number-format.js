@@ -21,6 +21,30 @@ export const toFixedNumber = (numb, numbBehindComma) => {
 	return (numb.toString().length > numbBehindComma + 1) ? numb.toFixed(numbBehindComma) : numb.toString();
 };
 
+export const toNumberText = (numb, decimalLimit = 2) => {
+	let numberStr = numb.toString();
+
+	const hasDecimal = numberStr.includes(".");
+	if(hasDecimal) {
+		const decimalPart = numberStr.split(".")[1];
+		if(decimalPart.length > decimalLimit)
+			numberStr = parseFloat(numberStr).toFixed(decimalLimit);
+	}
+  
+	const split = numberStr.split(".");
+	const left = split[0].length % 3;
+	let result = split[0].substr(0, left);
+	const digit = split[0].substr(left).match(/\d{3}/g);
+  
+	if(digit) {
+	  const separator = left ? "." : "";
+	  result += separator + digit.join(".");
+	}
+  
+	result = split[1] !== undefined ? result + "," + split[1] : result;
+	return result;
+};
+
 export const toZeroLeading = (numb, maxDigit) => {
 	numb = Number(numb).toString();
 	

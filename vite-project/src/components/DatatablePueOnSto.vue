@@ -14,7 +14,7 @@ const { collapsedDivre, collapsedWitel, toggleRowCollapse } = useCollapseRow();
 
 const tableData = computed(() => {
     const list = props.list;
-    const test = groupByLocation({
+    const result = groupByLocation({
         data: list,
         averagedKeys: ["currDay", "currWeek", "currMonth"],
         divre: {
@@ -29,14 +29,14 @@ const tableData = computed(() => {
         },
         sto: { formatTitle: item => item.rtu_name }
     });
-    console.log(test);
-    return test;
+    
+    return result;
 });
 
 const getDetailUrl = item => {
     const paramsKey = item.type == "sto" ? "rtu" : item.type;
     const paramsCode = item[paramsKey + "_kode"];
-    return `/pue/${ paramsKey }/${ paramsCode }`;
+    return `/pue/online/${ paramsKey }/${ paramsCode }`;
 };
 </script>
 <template>

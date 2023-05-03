@@ -19,6 +19,8 @@ export const useCollapseRow = () => {
     };
     
     const toggleRowCollapse = (type, code) => {
+        if(!type || !code)
+            return;
         const isExpand = (type == "divre") ? collapsedDivre.value.indexOf(code) < 0 : collapsedWitel.value.indexOf(code) < 0;
         if(isExpand)
             collapseRow(type, code);

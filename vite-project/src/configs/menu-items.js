@@ -53,8 +53,9 @@ export const menuPue = {
     title: "Monitoring PUE & IKE",
     icon: "feather",
     child: [
-        { key: "monitoring", to: "/pue/monitoring", title: "Monitoring PUE" },
-        { key: "offline", to: "/pue/offline", title: "PUE Offline" }
+        { key: "online", to: "/pue/online", title: "PUE Online" },
+        { key: "offline", to: "/pue/offline", title: "PUE Offline" },
+        { key: "ike", to: "#", title: "IKE" }
     ],
     roles: ["admin", "viewer", "teknisi"]
 };

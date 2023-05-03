@@ -4,6 +4,7 @@ import { useRoute } from "vue-router";
 import { toRoman } from "@helpers/number-format";
 import { useGepeeEvdStore } from "@stores/gepee-evidence";
 import { categoryList } from "@/configs/gepee-evidence";
+import { toFixedNumber } from "@helpers/number-format";
 import { BuildingOffice2Icon } from "@heroicons/vue/24/solid";
 import CheckedScoreGepeeEvidence from "@components/CheckedScoreGepeeEvidence.vue";
 import Skeleton from "primevue/skeleton";

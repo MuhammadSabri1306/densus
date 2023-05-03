@@ -83,6 +83,8 @@ export const useViewStore = defineStore("view", {
                 this.filters.witel = filter.witel;
             if(filter.month !== undefined)
                 this.filters.month = Number(filter.month);
+            if(filter.year !== undefined)
+                this.filters.year = Number(filter.year);
         },
 
         async getDivre(locationKey = "basic") {

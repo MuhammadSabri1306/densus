@@ -2,10 +2,9 @@
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useGepeeEvdStore } from "@stores/gepee-evidence";
-import { useUserStore } from "@stores/user";
 import { required } from "@vuelidate/validators";
 import { useDataForm } from "@/helpers/data-form";
-import FileUpload from "@components/FileUpload.vue";
+import FileUpload from "@components/ui/FileUpload.vue";
 
 const emit = defineEmits(["save", "cancel"]);
 const props = defineProps({

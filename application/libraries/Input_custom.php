@@ -27,7 +27,8 @@ class Input_custom
         }
 
         if($method == 'put') {
-            return $this->CI->put($key);
+            $val = $this->CI->put($key);
+            return $val;
         }
 
         return null;

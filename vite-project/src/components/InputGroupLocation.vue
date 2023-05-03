@@ -11,8 +11,12 @@ const props = defineProps({
     useLevel: { type: Boolean, default: false },
     level: String,
     divreValue: String,
-    witelValue: String
+    witelValue: String,
+    locationType: { type: String, default: "basic" }
 });
+
+const locationTypeList = ["basic", "gepee"];
+const fetchKey = (locationTypeList.indexOf(props.locationType) < 0) ? locationTypeList[0] : props.locationType;
 
 const level = computed(() => props.level);
 
@@ -71,7 +75,7 @@ watch(() => level.value, onChange);
 const onDivreChange = val => {
     location.divre = val;
     listboxWitel.value.fetch(
-        () => viewStore.getWitelByDivre(val),
+        () => viewStore.getWitelByDivre(val, fetchKey),
         list => {
             witelList.value = list;
         }
@@ -99,7 +103,7 @@ onMounted(() => {
     if(currLevel == "divre") {
 
         listboxWitel.value.fetch(
-            () => viewStore.getWitelByDivre(location.divre),
+            () => viewStore.getWitelByDivre(location.divre, fetchKey),
             list => {
                 witelList.value = list;
                 onChange();
@@ -109,7 +113,7 @@ onMounted(() => {
     } else if(currLevel == "witel" || location.witel) {
         
         listboxWitel.value.fetch(
-            () => viewStore.getWitel(location.witel),
+            () => viewStore.getWitel(location.witel, fetchKey),
             data => {
                 witelList.value = data;
                 onChange();
@@ -126,7 +130,7 @@ onMounted(() => {
     }
 
     listboxDivre.value.fetch(
-        () => viewStore.getDivre(),
+        () => viewStore.getDivre(fetchKey),
         list => {
             divreList.value = list;
             onChange();

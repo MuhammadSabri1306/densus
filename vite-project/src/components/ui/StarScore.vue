@@ -1,12 +1,16 @@
 <script setup>
 import { computed } from "vue";
+import { toFixedNumber } from "@helpers/number-format";
 import { StarIcon } from "@heroicons/vue/24/solid";
 
 const props = defineProps({
     score: { type: Number, default: 0 }
 });
 
-const scoreText = computed(() => `${ props.score }%`);
+const scoreText = computed(() => {
+    const score = props.score;
+    return toFixedNumber(score, 2) + "%";
+});
 </script>
 <template>
     <div class="d-flex justify-content-center align-items-center">

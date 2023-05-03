@@ -8,7 +8,6 @@ import { getPueBgClass } from "@helpers/pue-color";
 const props = defineProps({
     pueValues: { type: Array, required: true }
 });
-console.log(props.pueValues)
 
 const tabledata = computed(() => {
     return props.pueValues.map((item, index) => {

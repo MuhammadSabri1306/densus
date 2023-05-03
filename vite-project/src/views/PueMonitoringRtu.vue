@@ -50,9 +50,9 @@ const excelExportUrl = computed(() => pueStore.excelExportUrl);
                     <div class="col-sm-6">
                         <h3>
                             <VueFeather type="feather" size="1.2em" class="font-primary middle" />
-                            <span class="middle ms-3">Monitoring PUE</span>
+                            <span class="middle ms-3">PUE Online</span>
                         </h3>
-                        <DashboardBreadcrumb :items="['Monitoring PUE', 'RTU']" class="ms-4" />
+                        <DashboardBreadcrumb :items="['Monitoring PUE', 'PUE Online', 'RTU']" class="ms-4" />
                     </div>
                 </div>
             </div>

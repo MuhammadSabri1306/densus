@@ -193,10 +193,15 @@ $route['api/activity/execution/(:any)']['delete'] = 'activity_execution/index/$1
 $route['api/activity/execution/(:any)/approve']['put'] = 'activity_execution/approve/$1';
 $route['api/activity/execution/(:any)/reject']['put'] = 'activity_execution/reject/$1';
 
-$route['api/pue/offline/location']['post'] = 'pue_offline';
-$route['api/pue/offline/location/(:any)']['put'] = 'pue_offline/index/$1';
-$route['api/pue/offline/location/(:any)']['delete'] = 'pue_offline/index/$1';
+$route['api/pue/offline/location']['post'] = 'pue_offline/location';
+$route['api/pue/offline/location/(:any)']['put'] = 'pue_offline/location/$1';
+$route['api/pue/offline/location/(:any)']['delete'] = 'pue_offline/location/$1';
 $route['api/pue/offline/location']['get'] = 'pue_offline/location_data';
+$route['api/pue/offline/(:num)/(:num)']['get'] = 'pue_offline/index/$1/$2';
+$route['api/pue/offline/(:num)']['get'] = 'pue_offline/index/$1';
+$route['api/pue/offline']['post'] = 'pue_offline';
+$route['api/pue/offline/(:num)']['put'] = 'pue_offline/index/$1';
+$route['api/pue/offline/(:num)']['delete'] = 'pue_offline/index/$1';
 
 $route['api/user/(:any)']['get'] = 'user/index/$1';
 $route['api/user/(:any)']['put'] = 'user/index/$1';

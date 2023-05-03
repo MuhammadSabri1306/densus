@@ -255,12 +255,13 @@ class Gepee_evidence_model extends CI_Model
 
         $whereQuery = '';
         if(count($filter) > 0) {
-            $whereQuery = ' WHERE '.implode(' AND ', $filter);
+            $whereQuery = ' WHERE evd.id_category=cat.id_category AND '.implode(' AND ', $filter);
         }
 
-        $query = "SELECT cat.code, cat.category, cat.use_target, (SELECT COUNT(*) FROM $this->tableName AS evd JOIN $this->tableLocationName AS loc
+        $query = "SELECT cat.code, cat.category, cat.use_target, (SELECT COUNT(*) FROM $this->tableName AS evd
+            LEFT JOIN $this->tableLocationName AS loc ON loc.id_location=evd.id_location
             $whereQuery) AS count FROM $this->tableCategoryName AS cat";
-
+        
         $data = $this->db->query($query)->result_array();
         $result = [];
 
@@ -271,7 +272,7 @@ class Gepee_evidence_model extends CI_Model
                 $result[$item['code']]['checkedCount'] = 0;
                 $result[$item['code']]['targetCount'] = 0;
             }
-
+            
             if((int) $item['count'] > 0) $result[$item['code']]['checkedCount']++;
             if(boolval($item['use_target'])) {
                 $result[$item['code']]['targetCount']++;
@@ -392,13 +393,13 @@ class Gepee_evidence_model extends CI_Model
 
         $whereQuery = '';
         if(count($filter) > 0) {
-            $whereQuery = ' WHERE '.implode(' AND ', $filter);
+            $whereQuery = ' WHERE evd.id_category=cat.id_category AND '.implode(' AND ', $filter);
         }
 
         $query = "SELECT cat.id_category, cat.code, cat.category, cat.sub_category, cat.use_target,
-            (SELECT COUNT(*) FROM $this->tableName AS evd JOIN $this->tableLocationName AS loc
+            (SELECT COUNT(*) FROM $this->tableName AS evd JOIN $this->tableLocationName AS loc ON loc.id_location=evd.id_location
             $whereQuery) AS data_count FROM $this->tableCategoryName AS cat";
-
+        
         $data = $this->db->query($query)->result_array();
         $result = [];
 
