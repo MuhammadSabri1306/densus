@@ -53,6 +53,7 @@ const onSubmit = async () => {
         if(response.success) {
             viewStore.showToast("PUE Offline", "Berhasil menambahkan item.", true);
             emit("save");
+            showDialog.value = false;
         }
         isLoading.value = false;
     });

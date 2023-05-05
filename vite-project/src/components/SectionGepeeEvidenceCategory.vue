@@ -57,8 +57,8 @@ const getCategoryRoute = idCategory => `/gepee-evidence/witel/${ witel.value }/$
                     <h5 class="card-title">{{ category.name }}</h5>
                 </div>
                 <div class="card-body">
-                    <table class="table">
-                        <template v-if="!isLoading">
+                    <table class="table table-borderless">
+                        <tbody v-if="!isLoading">
                             <tr v-for="item in category.evidence">
                                 <td>
                                     {{ item.sub_category }}<br>
@@ -70,7 +70,7 @@ const getCategoryRoute = idCategory => `/gepee-evidence/witel/${ witel.value }/$
                                     </span>
                                 </td>
                             </tr>
-                        </template>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -82,8 +82,8 @@ const getCategoryRoute = idCategory => `/gepee-evidence/witel/${ witel.value }/$
                     <h5 class="card-title">{{ category.name }}</h5>
                 </div>
                 <div class="card-body">
-                    <table class="table">
-                        <template v-if="!isLoading">
+                    <table class="table table-borderless">
+                        <tbody v-if="!isLoading">
                             <tr v-for="item in category.evidence">
                                 <td>
                                     {{ item.sub_category }}<br>
@@ -95,7 +95,7 @@ const getCategoryRoute = idCategory => `/gepee-evidence/witel/${ witel.value }/$
                                     </span>
                                 </td>
                             </tr>
-                        </template>
+                        </tbody>
                     </table>
                 </div>
             </div>

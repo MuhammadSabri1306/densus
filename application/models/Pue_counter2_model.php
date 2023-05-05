@@ -110,7 +110,24 @@ class Pue_Counter2_model extends CI_Model {
             FROM $this->tableName AS p
             JOIN $this->tableRtuMapName AS r ON r.rtu_kode=p.rtu_kode
             $filter $qGroupItems";
-        
+            
+        // $this->load->library('blackbox_stopwatch');
+        // $this->blackbox_stopwatch->create_case('pue_chart_data', 'Pue_counter2_model/get_zone_avg_on_curr_year');
+        // $this->blackbox_stopwatch->start();
+        // $query = $this->db->query($q);
+        // $this->blackbox_stopwatch->stop();
+        // $this->blackbox_stopwatch->print_interval();
+
+        // $stopwatchConfig = [
+        //     'auto' => true,
+        //     'case' => 'pue_chart_data',
+        //     'description' => 'Pue_counter2_model/get_zone_avg_on_curr_year'
+        // ];
+        // $this->load->library('blackbox_stopwatch', $stopwatchConfig);
+        // $this->blackbox_stopwatch->start();
+        // $query = $this->db->query($q);
+        // $this->blackbox_stopwatch->stop();
+
         $query = $this->db->query($q);
         return $query->result();
     }

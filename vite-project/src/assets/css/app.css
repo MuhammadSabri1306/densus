@@ -331,10 +331,15 @@ label.required:after {
     @apply tw-text-danger tw-ml-0.5;
 }
 
-.table>:not(caption)>*>* {
+/* .table:not(.table-bordered) > :not(caption) > * > * {
     padding: 0;
     border-width: 0;
 }
+
+.table > :not(caption) > * > * {
+    padding: 0;
+    border-width: 0;
+} */
 
 .img-stretched-link {
     @apply tw-absolute tw-inset-0 tw-opacity-0;
@@ -346,4 +351,11 @@ label.required:after {
 
 .filter-year-panel {
     width: 16rem;
+}
+
+@media (max-width: 767px) {
+    .filter-month,
+    .filter-year-panel {
+        min-width: 16rem;
+    }
 }

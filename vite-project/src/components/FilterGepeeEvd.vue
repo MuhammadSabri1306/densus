@@ -12,6 +12,11 @@ defineProps({
 const yearConfig = getYearConfig();
 const gepeeEvdStore = useGepeeEvdStore();
 
+if(!gepeeEvdStore.filters.year) {
+    const currDate = new Date();
+    gepeeEvdStore.setFilter({ year: currDate.getFullYear() });
+}
+
 const selectedDate = ref(new Date(gepeeEvdStore.filters.year.toString()));
 const isYearInvalid = computed(() => {
     const year = selectedDate.value.getFullYear();

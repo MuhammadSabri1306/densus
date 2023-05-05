@@ -135,6 +135,66 @@ class Activity_execution extends RestController
         }
     }
 
+    // public function index_post($scheduleId)
+    // {
+    //     $status = REST_ERR_BAD_REQ_STATUS;
+    //     $data = [
+    //         'success' => false,
+    //         'message' => 'Fitur ini sedang dalam pemeliharaan dan penambahan data akan ditutup sampai besok pagi. Mohon maaf atas ketidaknyamanannya.'
+    //     ];
+    //     $this->response($data, $status);
+        
+    //     $status = $this->auth_jwt->auth('viewer', 'teknisi');
+    //     switch($status) {
+    //         case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+    //         case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+    //         default: $data = REST_ERR_DEFAULT_DATA; break;
+    //     }
+        
+    //     if($status === 200) {
+    //         $currUser = $this->auth_jwt->get_payload();
+    //         $this->load->library('input_custom');
+    //         $fields = [
+    //             'title' => ['string', 'required'],
+    //             'description' => ['string', 'required'],
+    //             'description_before' => ['string', 'required'],
+    //             'description_after' => ['string', 'required'],
+    //             'evidence' => ['string', 'required']
+    //         ];
+
+    //         $this->input_custom->set_fields($fields);
+	// 		$input = $this->input_custom->get_body('post');
+
+    //         if(!$input['valid']) {
+    //             $data = [ 'success' => false, 'message' => $input['msg'] ];
+    //             $status = REST_ERR_BAD_REQ_STATUS;
+    //         } else {
+    //             $body = $input['body'];
+    //             $body['id_schedule'] = $scheduleId;
+    //             $body['user_id'] = $currUser['id'];
+    //             $body['user_username'] = $currUser['username'];
+    //             $body['user_name'] = $currUser['name'];
+    //             $body['created_at'] = date('Y-m-d H:i:s');
+    //             $body['updated_at'] = $body['created_at'];
+    //         }
+    //     }
+        
+    //     if($status == 200){
+    //         $this->load->model("activity_execution_model");
+    //         $success = $this->activity_execution_model->save($body);
+    //         $data = [ 'success' => $success ];
+
+    //         $this->user_log
+    //             ->userId($currUser['id'])
+    //             ->username($currUser['username'])
+    //             ->name($currUser['name'])
+    //             ->activity('input new activity:pelaksanaan')
+    //             ->log();
+    //     }
+        
+    //     $this->response($data, $status);
+    // }
+
     public function index_put($execId)
     {
         $this->load->library('input_handler');

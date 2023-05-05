@@ -212,7 +212,7 @@ $route['api/user']['get'] = 'user';
 $route['api/user']['post'] = 'user';
 $route['api/profile']['get'] = 'user/profile';
 
-$route['api/attachment/activity/check']['get'] = 'attachment/check_activity_execution';
+// $route['api/attachment/activity/check']['get'] = 'attachment/check_activity_execution';
 $route['api/attachment/activity']['post'] = 'attachment/store_activity_execution';
 $route['api/attachment/activity/(:any)']['delete'] = 'attachment/del_activity_execution/$1';
 $route['api/attachment/gepee-evidence']['post'] = 'attachment/store_gepee_evidence';

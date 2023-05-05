@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import http from "@helpers/http-common";
 import { handlingFetchErr } from "@helpers/error-handler";
 import { useUserStore } from "@stores/user";
+import { useViewStore } from "@stores/view";
 
 import { allowSampleData } from "@/configs/base";
 import sampleCategory from "@helpers/sample-data/gepee-evidence/category";
@@ -22,11 +23,10 @@ const getCurrentSemester = () => {
 export const useGepeeEvdStore = defineStore("gepee", {
     state: () => ({
 
-        filters: {
-            semester: getCurrentSemester(),
-            year: new Date().getFullYear()
+        specialFilters: {
+            semester: getCurrentSemester()
         },
-        lastFetch: null,
+        
         categoryList: []
 
     }),
@@ -37,31 +37,47 @@ export const useGepeeEvdStore = defineStore("gepee", {
             return userStore.axiosAuthConfig;
         },
 
-        urlParams: state => {
-            return (settedFilter = {}) => {
-                const params = [];
-                if(settedFilter.divre)
-                    params.push("divre=" + settedFilter.divre)
-                if(settedFilter.witel)
-                    params.push("witel=" + settedFilter.witel)
-                if(settedFilter.idLocation)
-                    params.push("idLocation=" + settedFilter.idLocation)
-                if(state.filters.semester)
-                    params.push("semester=" + state.filters.semester)
-                if(state.filters.year)
-                    params.push("year=" + state.filters.year)
-                return params.length < 1 ? "" : "/?" + params.join("&");
-            };
+        filters: state => {
+            const viewStore = useViewStore();
+            // const divre = viewStore.filters.divre;
+            // const witel = viewStore.filters.witel;
+            const year = viewStore.filters.year;
+            const semester = state.specialFilters.semester;
+            // const idLocation = state.specialFilters.idLocation;
+            return { year, semester };
         }
 
     },
     actions: {
 
         setFilter(filter = {}) {
-            if(filter.semester)
-                this.filters.semester = filter.semester;
+            const viewStore = useViewStore();
+
+            if(filter.divre)
+                viewStore.setFilter({ divre: filter.divre });
+            if(filter.witel)
+                viewStore.setFilter({ witel: filter.witel });
             if(filter.year)
-                this.filters.year = filter.year;
+                viewStore.setFilter({ year: filter.year });
+            if(filter.semester)
+                this.specialFilters.semester = filter.semester;
+        },
+
+        buildUrlParams(settedParams = {}) {
+            const filters = this.filters;
+            const params = [];
+
+            if(settedParams.divre)
+                params.push("divre=" + settedParams.divre)
+            if(settedParams.witel)
+                params.push("witel=" + settedParams.witel)
+            if(settedParams.idLocation)
+                params.push("idLocation=" + settedParams.idLocation)
+            if(filters.semester || settedParams.semester)
+                params.push("semester=" + (settedParams.semester || filters.semester))
+            if(filters.year || settedParams.year)
+                params.push("year=" + (settedParams.year || filters.year))
+            return params.length < 1 ? "" : "/?" + params.join("&");
         },
 
         fetchCategory(force = false, callback = null) {
@@ -75,7 +91,7 @@ export const useGepeeEvdStore = defineStore("gepee", {
         },
 
         async getDivreList(callback) {
-            const urlParams = this.urlParams();
+            const urlParams = this.buildUrlParams();
             try {
 
                 const response = await http.get("/gepee-evidence/location/" + urlParams, this.fetchHeader);
@@ -99,7 +115,7 @@ export const useGepeeEvdStore = defineStore("gepee", {
         },
 
         async getWitelList(divreCode, callback) {
-            const urlParams = this.urlParams({ divre: divreCode });
+            const urlParams = this.buildUrlParams({ divre: divreCode });
             try {
 
                 const response = await http.get("/gepee-evidence/location" + urlParams, this.fetchHeader);
@@ -122,8 +138,8 @@ export const useGepeeEvdStore = defineStore("gepee", {
             }
         },
 
-        async getLocationInfo(settedFilter, callback) {
-            const urlParams = this.urlParams(settedFilter);
+        async getLocationInfo(settedParams, callback) {
+            const urlParams = this.buildUrlParams(settedParams);
             try {
 
                 const response = await http.get("/gepee-evidence/location/info" + urlParams, this.fetchHeader);
@@ -139,9 +155,9 @@ export const useGepeeEvdStore = defineStore("gepee", {
 
                 handlingFetchErr(err);
                 let data = {};
-                if(allowSampleData && settedFilter.witel)
+                if(allowSampleData && settedParams.witel)
                     data = sampleLocationInfoWitel;
-                else if(allowSampleData && settedFilter.divre)
+                else if(allowSampleData && settedParams.divre)
                     data = sampleLocationInfoDivre;
                 else if(allowSampleData)
                     data = sampleLocationInfoNasional;
@@ -152,7 +168,7 @@ export const useGepeeEvdStore = defineStore("gepee", {
         },
 
         async getCategoryData(witel, callback) {
-            const urlParams = this.urlParams({ witel });
+            const urlParams = this.buildUrlParams({ witel });
             try {
 
                 const response = await http.get("/gepee-evidence/category-data" + urlParams, this.fetchHeader);
@@ -176,7 +192,7 @@ export const useGepeeEvdStore = defineStore("gepee", {
         },
 
         async getEvidenceList(witel, idCategory, callback) {
-            const urlParams = this.urlParams({ witel });
+            const urlParams = this.buildUrlParams({ witel });
             const url = `/gepee-evidence/evidence/category/${ idCategory + urlParams }`;
             try {
 

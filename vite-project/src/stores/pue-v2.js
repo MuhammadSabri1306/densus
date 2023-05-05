@@ -15,8 +15,7 @@ export const usePueV2Store = defineStore("pueV2", {
         return {
             currDivre: null,
             currWitel: null,
-            currRtu: null,
-            idLocation: null
+            currRtu: null
         };
 
     },
@@ -43,9 +42,8 @@ export const usePueV2Store = defineStore("pueV2", {
             const witel = viewStore.filters.witel;
             const year = viewStore.filters.year;
             const month = viewStore.filters.month;
-            const idLocation = state.idLocation;
             
-            return { divre, witel, idLocation, year, month };
+            return { divre, witel, year, month };
         },
         
         offlineUrlParams() {
@@ -84,13 +82,19 @@ export const usePueV2Store = defineStore("pueV2", {
             this.currRtu = null;
             this.currWitel = null;
             this.currDivre = null;
-            this.idLocation = null;
 
             if(zone.rtu) this.currRtu = zone.rtu;
             else if(zone.witel) this.currWitel = zone.witel;
             else if(zone.divre) this.currDivre = zone.divre;
+        },
 
-            if(zone.idLocation) this.idLocation = zone.idLocation;
+        buildUrlParams(filters) {
+            const params = [];
+            for(let key in filters) {
+                if(filters[key] !== null || filters[key] !== undefined)
+                    params.push(`${ key }=${ filters[key] }`);
+            }
+            return params.length < 1 ? "" : "/?" + params.join("&");
         },
 
         async getChartData(callback) {
@@ -161,7 +165,7 @@ export const usePueV2Store = defineStore("pueV2", {
 
         async updateOfflineLocation(idLocation, body, callback = null) {
             try {
-                const response = await http.put("/pue/offline/location" + idLocation, body, this.fetchHeader);
+                const response = await http.put("/pue/offline/location/" + idLocation, body, this.fetchHeader);
                 if(!response.data.success) {
                     console.warn(response.data);
                     callback && callback({ success: false, status: response.status });
@@ -189,9 +193,13 @@ export const usePueV2Store = defineStore("pueV2", {
             }
         },
 
-        async getOfflinePue(callback) {
+        async getOfflinePue(idLocation, callback) {
+            const filters = this.filters;
+            const urlParams = this.buildUrlParams({ year: filters.year, month: filters.month });
+            const url = "/pue/offline/" + idLocation + urlParams;
+
             try {
-                const response = await http.get("/pue/offline/" + this.idLocation, this.fetchHeader);
+                const response = await http.get(url, this.fetchHeader);
                 if(!response.data.pue) {
                     console.warn(response.data);
                     callback({ success: false, status: response.status, data: {} });

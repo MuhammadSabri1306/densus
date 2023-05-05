@@ -157,7 +157,6 @@ class Attachment extends RestController
 
     public function store_gepee_evidence_post()
     {
-        // dd($_FILES);
         $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
         switch($status) {
             case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;

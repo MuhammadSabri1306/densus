@@ -28,7 +28,8 @@ export const useViewStore = defineStore("view", {
         filters: {
             divre: null,
             witel: null,
-            month: null
+            month: null,
+            year: null
         }
     }),
     getters: {

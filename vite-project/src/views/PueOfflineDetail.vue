@@ -13,6 +13,7 @@ import Skeleton from "primevue/skeleton";
 import DialogPueOfflineAdd from "@components/DialogPueOfflineAdd.vue";
 import DialogPueOfflineEdit from "@components/DialogPueOfflineEdit.vue";
 import DialogPueOfflineDetail from "@components/DialogPueOfflineDetail.vue";
+import FilterGepeeMonth from "@components/FilterGepeeMonth.vue";
 
 const pueStore = usePueV2Store();
 const route = useRoute();
@@ -41,9 +42,10 @@ const tableFilter = ref({
 
 const isLoading = ref(true);
 const fetchData = () => {
-    pueStore.setCurrentZone({ idLocation: route.params.locationId });
+    const idLocation = route.params.locationId;
     isLoading.value = true;
-    pueStore.getOfflinePue(({ data }) => {
+
+    pueStore.getOfflinePue(idLocation, ({ data }) => {
         if(data.pue)
             pueData.value = data.pue;
         if(data.location)
@@ -81,6 +83,11 @@ const deletePueItem = pueId => {
         viewStore.showToast("PUE Offline", "Berhasil menghapus item.", true);
         fetchData();
     });
+};
+
+const onFilterApply = filterValue => {
+    viewStore.setFilter(filterValue);
+    fetchData();
 };
 </script>
 <template>
@@ -121,8 +128,11 @@ const deletePueItem = pueId => {
                         </tr>
                     </table>
                 </div>
-                <div v-if="!isLoading" class="row justify-content-end align-items-center g-4">
-                    <div class="col-auto">
+                <div v-if="!isLoading" class="row align-items-center g-4 mt-2">
+                    <div class="col-md-auto">
+                        <FilterGepeeMonth @apply="onFilterApply" class="d-flex align-items-center" labelClass="text-muted me-2" fieldClass="me-4" />
+                    </div>
+                    <div class="col-auto ms-auto">
                         <button type="button" @click="isDialogAddShow = true" class="btn btn-outline-info btn-icon">
                             <VueFeather type="plus" />
                             <span>Input PUE Baru</span>

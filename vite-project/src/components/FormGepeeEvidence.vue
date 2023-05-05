@@ -21,6 +21,8 @@ const { data, v$ } = useDataForm({
     file: { value: props.initData.file, required }
 });
 
+const uploadedFile = computed(() => props.initData?.file_url || null);
+
 const onFileUploaded = event => {
     data.file = event.latestUpload;
 };
@@ -58,9 +60,12 @@ const onSubmit = async () => {
     <form @submit.prevent="onSubmit">
         <div class="mb-4">
             <label for="txtDescription" class="required">Deskripsi</label>
-            <textarea v-model="data.description" :class="{ 'is-invalid': hasSubmitted && v$.description.$invalid }" class="form-control" id="txtDescription" rows="5"></textarea>
+            <textarea v-model="data.description" :class="{ 'is-invalid': hasSubmitted && v$.description.$invalid }"
+                class="form-control" id="txtDescription" rows="5"></textarea>
         </div>
-        <FileUpload isRequired url="/attachment/gepee-evidence" label="File Evidence" accept=".jpg, .jpeg, .png, .pdf" acceptText="(*.jpg, *.jpeg, *.png, *.pdf)" @uploaded="onFileUploaded" @removed="onFileRemoved" class="mb-5" />
+        <FileUpload isRequired url="/attachment/gepee-evidence" :uploadedFile="uploadedFile" label="File Evidence"
+            accept=".jpg, .jpeg, .png, .pdf" acceptText="(*.jpg, *.jpeg, *.png, *.pdf)"
+            @uploaded="onFileUploaded" @removed="onFileRemoved" class="mb-5" />
         <div class="d-flex justify-content-between align-items-end">
             <button type="submit" :class="{ 'btn-loading': isLoading }" class="btn btn-lg btn-primary">Simpan</button>
             <button type="button" @click="$emit('cancel')" class="btn btn-danger">Batalkan</button>

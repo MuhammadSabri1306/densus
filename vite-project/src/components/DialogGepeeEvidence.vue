@@ -5,11 +5,14 @@ import { useGepeeEvdStore } from "@stores/gepee-evidence";
 import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
 import { limitWords } from "@helpers/text-format";
+import { toRoman } from "@helpers/number-format";
+import { isFileImg } from "@helpers/file";
 import Dialog from "primevue/dialog";
 import ButtonGroupAction from "@components/ButtonGroupAction.vue";
 import Skeleton from "primevue/skeleton";
 import FormGepeeEvidence from "@components/FormGepeeEvidence.vue";
 import Image from "primevue/image";
+import { DocumentIcon } from "@heroicons/vue/24/solid";
 
 const emit = defineEmits(["updated"]);
 
@@ -26,11 +29,19 @@ const location = ref(null);
 const currDetail = ref(null);
 const currUpdate = ref(null);
 
-const currDateString = () => new Intl.DateTimeFormat('id', { dateStyle: 'long'}).format() || null;
 const categoryHeading = computed(() => category.value ? "Kategori " + category.value.category : "Gepee Evidence");
 const categorySubHeading = computed(() => category.value ? category.value.sub_category : "Daftar Gepee Evidence");
 const witelName = computed(() => location.value ? location.value.witel_name : null);
 const locationId = computed(() => location.value ? Number(location.value.id_location) : 0);
+const dayTitle = computed(() => {
+    const filters = gepeeEvdStore.filters;
+    const text = [];
+    if(filters.semester)
+        text.push(`Semester ${ toRoman(filters.semester) }`);
+    if(filters.year)
+        text.push(`Tahun ${ filters.year }`);
+    return text.join(" ");
+});
 
 const resetReactiveData = () => {
     currDetail.value = null;
@@ -119,19 +130,11 @@ const onDelete = evidenceId => {
 
 const userStore = useUserStore();
 const hasUpdateAccess = computed(() => userStore.role == "admin");
-
-const getFileExtension = filename => {
-    const nameArr = filename.split(".");
-    return nameArr[nameArr.length - 1];
-};
-
 const isCurrDetailImg = computed(() => {
     const currDetailData = currDetail.value;
     if(!currDetailData || !currDetailData.file)
         return false;
-    
-    const fileExt = getFileExtension(currDetailData.file);
-    return ["jpg", "jpeg", "png"].indexOf(fileExt) >= 0;
+    return isFileImg(currDetailData.file);
 });
 </script>
 <template>
@@ -146,7 +149,7 @@ const isCurrDetailImg = computed(() => {
                         <div class="col">
                             <h6 class="m-b-5 font-success f-w-700">{{ categorySubHeading }}</h6>
                             <p class="mb-0">
-                                {{ currDateString() }}<br>
+                                {{ dayTitle }}<br>
                                 {{ witelName }}
                             </p>
                         </div>
@@ -162,7 +165,7 @@ const isCurrDetailImg = computed(() => {
                     <Skeleton v-for="n in 4" class="block mb-3" />
                 </div>
                 <div v-else-if="evdList.length > 0">
-                    <table class="table table-head-primary">
+                    <table class="table table-head-primary table-borderless">
                         <thead>
                             <tr>
                                 <th class="text-start">No.</th>
@@ -174,7 +177,7 @@ const isCurrDetailImg = computed(() => {
                             <tr v-for="(item, index) in evdList">
                                 <td>{{ index + 1 }}</td>
                                 <td>{{ limitWords(item.deskripsi) }}</td>
-                                <td>
+                                <td class="text-center">
                                     <button v-if="!hasUpdateAccess" @click="dialog.showDetail(item)" class="btn btn-primary">Detail</button>
                                     <ButtonGroupAction v-else @detail="dialog.showDetail(item)" @edit="dialog.showFormEdit(item)" @delete="onDelete(item.id)" class="justify-content-center" />
                                 </td>
@@ -200,7 +203,7 @@ const isCurrDetailImg = computed(() => {
                         <div class="col">
                             <h6 class="m-b-5 font-success f-w-700">{{ categorySubHeading }}</h6>
                             <p class="mb-0">
-                                {{ currDateString() }}<br>
+                                {{ dayTitle }}<br>
                                 {{ witelName }}
                             </p>
                         </div>
@@ -219,7 +222,7 @@ const isCurrDetailImg = computed(() => {
                         <div class="col">
                             <h6 class="m-b-5 font-success f-w-700">{{ categorySubHeading }}</h6>
                             <p class="mb-0">
-                                {{ currDateString() }}<br>
+                                {{ dayTitle }}<br>
                                 {{ witelName }}
                             </p>
                         </div>
@@ -238,31 +241,37 @@ const isCurrDetailImg = computed(() => {
                         <div class="col">
                             <h6 class="m-b-5 font-success f-w-700">{{ categorySubHeading }}</h6>
                             <p class="mb-0">
-                                {{ currDateString() }}<br>
+                                {{ dayTitle }}<br>
                                 {{ witelName }}
                             </p>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <table class="table text-muted">
-                        <tbody>
-                            <tr>
-                                <th>Deskripsi</th>
-                                <td>{{ currDetail.deskripsi }}</td>
-                            </tr>
-                            <tr>
-                                <th>File Evidence</th>
-                                <td>
-                                    <div v-if="isCurrDetailImg" class="position-relative">
-                                        <span>{{ currDetail.file }}</span>
-                                        <Image :src="currDetail.file_url" alt="gambar evidence" preview class="img-stretched-link" />
+                    <h6>Deskripsi</h6>
+                    <p class="text-muted px-4">{{ currDetail.deskripsi }}</p>
+                    <h6>File Evidence</h6>
+                    <div v-if="isCurrDetailImg" class="d-flex flex-column align-items-center px-4">
+                        <div class="position-relative mb-2">
+                            <img :src="currDetail.file_url" alt="gambar evidence" class="img-fluid" role="presentation" />
+                            <Image :src="currDetail.file_url" :alt="currDetail.file" preview class="img-stretched-link" />
+                        </div>
+                        <span class="text-muted">{{ currDetail.file }}</span>
+                    </div>
+                    <div v-else class="px-4 py-2">
+                        <div class="border position-relative">
+                            <div class="m-3">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <DocumentIcon class="tw-w-8 tw-h-8 text-muted" />
                                     </div>
-                                    <a v-else :href="currDetail.file_url" target="_blank">{{ currDetail.file }}</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    <div class="col position-static">
+                                        <a :href="currDetail.file_url" target="_blank" class="stretched-link">{{ currDetail.file }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="d-flex justify-content-end mt-5">
                     <button type="button" @click="showDialogDetail = false" class="btn btn-secondary">Tutup</button>

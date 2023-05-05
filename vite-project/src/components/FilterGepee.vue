@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed, onMounted, watch } from "vue";
+import { ref, reactive, computed, onMounted } from "vue";
 import { useViewStore } from "@stores/view";
 import { useUserStore } from "@stores/user";
 import { getYearConfig } from "@/configs/filter";
@@ -170,7 +170,7 @@ onMounted(() => {
                                     <label for="inputMonth" :class="{ 'required': requireMonth }">Bulan</label>
                                     <div class="d-grid">
                                         <Calendar v-model="tempFilters.date" view="month" dateFormat="M yy" showButtonBar placeholder="Pilih Bulan"
-                                            :class="{ 'p-invalid': isDateInvalid }" inputId="inputYear" inputClass="form-control" panelClass="filter-month" />
+                                            :class="{ 'p-invalid': isDateInvalid }" inputId="inputMonth" inputClass="form-control" panelClass="filter-month" />
                                     </div>
                                 </div>
                             </div>

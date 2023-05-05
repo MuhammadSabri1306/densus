@@ -55,6 +55,7 @@ const onSubmit = async () => {
         if(response.success) {
             viewStore.showToast("PUE Offline", "Berhasil melakukan update.", true);
             emit("save");
+            showDialog.value = false;
         }
         isLoading.value = false;
     });
