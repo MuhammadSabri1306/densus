@@ -1,6 +1,8 @@
 **/node_modules
 vite-project/dist
+
 upload/*
+!upload/**/
 
 # Logs
 logs
