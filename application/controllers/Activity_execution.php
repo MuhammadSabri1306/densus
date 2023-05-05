@@ -51,199 +51,110 @@ class Activity_execution extends RestController
 
         }
     }
-
+    
     public function index_post($scheduleId)
     {
-        // $status = REST_ERR_BAD_REQ_STATUS;
-        // $data = [
-        //     'success' => false,
-        //     'message' => 'Fitur ini sedang dalam pemeliharaan dan penambahan data akan ditutup sampai besok pagi. Mohon maaf atas ketidaknyamanannya.'
-        // ];
-        // $this->response($data, $status);
-        
-        $this->load->library('input_handler');
         $status = $this->auth_jwt->auth('viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+        
+        if($status === 200) {
+            $currUser = $this->auth_jwt->get_payload();
+            $this->load->library('input_custom');
+            $fields = [
+                'title' => ['string', 'required'],
+                'description' => ['string', 'required'],
+                'description_before' => ['string', 'required'],
+                'description_after' => ['string', 'required'],
+                'evidence' => ['string', 'required']
+            ];
 
-		if($status === 200) {
-			$this->input_handler->set_fields('title', 'description', 'description_before', 'description_after');
-            $this->input_handler->set_required('title', 'description', 'description_before', 'description_after');
+            $this->input_custom->set_fields($fields);
+			$input = $this->input_custom->get_body('post');
 
-			$input = $this->input_handler->get_body('post');
             if(!$input['valid']) {
                 $data = [ 'success' => false, 'message' => $input['msg'] ];
-                $status = REST_ERR_BAD_REQ;
-            }
-
-            $currUser = $this->auth_jwt->get_payload();
-            $evidence = '';
-
-            if($status == 200) {
-                $fileInfo = pathinfo($_FILES['evidence']['name']);
-                $filename = str_replace('.', '', $fileInfo['filename']);
-                $filename = str_replace(' ', '', $filename);
-                $filename .= '_' . time() . '.' . $fileInfo['extension'];
-
-                $config['upload_path'] = FCPATH . UPLOAD_ACTIVITY_EVIDENCE_PATH;
-                $config['allowed_types'] = 'jpg|jpeg|png|pdf';
-                $config['file_name'] = $filename;
-
-                $this->load->library('upload', $config);
-                $this->upload->initialize($config);
-
-                if(!$this->upload->do_upload('evidence')) {
-                    $data = [ 'success' => false, 'message' => $this->upload->display_errors('', '') ];
-                    $status = REST_ERR_BAD_REQ;
-                } else {
-                    $uploadedFile = $this->upload->data();
-                    $evidence = $uploadedFile['file_name'];
-                }
-            }
-            
-            if($status == 200){
+                $status = REST_ERR_BAD_REQ_STATUS;
+            } else {
                 $body = $input['body'];
                 $body['id_schedule'] = $scheduleId;
-                $body['evidence'] = $evidence;
                 $body['user_id'] = $currUser['id'];
                 $body['user_username'] = $currUser['username'];
                 $body['user_name'] = $currUser['name'];
                 $body['created_at'] = date('Y-m-d H:i:s');
                 $body['updated_at'] = $body['created_at'];
-
-                $this->load->model("activity_execution_model");
-				$success = $this->activity_execution_model->save($body);
-                $data = [ 'success' => $success ];
-
-                $this->user_log
-                    ->userId($currUser['id'])
-                    ->username($currUser['username'])
-                    ->name($currUser['name'])
-                    ->activity('input new activity:pelaksanaan')
-                    ->log();
-			}
-            
-            $this->response($data, $status);
-
-        } else {
-
-            switch($status) {
-                case REST_ERR_AUTH_CODE: $data = REST_ERR_AUTH_DATA; break;
-                case REST_ERR_EXP_CODE: $data = REST_ERR_EXP_DATA; break;
-                default: $data = null;
             }
-            $this->response($data, $status);
-
         }
+        
+        if($status == 200){
+            $this->load->model("activity_execution_model");
+            $success = $this->activity_execution_model->save($body);
+            $data = [ 'success' => $success ];
+
+            $this->user_log
+                ->userId($currUser['id'])
+                ->username($currUser['username'])
+                ->name($currUser['name'])
+                ->activity('input new activity:pelaksanaan')
+                ->log();
+        }
+        
+        $this->response($data, $status);
     }
-
-    // public function index_post($scheduleId)
-    // {
-    //     $status = REST_ERR_BAD_REQ_STATUS;
-    //     $data = [
-    //         'success' => false,
-    //         'message' => 'Fitur ini sedang dalam pemeliharaan dan penambahan data akan ditutup sampai besok pagi. Mohon maaf atas ketidaknyamanannya.'
-    //     ];
-    //     $this->response($data, $status);
-        
-    //     $status = $this->auth_jwt->auth('viewer', 'teknisi');
-    //     switch($status) {
-    //         case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
-    //         case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
-    //         default: $data = REST_ERR_DEFAULT_DATA; break;
-    //     }
-        
-    //     if($status === 200) {
-    //         $currUser = $this->auth_jwt->get_payload();
-    //         $this->load->library('input_custom');
-    //         $fields = [
-    //             'title' => ['string', 'required'],
-    //             'description' => ['string', 'required'],
-    //             'description_before' => ['string', 'required'],
-    //             'description_after' => ['string', 'required'],
-    //             'evidence' => ['string', 'required']
-    //         ];
-
-    //         $this->input_custom->set_fields($fields);
-	// 		$input = $this->input_custom->get_body('post');
-
-    //         if(!$input['valid']) {
-    //             $data = [ 'success' => false, 'message' => $input['msg'] ];
-    //             $status = REST_ERR_BAD_REQ_STATUS;
-    //         } else {
-    //             $body = $input['body'];
-    //             $body['id_schedule'] = $scheduleId;
-    //             $body['user_id'] = $currUser['id'];
-    //             $body['user_username'] = $currUser['username'];
-    //             $body['user_name'] = $currUser['name'];
-    //             $body['created_at'] = date('Y-m-d H:i:s');
-    //             $body['updated_at'] = $body['created_at'];
-    //         }
-    //     }
-        
-    //     if($status == 200){
-    //         $this->load->model("activity_execution_model");
-    //         $success = $this->activity_execution_model->save($body);
-    //         $data = [ 'success' => $success ];
-
-    //         $this->user_log
-    //             ->userId($currUser['id'])
-    //             ->username($currUser['username'])
-    //             ->name($currUser['name'])
-    //             ->activity('input new activity:pelaksanaan')
-    //             ->log();
-    //     }
-        
-    //     $this->response($data, $status);
-    // }
-
+    
     public function index_put($execId)
     {
-        $this->load->library('input_handler');
         $status = $this->auth_jwt->auth('viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+        
+        if($status === 200) {
+            $currUser = $this->auth_jwt->get_payload();
+            $this->load->library('input_custom');
+            $fields = [
+                'title' => ['string', 'required'],
+                'description' => ['string', 'required'],
+                'description_before' => ['string', 'required'],
+                'description_after' => ['string', 'required'],
+                'evidence' => ['string', 'required']
+            ];
 
-		if($status === 200) {
-			$this->input_handler->set_fields('title', 'description', 'description_before', 'description_after');
-            $this->input_handler->set_required('title', 'description', 'description_before', 'description_after');
+            $this->input_custom->set_fields($fields);
+			$input = $this->input_custom->get_body('put');
 
-			$input = $this->input_handler->get_body('put');
             if(!$input['valid']) {
                 $data = [ 'success' => false, 'message' => $input['msg'] ];
-                $status = REST_ERR_BAD_REQ;
-            }
-
-            $currUser = $this->auth_jwt->get_payload();
-            
-            if($status == 200){
+                $status = REST_ERR_BAD_REQ_STATUS;
+            } else {
                 $body = $input['body'];
                 $body['status'] = 'submitted';
                 $body['user_id'] = $currUser['id'];
                 $body['user_username'] = $currUser['username'];
                 $body['user_name'] = $currUser['name'];
                 $body['updated_at'] = date('Y-m-d H:i:s');
-
-                $this->load->model("activity_execution_model");
-				$success = $this->activity_execution_model->save($body, $execId, $currUser);
-                $data = [ 'success' => $success ];
-
-                $this->user_log
-                    ->userId($currUser['id'])
-                    ->username($currUser['username'])
-                    ->name($currUser['name'])
-                    ->activity('update activity:pelaksanaan')
-                    ->log();
-			}
-            
-            $this->response($data, $status);
-
-        } else {
-
-            switch($status) {
-                case REST_ERR_AUTH_CODE: $data = REST_ERR_AUTH_DATA; break;
-                case REST_ERR_EXP_CODE: $data = REST_ERR_EXP_DATA; break;
-                default: $data = null;
             }
-            $this->response($data, $status);
-
         }
+        
+        if($status == 200){
+            $this->load->model("activity_execution_model");
+            $success = $this->activity_execution_model->save($body, $execId, $currUser);
+            $data = [ 'success' => $success ];
+
+            $this->user_log
+                ->userId($currUser['id'])
+                ->username($currUser['username'])
+                ->name($currUser['name'])
+                ->activity('update activity:pelaksanaan')
+                ->log();
+        }
+        
+        $this->response($data, $status);
     }
 
     public function index_delete($execId)

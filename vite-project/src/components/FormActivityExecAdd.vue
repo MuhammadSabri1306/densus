@@ -5,8 +5,7 @@ import { useActivityStore } from "@stores/activity";
 import { useUserStore } from "@stores/user";
 import { required } from "@vuelidate/validators";
 import { useDataForm } from "@/helpers/data-form";
-import FileUpload from "primevue/fileupload";
-// import FileUpload from "@components/FileUpload.vue";
+import FileUpload from "@components/ui/FileUpload.vue";
 
 const emit = defineEmits(["save", "cancel"]);
 
@@ -18,22 +17,8 @@ const { data, v$ } = useDataForm({
     description: { required },
     descriptionBefore: { required },
     descriptionAfter: { required },
-    evidence: { value: null }
+    evidence: { required }
 });
-
-const hideUploadBtnBar = ref(false);
-const onUpload = event => {
-    const file = event.files[event.files.length - 1];
-    console.log(file, event);
-    if(file) {
-        data.evidence = file;
-        hideUploadBtnBar.value = true;
-    }
-};
-
-const onUploadRemove = () => {
-    data.evidence = null;
-};
 
 const activityStore = useActivityStore();
 const hasSubmitted = ref(false);
@@ -44,16 +29,17 @@ const onSave = async () => {
     const isValid = await v$.value.$validate();
     if(!isValid)
         return;
-        
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("description_before", data.descriptionBefore);
-    formData.append("description_after", data.descriptionAfter);
-    formData.append("evidence", data.evidence);
+    
+    const body = {
+        title: data.title,
+        description: data.description,
+        description_before: data.descriptionBefore,
+        description_after: data.descriptionAfter,
+        evidence: data.evidence
+    };
 
     isLoading.value = true;
-    activityStore.addExecution(scheduleId.value, formData, response => {
+    activityStore.addExecution(scheduleId.value, body, response => {
         isLoading.value = false;
         if(response.success)
             emit("save");
@@ -62,6 +48,9 @@ const onSave = async () => {
 
 const userStore = useUserStore();
 const inputerName = computed(() => userStore.name);
+
+const onFileUploaded = event => data.evidence = event.latestUpload;
+const onFileRemoved = event => data.evidence = event.latestUpload;
 </script>
 <template>
     <form @submit.prevent="onSave">
@@ -85,16 +74,9 @@ const inputerName = computed(() => userStore.name);
             <label for="txtDescriptionAfter">After <span class="text-danger">*</span></label>
             <textarea v-model="data.descriptionAfter" id="inputDescriptionAfter" :class="{ 'is-invalid': hasSubmitted && v$.descriptionAfter.$invalid }" rows="5" class="form-control"></textarea>
         </div>
-        <div class="mb-5">
-            <label for="inputEvidence">Evidence <span class="text-danger">*</span></label>
-            <FileUpload :customUpload="true" :fileLimit="1" @select="onUpload($event)" @clear="onUploadRemove" @remove="onUploadRemove" accept=".jpg, .jpeg, .png, .pdf" :showUploadButton="false" :showCancelButton="false" uploadLabel="inputEvidence">
-                <template #empty>
-                    <p>Drag dan drop file anda disini.</p>
-                </template>
-            </FileUpload>
-            <p class="text-muted ms-4"><small><b>(*.jpg, *.jpeg, *.png, *.pdf)</b></small></p>
-        </div>
-        <!-- <FileUpload class="mb-5" isRequired label="Evidence" accept=".jpg, .jpeg, .png, .pdf" acceptText="(*.jpg, *.jpeg, *.png, *.pdf)" /> -->
+        <FileUpload isRequired url="/attachment/activity" label="Evidence"
+            accept=".jpg, .jpeg, .png, .pdf" acceptText="(*.jpg, *.jpeg, *.png, *.pdf)"
+            @uploaded="onFileUploaded" @removed="onFileRemoved" class="mb-5" />
         <div class="d-flex justify-content-between align-items-end">
             <button type="submit" :class="{ 'btn-loading': isLoading }" class="btn btn-lg btn-primary">Simpan</button>
             <button type="button" @click="$emit('cancel')" class="btn btn-danger">Batalkan</button>

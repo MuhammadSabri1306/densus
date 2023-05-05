@@ -1,24 +1,23 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useRoute } from "vue-router";
 import { useActivityStore } from "@stores/activity";
 import { useUserStore } from "@stores/user";
 import { required } from "@vuelidate/validators";
 import { useDataForm } from "@/helpers/data-form";
+import FileUpload from "@components/ui/FileUpload.vue";
 
 const emit = defineEmits(["save", "cancel"]);
 const props = defineProps({
     initData: { type: Object, default: {} }
 });
 
-const route = useRoute();
-const scheduleId = computed(() => route.params.scheduleId);
-
+const execId = computed(() => props.initData?.id || null);
 const { data, v$ } = useDataForm({
     title: { value: props.initData.title, required },
     description: { value: props.initData.description, required },
     descriptionBefore: { value: props.initData.description_before, required },
-    descriptionAfter: { value: props.initData.description_after, required }
+    descriptionAfter: { value: props.initData.description_after, required },
+    evidence: { value: props.initData.evidence, required }
 });
 
 const activityStore = useActivityStore();
@@ -31,14 +30,16 @@ const onSave = async () => {
     if(!isValid)
         return;
         
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("description_before", data.descriptionBefore);
-    formData.append("description_after", data.descriptionAfter);
+    const body = {
+        title: data.title,
+        description: data.description,
+        description_before: data.descriptionBefore,
+        description_after: data.descriptionAfter,
+        evidence: data.evidence
+    };
 
     isLoading.value = true;
-    activityStore.updateExecution(props.initData.id, formData, response => {
+    activityStore.updateExecution(execId.value, body, response => {
         isLoading.value = false;
         if(response.success)
             emit("save");
@@ -47,6 +48,10 @@ const onSave = async () => {
 
 const userStore = useUserStore();
 const inputerName = computed(() => userStore.name);
+
+const uploadedFile = computed(() => props.initData?.evidence_url || null);
+const onFileUploaded = event => data.evidence = event.latestUpload;
+const onFileRemoved = event => data.evidence = event.latestUpload;
 </script>
 <template>
     <form @submit.prevent="onSave">
@@ -55,21 +60,24 @@ const inputerName = computed(() => userStore.name);
             <input type="text" :value="inputerName" id="inputUser" class="form-control" readonly />
         </div>
         <div class="mb-4">
-            <label for="inputTitle">Judul Activity <span class="text-danger">*</span></label>
+            <label for="inputTitle" class="required">Judul Activity</label>
             <input type="text" v-model="data.title" id="inputTitle" :class="{ 'is-invalid': hasSubmitted && v$.title.$invalid }" class="form-control" autofocus />
         </div>
         <div class="mb-4">
-            <label for="txtDescription">Deskripsi <span class="text-danger">*</span></label>
+            <label for="txtDescription" class="required">Deskripsi</label>
             <textarea v-model="data.description" id="inputDescription" :class="{ 'is-invalid': hasSubmitted && v$.description.$invalid }" rows="5" class="form-control"></textarea>
         </div>
         <div class="mb-4">
-            <label for="txtDescriptionBefore">Before <span class="text-danger">*</span></label>
+            <label for="txtDescriptionBefore" class="required">Before</label>
             <textarea v-model="data.descriptionBefore" id="inputDescriptionBefore" :class="{ 'is-invalid': hasSubmitted && v$.descriptionBefore.$invalid }" rows="5" class="form-control"></textarea>
         </div>
-        <div class="mb-5">
-            <label for="txtDescriptionAfter">After <span class="text-danger">*</span></label>
+        <div class="mb-4">
+            <label for="txtDescriptionAfter" class="required">After</label>
             <textarea v-model="data.descriptionAfter" id="inputDescriptionAfter" :class="{ 'is-invalid': hasSubmitted && v$.descriptionAfter.$invalid }" rows="5" class="form-control"></textarea>
         </div>
+        <FileUpload isRequired url="/attachment/activity" :uploadedFile="uploadedFile" label="File Evidence"
+            accept=".jpg, .jpeg, .png, .pdf" acceptText="(*.jpg, *.jpeg, *.png, *.pdf)"
+            @uploaded="onFileUploaded" @removed="onFileRemoved" class="mb-5" />
         <div class="d-flex justify-content-between align-items-end">
             <button type="submit" :class="{ 'btn-loading': isLoading }" class="btn btn-lg btn-primary">Save</button>
             <button type="button" @click="$emit('cancel')" class="btn btn-danger">Cancel</button>

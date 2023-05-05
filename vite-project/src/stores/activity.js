@@ -282,11 +282,8 @@ export const useActivityStore = defineStore("activity", {
         },
 
         async addExecution(schedulId, body, callback = null) {
-            console.log(body);
-            const { headers } = this.fetchHeader;
-            headers["Content-Type"] = "multipart/form-data";
             try {
-                const response = await http.post("/activity/execution/" + schedulId, body, { headers });
+                const response = await http.post("/activity/execution/" + schedulId, body, this.fetchHeader);
                 if(!response.data.success) {
                     console.warn(response.data);
                     callback && callback({ success: false, status: response.status });
@@ -300,7 +297,6 @@ export const useActivityStore = defineStore("activity", {
         },
 
         async updateExecution(execId, body, callback = null) {
-            console.log(body);
             try {
                 const response = await http.put("/activity/execution/" + execId, body, this.fetchHeader);
                 if(!response.data.success) {

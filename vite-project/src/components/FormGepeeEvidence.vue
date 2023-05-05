@@ -22,14 +22,8 @@ const { data, v$ } = useDataForm({
 });
 
 const uploadedFile = computed(() => props.initData?.file_url || null);
-
-const onFileUploaded = event => {
-    data.file = event.latestUpload;
-};
-
-const onFileRemoved = event => {
-    data.file = event.latestUpload;
-};
+const onFileUploaded = event => data.file = event.latestUpload;
+const onFileRemoved = event => data.file = event.latestUpload;
 
 const gepeeEvdStore = useGepeeEvdStore();
 const isLoading = ref(false);
