@@ -8,18 +8,18 @@ dns.setDefaultResultOrder("verbatim");
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
+
 	const env = loadEnv(mode, process.cwd());
-
-	const plugins = [vue()];
-	const base = env.VITE_BASE_URL;
-	const server = { cors };
-
-	const resolve = {
-		alias: resolveAlias.reduce((value, currItem) => {
-			value[currItem.key] = fileURLToPath(new URL(currItem.url, import.meta.url));
-			return value;
-		}, {})
+	return {
+		plugins: [vue()],
+		base: env.VITE_BASE_URL,
+		resolve: {
+			alias: resolveAlias.reduce((value, currItem) => {
+				value[currItem.key] = fileURLToPath(new URL(currItem.url, import.meta.url));
+				return value;
+			}, {})
+		},
+		server: { cors }
 	};
 
-	return { plugins, base, resolve, server };
 });
