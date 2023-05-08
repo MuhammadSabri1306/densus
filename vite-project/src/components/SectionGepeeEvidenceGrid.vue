@@ -25,17 +25,18 @@ const onFetched = data => {
         list.value = data.location;
 };
 
-const fetch = divreCode => {
+const divreCode = computed(() => route.params.divreCode);
+const fetch = () => {
     isLoading.value = true;
-    if(divreCode)
-        gepeeEvdStore.getWitelList(divreCode, onFetched);
+    if(divreCode.value)
+        gepeeEvdStore.getWitelList(divreCode.value, onFetched);
     else
         gepeeEvdStore.getDivreList(onFetched);
 };
 
-watch(() => route.params.divreCode, fetch);
+// watch(() => route.params.divreCode, fetch);
 defineExpose({ fetch });
-fetch(route.params.divreCode);
+fetch();
 </script>
 <template>
     <div class="top-dealer-sec">
@@ -54,7 +55,7 @@ fetch(route.params.divreCode);
             </div>
         </div>
         <div v-else class="row">
-            <div v-for="item in gridItems" class="col-md-3">
+            <div v-for="(item, index) in gridItems" class="col-md-3">
                 <div class="card card-h-full pt-3 pb-2">
                     <div class="top-dealerbox text-center">
                         <div class="d-flex justify-content-center mb-4">
@@ -63,7 +64,7 @@ fetch(route.params.divreCode);
                             </div>
                         </div>
                         <h6>{{ item.title }}</h6>
-                        <StarScore :score="item.score" class="f-w-600 mb-4" />
+                        <StarScore :key="index+1" :score="item.scores" class="f-w-600 mb-4" />
                         <RouterLink :to="item.routeTo" class="btn btn-rounded stretched-link">Detail</RouterLink>
                     </div>
                 </div>

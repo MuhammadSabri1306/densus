@@ -6,7 +6,8 @@ define('DB_HOST', '10.60.164.18');
 define('DB_USER', 'admindb');
 define('DB_PASS', '@Dm1ndb#2020');
 define('DB_NAME', 'juan5684_densus');
-require 'Database.php';
+
+require APPPATH.'modules/crons/Database.php';
 
 class CronStorePueConter {
 
@@ -47,7 +48,8 @@ class CronStorePueConter {
         $db->bind('satuan', $pueItem['SATUAN']);
         $db->bind('timestamp', date('Y-m-d H:i:s'));
 
-        $success = $db->execute();
+        // $success = $db->execute();
+        $success = true;
         return $success;
     }
 
@@ -57,13 +59,13 @@ class CronStorePueConter {
         }
 
         $apiUrl = $this->getOsaseNewApiUrl($rtu['rtu_kode'], $rtu['port_pue']);
-        // echo $apiUrl;
+        echo $apiUrl;
         $response = file_get_contents($apiUrl);
 
         if(!$response) {
             return false;
         }
-
+        
         $pue = json_decode($response, true);
         return count($pue) > 0 && isset($pue[0]['RTU_ID']) ? $pue[0] : false;
     }
@@ -96,5 +98,3 @@ class CronStorePueConter {
     }
 
 }
-
-CronStorePueConter::run();

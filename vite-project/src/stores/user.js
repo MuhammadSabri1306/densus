@@ -5,6 +5,9 @@ import { useListUserStore } from "@stores/list-user";
 import { useRtuStore } from "@stores/rtu";
 import { handlingFetchErr } from "@helpers/error-handler";
 
+import { allowSampleData } from "@/configs/base";
+import fakeLogin from "@helpers/sample-data/fake-login";
+
 export const useUserStore = defineStore("user", {
     state: () => ({
         id: null,
@@ -59,6 +62,14 @@ export const useUserStore = defineStore("user", {
                 });
                 callback && callback({ success: true, status: response.status });
             } catch(err) {
+                if(allowSampleData) {
+                    const data = fakeLogin(body);
+                    if(data) {
+                        this.sync(data);
+                        callback && callback({ success: true, status: err.response?.status });
+                    }
+                }
+
                 console.error(err);
                 callback && callback({ success: false, status: err.response?.status });
             }

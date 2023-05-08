@@ -45,7 +45,7 @@ class Monitoring_pue extends RestController
             if(isset($zone['rtu'])) {
                 $data['chart'] = $this->pue_counter2_model->get_curr_year($zone['rtu']);
             } else {
-                $data['chart'] = $this->pue_counter2_model->get_zone_avg_on_curr_year($zone);
+                $data['chart'] = $this->pue_counter2_model->get_zone_avg_on_curr_year_v2($zone);
             }
 
             $data['timestamp'] = date('Y-m-d H:i:s');

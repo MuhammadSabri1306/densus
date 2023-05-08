@@ -174,19 +174,19 @@ class Gepee_evidence_model extends CI_Model
 
     public function get_location_list($filter)
     {
-        $locFilter = $this->get_location_filter($filter);
-        $dateFilter = $this->get_datetime_filter($filter);
+        $locFilter = $this->get_location_filter($filter, 'loc');
+        $dateFilter = $this->get_datetime_filter($filter, 'evd');
         
-        $locfields = ['divre_kode', 'divre_name'];
-        if(isset($locFilter['divre_kode'])) {
-            $locfields = ['id_location', 'divre_kode', 'divre_name', 'witel_kode', 'witel_name'];
+        if(isset($locFilter['loc.divre_kode'])) {
+            $locfields = ['loc.*'];
         } else {
+            $locfields = ['loc.divre_kode', 'loc.divre_name'];
             $this->db->group_by('divre_kode');
         }
 
         $locationList = $this->db
             ->select(implode(', ', $locfields))
-            ->from($this->tableLocationName)
+            ->from("$this->tableLocationName AS loc")
             ->where($locFilter)
             ->get()
             ->result_array();
@@ -213,24 +213,44 @@ class Gepee_evidence_model extends CI_Model
                             $temp[$catItem['code']]['total'] = 0;
                         }
 
+                        if(isset($locFilter['loc.divre_kode'])) {
+                            $this->db
+                                ->select('*')
+                                ->from("$this->tableName AS evd")
+                                ->where('evd.id_location', $locItem['id_location']);
+                        } else {
+                            $this->db
+                                ->select('evd.*')
+                                ->from("$this->tableName AS evd")
+                                ->join("$this->tableLocationName AS loc", 'loc.id_location=evd.id_location')
+                                ->where('loc.divre_kode', $locItem['divre_kode']);
+                        }
+
                         $itemCount = $this->db
-                            ->select()
-                            ->from($this->tableName)
-                            ->where('id_location', $locItem['id_location'])
                             ->where('id_category', $catItem['id_category'])
                             ->where($dateFilter)
                             ->count_all_results();
                         
-                        if($itemCount > 0) $temp[$catItem['code']]['count']++;
+                        if($itemCount > 0) {
+                            $temp[$catItem['code']]['count']++;
+                        }
                         $temp[$catItem['code']]['total']++;
 
                     }
                 }
 
                 $temp['scores'] = 0;
-                foreach($this->categories as $code => $point) {
-                    $temp['scores'] += ($temp[$code]['count'] * 100) / ($temp[$code]['total'] * $point);
+                $countAll = 0;
+                $totalAll = 0;
+                foreach($this->categories as $code => $point) {    
+                    $countAll += $temp[$code]['count'];
+                    // $countAll += $temp[$code]['count'] * 100;
+                    $totalAll += $temp[$code]['total'];
+                    // $totalAll = $temp[$code]['total'] * $point;
                 }
+
+                $temp['scores'] = $totalAll > 0 ? $countAll / $totalAll * 100 : 0;
+                $temp['test'] = [$countAll, $totalAll];
                 
                 array_push($result, $temp);
 
@@ -274,9 +294,9 @@ class Gepee_evidence_model extends CI_Model
             }
             
             if((int) $item['count'] > 0) $result[$item['code']]['checkedCount']++;
-            if(boolval($item['use_target'])) {
-                $result[$item['code']]['targetCount']++;
-            }
+            $result[$item['code']]['targetCount']++;
+            // if(boolval($item['use_target'])) {
+            // }
 
         }
         
@@ -374,7 +394,7 @@ class Gepee_evidence_model extends CI_Model
             ->from($this->tableCategoryName)
             ->where('use_target', 1);
         $targetCount = $this->db->count_all_results();
-
+        // dd($checkedCount, $targetCount);
         return $checkedCount / $targetCount * 100;
     }
 

@@ -220,6 +220,9 @@ $route['api/attachment/gepee-evidence/(:any)']['delete'] = 'attachment/del_gepee
 $route['api/attachment/pue/offline']['post'] = 'attachment/store_pue_evidence';
 $route['api/attachment/pue/offline/(:any)']['delete'] = 'attachment/del_pue_evidence/$1';
 
+$route['test/get_pue_chart_data'] = 'test/get_pue_chart_data';
+$route['test/cron_store_pue_counter'] = 'test/cron_store_pue_counter';
+
 $route['login'] = 'vue';
 $route['monitoring/(:any)/(:any)'] = 'vue';
 $route['monitoring/(:any)'] = 'vue';

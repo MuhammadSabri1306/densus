@@ -37,7 +37,7 @@ const getYear = computed(() => {
 });
 
 const isLoading = ref(true);
-pueStore.fetchOnRtu(rtuCode.value, false, () => isLoading.value = false);
+setTimeout(() => pueStore.fetchOnRtu(rtuCode.value, false, () => isLoading.value = false), 1000);
 
 pueStore.setCurrentZone({ rtu: rtuCode.value });
 const excelExportUrl = computed(() => pueStore.excelExportUrl);
@@ -62,15 +62,13 @@ const excelExportUrl = computed(() => pueStore.excelExportUrl);
                 <div class="col-md-4">
                     <CardPueRtuInfo :data="requestLevel" />
                     <CardPueCurrent />
-                    <CardPueMax v-if="!isLoading" :value="maxPue" title="Nilai PUE tertinggi tahun ini" />
-                    <Skeleton v-else width="100%" height="5rem" class="mb-4" />
+                    <CardPueMax title="Nilai PUE tertinggi tahun ini" />
                 </div>
                 <div class="col-md-8">
                     <ChartPueValue />
                 </div>
                 <div class="col-md-6">
-                    <CardContentPueAverage v-if="!isLoading" :value="averages" />
-                    <Skeleton v-else width="100%" height="190px" class="mb-4" />
+                    <CardContentPueAverage />
                 </div>
                 <div class="col-md-6">
                     <CardContentPuePerformance v-if="!isLoading" :value="performances" />

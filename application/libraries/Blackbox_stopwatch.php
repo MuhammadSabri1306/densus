@@ -6,20 +6,24 @@ class Blackbox_stopwatch
     private $case;
     private $currCase;
     private $autoDebug;
+    private $lineBreakTag;
 
     /*
      * $config => {
      *    String format,
-     *    Bool auto[?true],
+     *    Bool auto?[true],
      *    String case,
-     *    String description
+     *    String description,
+     *    String linebreak_tag?[<br>]
      * }
      */
     public function __construct($config = [])
     {
+        $this->case = [];
+
         $this->resultFormat = isset($config['format']) ? $config['format'] : '%H:%I:%S:%f';
         $this->autoDebug = isset($config['auto']) ? $config['auto'] : false;
-        $this->case = [];
+        $this->lineBreakTag = isset($config['linebreak_tag']) ? $config['linebreak_tag'] : '<br>'; 
 
         if(isset($config['case'], $config['description'])) {    
             $this->create_case($config['case'], $config['description']);
@@ -95,14 +99,16 @@ class Blackbox_stopwatch
         $interval = $this->get_interval();
 
         if($interval) {
-            echo $case->description . '\n';
+            echo $case->description . $this->lineBreakTag;
             echo $interval->format($this->resultFormat);
         } else {
             echo "The interval of case '$this->currCase' is NULL";
         }
 
+        $this->lineBreakTag.'--------------------------'.$this->lineBreakTag;
+
         if($dieAfter) {
-            exit('\n--------------------------\nExit by Blackbox Stopwatch');
+            exit('Exit by Blackbox Stopwatch');
         }
     }
 }

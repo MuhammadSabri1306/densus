@@ -6,7 +6,11 @@ import { useViewStore } from "@stores/view";
 import { backendUrl } from "@/configs/base";
 
 import { allowSampleData } from "@/configs/base";
-import pueOfflineByLocation from "@helpers/sample-data/pue/offline_by_location";
+import samplePueOfflineByLocation from "@helpers/sample-data/pue/offline_by_location";
+import sampleLatestValue from "@helpers/sample-data/pue/latest-value";
+import sampleCchartData from "@helpers/sample-data/pue/chart-data";
+import sampleMaxValue from "@helpers/sample-data/pue/max-value";
+import sampleAvg from "@helpers/sample-data/pue/avg";
 
 export const usePueV2Store = defineStore("pueV2", {
     state: () => {
@@ -66,7 +70,6 @@ export const usePueV2Store = defineStore("pueV2", {
 
         excelExportUrl() {
             const urlParams = this.zoneUrlParams;
-            console.log(urlParams)
             return backendUrl + "/export/excel/pue" + urlParams;
         },
 
@@ -110,7 +113,10 @@ export const usePueV2Store = defineStore("pueV2", {
                 callback({ success: true, status: response.status, data: response.data });
             } catch(err) {
                 handlingFetchErr(err);
-                callback({ success: false, status: err.response?.status, data: {} });
+                if(allowSampleData)
+                    callback({ success: true, status: err.response?.status, data: sampleCchartData });
+                else
+                    callback({ success: false, status: err.response?.status, data: {} });
             }
         },
 
@@ -127,7 +133,52 @@ export const usePueV2Store = defineStore("pueV2", {
                 callback({ success: true, status: response.status, data: response.data });
             } catch(err) {
                 handlingFetchErr(err);
-                callback({ success: false, status: err.response?.status, data: {} });
+                if(allowSampleData)
+                    callback({ success: true, status: err.response?.status, data: sampleLatestValue });
+                else
+                    callback({ success: false, status: err.response?.status, data: {} });
+            }
+        },
+
+        async getMaxPue(callback) {
+            const zoneUrlParams = this.zoneUrlParams;
+            try {
+                const response = await http.get("/pue/max_value" + zoneUrlParams, this.fetchHeader);
+                if(!response.data.maxValue) {
+                    console.warn(response.data);
+                    callback({ success: false, status: response.status, data: {} });
+                    return;
+                }
+
+                callback({ success: true, status: response.status, data: response.data });
+            } catch(err) {
+                handlingFetchErr(err);
+                if(allowSampleData)
+                    callback({ success: true, status: err.response?.status, data: sampleMaxValue });
+                else
+                    callback({ success: false, status: err.response?.status, data: {} });
+
+            }
+        },
+
+        async getAvgPue(callback) {
+            const zoneUrlParams = this.zoneUrlParams;
+            try {
+                const response = await http.get("/pue/avg_value" + zoneUrlParams, this.fetchHeader);
+                if(!response.data.averages) {
+                    console.warn(response.data);
+                    callback({ success: false, status: response.status, data: {} });
+                    return;
+                }
+
+                callback({ success: true, status: response.status, data: response.data });
+            } catch(err) {
+                handlingFetchErr(err);
+                if(allowSampleData)
+                    callback({ success: true, status: err.response?.status, data: sampleAvg });
+                else
+                    callback({ success: false, status: err.response?.status, data: {} });
+
             }
         },
 
@@ -210,7 +261,7 @@ export const usePueV2Store = defineStore("pueV2", {
             } catch(err) {
                 handlingFetchErr(err);
                 if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: pueOfflineByLocation });
+                    callback({ success: true, status: err.response?.status, data: samplePueOfflineByLocation });
                 else
                     callback({ success: false, status: err.response?.status, data: {} });
             }

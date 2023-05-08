@@ -32,6 +32,8 @@ getFiles(srcAssetsDir).forEach(filepath => {
     list.push({ from, to });
 });
 
+fs.rmSync(destAssetsDir, { recursive: true, force: true });
+
 list.forEach(async (item) => {
     try {
         await copyFile(item.from, item.to);

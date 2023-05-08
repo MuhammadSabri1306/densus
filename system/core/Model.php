@@ -49,6 +49,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class CI_Model {
 
+	// CUSTOM
+	public $result;
+
 	/**
 	 * __get magic
 	 *
@@ -65,5 +68,24 @@ class CI_Model {
 		//	most likely a typo in your model code.
 		return get_instance()->$key;
 	}
+
+	// CUSTOM
+	public function use_module($__fileName, $data)
+    {
+        $__className = static::class;
+        $__dirName = strtolower($__className);
+        $__fileName = strtolower($__fileName).'.php';
+        $__fileName = APPPATH."modules/$__dirName/$__fileName";
+
+		if(file_exists($__fileName)) {
+
+			extract($data);
+			require $__fileName;
+
+		} else {
+			echo "<br>Cannot find Model's module: $__filename<br>";
+			dd($__fileName);
+		}
+    }
 
 }
