@@ -45,18 +45,42 @@ class Rtu extends RestController
 
     public function add_post()
     {
-        $this->load->library('input_handler');
-		$status = $this->auth_jwt->auth('admin');
-		if($status === 200) {
-			$this->input_handler->set_fields('rtu_kode', 'rtu_name', 'lokasi', 'sto_kode', 'divre_kode', 'divre_name', 'witel_kode', 'witel_name', 'port_kwh', 'port_genset', 'kva_genset', 'port_pue');
-            $this->input_handler->set_required('rtu_kode', 'rtu_name', 'lokasi', 'sto_kode', 'divre_kode', 'divre_name', 'witel_kode', 'witel_name', 'port_kwh', 'port_genset', 'kva_genset');
+        $status = $this->auth_jwt->auth('admin');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
 
-			$input = $this->input_handler->get_body('post');
+        if($status === 200) {
+            $this->load->library('input_custom');
+            $fields = [
+                'rtu_kode' => [ 'string', 'required' ],
+                'rtu_name' => [ 'string', 'required' ],
+                'lokasi' => [ 'string', 'required' ],
+                'sto_kode' => [ 'string', 'required' ],
+                'divre_kode' => [ 'string', 'required' ],
+                'divre_name' => [ 'string', 'required' ],
+                'witel_kode' => [ 'string', 'required' ],
+                'witel_name' => [ 'string', 'required' ],
+                'port_kwh' => [ 'string', 'required' ],
+                'port_genset' => [ 'string', 'required' ],
+                'kva_genset' => [ 'string', 'required' ],
+                'port_pue' => [ 'int' ],
+                'use_gepee' => [ 'bool', 'required' ],
+                'id_lokasi_gepee' => [ 'int' ]
+            ];
+
+            $this->input_custom->set_fields($fields);
+            $input = $this->input_custom->get_body('post');
+
             if(!$input['valid']) {
                 $data = [ 'success' => false, 'message' => $input['msg'] ];
-                $status = REST_ERR_BAD_REQ;
+                $status = REST_ERR_BAD_REQ_STATUS;
             }
+        }
 
+        if($status === 200) {
             $currUser = $this->auth_jwt->get_payload();
             $levelValidations = [
                 $currUser['level'] == 'nasional',
@@ -67,12 +91,20 @@ class Rtu extends RestController
             if(!in_array(true, $levelValidations)) {
                 $data = [ 'success' => false ];
                 $status = REST_ERR_BAD_REQ;
+            } else {
+                $body = $input['body'];
+                if(!$body['use_gepee']) {
+                    $body['id_lokasi_gepee'] = null;
+                }
+                unset($body['use_gepee']);
             }
-            
-            if($status == 200){
-                $this->load->model("rtu_map_model");
-				$success = $this->rtu_map_model->save($input['body']);
+        }
 
+        if($status === 200) {
+            $this->load->model("rtu_map_model");
+            $success = $this->rtu_map_model->save($body);
+
+            if($success) {
                 $this->user_log
                     ->userId($currUser['id'])
                     ->username($currUser['username'])
@@ -80,59 +112,78 @@ class Rtu extends RestController
                     ->activity('input new RTU')
                     ->log();
                 $data = [ 'success' => $success ];
-			}
-            
-            $this->response($data, $status);
-
-        } else {
-
-            switch($status) {
-                case REST_ERR_AUTH_CODE: $data = REST_ERR_AUTH_DATA; break;
-                case REST_ERR_EXP_CODE: $data = REST_ERR_EXP_DATA; break;
-                default: $data = null;
+            } else {
+                $data = REST_ERR_BAD_REQ_STATUS;
+                $status = REST_ERR_BAD_REQ_STATUS;
             }
-            $this->response($data, $status);
-
         }
+        
+        $this->response($data, $status);
     }
 
     public function update_put($id)
     {
-        $this->load->library('input_handler');
-		$status = $this->auth_jwt->auth('admin');
-		if($status === 200) {
-			$this->input_handler->set_fields('rtu_kode', 'rtu_name', 'lokasi', 'sto_kode', 'divre_kode', 'divre_name', 'witel_kode', 'witel_name', 'port_kwh', 'port_genset', 'kva_genset', 'port_pue');
-            $this->input_handler->set_required('rtu_kode', 'rtu_name', 'lokasi', 'sto_kode', 'divre_kode', 'divre_name', 'witel_kode', 'witel_name', 'port_kwh', 'port_genset', 'kva_genset');
+        $status = $this->auth_jwt->auth('admin');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
 
-			$input = $this->input_handler->get_body('put');
+        if($status === 200) {
+            $this->load->library('input_custom');
+            $fields = [
+                'rtu_kode' => [ 'string', 'required' ],
+                'rtu_name' => [ 'string', 'required' ],
+                'lokasi' => [ 'string', 'required' ],
+                'sto_kode' => [ 'string', 'required' ],
+                'divre_kode' => [ 'string', 'required' ],
+                'divre_name' => [ 'string', 'required' ],
+                'witel_kode' => [ 'string', 'required' ],
+                'witel_name' => [ 'string', 'required' ],
+                'port_kwh' => [ 'string', 'required' ],
+                'port_genset' => [ 'string', 'required' ],
+                'kva_genset' => [ 'string', 'required' ],
+                'port_pue' => [ 'int' ],
+                'use_gepee' => [ 'bool', 'required' ],
+                'id_lokasi_gepee' => [ 'int' ]
+            ];
+
+            $this->input_custom->set_fields($fields);
+            $input = $this->input_custom->get_body('put');
+
             if(!$input['valid']) {
                 $data = [ 'success' => false, 'message' => $input['msg'] ];
-				$this->response($data, REST_ERR_BAD_REQ);
+                $status = REST_ERR_BAD_REQ_STATUS;
             } else {
-                $this->load->model("rtu_map_model");
-                $currUser = $this->auth_jwt->get_payload();
-				$success = $this->rtu_map_model->save($input['body'], $id, $currUser);
+                $body = $input['body'];
+                if(!$body['use_gepee']) {
+                    $body['id_lokasi_gepee'] = null;
+                }
+                unset($body['use_gepee']);
+            }
+        }
 
+        if($status === 200) {
+            $this->load->model("rtu_map_model");
+            $currUser = $this->auth_jwt->get_payload();
+            $success = $this->rtu_map_model->save($body, $id, $currUser);
+
+            if($success) {
                 $this->user_log
                     ->userId($currUser['id'])
                     ->username($currUser['username'])
                     ->name($currUser['name'])
-                    ->activity('update RTU')
+                    ->activity('input new RTU')
                     ->log();
-
-				$this->response([ 'success' => $success ], 200);
-			}
-
-        } else {
-
-            switch($status) {
-                case REST_ERR_AUTH_CODE: $data = REST_ERR_AUTH_DATA; break;
-                case REST_ERR_EXP_CODE: $data = REST_ERR_EXP_DATA; break;
-                default: $data = null;
+                $data = [ 'success' => $success ];
+            } else {
+                $data = REST_ERR_BAD_REQ_STATUS;
+                $status = REST_ERR_BAD_REQ_STATUS;
             }
-            $this->response($data, $status);
-
         }
+        
+        $this->response($data, $status);
     }
 
 	public function del_delete($id)

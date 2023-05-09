@@ -155,6 +155,33 @@ class Location extends RestController
         }
     }
 
+    public function gepee_sto_get($divreCode = null, $witelCode = null)
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        if($status === 200) {
+            $filter = [
+                'divre' => $divreCode,
+                'witel' => $witelCode
+            ];
+
+            $this->load->model('lokasi_gepee_model');
+			$dataSto = $this->lokasi_gepee_model->get_all($filter);
+
+			$data = [ 'sto' => $dataSto, 'success' => true ];
+			$this->response($data, 200);
+
+        } else {
+
+            switch($status) {
+                case REST_ERR_AUTH_CODE: $data = REST_ERR_AUTH_DATA; break;
+                case REST_ERR_EXP_CODE: $data = REST_ERR_EXP_DATA; break;
+                default: $data = null;
+            }
+            $this->response($data, $status);
+
+        }
+    }
+
     public function gepee_post()
     {
 		$status = $this->auth_jwt->auth('admin');

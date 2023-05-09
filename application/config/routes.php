@@ -162,11 +162,14 @@ $route['api/location/gepee/divre']['get'] = 'location/gepee_divre';
 $route['api/location/gepee/divre/(:any)/witel']['get'] = 'location/gepee_witel_by_divre/$1';
 $route['api/location/gepee/witel/(:any)']['get'] = 'location/gepee_witel/$1';
 $route['api/location/gepee/witel']['get'] = 'location/gepee_witel';
+$route['api/location/gepee/sto/(:any)/(:any)']['get'] = 'location/gepee_sto/$1/$2';
+$route['api/location/gepee/sto/(:any)']['get'] = 'location/gepee_sto/$1';
+$route['api/location/gepee/sto']['get'] = 'location/gepee_sto';
+$route['api/location/gepee']['post'] = 'location/gepee';
 $route['api/location/divre']['get'] = 'location/divre';
 $route['api/location/divre/(:any)/witel']['get'] = 'location/witel_by_divre/$1';
 $route['api/location/witel/(:any)']['get'] = 'location/witel/$1';
 $route['api/location/witel']['get'] = 'location/witel';
-$route['api/location/gepee']['post'] = 'location/gepee';
 
 $route['api/activity/divre']['get'] = 'activity/divre';
 $route['api/activity/divre/(:any)/witel']['get'] = 'activity/witel_by_divre/$1';

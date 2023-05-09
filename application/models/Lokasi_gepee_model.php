@@ -98,8 +98,15 @@ class Lokasi_gepee_model extends CI_Model
         return $query->result();
     }
 
-    public function get_all()
+    public function get_all($filters = [])
     {
+        if(isset($filters['divre'])) {
+            $this->db->where('divre_kode', $filters['divre']);
+        }
+        if(isset($filters['witel'])) {
+            $this->db->where('witel_kode', $filters['witel']);
+        }
+
         $query = $this->db
             ->select()
             ->from($this->tableName)
@@ -112,7 +119,9 @@ class Lokasi_gepee_model extends CI_Model
         if(is_null($id)) {
             $success = $this->db->insert($this->tableName, $body);
         } else {
-            if($currUser) $this->apply_filter(null, $currUser);
+            if($currUser) {
+                $this->filter_for_curr_user($currUser);
+            }
             $this->db->where('id', $id);
 
             $success = $this->db->update($this->tableName, $body);

@@ -144,6 +144,32 @@ export const useViewStore = defineStore("view", {
                 return allowSampleData ? sampleWitelByDivre.witel : [];
                 
             }
-        }
+        },
+
+        async getSto(filter = {}, locationKey = "basic") {
+            const urlKey = locationKey == "gepee" ? "/gepee" : "";
+            let url = `/location${ urlKey }/sto`;
+
+            if(filter.divre)
+                url += "/" + filter.divre;
+            if(filter.witel)
+                url += "/" + filter.witel;
+
+            try {
+
+                const response = await http.get(url, this.fetchHeader);
+                if(response.data.sto)
+                    return response.data.sto;
+        
+                console.warn(response.data);
+                return [];
+        
+            } catch(err) {
+        
+                handlingFetchErr(err);
+                return [];
+                
+            }
+        },
     }
 });
