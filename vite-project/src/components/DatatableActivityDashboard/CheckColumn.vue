@@ -10,6 +10,8 @@ const props = defineProps({
     <td v-for="item in rowData" :class="{ 'hover:tw-bg-light position-relative': item.id_schedule }"
         class="text-center middle">
         <span v-if="item.isExists && !item.id_schedule" class="tw-cursor-default">{{ toFixedNumber(item.percent, 2) }}%</span> 
-        <RouterLink v-if="item.isExists && item.id_schedule" :to="'/gepee/' + item.id_schedule" class="f-w-700 stretched-link">{{ toFixedNumber(item.percent, 2) }}%</RouterLink> 
+        <RouterLink v-else-if="item.isExists && item.id_schedule" :to="'/gepee/' + item.id_schedule"
+            class="f-w-700 stretched-link">{{ toFixedNumber(item.percent, 2) }}%</RouterLink> 
+        <span v-else class="tw-cursor-default">-</span>
     </td>
 </template>

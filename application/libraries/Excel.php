@@ -2,6 +2,7 @@
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use \PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class Excel
 {
@@ -22,7 +23,14 @@ class Excel
     }
 
     // $rowIndex >= 1, $colIndex >=1
-    private function getCellKey($rowIndex, $colIndex)
+    public function getCellKey($rowIndex, $colIndex)
+    {
+        $dividend = $colIndex;
+        $colKey = $this->getColKey($colIndex);
+        return $colKey . $rowIndex;
+    }
+
+    public function getColKey($colIndex)
     {
         $dividend = $colIndex;
         $colKey = '';
@@ -33,8 +41,7 @@ class Excel
             $dividend = floor(($dividend - $modulo) / 26);
         }
 
-        $rowIndex = (string) $rowIndex;
-        return $colKey . $rowIndex;
+        return $colKey;
     }
 
     public function fill($data, $startRow = 1, $startColumn = 1)
@@ -67,4 +74,56 @@ class Excel
             ->getActiveSheet()
             ->setCellValue($cellKey, $value);
     }
+
+    public function setCellMergeValue($rowStartIndex, $colStartIndex, $rowEndIndex, $colEndIndex, $value)
+    {
+        $startCell = $this->getCellKey($rowStartIndex, $colStartIndex);
+        $endCell = $this->getCellKey($rowEndIndex, $colEndIndex);
+        
+        $this->setCellValue($startCell, $value);
+        $this->spreadsheet
+            ->getActiveSheet()
+            ->mergeCells($startCell.':'.$endCell);
+    }
+
+    public function setCellWidth($colNumber, $width, $unit = 'pt') {
+        $colKey = $this->getColKey($colNumber);
+        // dd($this->spreadsheet->getActiveSheet()->getColumnDimension($colKey));
+        $this->spreadsheet
+            ->getActiveSheet()
+            ->getColumnDimension($colKey)
+            ->setWidth($width, $unit);
+    }
+
+    public function setCellAlignment($rowIndex, $colIndex, $value)
+    {
+        $cellKey = $this->getCellKey($rowIndex, $colIndex);
+        $align = [
+            'left' => Alignment::HORIZONTAL_LEFT,
+            'center' => Alignment::HORIZONTAL_CENTER,
+            'right' => Alignment::HORIZONTAL_RIGHT
+        ];
+
+        if($align[$value]) {
+            $alignValue = $align[$value];
+        } else {
+            return false;
+        }
+
+        $this->spreadsheet
+            ->getActiveSheet()
+            ->getStyle($cellKey)
+            ->getAlignment()
+            ->setHorizontal($alignValue);
+    }
+
+    public function setColSizeAuto($colIndex, $value = true)
+    {
+        $colKey = $this->getColKey($colIndex);
+        $this->spreadsheet
+            ->getActiveSheet()
+            ->getColumnDimension($colKey)
+            ->setAutoSize($value);
+    }
+
 }

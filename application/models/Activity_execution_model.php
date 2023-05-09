@@ -1,10 +1,10 @@
 <?php
 class Activity_execution_model extends CI_Model
 {
-    private $tableName = 'activity_execution';
-    private $tableScheduleName = 'activity_schedule';
-    private $tableCategoryName = 'activity_category';
-    private $tableLocationName = 'master_lokasi_gepee';
+    protected $tableName = 'activity_execution';
+    protected $tableScheduleName = 'activity_schedule';
+    protected $tableCategoryName = 'activity_category';
+    protected $tableLocationName = 'master_lokasi_gepee';
 
     public $currUser;
 
@@ -13,19 +13,78 @@ class Activity_execution_model extends CI_Model
             $this->load->database('densus');
     }
 
-    private function mysql_updatable_time($fieldName)
+    protected function mysql_updatable_time($fieldName)
     {
         $updatableTime = EnvPattern::getUpdatableActivityTime();
         return "UNIX_TIMESTAMP(e.created_at)>=$updatableTime->start AND UNIX_TIMESTAMP(e.created_at)<=$updatableTime->end";
     }
 
-    private function filter_for_curr_user($currUser)
+    protected function filter_for_curr_user($currUser)
     {
         if($currUser && $currUser['level'] == 'witel') {
             $this->db->where('l.witel_kode', $currUser['locationId']);
         } elseif($currUser && $currUser['level'] == 'divre') {
             $this->db->where('l.divre_kode', $currUser['locationId']);
         }
+    }
+
+    protected function get_loc_filter($filter, $prefix = null)
+    {
+        $filterKeys = [
+            'witel' => 'witel_kode',
+            'divre' => 'divre_kode',
+            'id' => 'id'
+        ];
+
+        if($prefix) {
+            foreach(['witel', 'divre', 'id'] as $key) {
+                $filterKeys[$key] = $prefix . '.' . $filterKeys[$key];
+            }
+        }
+
+        $appliedFilter = [];
+
+        if(is_array($filter)) {
+            if(isset($filter['witel'])) $appliedFilter[$filterKeys['witel']] = $filter['witel'];
+            if(isset($filter['divre'])) $appliedFilter[$filterKeys['divre']] = $filter['divre'];
+            if(isset($filter['idLocation'])) $appliedFilter[$filterKeys['id']] = $filter['idLocation'];
+        }
+
+        if(is_array($this->currUser)) {
+            $locationId = $this->currUser['locationId'];
+            if($this->currUser['level'] == 'witel') $appliedFilter[$filterKeys['witel']] = $locationId;
+            elseif($this->currUser['level'] == 'divre') $appliedFilter[$filterKeys['divre']] = $locationId;
+        }
+
+        return $appliedFilter;
+    }
+
+    protected function get_datetime_filter($filter, $prefix = null)
+    {
+        if(!is_array($filter) || !isset($filter['datetime'])) {
+            return [];
+        }
+
+        $appliedFilter = [];
+        $field = $prefix ? $prefix.'.created_at' : 'created_at';
+
+        $appliedFilter[$field.'>='] = $filter['datetime'][0];
+        $appliedFilter[$field.'<='] = $filter['datetime'][1];
+
+        return $appliedFilter;
+    }
+
+    protected function get_datetime_filter_query($filter, $prefix = null)
+    {
+        if(!is_array($filter) || !isset($filter['datetime'])) {
+            return null;
+        }
+        
+        $field = $prefix ? $prefix.'.created_at' : 'created_at';
+        $startDate = $filter['datetime'][0];
+        $endDate = $filter['datetime'][1];
+
+        return "$field BETWEEN '$startDate' AND '$endDate'";
     }
 
     public function get_filtered($scheduleId, $currUser = null)
@@ -318,77 +377,14 @@ class Activity_execution_model extends CI_Model
 
     public function get_performance_v2($filter)
     {
-        $locationFilter = [];
-        if(is_array($filter)) {
-            if($filter['witel']) $locationFilter['witel_kode'] = $filter['witel'];
-            if($filter['divre']) $locationFilter['divre_kode'] = $filter['divre'];
-        }
-        if(is_array($this->currUser)) {
-            if($this->currUser['level'] == 'witel') $locationFilter['witel_kode'] = $this->currUser['locationId'];
-            if($this->currUser['level'] == 'divre') $locationFilter['divre_kode'] = $this->currUser['locationId'];
-        }
-        foreach($locationFilter as $lfKey => $lfVal) {
-            $this->db->where($lfKey, $lfVal);
-        }
-        $locationList = $this->db
-            ->select()
-            ->from($this->tableLocationName)
-            ->order_by('divre_kode')
-            ->order_by('witel_kode')
-            ->get()
-            ->result_array();
+        $this->use_module('get_performance_v2', [ 'filter' => $filter ]);
+        return $this->result;
+    }
 
-        $categoryList = $this->db
-            ->select()
-            ->from($this->tableCategoryName)
-            ->get()
-            ->result_array();
-        
-        $startMonth = $filter['month'] ? (int) $filter['month'] : 1;
-        $endMonth = $filter['month'] ? (int) $filter['month'] : 12;
-        $currYear = date('Y');
-        $result = [ 'month_list' => [], 'category_list' => $categoryList, 'performance' => [] ];
-        foreach($locationList as $locData) {
-
-            $item = [ 'location' => $locData, 'item' => [] ];
-
-            for($month=$startMonth; $month<=$endMonth; $month++) {
-
-                if(!in_array($month, $result['month_list'])) {
-                    array_push($result['month_list'], $month);
-                }
-
-                foreach($categoryList as $catgData) {
-                    
-                    $locId = $locData['id'];
-                    $catgId = $catgData['id'];
-                    $selectScheduleId = "SELECT s.id FROM activity_schedule AS s WHERE s.id_category=$catgId AND s.id_lokasi=$locId
-                        AND MONTH(s.created_at)='$month' AND YEAR(s.created_at)='$currYear' AND s.value=1
-                        ORDER BY UNIX_TIMESTAMP(s.created_at) DESC LIMIT 1";
-                    $selectExecCount = "SELECT COUNT(*) FROM activity_execution AS e JOIN activity_schedule AS s ON s.id=e.id_schedule
-                        WHERE s.id_category=$catgId AND s.id_lokasi=$locId AND MONTH(s.created_at)='$month' AND YEAR(s.created_at)='$currYear'";
-                    $selectApprovedCount = $selectExecCount . ' AND e.status="approved"';
-
-                    $querySelect = "SELECT ($selectScheduleId) AS id_schedule, ($selectExecCount) AS exec_count,
-                        ($selectApprovedCount) AS approved_count";
-                    $queryResult = $this->db->query($querySelect)->row_array();
-
-                    $colItem = null;
-                    if(is_array($queryResult)) {
-                        $colItem = $queryResult;
-                        $colItem['percent'] = $queryResult['exec_count'] < 1 ? 0 : $queryResult['approved_count'] / $queryResult['exec_count'] * 100;
-                        $colItem['isExists'] = $queryResult['id_schedule'] ? true : false;
-                    }
-                    array_push($item['item'], $colItem);
-                                    
-                }
-            }
-
-            array_push($result['performance'], $item);
-
-        }
-        
-        return $result;
+    public function get_performance_v3($filter)
+    {
+        $this->use_module('get_performance_v3', [ 'filter' => $filter ]);
+        return $this->result;
     }
 
     public function get_file_list()

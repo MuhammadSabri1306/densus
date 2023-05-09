@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useActivityStore } from "@stores/activity";
 import { useViewStore } from "@stores/view";
 import Skeleton from "primevue/skeleton";
@@ -21,6 +21,8 @@ const monthListView = viewStore.monthList;
 
 const activityStore = useActivityStore();
 const isFetchSuccess = ref(false);
+const excelDownloadUrl = computed(() => activityStore.performanceExcelExportUrl);
+
 const fetch = () => {
     show.value = true;
     isLoading.value = true;
@@ -45,7 +47,7 @@ const showTable = ref(true);
 <template>
     <div v-if="show">
         <div v-if="!isLoading">
-            <div class="row align-items-center py-4">
+            <div class="row align-items-center gy-4 py-4">
                 <div class="col-auto">
                     <label for="showTable">Diagram Konsistensi</label>
                 </div>
@@ -56,6 +58,12 @@ const showTable = ref(true);
                     <label for="showTable">Tabel Activity</label>
                 </div>
                 <div class="col-auto ms-auto">
+                    <a :href="excelDownloadUrl" target="_blank" class="btn-icon ms-auto">
+                        <VueFeather type="download" size="1.2em" />
+                        <span class="ms-1">Download</span>
+                    </a>
+                </div>
+                <div class="col-auto ms-auto col-md-12 text-end col-lg-auto ms-lg-4">
                     <button type="button" @click="showCategory = true" class="btn btn-outline-info bg-white btn-icon px-3">
                         <VueFeather type="info" size="1em" />
                         <span class="ms-2">Keterangan Activity Categories</span>

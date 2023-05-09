@@ -4,6 +4,7 @@ import { useViewStore } from "@stores/view";
 import http from "@helpers/http-common";
 import { handlingFetchErr } from "@helpers/error-handler";
 import { getApiPath } from "@helpers/get-api-path";
+import { backendUrl } from "@/configs/base";
 
 import { allowSampleData } from "@/configs/base";
 import sampleSchedule from "@helpers/sample-data/schedule";
@@ -85,6 +86,12 @@ export const useActivityStore = defineStore("activity", {
             });
             // console.log(table);
             return table;
+        },
+
+        performanceExcelExportUrl() {
+            const filters = this.filters;
+            const url = getApiPath(backendUrl + "/export/excel/activity/performance", filters);
+            return  url;
         }
 
     },

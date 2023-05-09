@@ -9,6 +9,7 @@ import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import InputGroupLocation from "@components/InputGroupLocation.vue";
 
 const { data, v$ } = useDataForm({
+    idLocGepee: {},
     rtuCode: { required },
     rtuName: { required },
     location: { required },
@@ -44,6 +45,7 @@ const onSubmit = async () => {
         return;
 
     const body = {
+        id_lokasi_gepee: data.idLocGepee,
         rtu_kode: data.rtuCode,
         rtu_name: data.rtuName,
         lokasi: data.location,

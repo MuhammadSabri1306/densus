@@ -86,7 +86,6 @@ $route['api/pue/latest_value']['get'] = 'monitoring_pue/latest_value'; // jadi s
 $route['api/pue/avg_value']['get'] = 'monitoring_pue/avg_value';
 $route['api/pue/max_value']['get'] = 'monitoring_pue/max_value';
 $route['api/pue/performance']['get'] = 'monitoring_pue/performance';
-$route['export/excel/pue'] = 'excel_export/pue';
 
 /* ENDPOINT GEPEE EVIDENCE */
 $route['api/gepee-evidence/location/info']['get'] = 'gepee_evidence/location_info';
@@ -212,6 +211,11 @@ $route['api/user']['get'] = 'user';
 $route['api/user']['post'] = 'user';
 $route['api/profile']['get'] = 'user/profile';
 
+/* ENDPOINT EXPORT DATA */
+$route['export/excel/pue'] = 'excel_export/pue';
+$route['export/excel/activity/performance'] = 'excel_export/activity_performance';
+
+/* ENDPOINT FILE ATTACHMENT */
 // $route['api/attachment/activity/check']['get'] = 'attachment/check_activity_execution';
 $route['api/attachment/activity']['post'] = 'attachment/store_activity_execution';
 $route['api/attachment/activity/(:any)']['delete'] = 'attachment/del_activity_execution/$1';

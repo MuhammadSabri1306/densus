@@ -11,6 +11,8 @@ class Auth_jwt
     private $alg = 'HS256';
     private $expireTime = 60 * 60 * 24 * 2;
 
+    public $cookieName;
+
     public $id;
     public $username;
     public $name;
@@ -23,7 +25,37 @@ class Auth_jwt
     {
         $this->CI =& get_instance();
     }
-    
+
+    private function verify_token($rawToken)
+    {
+        list($type, $data) = explode(" ", $rawToken, 2);
+        return (strcasecmp($type, "Bearer") == 0) ? $data : false;
+    }
+
+    private function validate_token($rawToken, $allowedRole)
+    {
+        if(!$this->is_role($rawToken, $allowedRole)) {
+            return REST_ERR_AUTH_CODE;
+        }
+        
+        if($this->is_expired($rawToken)) {
+            return REST_ERR_EXP_CODE;
+        }
+
+        $payload = $this->decrypt_token(str_replace('Bearer ', '', $rawToken));
+        if($payload) {
+            $this->id = $payload->id;
+            $this->username = $payload->username;
+            $this->name = $payload->name;
+            $this->role = $payload->role;
+            $this->level = $payload->level;
+            $this->location = $payload->location;
+            $this->locationId = $payload->locationId;
+        }
+        
+        return 200;
+    }
+
     public function create_token()
     {
         $payload = $this->get_payload();
@@ -39,35 +71,12 @@ class Auth_jwt
     public function auth(...$allowedRole)
     {
         $rawToken = $this->CI->head('Authorization');
-        if(!$this->is_role($rawToken, $allowedRole)) {
-
-            return REST_ERR_AUTH_CODE;
-
-        } elseif($this->is_expired($rawToken)) {
-
-            return REST_ERR_EXP_CODE;
-            
-        } else {
-
-            $payload = $this->decrypt_token(str_replace('Bearer ', '', $rawToken));
-            if($payload) {
-                $this->id = $payload->id;
-                $this->username = $payload->username;
-                $this->name = $payload->name;
-                $this->role = $payload->role;
-                $this->level = $payload->level;
-                $this->location = $payload->location;
-                $this->locationId = $payload->locationId;
-            }
-            
-            return 200;
-
-        }
+        return $this->validate_token($rawToken, $allowedRole);
     }
 
     public function is_role($rawToken, $allowedRole)
     {
-        $token = $this->validate_token($rawToken);
+        $token = $this->verify_token($rawToken);
         if($token === false) return false;
 
         $payload = $this->decrypt_token($token);
@@ -76,17 +85,11 @@ class Auth_jwt
 
     public function is_expired($rawToken)
     {
-        $token = $this->validate_token($rawToken);
+        $token = $this->verify_token($rawToken);
         if($token === false) return false;
 
         $payload = $this->decrypt_token($token);
         return $payload->expiredAt < time();
-    }
-
-    private function validate_token($rawToken)
-    {
-        list($type, $data) = explode(" ", $rawToken, 2);
-        return (strcasecmp($type, "Bearer") == 0) ? $data : false;
     }
 
     private function decrypt_token($token)
