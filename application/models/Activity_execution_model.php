@@ -333,6 +333,8 @@ class Activity_execution_model extends CI_Model
         $locationList = $this->db
             ->select()
             ->from($this->tableLocationName)
+            ->order_by('divre_kode')
+            ->order_by('witel_kode')
             ->get()
             ->result_array();
 
