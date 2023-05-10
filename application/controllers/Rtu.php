@@ -65,8 +65,8 @@ class Rtu extends RestController
                 'witel_name' => [ 'string', 'required' ],
                 'port_kwh' => [ 'string', 'required' ],
                 'port_genset' => [ 'string', 'required' ],
-                'kva_genset' => [ 'string', 'required' ],
-                'port_pue' => [ 'int' ],
+                'kva_genset' => [ 'int', 'required' ],
+                'port_pue' => [ 'string' ],
                 'use_gepee' => [ 'bool', 'required' ],
                 'id_lokasi_gepee' => [ 'int' ]
             ];
@@ -143,8 +143,8 @@ class Rtu extends RestController
                 'witel_name' => [ 'string', 'required' ],
                 'port_kwh' => [ 'string', 'required' ],
                 'port_genset' => [ 'string', 'required' ],
-                'kva_genset' => [ 'string', 'required' ],
-                'port_pue' => [ 'int' ],
+                'kva_genset' => [ 'int', 'required' ],
+                'port_pue' => [ 'string' ],
                 'use_gepee' => [ 'bool', 'required' ],
                 'id_lokasi_gepee' => [ 'int' ]
             ];
