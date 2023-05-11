@@ -169,7 +169,7 @@ onMounted(() => {
                                 <div class="mb-2">
                                     <label for="inputMonth" :class="{ 'required': requireMonth }">Bulan</label>
                                     <div class="d-grid">
-                                        <Calendar v-model="tempFilters.date" view="month" dateFormat="M yy" showButtonBar placeholder="Pilih Bulan"
+                                        <Calendar v-model="tempFilters.date" view="month" dateFormat="M yy" :showButtonBar="!requireMonth" placeholder="Pilih Bulan"
                                             :class="{ 'p-invalid': isDateInvalid }" inputId="inputMonth" inputClass="form-control" panelClass="filter-month" />
                                     </div>
                                 </div>

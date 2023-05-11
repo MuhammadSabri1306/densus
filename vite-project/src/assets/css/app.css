@@ -201,12 +201,14 @@
 }
 
 .table-gepee tr.row-collapsed,
-.table-pue tr.row-collapsed {
+.table-pue tr.row-collapsed,
+.table-collapsable tr.row-collapsed {
     display: none;
 }
 
 .table-gepee .btn-collapse-row,
-.table-pue .btn-collapse-row {
+.table-pue .btn-collapse-row,
+.table-collapsable .btn-collapse-row {
     @apply tw-rotate-90 tw-transition-transform tw-duration-300;
 }
 

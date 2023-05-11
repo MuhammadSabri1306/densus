@@ -38,6 +38,8 @@ import GepeeEvidence from "@views/GepeeEvidence.vue";
 import GepeeEvidenceDivre from "@views/GepeeEvidenceDivre.vue";
 import GepeeEvidenceWitel from "@views/GepeeEvidenceWitel.vue";
 
+import GepeeReport from "@views/GepeeReport.vue";
+
 const routes = [
     {
         path: "/", component: Dashboard,
@@ -162,6 +164,10 @@ const routes = [
     {
         path: "/gepee-evidence/witel/:witelCode/:idCategory", component: GepeeEvidenceWitel,
         meta: { menuKey: ["gepee_evidence"], requiresAuth: true }
+    },
+    {
+        path: "/gepee-performance/management-report", component: GepeeReport,
+        meta: { menuKey: ["gepee_performance", "report"], requiresAuth: true }
     },
     {
         path: "/login", name: "login", component: Login,

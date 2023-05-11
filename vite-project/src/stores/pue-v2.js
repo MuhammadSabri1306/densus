@@ -13,16 +13,13 @@ import sampleMaxValue from "@helpers/sample-data/pue/max-value";
 import sampleAvg from "@helpers/sample-data/pue/avg";
 
 export const usePueV2Store = defineStore("pueV2", {
-    state: () => {
+    state: () => ({
 
-        const currDate = new Date();
-        return {
-            currDivre: null,
-            currWitel: null,
-            currRtu: null
-        };
-
-    },
+        currDivre: null,
+        currWitel: null,
+        currRtu: null
+        
+    }),
     getters: {
 
         fetchHeader: () => {

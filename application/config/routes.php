@@ -205,6 +205,8 @@ $route['api/pue/offline']['post'] = 'pue_offline';
 $route['api/pue/offline/(:num)']['put'] = 'pue_offline/index/$1';
 $route['api/pue/offline/(:num)']['delete'] = 'pue_offline/index/$1';
 
+$route['api/gepee-report']['get'] = 'gepee_report';
+
 $route['api/user/(:any)']['get'] = 'user/index/$1';
 $route['api/user/(:any)']['put'] = 'user/index/$1';
 $route['api/user/(:any)/general']['put'] = 'user/update/$1';

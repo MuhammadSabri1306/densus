@@ -3,7 +3,7 @@ import { ref, computed } from "vue";
 import { usePueV2Store } from "@/stores/pue-v2";
 import { useUserStore } from "@stores/user";
 import { useCollapseRow } from "@helpers/collapse-row";
-import { toFixedNumber, toRoman } from "@helpers/number-format";
+import { toFixedNumber } from "@helpers/number-format";
 import Skeleton from "primevue/skeleton";
 import DialogPueOfflineLocation from "@components/DialogPueOfflineLocation.vue";
 
@@ -11,16 +11,10 @@ const { collapsedDivre, collapsedWitel, toggleRowCollapse } = useCollapseRow();
 const userStore = useUserStore();
 const pueStore = usePueV2Store();
 
-const isAdmin = computed(() => userStore.role == "admin");
 const level = computed(() => {
     const userLevel = userStore.level;
     const filters = pueStore.filters;
     return filters.witel ? "witel" : filters.divre ? "divre" : userLevel;
-});
-const isUpdateEnable = computed(() => {
-    const userRole = userStore.role;
-    const userLevel = userStore.level;
-    return userRole == "admin" && userLevel == "nasional";
 });
 
 const getGroupAvg = (data, index, groupKey) => {
@@ -213,7 +207,7 @@ const getRowClass = item => {
                                 </button>
                                 <small class="ms-2 tw-whitespace-nowrap fw-semibold">{{ item.title }}</small>
                             </div>
-                            <RouterLink :to="'/pue/offline/'+item.location.id_location" v-else class="d-flex align-items-center px-4 py-1 tw-group">
+                            <RouterLink v-else :to="'/pue/offline/'+item.location.id_location" class="d-flex align-items-center px-4 py-1 tw-group">
                                 <small :class="{ 'ps-5': level != 'witel', 'ms-5': level == 'nasional' }" class="fw-semibold">{{ item.title }}</small>
                                 <VueFeather type="eye" size="1.2rem" class="ms-auto tw-transition-opacity tw-opacity-0 group-hover:tw-opacity-50" />
                             </RouterLink>

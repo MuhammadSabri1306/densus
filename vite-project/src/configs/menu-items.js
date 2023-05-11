@@ -76,8 +76,29 @@ export const menuGepeeEvidence = {
     roles: ["admin", "viewer", "teknisi"]
 };
 
+export const menuGepeePerformance = {
+    key: "gepee_performance",
+    title: "Gepee Performance",
+    icon: "award",
+    child: [
+        { key: "report", to: "/gepee-performance/management-report", title: "Management Report" },
+        { key: "pue_target", to: "#", title: "Target Pencapaian PUE" }
+    ],
+    roles: ["admin", "viewer", "teknisi"]
+};
+
 export default (() => {
-    const menu = [ menuLanding, menuPue, menuMonitoring, menuMonitoringEnergy, menuRtu, menuGepee, menuGepeeEvidence, menuUser ];
+    const menu = [
+        menuLanding,
+        menuPue,
+        menuMonitoring,
+        menuMonitoringEnergy,
+        menuRtu,
+        menuGepee,
+        menuGepeeEvidence,
+        menuGepeePerformance,
+        menuUser
+    ];
     return menu.map(item => {
 
         const menuItem = { name: item.key, ...item };

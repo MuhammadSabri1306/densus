@@ -103,6 +103,7 @@ class Excel_export extends CI_Controller
         $divre = $this->input->get('divre');
         $witel = $this->input->get('witel');
         $month = $this->input->get('month');
+        $year = $this->input->get('year');
         
         $this->load->library('datetime_range');
         if(!$year) $year = date('Y');
