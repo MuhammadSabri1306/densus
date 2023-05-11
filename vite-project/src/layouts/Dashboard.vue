@@ -14,6 +14,7 @@ import "@/assets/css/app.css";
 import "@/assets/css/theme.css";
 import "@/assets/css/responsive.css";
 import "@/assets/css/pue-color.css";
+import "@/assets/css/percentage-color.css";
 
 const viewStore = useViewStore();
 const hideSidebar = computed(() => viewStore.hideSidebar);

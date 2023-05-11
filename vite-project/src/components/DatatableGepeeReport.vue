@@ -3,7 +3,9 @@ import { ref, computed } from "vue";
 import { useGepeeReportStore } from "@/stores/gepee-report";
 import { useUserStore } from "@stores/user";
 import { useCollapseRow } from "@helpers/collapse-row";
-import { toNumberText } from "@helpers/number-format";
+import { getPueBgClass } from "@helpers/pue-color";
+import { getPercentageTextClass } from "@helpers/percentage-color";
+import { toNumberText, toFixedNumber } from "@helpers/number-format";
 import Skeleton from "primevue/skeleton";
 
 defineEmits(["showCategory"]);
@@ -140,14 +142,22 @@ const getRowClass = item => {
     return { "row-collapsed": collapsed };
 };
 
+const isLocationOnline = item => item.type == "sto" && item.location.is_online;
+const isPueReachTarget = item => item.type == "sto" && item.pue.isReachTarget;
 const formatItemNumber = itemNumb => {
     if(itemNumb === null)
         return "-";
     return toNumberText(itemNumb);
 };
 
-const isLocationOnline = item => item.type == "sto" && item.location.is_online;
-const isPueReachTarget = item => item.type == "sto" && item.pue.isReachTarget;
+const getColClassNumber = (type, itemNumb) => {
+    if(type == "pue" && itemNumb === null)
+        return "text-muted";
+    if(type == "pue")
+        return getPueBgClass(toFixedNumber(itemNumb));
+    if(type == "percent")
+        return getPercentageTextClass(toFixedNumber(itemNumb));
+};
 </script>
 <template>
     <div v-if="hasInit">
@@ -211,13 +221,14 @@ const isPueReachTarget = item => item.type == "sto" && item.pue.isReachTarget;
                         <td v-if="item.type != 'sto'" colspan="4"></td>
                         <template v-else>
                             <td class="middle text-center">{{ item.location.id_pel_pln }}</td>
-                            <td class="middle text-center">{{ formatItemNumber(item.pue.offline) }}</td>
-                            <td class="middle text-center">{{ formatItemNumber(item.pue.online) }}</td>
+                            <td :class="getColClassNumber('pue', item.pue.offline)" class="middle text-center f-w-700">{{ formatItemNumber(item.pue.offline) }}</td>
+                            <td :class="getColClassNumber('pue', item.pue.online)" class="middle text-center f-w-700">{{ formatItemNumber(item.pue.online) }}</td>
                             <td class="middle text-center">{{ isLocationOnline(item) ? "ONLINE" : "OFFLINE" }}</td>
                         </template>
                         <td class="middle text-center">{{ isPueReachTarget(item) ? "TIDAK" : "YA" }}</td>
                         <td class="middle text-center">-</td>
-                        <td v-for="category in item.performance" class="middle text-center">{{ formatItemNumber(category.percentage) }}%</td>
+                        <td v-for="category in item.performance" :class="getColClassNumber('percent', category.percentage)"
+                            class="middle text-center f-w-700">{{ formatItemNumber(category.percentage) }}%</td>
                         <td class="middle text-center">-</td>
                     </tr>
                 </tbody>

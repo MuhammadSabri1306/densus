@@ -1,0 +1,39 @@
+.tc-percentage-danger {
+    color: #fd2e64!important;
+}
+
+.bgc-percentage-danger {
+    background-color: #ff658d!important;
+}
+
+.tc-percentage-warning {
+    color: #e46a1e!important;
+}
+
+.bgc-percentage-warning {
+    background-color: #eb8647!important;
+}
+
+.tc-percentage-standard {
+    color: #e2c636!important;
+}
+
+.bgc-percentage-standard {
+    background-color: #ffe55c!important;
+}
+
+.tc-percentage-good {
+    color: #72a943!important;
+}
+
+.bgc-percentage-good {
+    background-color: #77d077!important;
+}
+
+.tc-percentage-excellent {
+    color: #24695c!important;
+}
+
+.bgc-percentage-excellent {
+    background-color: #2cb198!important;
+}

@@ -1,22 +1,33 @@
-import { computed } from "vue";
 
-// const pueLimit = [ 1.6, 2, 2.4, 3 ];
-const pueLimit = [ 1.6, 2.4, 3 ];
+const limit = {
+    optimize: { high: 1.6 },
+    efficient: { middle: 2 },
+    average: { low: 2.4 },
+    inefficient: { low: 3 }
+};
+
+export const inPueRange = {
+    optimize: value => limit.optimize.high > value,
+    efficient: value => limit.optimize.high <= value && value < limit.average.low,
+    average: value => limit.average.low <= value && value < limit.inefficient.low,
+    inefficient: value => value >= limit.inefficient.low
+};
 
 export const getPueTextClass = pueValue => {
     return {
-        "tc-optimize": pueValue <= pueLimit[0],
-        "tc-efficient": pueValue > pueLimit[0] && pueValue < pueLimit[1],
-        "tc-average": pueValue >= pueLimit[1] && pueValue < pueLimit[2],
-        "tc-inefficient": pueValue >= pueLimit[2]
+        "tc-pue-optimize": inPueRange.optimize(pueValue),
+        "tc-pue-efficient": inPueRange.efficient(pueValue),
+        "tc-pue-average": inPueRange.average(pueValue),
+        "tc-pue-inefficient": inPueRange.inefficient(pueValue),
     };
 };
 
 export const getPueBgClass = pueValue => {
+    console.log(pueValue)
     return {
-        "bgc-optimize": pueValue <= pueLimit[0],
-        "bgc-efficient": pueValue > pueLimit[0] && pueValue < pueLimit[1],
-        "bgc-average": pueValue >= pueLimit[1] && pueValue < pueLimit[2],
-        "bgc-inefficient": pueValue >= pueLimit[2]
+        "bgc-pue-optimize": inPueRange.optimize(pueValue),
+        "bgc-pue-efficient": inPueRange.efficient(pueValue),
+        "bgc-pue-average": inPueRange.average(pueValue),
+        "bgc-pue-inefficient": inPueRange.inefficient(pueValue)
     };
 };

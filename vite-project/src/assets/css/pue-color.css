@@ -1,31 +1,31 @@
-.tc-inefficient {
+.tc-pue-inefficient {
     color: #fd2e64!important;
 }
 
-.tc-average {
-    color: #e2c636!important;
-}
-
-.tc-optimize {
-    color: #24695c!important;
-}
-
-.tc-efficient {
-    color: #72a943!important;
-}
-
-.bgc-inefficient {
+.bgc-pue-inefficient {
     background-color: #ff658d!important;
 }
 
-.bgc-average {
+.tc-pue-average {
+    color: #e2c636!important;
+}
+
+.bgc-pue-average {
     background-color: #ffe55c!important;
 }
 
-.bgc-optimize {
+.tc-pue-optimize {
+    color: #24695c!important;
+}
+
+.bgc-pue-optimize {
     background-color: #2cb198!important;
 }
 
-.bgc-efficient {
+.tc-pue-efficient {
+    color: #72a943!important;
+}
+
+.bgc-pue-efficient {
     background-color: #77d077!important;
 }

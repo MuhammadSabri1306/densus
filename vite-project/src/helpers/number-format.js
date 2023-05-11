@@ -16,7 +16,7 @@ export const toIdrCurrency = numb => {
 	return result;
 };
 
-export const toFixedNumber = (numb, numbBehindComma) => {
+export const toFixedNumber = (numb, numbBehindComma = 2) => {
 	numb = Number(numb);
 	return (numb.toString().length > numbBehindComma + 1) ? numb.toFixed(numbBehindComma) : numb.toString();
 };
