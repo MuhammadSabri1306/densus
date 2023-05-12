@@ -5,7 +5,7 @@
  */
 $filterLocGepee = $this->get_loc_filter($filter, 'loc');
 $filterLocRtu = $this->get_loc_filter($filter, 'rtu');
-$filterDateExc = $this->get_datetime_filter('created_at', $filter, 'exc');
+$filterDateSch = $this->get_datetime_filter('created_at', $filter, 'sch');
 $filterDatePueOff = $this->get_datetime_filter('created_at', $filter, 'pue');
 $filterDatePueOn = $this->get_datetime_filter('timestamp', $filter, 'pue');
 
@@ -69,20 +69,20 @@ foreach($locationData as $location) {
      */
     $this->db
         ->select('COUNT(exc.id)')
-        ->from("$this->tableExecutionName AS exc")
-        ->join("$this->tableScheduleName AS sch", 'sch.id=exc.id_schedule', 'left')
+        ->from("$this->tableScheduleName AS sch")
+        ->join("$this->tableExecutionName AS exc", 'exc.id_schedule=sch.id')
         ->where('sch.id_category=cat.id')
         ->where('sch.id_lokasi', $location['id'])
-        ->where($filterDateExc);
+        ->where($filterDateSch);
     $countAllQuery = $this->db->get_compiled_select();
     
     $this->db
         ->select('COUNT(exc.id)')
-        ->from("$this->tableExecutionName AS exc")
-        ->join("$this->tableScheduleName AS sch", 'sch.id=exc.id_schedule', 'left')
+        ->from("$this->tableScheduleName AS sch")
+        ->join("$this->tableExecutionName AS exc", 'exc.id_schedule=sch.id')
         ->where('sch.id_category=cat.id')
         ->where('sch.id_lokasi', $location['id'])
-        ->where($filterDateExc)
+        ->where($filterDateSch)
         ->where('exc.status', 'approved');
     $countApprovedQuery = $this->db->get_compiled_select();
     
