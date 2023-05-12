@@ -1,17 +1,38 @@
 <?php
 
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use \PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Color;
 
 class Excel
 {
     public $spreadsheet;
+
+    public $useColSizeAuto = false;
+
     private $field;
+
+    public $startRowNumber;
+    public $startColNumber;
+    public $endRowNumber;
+    public $endColNumber;
 
     public function __construct()
     {
         $this->spreadsheet = new Spreadsheet();
+    }
+
+    public function createDownload($filename)
+    {
+        $filename .= '.xls';
+        $writer = IOFactory::createWriter($this->spreadsheet, 'Xls');
+        header('Content-Type: text/xls');
+        header('Content-Disposition: attachment;filename="'. $filename .'"');
+        $writer->save('php://output');
     }
 
     public function setField($field)
@@ -20,19 +41,20 @@ class Excel
         foreach($field as $key => $title) {
             array_push($this->field, [ 'key' => $key, 'title' => $title ]);
         }
+        return $this;
     }
 
-    // $rowIndex >= 1, $colIndex >=1
-    public function getCellKey($rowIndex, $colIndex)
+    // $rowNumber >= 1, $colNumber >=1
+    public function getCellKey($rowNumber, $colNumber)
     {
-        $dividend = $colIndex;
-        $colKey = $this->getColKey($colIndex);
-        return $colKey . $rowIndex;
+        $dividend = $colNumber;
+        $colKey = $this->getColKey($colNumber);
+        return $colKey . $rowNumber;
     }
 
-    public function getColKey($colIndex)
+    public function getColKey($colNumber)
     {
-        $dividend = $colIndex;
+        $dividend = $colNumber;
         $colKey = '';
 
         while ($dividend > 0) {
@@ -44,86 +66,193 @@ class Excel
         return $colKey;
     }
 
-    public function fill($data, $startRow = 1, $startColumn = 1)
+    public function selectCell($startCellNumbers, $endCellNumbers = [])
     {
-        if(!is_array($this->field) || count($this->field) < 1) {
-            return null;
+        if(count($startCellNumbers) === 2) {
+            $this->startRowNumber = $startCellNumbers[0];
+            $this->startColNumber = $startCellNumbers[1];
         }
-        
-        for($x=$startColumn; $x<count($this->field); $x++) {
-            $cellKey = $this->getCellKey($startRow, $x);
-            $this->setCellValue($cellKey, $this->field[$x]['title']);
-            $test[$cellKey] = $this->field[$x]['title'];
+        if(count($endCellNumbers) === 2) {
+            $this->endRowNumber = $endCellNumbers[0];
+            $this->endColNumber = $endCellNumbers[1];
+        } else {
+            $this->endRowNumber = null;
+            $this->endColNumber = null;
         }
-
-        $startRow++;
-        for($i=$startRow; $i<count($data); $i++) {
-            for($j=$startColumn; $j<count($this->field); $j++) {
-
-                $cellKey = $this->getCellKey($i, $j);
-                $dataKey = $this->field[$j]['key'];
-                $this->setCellValue($cellKey, $data[$i][$dataKey]);
-
-            }
-        }
+        return $this;
     }
 
-    public function setCellValue($cellKey, $value)
+    public function getSelectedCell()
     {
+        if(!$this->startRowNumber || !$this->startColNumber) {
+            return null;
+        }
+
+        $cellKey = $this->getCellKey($this->startRowNumber, $this->startColNumber);
+        if(!$this->endRowNumber || !$this->endColNumber) {
+            return $cellKey;
+        }
+        
+        $cellKey .= ':' . $this->getCellKey($this->endRowNumber, $this->endColNumber);
+        return $cellKey;
+    }
+
+    public function setValue($value, $rowNumber = null, $colNumber = null)
+    {
+        if($rowNumber && $colNumber) {
+            $this->selectCell([$rowNumber, $colNumber]);
+        } else {
+            $rowNumber = $this->startRowNumber;
+            $colNumber = $this->startColNumber;
+        }
+        
+        $cellKey = $this->getCellKey($rowNumber, $colNumber);
         $this->spreadsheet
             ->getActiveSheet()
             ->setCellValue($cellKey, $value);
-    }
-
-    public function setCellMergeValue($rowStartIndex, $colStartIndex, $rowEndIndex, $colEndIndex, $value)
-    {
-        $startCell = $this->getCellKey($rowStartIndex, $colStartIndex);
-        $endCell = $this->getCellKey($rowEndIndex, $colEndIndex);
         
-        $this->setCellValue($startCell, $value);
-        $this->spreadsheet
-            ->getActiveSheet()
-            ->mergeCells($startCell.':'.$endCell);
+        if($this->useColSizeAuto) {
+            $this->setWidthAuto($colNumber);
+        }
+
+        return $this;
     }
 
-    public function setCellWidth($colNumber, $width, $unit = 'pt') {
-        $colKey = $this->getColKey($colNumber);
-        // dd($this->spreadsheet->getActiveSheet()->getColumnDimension($colKey));
-        $this->spreadsheet
-            ->getActiveSheet()
-            ->getColumnDimension($colKey)
-            ->setWidth($width, $unit);
-    }
-
-    public function setCellAlignment($rowIndex, $colIndex, $value)
+    public function fill($data)
     {
-        $cellKey = $this->getCellKey($rowIndex, $colIndex);
+        if(!is_array($this->field) || count($this->field) < 1) {
+            return $this;
+        }
+
+        $startRowNumber = $this->startRowNumber;
+        $startColNumber = $this->startColNumber;
+        
+        for($x=$startColNumber; $x<count($this->field); $x++) {
+            $cellKey = $this->getCellKey($startRowNumber, $x);
+            $this->setValue($this->field[$x]['title'], $startRowNumber, $x);
+        }
+        
+        $startRowNumber++;
+        for($i=$startRowNumber; $i<count($data); $i++) {
+            for($j=$startColNumber; $j<count($this->field); $j++) {
+
+                $dataKey = $this->field[$j]['key'];
+                $this->setValue($data[$i][$dataKey], $i, $j);
+
+            }
+        }
+
+        return $this;
+    }
+
+    public function mergeCell()
+    {
+        $cell = $this->getSelectedCell();
+        $this->spreadsheet
+            ->getActiveSheet()
+            ->mergeCells($cell);
+        return $this;
+    }
+
+    public function setWidthAuto($value = true)
+    {
+        $startColNumber = $this->startColNumber;
+        $endColNumber = $this->endColNumber ? $this->endColNumber : $startColNumber;
+
+        for ($colNumber=$startColNumber; $colNumber<=$endColNumber; $colNumber++) {
+            $colKey = $this->getColKey($colNumber);
+            $this->spreadsheet
+                ->getActiveSheet()
+                ->getColumnDimension($colKey)
+                ->setAutoSize($value);
+        }
+        return $this;
+    }
+
+    public function setWidth($width, $unit = 'pt') {
+        $startColNumber = $this->startColNumber;
+        $this->endColNumber = $this->endColNumber ? $this->endColNumber : $startColNumber;
+
+        for ($colNumber=$startColNumber; $colNumber<=$endColNumber; $colNumber++) {
+            $colKey = $this->getColKey($colNumber);
+            $this->spreadsheet
+                ->getActiveSheet()
+                ->getColumnDimension($colKey)
+                ->setWidth($width, $unit);
+        }
+
+        return $this;
+    }
+
+    public function setAlignment($value)
+    {
         $align = [
             'left' => Alignment::HORIZONTAL_LEFT,
             'center' => Alignment::HORIZONTAL_CENTER,
             'right' => Alignment::HORIZONTAL_RIGHT
         ];
 
-        if($align[$value]) {
-            $alignValue = $align[$value];
-        } else {
-            return false;
+        if(!$align[$value]) {
+            return $this;
         }
 
+        $alignValue = $align[$value];
+        $cellKey = $this->getSelectedCell();
         $this->spreadsheet
             ->getActiveSheet()
             ->getStyle($cellKey)
             ->getAlignment()
             ->setHorizontal($alignValue);
+        return $this;
     }
 
-    public function setColSizeAuto($colIndex, $value = true)
+    public function setFill($argbColor)
     {
-        $colKey = $this->getColKey($colIndex);
+        $cellKey = $this->getSelectedCell();
         $this->spreadsheet
             ->getActiveSheet()
-            ->getColumnDimension($colKey)
-            ->setAutoSize($value);
+            ->getStyle($cellKey)
+            ->getFill()
+            ->setFillType(Fill::FILL_SOLID)
+            ->getStartColor()
+            ->setARGB($argbColor);
+        return $this;
+    }
+
+    public function setColor($argbColor)
+    {
+        $cellKey = $this->getSelectedCell();
+        $this->spreadsheet
+            ->getActiveSheet()
+            ->getStyle($cellKey)
+            ->getFont()
+            ->getColor()
+            ->setARGB($argbColor);
+        return $this;
+    }
+
+    public function setBold($value = true)
+    {
+        $cellKey = $this->getSelectedCell();
+        $this->spreadsheet
+            ->getActiveSheet()
+            ->getStyle($cellKey)
+            ->getFont()
+            ->setBold($value);
+        return $this;
+    }
+
+    public function setBorderColor($argbColor)
+    {
+        $cellKey = $this->getSelectedCell();
+        $this->spreadsheet
+            ->getActiveSheet()
+            ->getStyle($cellKey)
+            ->getBorders()
+            ->getAllBorders()
+            ->setBorderStyle(Border::BORDER_THIN)
+            ->setColor(new Color($argbColor));
+        return $this;
     }
 
 }

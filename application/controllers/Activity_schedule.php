@@ -257,27 +257,26 @@ class Activity_schedule extends RestController
         
         $this->response($data, $status);
     }
-}
 
-// {
-    // "schedule": [
-    //     "211&4&1",
-    //     "211&4&2",
-    //     "211&4&3",
-    //     "211&4&4",
-    //     "211&4&5",
-    //     "211&4&6",
-    //     "211&4&7",
-    //     "211&4&8",
-    //     "212&4&8",
-    //     "212&4&7",
-    //     "212&4&6",
-    //     "212&4&5",
-    //     "212&4&4",
-    //     "212&4&3",
-    //     "212&4&2",
-    //     "212&4&1"
-    // ],
-//     "divreCode": "TLK-r1000000",
-//     "witelCode": "DTB-bi200000"
-// }
+    public function index_v3_get()
+    {
+        $divre = $this->input->get('divre');
+        $witel = $this->input->get('witel');
+        $year = $this->input->get('year');
+        $startMonth = $this->input->get('month');
+        
+        if(!$year) $year = date('Y');
+        $endMonth = $startMonth ? $startMonth : date('m');
+        if(!$startMonth) $startMonth = 1;
+        
+        $this->load->library('datetime_range');
+        $datetime = $this->datetime_range->get_by_month_range($startMonth, $endMonth, $year);
+
+        $filter = compact('divre', 'witel', 'datetime');
+        $this->load->model('activity_schedule_model');
+        $data = $this->activity_schedule_model->get_all_v2($filter);
+        
+        $status = 200;
+        $this->response($data, $status);
+    }
+}

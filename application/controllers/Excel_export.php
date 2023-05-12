@@ -1,11 +1,30 @@
 <?php
 
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
 class Excel_export extends CI_Controller
 {
+    private $colorScheme = [
+        'white' => [
+            'hex' => '#fff',
+            'argb' => 'ffffffff'
+        ],
+        'primary' => [
+            'hex' => '#24695c',
+            'argb' => 'ff24695c'
+        ],
+        'gepee_exec_success' => [
+            'hex' => '#2cb198',
+            'argb' => 'ff2cb198'
+        ],
+        'gepee_exec_warning' => [
+            'hex' => '#ffe55c',
+            'argb' => 'ffffe55c'
+        ],
+        'gepee_exec_danger' => [
+            'hex' => '#ff658d',
+            'argb' => 'ffff658d'
+        ],
+    ];
+
     public function __construct()
     {
         parent::__construct();
@@ -14,29 +33,6 @@ class Excel_export extends CI_Controller
         // $this->load->library('auth_jwt');
         // $this->auth_jwt->cookieName = 'densus_export_token';
         // $this->load->library('session');
-    }
-
-    private function createDownload($spreadsheet, $filename)
-    {
-        $filename .= '.xls';
-
-        // $writer = new Xlsx($spreadsheet);
-        // ob_start();
-        // $writer->save('php://output');
-        // echo 'Hello ';
-        // echo 'World';
-        // $content = ob_get_contents();
-        // ob_end_clean();
-
-        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        // header('Content-Disposition: attachment;filename="'. $filename .'"');
-        // header('Cache-Control: max-age=0');
-        // echo $content;
-
-        $writer = IOFactory::createWriter($spreadsheet, 'Xls');
-        header('Content-Type: text/xls');
-        header('Content-Disposition: attachment;filename="'. $filename .'"');
-        $writer->save('php://output');
     }
 
     public function pue()
@@ -74,10 +70,10 @@ class Excel_export extends CI_Controller
         $this->load->model('Pue_counter2_model');
         $data = $this->Pue_counter2_model->get_all($filter);
         
-        $this->excel->setCellValue('B2', 'Mulai tanggal :');
-        $this->excel->setCellValue('B3', $startDate);
-        $this->excel->setCellValue('E2', 'Sampai tanggal :');
-        $this->excel->setCellValue('E3', $endDate);
+        $this->excel->setValue('Mulai tanggal :', 2, 2);
+        $this->excel->setValue($startDate, 2, 3);
+        $this->excel->setValue('Sampai tanggal :', 3, 2);
+        $this->excel->setValue($endDate, 3, 3);
 
         $this->excel->setField([
             'divre_kode' => 'KODE DIVRE',
@@ -94,8 +90,11 @@ class Excel_export extends CI_Controller
             'timestamp' => 'WAKTU'
         ]);
         
-        $this->excel->fill($data, $startRow = 5, $startColumn = 1);
-        $this->createDownload($this->excel->spreadsheet, 'DATA_PUE');
+        $this->excel
+            ->selectCell([5, 1])
+            ->fill($data);
+
+        $this->excel->createDownload('Nilai PUE '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
     }
 
     public function activity_performance()
@@ -121,52 +120,75 @@ class Excel_export extends CI_Controller
         $categoryList = isset($data['category_list']) ? $data['category_list'] : [];
         $performanceList = isset($data['performance']) ? $data['performance'] : [];
         
-        $this->excel->setCellAlignment(2, 3, 'left');
-        $this->excel->setCellMergeValue(2, 3, 2, 5, 'Mulai tanggal :');
-        $this->excel->setCellAlignment(3, 3, 'left');
-        $this->excel->setCellMergeValue(3, 3, 3, 5, $datetime[0]);
-        $this->excel->setCellAlignment(2, 6, 'left');
-        $this->excel->setCellMergeValue(2, 6, 2, 8, 'Sampai tanggal :');
-        $this->excel->setCellAlignment(3, 6, 'left');
-        $this->excel->setCellMergeValue(3, 6, 3, 8, $datetime[1]);
+        $this->excel
+            ->selectCell([2, 2], [2, 3])
+            ->mergeCell()
+            ->setAlignment('left')
+            ->setValue('Mulai tanggal : '.$datetime[0], 2, 2);
+        $this->excel
+            ->selectCell([3, 2], [3, 3])
+            ->mergeCell()
+            ->setAlignment('left')
+            ->setValue('Sampai tanggal : '.$datetime[1], 3, 2);
         
-        $this->excel->setCellMergeValue(5, 2, 6, 2, 'Lingkup Kerja');
-        $this->excel->setColSizeAuto(2);
+        $this->excel
+            ->selectCell([5, 2], [6, 2])
+            ->mergeCell()
+            ->setValue('Regional', 5, 2);
+        $this->excel
+            ->selectCell([5, 3], [6, 3])
+            ->mergeCell()
+            ->setValue('Witel', 5, 3);
+        $this->excel
+            ->selectCell([5, 4], [6, 4])
+            ->mergeCell()
+            ->setValue('STO', 5, 4);
+        $this->excel
+            ->selectCell([5, 2], [6, 4])
+            ->setFill($this->colorScheme['primary']['argb'])
+            ->setColor($this->colorScheme['white']['argb'])
+            ->setBorderColor($this->colorScheme['white']['argb'])
+            ->setBold(true)
+            ->setAlignment('center')
+            ->setWidthAuto();
 
+        $this->load->library('Month_idn');
         $categoryCount = count($categoryList);
         $monthIndex = 0;
+        $monthStartCol = 5;
+
         foreach($monthList as $month) {
 
             for($i=0; $i<$categoryCount; $i++) {
 
-                $categoryColIndex = ($monthIndex * $categoryCount) + $i + 3;
-                $cellKey = $this->excel->getCellKey(6, $categoryColIndex);
-                $this->excel->setCellValue($cellKey, $categoryList[$i]['alias']);
-                $this->excel->setCellAlignment(6, $categoryColIndex, 'center');
-                $this->excel->setColSizeAuto($categoryColIndex);
+                $categoryColIndex = ($monthIndex * $categoryCount) + $i + $monthStartCol;
+                $this->excel
+                    ->setValue($categoryList[$i]['alias'], 6, $categoryColIndex)
+                    ->setAlignment('center')
+                    ->setFill($this->colorScheme['primary']['argb'])
+                    ->setColor($this->colorScheme['white']['argb'])
+                    ->setBorderColor($this->colorScheme['white']['argb'])
+                    ->setBold(true)
+                    ->setWidth(48, 'px');
 
             }
-
-            $monthStartColIndex = 3 + ($categoryCount * $monthIndex);
+            
+            $monthStartColIndex = $monthStartCol + ($categoryCount * $monthIndex);
             $monthEndColIndex = $monthStartColIndex + $categoryCount - 1;
-            switch($month) {
-                case 1: $monthText = 'Januari'; break;
-                case 2: $monthText = 'Februari'; break;
-                case 3: $monthText = 'Maret'; break;
-                case 4: $monthText = 'April'; break;
-                case 5: $monthText = 'Mei'; break;
-                case 6: $monthText = 'Juni'; break;
-                case 7: $monthText = 'Juli'; break;
-                case 8: $monthText = 'Agustus'; break;
-                case 9: $monthText = 'September'; break;
-                case 10: $monthText = 'November'; break;
-                case 11: $monthText = 'Oktober'; break;
-                case 12: $monthText = 'Desember'; break;
-                default: $monthText = 'Bulan '.$month; break;
+            $monthText = Month_idn::getNameByNumber($month);
+            if(!$monthText) {
+                $monthText = 'Bulan '.$month;
             }
 
-            $this->excel->setCellMergeValue(5, $monthStartColIndex, 5, $monthEndColIndex, $monthText);
-            $this->excel->setCellAlignment(5, $monthStartColIndex, 'center');
+            $this->excel
+                ->selectCell([5, $monthStartColIndex], [5, $monthEndColIndex])
+                ->mergeCell()
+                ->setBorderColor($this->colorScheme['white']['argb'])
+                ->setAlignment('center')
+                ->setFill($this->colorScheme['primary']['argb'])
+                ->setColor($this->colorScheme['white']['argb'])
+                ->setBold(true)
+                ->setValue($monthText, 5, $monthStartColIndex);
 
             $monthIndex++;
         }
@@ -174,9 +196,16 @@ class Excel_export extends CI_Controller
         for($x=0; $x<count($performanceList); $x++) {
 
             $rowNumber = $x + 7;
-            $locationName = $performanceList[$x]['location']['sto_name'];
-            $cellKey = $this->excel->getCellKey($rowNumber, 2);
-            $this->excel->setCellValue($cellKey, $locationName);
+            
+            $divreName = $performanceList[$x]['location']['divre_name'];
+            $this->excel->setValue($divreName, $rowNumber, 2);
+
+            $witelName = $performanceList[$x]['location']['witel_name'];
+            $this->excel->setValue($witelName, $rowNumber, 3);
+            
+            $stoName = $performanceList[$x]['location']['sto_name'];
+            $this->excel->setValue($stoName, $rowNumber, 4);
+
             for($y=0; $y<count($performanceList[$x]['item']); $y++) {
 
                 $item = $performanceList[$x]['item'][$y];
@@ -187,14 +216,289 @@ class Excel_export extends CI_Controller
                     $percentValue = '';
                 }
 
-                $colNumber = 3 + $y;
-                $cellKey = $this->excel->getCellKey($rowNumber, $colNumber);
-                $this->excel->setCellValue($cellKey, $percentValue);
-                $this->excel->setCellAlignment($colNumber, $colNumber, 'center');
+                $colNumber = $monthStartCol + $y;
+                $this->excel
+                    ->setValue($percentValue, $rowNumber, $colNumber)
+                    ->setAlignment('center');
 
             }
         }
         
-        $this->createDownload($this->excel->spreadsheet, 'DATA_ACTIVITY_PERFORMANCE');
+        $this->excel->createDownload('GEPEE Activity Performansi '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
+    }
+
+    public function activity_schedule()
+    {
+        $divre = $this->input->get('divre');
+        $witel = $this->input->get('witel');
+        $year = $this->input->get('year');
+        $startMonth = $this->input->get('month');
+        
+        if(!$year) $year = date('Y');
+        $endMonth = $startMonth ? $startMonth : date('m');
+        if(!$startMonth) $startMonth = 1;
+        
+        $this->load->library('datetime_range');
+        $datetime = $this->datetime_range->get_by_month_range($startMonth, $endMonth, $year);
+
+        $filter = compact('divre', 'witel', 'datetime');
+        $this->load->model('activity_schedule_model');
+        $data = $this->activity_schedule_model->get_all_v2($filter);
+        $monthList = isset($data['month_list']) ? $data['month_list'] : [];
+        $categoryList = isset($data['category_list']) ? $data['category_list'] : [];
+        $schedule = isset($data['schedule']) ? $data['schedule'] : [];
+        
+        $this->excel
+            ->selectCell([2, 2], [2, 3])
+            ->mergeCell()
+            ->setAlignment('left')
+            ->setValue('Mulai tanggal : '.$datetime[0], 2, 2);
+        $this->excel
+            ->selectCell([3, 2], [3, 3])
+            ->mergeCell()
+            ->setAlignment('left')
+            ->setValue('Sampai tanggal : '.$datetime[1], 3, 2);
+        
+        $this->excel->useColSizeAuto = true;
+        $this->excel
+            ->selectCell([5, 2], [6, 2])
+            ->mergeCell()
+            ->setValue('Regional', 5, 2);
+        $this->excel
+            ->selectCell([5, 3], [6, 3])
+            ->mergeCell()
+            ->setValue('Witel', 5, 3);
+        $this->excel
+            ->selectCell([5, 4], [6, 4])
+            ->mergeCell()
+            ->setValue('STO', 5, 4);
+        $this->excel
+            ->selectCell([5, 2], [6, 4])
+            ->setFill($this->colorScheme['primary']['argb'])
+            ->setColor($this->colorScheme['white']['argb'])
+            ->setBorderColor($this->colorScheme['white']['argb'])
+            ->setBold(true)
+            ->setAlignment('center');
+
+        $this->load->library('Month_idn');
+        $categoryCount = count($categoryList);
+        $monthIndex = 0;
+        $monthStartCol = 5;
+
+        foreach($monthList as $month) {
+
+            for($i=0; $i<$categoryCount; $i++) {
+                $categoryColIndex = ($monthIndex * $categoryCount) + $i + $monthStartCol;
+                $this->excel
+                    ->setValue($categoryList[$i]['alias'], 6, $categoryColIndex)
+                    ->setAlignment('center')
+                    ->setFill($this->colorScheme['primary']['argb'])
+                    ->setColor($this->colorScheme['white']['argb'])
+                    ->setBorderColor($this->colorScheme['white']['argb'])
+                    ->setBold(true)
+                    ->setWidth(48, 'px');
+            }
+
+            $monthStartColIndex = $monthStartCol + ($categoryCount * $monthIndex);
+            $monthEndColIndex = $monthStartColIndex + $categoryCount - 1;
+            $monthText = Month_idn::getNameByNumber($month);
+            if(!$monthText) {
+                $monthText = 'Bulan '.$month;
+            }
+            
+            $this->excel
+                ->selectCell([5, $monthStartColIndex], [5, $monthEndColIndex])
+                ->mergeCell()
+                ->setAlignment('center')
+                ->setFill($this->colorScheme['primary']['argb'])
+                ->setColor($this->colorScheme['white']['argb'])
+                ->setBorderColor($this->colorScheme['white']['argb'])
+                ->setBold(true)
+                ->setValue($monthText, 5, $monthStartColIndex);
+
+            $monthIndex++;
+        }
+        
+        for($x=0; $x<count($schedule); $x++) {
+
+            $rowNumber = $x + 7;
+            
+            $divreName = $schedule[$x]['location']['divre_name'];
+            $this->excel->setValue($divreName, $rowNumber, 2);
+
+            $witelName = $schedule[$x]['location']['witel_name'];
+            $this->excel->setValue($witelName, $rowNumber, 3);
+            
+            $stoName = $schedule[$x]['location']['sto_name'];
+            $this->excel->setValue($stoName, $rowNumber, 4);
+
+            for($y=0; $y<count($schedule[$x]['month_item']); $y++) {
+
+                $item = $schedule[$x]['month_item'][$y];
+                for($z=0; $z<count($item['category_item']); $z++) {
+
+                    $scheduleItem = $item['category_item'][$z]['schedule_data'];
+                    $isExists = $scheduleItem && $scheduleItem['value'] ? true : false;
+                    if($isExists) {
+                        
+                        $colNumber = $monthStartCol + (($y + 1) * $z);
+                        $this->excel
+                            ->setValue("V", $rowNumber, $colNumber)
+                            ->setAlignment('center')
+                            ->setFill($this->colorScheme['gepee_exec_success']['argb'])
+                            ->setBorderColor($this->colorScheme['white']['argb']);
+
+                    }
+                }
+            }
+        }
+        
+        $this->excel->createDownload('GEPEE Activity Penjadwalan '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
+    }
+
+    public function activity_execution()
+    {
+        $divre = $this->input->get('divre');
+        $witel = $this->input->get('witel');
+        $year = $this->input->get('year');
+        $startMonth = $this->input->get('month');
+        
+        if(!$year) $year = date('Y');
+        $endMonth = $startMonth ? $startMonth : date('m');
+        if(!$startMonth) $startMonth = 1;
+        
+        $this->load->library('datetime_range');
+        $datetime = $this->datetime_range->get_by_month_range($startMonth, $endMonth, $year);
+
+        $filter = compact('divre', 'witel', 'datetime');
+        $this->load->model('activity_schedule_model');
+        $data = $this->activity_schedule_model->get_all_v2($filter);
+        $monthList = isset($data['month_list']) ? $data['month_list'] : [];
+        $categoryList = isset($data['category_list']) ? $data['category_list'] : [];
+        $schedule = isset($data['schedule']) ? $data['schedule'] : [];
+        
+        $this->excel
+            ->selectCell([2, 2], [2, 3])
+            ->mergeCell()
+            ->setAlignment('left')
+            ->setValue('Mulai tanggal : '.$datetime[0], 2, 2);
+        $this->excel
+            ->selectCell([3, 2], [3, 3])
+            ->mergeCell()
+            ->setAlignment('left')
+            ->setValue('Sampai tanggal : '.$datetime[1], 3, 2);
+        
+        $this->excel->useColSizeAuto = true;
+        $this->excel
+            ->selectCell([5, 2], [6, 2])
+            ->mergeCell()
+            ->setValue('Regional', 5, 2);
+        $this->excel
+            ->selectCell([5, 3], [6, 3])
+            ->mergeCell()
+            ->setValue('Witel', 5, 3);
+        $this->excel
+            ->selectCell([5, 4], [6, 4])
+            ->mergeCell()
+            ->setValue('STO', 5, 4);
+        $this->excel
+            ->selectCell([5, 2], [6, 4])
+            ->setFill($this->colorScheme['primary']['argb'])
+            ->setColor($this->colorScheme['white']['argb'])
+            ->setBorderColor($this->colorScheme['white']['argb'])
+            ->setBold(true)
+            ->setAlignment('center');
+
+        $this->load->library('Month_idn');
+        $categoryCount = count($categoryList);
+        $monthIndex = 0;
+        $monthStartCol = 5;
+
+        foreach($monthList as $month) {
+
+            for($i=0; $i<$categoryCount; $i++) {
+                $categoryColIndex = ($monthIndex * $categoryCount) + $i + $monthStartCol;
+                $this->excel
+                    ->setValue($categoryList[$i]['alias'], 6, $categoryColIndex)
+                    ->setAlignment('center')
+                    ->setFill($this->colorScheme['primary']['argb'])
+                    ->setColor($this->colorScheme['white']['argb'])
+                    ->setBorderColor($this->colorScheme['white']['argb'])
+                    ->setBold(true)
+                    ->setWidth(48, 'px');
+            }
+
+            $monthStartColIndex = $monthStartCol + ($categoryCount * $monthIndex);
+            $monthEndColIndex = $monthStartColIndex + $categoryCount - 1;
+            $monthText = Month_idn::getNameByNumber($month);
+            if(!$monthText) {
+                $monthText = 'Bulan '.$month;
+            }
+            
+            $this->excel
+                ->selectCell([5, $monthStartColIndex], [5, $monthEndColIndex])
+                ->mergeCell()
+                ->setAlignment('center')
+                ->setFill($this->colorScheme['primary']['argb'])
+                ->setColor($this->colorScheme['white']['argb'])
+                ->setBorderColor($this->colorScheme['white']['argb'])
+                ->setBold(true)
+                ->setValue($monthText, 5, $monthStartColIndex);
+
+            $monthIndex++;
+        }
+        
+        for($x=0; $x<count($schedule); $x++) {
+
+            $rowNumber = $x + 7;
+            
+            $divreName = $schedule[$x]['location']['divre_name'];
+            $this->excel->setValue($divreName, $rowNumber, 2);
+
+            $witelName = $schedule[$x]['location']['witel_name'];
+            $this->excel->setValue($witelName, $rowNumber, 3);
+            
+            $stoName = $schedule[$x]['location']['sto_name'];
+            $this->excel->setValue($stoName, $rowNumber, 4);
+
+            for($y=0; $y<count($schedule[$x]['month_item']); $y++) {
+
+                $item = $schedule[$x]['month_item'][$y];
+                for($z=0; $z<count($item['category_item']); $z++) {
+
+                    $scheduleItem = $item['category_item'][$z]['schedule_data'];
+                    $isExists = $scheduleItem && $scheduleItem['value'] ? true : false;
+                    if($isExists) {
+                        
+                        $colNumber = $monthStartCol + (($y + 1) * $z);
+                        $isChecked = $scheduleItem['execution_count'] > 0;
+                        $fillKey = null;
+                        if($scheduleItem['execution_count'] < 1) {
+                            $fillKey = 'gepee_exec_danger';
+                        } elseif($scheduleItem['approved_count'] < $scheduleItem['execution_count']) {
+                            $fillKey = 'gepee_exec_warning';
+                        } else {
+                            $fillKey = 'gepee_exec_success';
+                        }
+
+                        if($isChecked) {
+                            $this->excel
+                                ->setValue("V", $rowNumber, $colNumber)
+                                ->setAlignment('center');
+                        }
+                        
+                        if($fillKey) {
+                            $this->excel
+                                ->selectCell([$rowNumber, $colNumber])
+                                ->setFill($this->colorScheme[$fillKey]['argb'])
+                                ->setBorderColor($this->colorScheme['white']['argb']);
+                        }
+
+                    }
+                }
+            }
+        }
+        
+        $this->excel->createDownload('GEPEE Activity Pelaksanaan '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
     }
 }

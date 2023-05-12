@@ -219,6 +219,9 @@ $route['api/profile']['get'] = 'user/profile';
 /* ENDPOINT EXPORT DATA */
 $route['export/excel/pue'] = 'excel_export/pue';
 $route['export/excel/activity/performance'] = 'excel_export/activity_performance';
+$route['export/excel/activity/schedule'] = 'excel_export/activity_schedule';
+// $route['export/excel/activity/schedule'] = 'activity_schedule/index_v3';
+$route['export/excel/activity/execution'] = 'excel_export/activity_execution';
 
 /* ENDPOINT FILE ATTACHMENT */
 // $route['api/attachment/activity/check']['get'] = 'attachment/check_activity_execution';
