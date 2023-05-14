@@ -501,4 +501,193 @@ class Excel_export extends CI_Controller
         
         $this->excel->createDownload('GEPEE Activity Pelaksanaan '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
     }
+
+    public function gepee_report()
+    {
+        $divreCode = $this->input->get('divre');
+        $witelCode = $this->input->get('witel');
+        $year = $this->input->get('year');
+        $month = $this->input->get('month');
+
+        if(!$year) $year = date('Y');
+        // if(!$month) $month = date('m');
+
+        $this->load->library('datetime_range');
+        if($month) {
+            $datetime = $this->datetime_range->get_by_month($month, $year);
+        } else {
+            $datetime = $this->datetime_range->get_by_year($year);
+        }
+
+        $filter = [
+            'divre' => $divreCode,
+            'witel' => $witelCode,
+            'datetime' => $datetime
+        ];
+
+        $this->load->model('gepee_management_model');
+        $this->load->model('activity_category_model');
+
+        $pueLowLimit = 1.8;
+        $categoryList = $this->activity_category_model->get();
+        $dataGepee = $this->gepee_management_model->get_report($filter, $pueLowLimit);
+        // $summaryGepeeNasional = null;
+        // if(!isset($divreCode) && !isset($witelCode)) {
+        //     $summaryGepeeNasional = $this->gepee_management_model->get_report_summary_nasional($filter, $pueLowLimit);
+        // }
+
+        $this->excel
+            ->selectCell([2, 2], [2, 3])
+            ->mergeCell()
+            ->setAlignment('left')
+            ->setValue('Mulai tanggal : '.$datetime[0], 2, 2);
+        $this->excel
+            ->selectCell([3, 2], [3, 3])
+            ->mergeCell()
+            ->setAlignment('left')
+            ->setValue('Sampai tanggal : '.$datetime[1], 3, 2);
+        
+        $this->excel->useColSizeAuto = true;
+        $startRow = 5; $currRow = $startRow;
+        $startCol = 2; $currCol = $startCol;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('Regional', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('Witel', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('STO', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('ID Pelanggan', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 1)])
+            ->mergeCell()
+            ->setValue('PUE (Diukur Bulanan)', $currRow, $currCol);
+        $this->excel->setValue('OFFLINE', ($currRow + 1), $currCol);
+        $currCol++;
+        $this->excel->setValue('ONLINE', ($currRow + 1), $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('OFFLINE/ONLINE', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('PUE <= 1.8', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('Tagihan PLN (Bulanan)', $currRow, $currCol);
+        $currCol++;
+        
+        $this->excel
+            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + count($categoryList))])
+            ->mergeCell()
+            ->setValue('Presentase Pencapaian Aktivitas GePEE (Dihitung 100% jika sudah dilaksanakan)', $currRow, $currCol);
+        // $currCol++;
+
+        foreach($categoryList as $cat) {
+            $this->excel->setValue($cat->alias, ($currRow + 1), $currCol);
+            $currCol++;
+        }
+        
+        $this->excel->setValue('Replacement', ($currRow + 1), $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('% GEPEE Activity', $currRow, $currCol);
+
+        $currRow++;
+        $this->excel
+            ->selectCell([$startRow, $startCol], [$currRow, $currCol])
+            ->setFill($this->colorScheme['primary']['argb'])
+            ->setColor($this->colorScheme['white']['argb'])
+            ->setBorderColor($this->colorScheme['white']['argb'])
+            ->setBold(true)
+            ->setAlignment('center');
+        
+        $currRow++;
+        foreach($dataGepee as $item) {
+
+            $currCol = $startCol;
+
+            $this->excel->setValue($item['location']['divre_name'], $currRow, $currCol);
+            $currCol++;
+            
+            $this->excel->setValue($item['location']['witel_name'], $currRow, $currCol);
+            $currCol++;
+
+            $this->excel->setValue($item['location']['sto_name'], $currRow, $currCol);
+            $currCol++;
+
+            $this->excel->setValue($item['location']['id_pel_pln'], $currRow, $currCol);
+            $currCol++;
+
+            $this->excel->setValue($item['pue']['offline'], $currRow, $currCol);
+            $currCol++;
+
+            $this->excel->setValue($item['pue']['online'], $currRow, $currCol);
+            $currCol++;
+
+            $isOnlineText = $item['location']['is_online'] ? 'ONLINE' : 'OFFLINE';
+            $this->excel
+                ->setValue($isOnlineText, $currRow, $currCol)
+                ->setAlignment('center');
+            $currCol++;
+
+            $isReachTargetText = $item['pue']['isReachTarget'] ? 'TIDAK' : 'YA';
+            $this->excel
+                ->setValue($isReachTargetText, $currRow, $currCol)
+                ->setAlignment('center');
+            // $currCol++;
+            $currCol++;
+
+            foreach($item['performance'] as $perf) {
+                $currCol++;
+                $percentText = (string) $perf['percentage'];
+                $percentText .= "%";
+                $this->excel
+                    ->setValue($percentText, $currRow, $currCol)
+                    ->setAlignment('center');
+            }
+
+            $currCol += 2;
+            $percentText = (string) $item['performance_summary']['percentage'];
+            $percentText .= "%";
+            $this->excel
+                ->setValue($percentText, $currRow, $currCol)
+                ->setAlignment('center');
+
+            $currRow++;
+
+        }
+        
+        $this->excel->createDownload('GEPEE Management Report '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
+        // header('Content-type: application/json');
+        // echo json_encode($dataGepee);
+    }
 }

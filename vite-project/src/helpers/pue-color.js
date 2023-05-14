@@ -23,7 +23,6 @@ export const getPueTextClass = pueValue => {
 };
 
 export const getPueBgClass = pueValue => {
-    console.log(pueValue)
     return {
         "bgc-pue-optimize": inPueRange.optimize(pueValue),
         "bgc-pue-efficient": inPueRange.efficient(pueValue),

@@ -70,4 +70,13 @@ class Gepee_management_model extends CI_Model
         ]);
         return $this->result;
     }
+    
+    public function get_report_summary_nasional($filter, $pueLowLimit = 1.8)
+    {
+        $this->use_module('get_report_summary_nasional', [
+            'filter' => $filter,
+            'pueLowLimit' => $pueLowLimit
+        ]);
+        return $this->result;
+    }
 }

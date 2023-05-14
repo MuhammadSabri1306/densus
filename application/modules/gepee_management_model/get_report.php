@@ -54,6 +54,11 @@ foreach($locationData as $location) {
     $row = [
         'location' => $location,
         'performance' => [],
+        'performance_summary' => [
+            'count_all' => 0,
+            'count_approved' => 0,
+            'percentage' => 0
+        ],
         'pue' => [
             'offline' => null,
             'online' => null,
@@ -93,11 +98,18 @@ foreach($locationData as $location) {
         ->result_array();
     
     foreach($categoryData as $category) {
-        $percent = $category;
-        $percent['count_all'] = (int) $percent['count_all'];
-        $percent['count_approved'] = (int) $percent['count_approved'];
-        $percent['percentage'] = $percent['count_all'] < 1 ? 0 : $percent['count_approved'] / $percent['count_all'] * 100;
-        array_push($row['performance'], $percent);
+        $perfm = $category;
+        $perfm['count_all'] = (int) $perfm['count_all'];
+        $perfm['count_approved'] = (int) $perfm['count_approved'];
+        $perfm['percentage'] = $perfm['count_all'] < 1 ? 0 : $perfm['count_approved'] / $perfm['count_all'] * 100;
+        array_push($row['performance'], $perfm);
+
+        $row['performance_summary']['count_all'] += $perfm['count_all'];
+        $row['performance_summary']['count_approved'] += $perfm['count_approved'];
+    }
+
+    if($row['performance_summary']['count_all'] > 0) {
+        $row['performance_summary']['percentage'] = $row['performance_summary']['count_approved'] / $row['performance_summary']['count_all'] * 100;
     }
 
     /*

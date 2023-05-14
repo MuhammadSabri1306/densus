@@ -5,6 +5,7 @@ import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import FilterGepee from "@components/FilterGepee.vue";
 import DatatableGepeeReport from "@components/DatatableGepeeReport.vue";
 import DialogActivityCategory from "@components/DialogActivityCategory.vue";
+import DialogExportLinkVue from "@components/ui/DialogExportLink.vue";
 
 const viewStore = useViewStore();
 if(!viewStore.filters.month) {
@@ -24,7 +25,8 @@ const onFilterApply = filterValue => {
     fetchData();
 };
 
-const showCategory = ref(false);
+const showDialogCategory = ref(false);
+const showDialogExport = ref(false);
 </script>
 <template>
     <div>
@@ -45,14 +47,26 @@ const showCategory = ref(false);
             <FilterGepee requireMonth @apply="onFilterApply" :autoApply="filterAutoApply" />
         </div>
         <div class="container-fluid dashboard-default-sec pb-5">
-            <div class="py-4 d-flex justify-content-end">
-                <button type="button" @click="showCategory = true" class="btn btn-outline-info bg-white btn-icon px-3">
-                    <VueFeather type="info" size="1em" />
-                    <span class="ms-2">Keterangan Activity Categories</span>
-                </button>
+            <div class="py-4">
+                <div class="row g-4 justify-content-end align-items-center">
+                    <div class="col-auto">
+                        <button type="button" @click="showDialogCategory = true" class="btn btn-outline-info bg-white btn-icon px-3">
+                            <VueFeather type="info" size="1em" />
+                            <span class="ms-2">Keterangan Activity Categories</span>
+                        </button>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" @click="showDialogExport = true" class="btn btn-outline-info bg-white btn-icon px-3">
+                            <VueFeather type="download" size="1em" />
+                            <span class="ms-2">Export</span>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <DatatableGepeeReport ref="datatable" @showCategory="showCategory = true" />
+            <DatatableGepeeReport ref="datatable" @showCategory="showDialogCategory = true" />
         </div>
-        <DialogActivityCategory v-model:visible="showCategory" />
+        <DialogActivityCategory v-model:visible="showDialogCategory" />
+        <DialogExportLinkVue v-if="showDialogExport" baseUrl="/export/excel/gepee-report" title="Export Gepee Management Report"
+            useDivre useWitel useYear requireYear @close="showDialogExport = false" />
     </div>
 </template>

@@ -213,7 +213,8 @@
 }
 
 .table-gepee .btn-collapse-row.child-collapsed,
-.table-pue .btn-collapse-row.child-collapsed {
+.table-pue .btn-collapse-row.child-collapsed,
+.table-collapsable .btn-collapse-row.child-collapsed {
     @apply tw-rotate-0;
 }
 

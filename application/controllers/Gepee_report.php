@@ -54,6 +54,10 @@ class Gepee_report extends RestController
                 'timestamp' => date('Y-m-d H:i:s'),
                 'success' => true
             ];
+
+            if(!isset($divreCode) && !isset($witelCode)) {
+                $data['gepee_summary_nasional'] = $this->gepee_management_model->get_report_summary_nasional($filter, $pueLowLimit);
+            }
         }
 
         $this->response($data, $status);

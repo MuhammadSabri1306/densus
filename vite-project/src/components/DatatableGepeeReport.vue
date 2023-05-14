@@ -30,6 +30,7 @@ const getGroupAvg = (data, groupKey) => {
     let rowCount = 0;
     const sum = {
         exc: [],
+        excSummary: { countAll: 0, countApproved: 0 },
         pue: { online: 0, offline: 0 }
     };
 
@@ -41,12 +42,15 @@ const getGroupAvg = (data, groupKey) => {
             if(sum.exc.length < (i + 1)) {
                 sum.exc.push({
                     countAll: 0,
-                    countApproved: 0,
+                    countApproved: 0
                 });
             }
 
             sum.exc[i].countAll += item.performance[i].count_all;
             sum.exc[i].countApproved += item.performance[i].count_approved;
+
+            sum.excSummary.countAll += item.performance[i].count_all;
+            sum.excSummary.countApproved += item.performance[i].count_approved;
         }
 
         if(item.pue.online)
@@ -61,11 +65,15 @@ const getGroupAvg = (data, groupKey) => {
 
         currItem.performance[index].count_all = sumItem.countAll;
         currItem.performance[index].count_approved = sumItem.countApproved;
-        currItem.performance[index].percentage = (sumItem.countAll > 0)
-            ? sumItem.countApproved / sumItem.countAll * 100
-            : 0;
+        currItem.performance[index].percentage = (sumItem.countAll < 1) ? 0
+            : sumItem.countApproved / sumItem.countAll * 100;
 
     });
+
+    currItem.performance_summary.count_all = sum.excSummary.countAll;
+    currItem.performance_summary.count_approved = sum.excSummary.countApproved;
+    currItem.performance_summary.percentage = (sum.excSummary.countAll < 1) ? 0
+        : sum.excSummary.countApproved / sum.excSummary.countAll * 100;
 
     currItem.pue.online = rowCount > 0 ? sum.pue.online / rowCount : null;
     currItem.pue.offline = rowCount > 0 ? sum.pue.offline / rowCount : null;
@@ -77,66 +85,6 @@ const getGroupAvg = (data, groupKey) => {
         : pueValue > pueLowLimit.value;
     
     return currItem;
-};
-
-const getSummaryNasional = rawData => {
-    if(rawData.length < 1)
-        return;
-    
-    const data = JSON.parse(JSON.stringify(rawData));
-    const summary = {};
-
-    let rowCount = 0;
-    const sum = {
-        exc: [],
-        pue: { online: 0, offline: 0 }
-    };
-
-    data.forEach(item => {
-        for(let i=0; i<item.performance.length; i++) {
-            if(sum.exc.length < (i + 1)) {
-                sum.exc.push({
-                    countAll: 0,
-                    countApproved: 0,
-                });
-            }
-
-            sum.exc[i].countAll += item.performance[i].count_all;
-            sum.exc[i].countApproved += item.performance[i].count_approved;
-        }
-
-        if(item.pue.online)
-            sum.pue.online += item.pue.online;
-        if(item.pue.offline)
-            sum.pue.offline += item.pue.offline;
-        rowCount++;
-    });
-
-    sum.exc.forEach((sumItem, index) => {
-        
-        if(!summary.performance)
-            summary.performance = [];
-        summary.performance.push({
-            count_all: sumItem.countAll,
-            count_approved: sumItem.countApproved
-        });
-        summary.performance[index].percentage = (sumItem.countAll > 0)
-            ? sumItem.countApproved / sumItem.countAll * 100
-            : 0;
-
-    });
-
-    summary.pue = {
-        online: rowCount > 0 ? sum.pue.online / rowCount : null,
-        offline: rowCount > 0 ? sum.pue.offline / rowCount : null
-    };
-    const pueValue = summary.pue.online !== null ? summary.pue.online
-        : summary.pue.offline !== null ? summary.pue.offline
-        : 0;
-    summary.pue.isReachTarget = pueLowLimit.value === null ? false
-        : pueValue > pueLowLimit.value;
-    
-    return summary;
 };
 
 const groupData = data => {
@@ -182,10 +130,14 @@ const fetch = () => {
             pueLowLimit.value = data.pueLowLimit;
         if(data.category)
             categoryList.value = data.category;
-        if(data.gepee) {
+        if(data.gepee)
             tableData.value = groupData(data.gepee);
-            summaryNasional.value = level.value == "nasional" ? getSummaryNasional(data.gepee) : null;
-        }
+
+        if(data.gepee_summary_nasional)
+            summaryNasional.value = data.gepee_summary_nasional;
+        else
+            summaryNasional.value = null;
+
         isLoading.value = false;
     });
 };
@@ -214,10 +166,14 @@ const formatItemNumber = itemNumb => {
 };
 
 const getColClassNumber = (type, itemNumb) => {
-    if(type == "pue" && itemNumb === null)
+    if(type == "pue") {
+        if(itemNumb)
+            return getPueBgClass(toFixedNumber(itemNumb));
+        if(itemNumb === 0)
+            return 'f-w-700';
         return "text-muted";
-    if(type == "pue")
-        return getPueBgClass(toFixedNumber(itemNumb));
+    }
+
     if(type == "percent")
         return getPercentageTextClass(toFixedNumber(itemNumb));
 };
@@ -242,9 +198,14 @@ const getColClassNumber = (type, itemNumb) => {
                         <th class="bg-success" rowspan="2">ID Pelanggan</th>
                         <th class="bg-success" colspan="2">PUE <small>(Diukur Bulanan)</small></th>
                         <th class="bg-success" rowspan="2">OFFLINE/<br>ONLINE</th>
-                        <th class="bg-success" rowspan="2">PUE &lt;= {{ pueLowLimit }}<br><small>YA/TIDAK</small></th>
+                        <th class="bg-success" rowspan="2">
+                            PUE &lt;= {{ pueLowLimit }}<br><small>YA/TIDAK</small>
+                        </th>
                         <th class="bg-success" rowspan="2">Tagihan PLN<br><small>(Tren Bulanan)</small></th>
-                        <th class="bg-success" :colspan="categoryList.length+1">Presentase Pencapaian Aktivitas GePEE (Dihitung 100% jika sudah dilaksanakan)</th>
+                        <th class="bg-success" :colspan="categoryList.length+1">
+                            Presentase Pencapaian Aktivitas GePEE (Dihitung 100% jika sudah dilaksanakan)
+                        </th>
+                        <th rowspan="2">% Gepee Activity</th>
                     </tr>
                     <tr>
                         <th>OFFLINE</th>
@@ -262,15 +223,30 @@ const getColClassNumber = (type, itemNumb) => {
                         <td class="sticky-column !tw-bg-[#24695c] text-white">
                             <b class="px-3">SUMMARY NASIONAL</b>
                         </td>
+                        <td></td>
+                        <td :class="getColClassNumber('pue', summaryNasional.pue.offline)"
+                            class="middle text-center f-w-700">
+                            {{ formatItemNumber(summaryNasional.pue.offline) }}
+                        </td>
+                        <td :class="getColClassNumber('pue', summaryNasional.pue.online)"
+                            class="middle text-center f-w-700">
+                            {{ formatItemNumber(summaryNasional.pue.online) }}
+                        </td>
+                        <td></td>
+                        <td class="middle text-center">
+                            {{ isPueReachTarget(summaryNasional) ? "TIDAK" : "YA" }}
+                        </td>
                         <td class="middle text-center">-</td>
-                        <td :class="getColClassNumber('pue', summaryNasional.pue.offline)" class="middle text-center f-w-700">{{ formatItemNumber(summaryNasional.pue.offline) }}</td>
-                        <td :class="getColClassNumber('pue', summaryNasional.pue.online)" class="middle text-center f-w-700">{{ formatItemNumber(summaryNasional.pue.online) }}</td>
+                        <td v-for="category in summaryNasional.performance"
+                            :class="getColClassNumber('percent', category.percentage)"
+                            class="middle text-center f-w-700">
+                            {{ formatItemNumber(category.percentage) }}%
+                        </td>
                         <td class="middle text-center">-</td>
-                        <td class="middle text-center">{{ isPueReachTarget(summaryNasional) ? "TIDAK" : "YA" }}</td>
-                        <td class="middle text-center">-</td>
-                        <td v-for="category in summaryNasional.performance" :class="getColClassNumber('percent', category.percentage)"
-                            class="middle text-center f-w-700">{{ formatItemNumber(category.percentage) }}%</td>
-                        <td class="middle text-center">-</td>
+                        <td :class="getColClassNumber('percent', summaryNasional.performance_summary.percentage)"
+                            class="middle text-center f-w-700">
+                            {{ formatItemNumber(summaryNasional.performance_summary.percentage) }}%
+                        </td>
                     </tr>
                     <tr v-for="item in tableData" :class="getRowClass(item)">
                         <td class="sticky-column">
@@ -296,14 +272,26 @@ const getColClassNumber = (type, itemNumb) => {
                             
                         </td>
                         <td class="middle text-center">{{ (item.type == 'sto') ? item.location.id_pel_pln : '-' }}</td>
-                        <td :class="getColClassNumber('pue', item.pue.offline)" class="middle text-center f-w-700">{{ formatItemNumber(item.pue.offline) }}</td>
-                        <td :class="getColClassNumber('pue', item.pue.online)" class="middle text-center f-w-700">{{ formatItemNumber(item.pue.online) }}</td>
-                        <td class="middle text-center">{{ (item.type != 'sto') ? '-' : isLocationOnline(item) ? "ONLINE" : "OFFLINE" }}</td>
+                        <td :class="getColClassNumber('pue', item.pue.offline)" class="middle text-center f-w-700">
+                            {{ formatItemNumber(item.pue.offline) }}
+                        </td>
+                        <td :class="getColClassNumber('pue', item.pue.online)" class="middle text-center f-w-700">
+                            {{ formatItemNumber(item.pue.online) }}
+                        </td>
+                        <td class="middle text-center">
+                            {{ (item.type != 'sto') ? '' : isLocationOnline(item) ? "ONLINE" : "OFFLINE" }}
+                        </td>
                         <td class="middle text-center">{{ isPueReachTarget(item) ? "TIDAK" : "YA" }}</td>
                         <td class="middle text-center">-</td>
                         <td v-for="category in item.performance" :class="getColClassNumber('percent', category.percentage)"
-                            class="middle text-center f-w-700">{{ formatItemNumber(category.percentage) }}%</td>
+                            class="middle text-center f-w-700">
+                            {{ formatItemNumber(category.percentage) }}%
+                        </td>
                         <td class="middle text-center">-</td>
+                        <td :class="getColClassNumber('percent', item.performance_summary.percentage)"
+                            class="middle text-center f-w-700">
+                            {{ formatItemNumber(item.performance_summary.percentage) }}%
+                        </td>
                     </tr>
                 </tbody>
             </table>
