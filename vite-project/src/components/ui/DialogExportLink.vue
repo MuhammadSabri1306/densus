@@ -75,12 +75,19 @@ const onDivreChange = val => {
 
 const onWitelChange = val => exportFilter.witel = val;
 
+const hasDateChanged = ref(false);
+const onDateChanged = () => hasDateChanged.value = true;
+
 const yearConfig = getYearConfig();
 const isDateInvalid = computed(() => {
+    if(!hasDateChanged.value)
+        return false;
+
     if((props.requireYear || props.requireMonth) && !exportFilter.date)
         return true;
     if(!exportFilter.date)
         return false;
+
     const year = exportFilter.date.getFullYear();
     return year < yearConfig.startYear || year > yearConfig.endYear;
 });
@@ -240,20 +247,22 @@ const colLayoutClass = computed(() => {
                         <label for="inputMonth" :class="{ 'required': requireMonth }">Bulan</label>
                         <div class="d-grid">
                             <Calendar v-model="exportFilter.date" view="month" dateFormat="M yy" :showButtonBar="!requireMonth" placeholder="Pilih Bulan"
-                                :class="{ 'p-invalid': isDateInvalid }" inputId="inputMonth" inputClass="form-control" panelClass="filter-month" />
+                                :class="{ 'p-invalid': isDateInvalid }" inputId="inputMonth" inputClass="form-control" panelClass="filter-month"
+                                @update:model-value="onDateChanged" />
                         </div>
                     </div>
                     <div v-else class="mb-2">
                         <label for="inputYear" :class="{ 'required': requireYear }">Tahun</label>
                         <div class="d-grid">
                             <Calendar v-model="exportFilter.date" view="year" dateFormat="yy" :showButtonBar="!requireYear" placeholder="Pilih Tahun"
-                                :class="{ 'p-invalid': isDateInvalid }" inputId="inputYear" inputClass="form-control" panelClass="filter-month" />
+                                :class="{ 'p-invalid': isDateInvalid }" inputId="inputYear" inputClass="form-control" panelClass="tw-min-w-[13rem]"
+                                @update:model-value="onDateChanged" />
                         </div>
                     </div>
                 </div>
             </div>
             <div class="mt-3 mb-4 d-flex justify-content-end">
-                <button type="submit" :disabled="disableSubmit" class="btn btn-primary">Generate Link</button>
+                <button type="submit" :disabled="disableSubmit || isDateInvalid" class="btn btn-primary">Generate Link</button>
             </div>
             <div v-if="generatedUrl || isGenerating" class="d-flex mt-4">
                 <div class="card card-body">

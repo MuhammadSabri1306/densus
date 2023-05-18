@@ -17,7 +17,7 @@ const route = useRoute();
 const rtuCode = computed(() => route.params.rtuCode);
 
 const pueStore = usePueStore();
-const requestLevel = computed(() => pueStore.pue ? pueStore.pue.req_level : null);
+const location = computed(() => pueStore.pue ? pueStore.pue.req_level : null);
 
 const latestValue = computed(() => pueStore.pue ? pueStore.pue.latestValue : {});
 const maxPue = computed(() => pueStore.pue ? pueStore.pue.maxValue : {});
@@ -60,8 +60,8 @@ const excelExportUrl = computed(() => pueStore.excelExportUrl);
         <div class="container-fluid dashboard-default-sec">
             <div class="row align-items-end">
                 <div class="col-md-4">
-                    <CardPueRtuInfo :data="requestLevel" />
-                    <CardPueCurrent />
+                    <CardPueRtuInfo :data="location" />
+                    <CardPueCurrent @loaded="loc => location = loc" />
                     <CardPueMax title="Nilai PUE tertinggi tahun ini" />
                 </div>
                 <div class="col-md-8">
@@ -71,8 +71,7 @@ const excelExportUrl = computed(() => pueStore.excelExportUrl);
                     <CardContentPueAverage />
                 </div>
                 <div class="col-md-6">
-                    <CardContentPuePerformance v-if="!isLoading" :value="performances" />
-                    <Skeleton v-else width="100%" height="190px" class="mb-4" />
+                    <CardContentPuePerformance />
                 </div>
                 <div class="col-12">
                     <div class="card">

@@ -19,10 +19,10 @@ import MonitoringFuelParamsDetail from "@views/MonitoringFuelParamsDetail.vue";
 import MonitoringFuelInvoice from "@views/MonitoringFuelInvoice.vue";
 import MonitoringFuelInvoiceDetail from "@views/MonitoringFuelInvoiceDetail.vue";
 
-import PueMonitoringRtu from "@views/PueMonitoringRtu.vue";
-import PueMonitoringDivre from "@views/PueMonitoringDivre.vue";
-import PueMonitoringWitel from "@views/PueMonitoringWitel.vue";
-import PueMonitoring from "@views/PueMonitoring.vue";
+import PueOnlineRtu from "@views/PueOnlineRtu.vue";
+import PueOnlineDivre from "@views/PueOnlineDivre.vue";
+import PueOnlineWitel from "@views/PueOnlineWitel.vue";
+import PueOnline from "@views/PueOnline.vue";
 import PueOffline from "@views/PueOffline.vue";
 import PueOfflineDetail from "@views/PueOfflineDetail.vue";
 
@@ -90,19 +90,19 @@ const routes = [
         meta: { menuKey: ["energy"], requiresAuth: true }
     },
     {
-        path: "/pue/online", component: PueMonitoring,
+        path: "/pue/online", component: PueOnline,
         meta: { menuKey: ["pue"], requiresAuth: true }
     },
     {
-        path: "/pue/online/divre/:divreCode", component: PueMonitoringDivre,
+        path: "/pue/online/divre/:divreCode", component: PueOnlineDivre,
         meta: { menuKey: ["pue"], requiresAuth: true }
     },
     {
-        path: "/pue/online/witel/:witelCode", component: PueMonitoringWitel,
+        path: "/pue/online/witel/:witelCode", component: PueOnlineWitel,
         meta: { menuKey: ["pue"], requiresAuth: true }
     },
     {
-        path: "/pue/online/rtu/:rtuCode", component: PueMonitoringRtu,
+        path: "/pue/online/rtu/:rtuCode", component: PueOnlineRtu,
         meta: { menuKey: ["pue"], requiresAuth: true }
     },
     {

@@ -93,8 +93,9 @@ class Monitoring_pue extends RestController
         }
 
         if($status === 200) {
-            $data['stoValueOnYear'] = $this->pue_counter2_model->get_curr_year_avg_on_sto($zone);
-            $data['timestamp'] = date('Y-m-d H:i:s');
+            $stoValue = $this->pue_counter2_model->get_curr_year_avg_on_sto($zone);
+            $data['stoValue'] = $stoValue['data'] ? $stoValue['data'] : [];
+            $data['timestamp'] = $stoValue['timestamp'] ? $stoValue['timestamp'] : date('Y-m-d H:i:s');
             $data['success'] = true;
             
             $this->load->library('user_log');
@@ -290,8 +291,10 @@ class Monitoring_pue extends RestController
         }
 
         if($status === 200) {
-            $data['performances'] = $this->pue_counter2_model->get_performance_value($zone);
-            $data['timestamp'] = date('Y-m-d H:i:s');
+            $perf = $this->pue_counter2_model->get_performance_value($zone);
+            $data['timestamp'] = $perf['timestamp'] ? $perf['timestamp'] : date('Y-m-d H:i:s');
+            unset($perf['timestamp']);
+            $data['performances'] = $perf;
             $data['success'] = true;
             
             $this->load->library('user_log');

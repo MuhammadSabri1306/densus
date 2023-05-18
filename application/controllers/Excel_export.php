@@ -42,30 +42,21 @@ class Excel_export extends CI_Controller
             'divre' => $this->input->get('divre'),
             'rtu' => $this->input->get('rtu')
         ];
-        $filterDate = [
-            'year' => $this->input->get('year'),
-            'month' => $this->input->get('month')
-        ];
+        
+        $month = $this->input->get('month');
+        $year = $this->input->get('year');
+        
+        $this->load->library('datetime_range');
+        if(!$year) $year = date('Y');
 
-        $filterYear = isset($filterDate['year']) ? $filterDate['year'] : date('Y');
-        if(isset($filterDate['month'])) {
-            $filterMonth = $filterDate['month'];
-
-            $dateTime = new DateTime("$filterYear-$filterMonth-01");
-            $startDate = $dateTime->format('Y-m-d H:i:s');
-
-            $dateTime->modify('last day of this month');
-            $endDate = $dateTime->format('Y-m-d H:i:s');
+        if($month) {
+            $datetime = $this->datetime_range->get_by_month($month, $year);
         } else {
-            $dateTime = new DateTime("$filterYear-01-01");
-            $startDate = $dateTime->format('Y-m-d H:i:s');
-
-            $dateTime = new DateTime("$filterYear-12-31");
-            $endDate = $dateTime->format('Y-m-d H:i:s');
+            $datetime = $this->datetime_range->get_by_year($year);
         }
 
-        $filter['startDate'] = $startDate;
-        $filter['endDate'] = $endDate;
+        $filter['startDate'] = $datetime[0];
+        $filter['endDate'] = $datetime[1];
 
         $this->load->model('Pue_counter2_model');
         $data = $this->Pue_counter2_model->get_all($filter);

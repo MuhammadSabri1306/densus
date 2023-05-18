@@ -7,17 +7,47 @@ const props = defineProps({
     data: { type: Object, default: {} }
 });
 
+const location = computed(() => props.data);
 const route = useRoute();
-const level = computed(() => route.params.rtuCode ? "rtu" : route.params.witelCode ? "witel" : route.params.divreCode ? "divre" : "nasional");
+const level = computed(() => {
+    const rtuCode = route.params.rtuCode;
+    const witelCode = route.params.witelCode;
+    const divreCode = route.params.divreCode;
+    return rtuCode ? "rtu"
+        : witelCode ? "witel"
+        : divreCode ? "divre"
+        : "nasional";
+});
 
-const divreName = computed(() => props.data.divre_name ? props.data.divre_name : null);
-const witelName = computed(() => props.data.witel_name ? props.data.witel_name : null);
-const rtuName = computed(() => props.data.rtu_name ? props.data.rtu_name : null);
+const headingText = computed(() => {
+    const levelVal = level.value;
+    const loc = location.value;
+    if(levelVal == "rtu")
+        return loc.value?.rtu_name || null;
+    if(levelVal == "witel")
+        return loc.value?.witel_name || null;
+    return null;
+});
 
-const firstHeading = computed(() => level.value == "rtu" ? rtuName.value : level.value == "witel" ? witelName.value : divreName.value);
-const secondTitle = computed(() => level.value == "rtu" ? witelName.value : level.value == "witel" ? divreName.value : null);
+const titleFirstLine = computed(() => {
+    const levelVal = level.value;
+    const loc = location.value;
+    if(levelVal == "rtu")
+        return loc?.witel_name || null;
+    if(levelVal == "witel")
+        return loc?.divre_name || null;
+    return null;
+});
 
-const isLoaded = computed(() => props.data && props.data.divre_name ? true : false);
+const titleSecondLine = computed(() => {
+    const loc = location.value;
+    return loc?.rtu_name || null;
+});
+
+const isLoaded = computed(() => {
+    const loc = location.value;
+    return loc && loc.divre_name ? true : false;
+});
 </script>
 <template>
     <div class="card income-card card-primary">                                 
@@ -25,16 +55,16 @@ const isLoaded = computed(() => props.data && props.data.divre_name ? true : fal
             <div class="round-box">
                 <VueFeather type="zap" style="enable-background:new 0 0 448.057 448.057;color:#24695c;" xml:space="preserve" />
             </div>
-            <div v-if="isLoaded && level != 'nasional'" class="d-flex flex-column justify-content-center">
-                <h5 v-if="firstHeading">{{ firstHeading }}</h5>
-                <p v-if="secondTitle" class="small mb-0">{{ secondTitle }}</p>
-                <p v-if="rtuName" class="small">{{ divreName }}</p>
-            </div>
-            <h5 v-else-if="level == 'nasional'">Nasional</h5>
-            <div v-else class="d-flex flex-column justify-content-center">
+            <div v-if="!isLoaded" class="d-flex flex-column justify-content-center">
                 <Skeleton height="1.5rem" width="12rem" class="mb-2" />
                 <Skeleton height="1rem" width="20rem" />
                 <Skeleton height="1rem" width="16rem" />
+            </div>
+            <h5 v-else-if="level == 'nasional'">Nasional</h5>
+            <div v-else class="d-flex flex-column justify-content-center">
+                <h5 v-if="headingText">{{ headingText }}</h5>
+                <p v-if="titleFirstLine" class="small mb-0">{{ titleFirstLine }}</p>
+                <p v-if="titleSecondLine" class="small">{{ titleSecondLine }}</p>
             </div>
             <div class="parrten">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewbox="0 0 448.057 448.057" style="enable-background:new 0 0 448.057 448.057;" xml:space="preserve">

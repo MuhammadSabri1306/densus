@@ -5,22 +5,38 @@ import { useViewStore } from "@stores/view";
 
 const userStore = useUserStore();
 const userRole = computed(() => userStore.role);
-const userLevel = computed(() => userStore.level);
-const userLocId = computed(() => userStore.locationId);
 
 const viewStore = useViewStore();
 const menuItems = computed(() => {
+    const userLevel = userStore.level;
+    const userLocId = userStore.locationId;
+
+    if(!userLevel || userLevel == "nasional" || !userLocId)
+        return viewStore.menuItems;
+
     return viewStore.menuItems.map(item => {
-        if(userLevel.value && userLevel.value != "nasional" && userLocId.value) {
-            if(["pue", "gepee_evidence"].indexOf(item.key) >= 0) {
-                const pueItem = JSON.parse(JSON.stringify(item));
-                pueItem.to = item.to + "/" + userLevel.value + "/" + userLocId.value;
-                return pueItem;
+        const isGepeeEvidence = item.key == "gepee_evidence";
+        const isPue = item.key == "pue";
+        
+        if(isPue) {
+            const pueOnlineIndex = item.child.findIndex(childItem => childItem.key == "online");
+            if(pueOnlineIndex >= 0) {
+                const newItem = JSON.parse(JSON.stringify(item));
+                newItem.child[pueOnlineIndex].to = `${ item.child[pueOnlineIndex].to }/${ userLevel }/${ userLocId }`;
+                return newItem;
             }
         }
+
+        if(isGepeeEvidence) {
+            const newItem = JSON.parse(JSON.stringify(item));
+            newItem.to = `${ item.to }/${ userLevel }/${ userLocId }`;
+            return newItem;
+        }
+
         return item;
     });
 });
+
 const menuActKeys = computed(() => viewStore.menuActKeys);
 
 const expandedIndexes = ref([]);

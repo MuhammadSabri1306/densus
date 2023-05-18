@@ -11,6 +11,8 @@ import sampleLatestValue from "@helpers/sample-data/pue/latest-value";
 import sampleCchartData from "@helpers/sample-data/pue/chart-data";
 import sampleMaxValue from "@helpers/sample-data/pue/max-value";
 import sampleAvg from "@helpers/sample-data/pue/avg";
+import samplePerformance from "@helpers/sample-data/pue/performance";
+import sampleStoValue from "@helpers/sample-data/pue/sto-value";
 
 export const usePueV2Store = defineStore("pueV2", {
     state: () => ({
@@ -176,6 +178,52 @@ export const usePueV2Store = defineStore("pueV2", {
                 else
                     callback({ success: false, status: err.response?.status, data: {} });
 
+            }
+        },
+
+        async getPerformance(callback) {
+            const zoneUrlParams = this.zoneUrlParams;
+            let data = {};
+            let status = null;
+            try {
+            
+                const response = await http.get("/pue/performance" + zoneUrlParams, this.fetchHeader);
+                status = response.status;
+                if(!response.data.performances)
+                    console.warn(response.data);
+                else
+                    data = response.data;
+                    
+            } catch(err) {
+                handlingFetchErr(err);
+                status = err.response?.status;
+                if(allowSampleData)
+                    data = samplePerformance;
+            } finally {
+                callback({ success: false, status, data });
+            }
+        },
+
+        async getStoValue(callback) {
+            const zoneUrlParams = this.zoneUrlParams;
+            let data = {};
+            let status = null;
+            try {
+            
+                const response = await http.get("/pue/sto_value_on_year" + zoneUrlParams, this.fetchHeader);
+                status = response.status;
+                if(!response.data.stoValue)
+                    console.warn(response.data);
+                else
+                    data = response.data;
+
+            } catch(err) {
+                handlingFetchErr(err);
+                status = err.response?.status;
+                if(allowSampleData)
+                    data = sampleStoValue;
+            } finally {
+                callback({ success: false, status, data });
             }
         },
 
