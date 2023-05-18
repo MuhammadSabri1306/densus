@@ -54,6 +54,10 @@ onUnmounted(() => document.body.addEventListener("click", hideActions));
     @apply tw-opacity-100 tw-w-10;
 }
 
+.dt-dropdown > button[disabled] > :deep(i) {
+    @apply tw-opacity-60;
+}
+
 .dt-dropdown.show > button:nth-last-child(3) {
     right: calc(100% + 9rem);
 }

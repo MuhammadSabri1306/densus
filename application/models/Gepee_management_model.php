@@ -8,6 +8,7 @@ class Gepee_management_model extends CI_Model
     protected $tableRtuName = 'rtu_map';
     protected $tablePueOfflineName = 'pue_offline';
     protected $tablePueOnlineName = 'pue_counter';
+    protected $tablePueTargetName = 'pue_location_target';
 
     public $currUser;
 
@@ -62,6 +63,26 @@ class Gepee_management_model extends CI_Model
         return $appliedFilter;
     }
 
+    protected function get_pue_category($pueValue)
+    {
+        $pueValue = (double) $pueValue;
+        
+        if($pueValue <= 1.8) return 'A';
+        if($pueValue <= 2) return 'B';
+        if($pueValue <= 4) return 'C';
+        return 'D';
+    }
+
+    public function get_pue_category_item()
+    {
+        return [
+            [ 'category' => 'A', 'title' => '<= 1.8' ],
+            [ 'category' => 'B', 'title' => '1.81 - 2.00' ],
+            [ 'category' => 'C', 'title' => '2.01 - 4.00' ],
+            [ 'category' => 'D', 'title' => '>= 4.01' ]
+        ];
+    }
+
     public function get_report($filter, $pueLowLimit = 1.8)
     {
         $this->use_module('get_report', [
@@ -71,12 +92,18 @@ class Gepee_management_model extends CI_Model
         return $this->result;
     }
     
-    public function get_report_summary_nasional($filter, $pueLowLimit = 1.8)
+    public function get_report_summary_nasional($filter, $pueLowLimit)
     {
         $this->use_module('get_report_summary_nasional', [
             'filter' => $filter,
             'pueLowLimit' => $pueLowLimit
         ]);
+        return $this->result;
+    }
+
+    public function get_pue_report($filter = [])
+    {
+        $this->use_module('get_pue_report', [ 'filter' => $filter ]);
         return $this->result;
     }
 }

@@ -55,13 +55,30 @@ class Datetime_range
 
     public function get_by_quarter($quarter, $year) {
         $quarter = (int) $quarter;
-        $startmonth = (($quarter - 1) * 3) + 1;
+        $startMonth = (($quarter - 1) * 3) + 1;
 
-        $this->startDate = new DateTime("$year-$startmonth-01");
+        $this->startDate = new DateTime("$year-$startMonth-01");
         $this->startDate->modify('first day of this month');
         $this->startDate->setTime(0, 0, 0);
     
-        $endMonth = $startmonth + 2;
+        $endMonth = $startMonth + 2;
+        $this->endDate = new DateTime("$year-$endMonth-01");
+        $this->endDate->modify('last day of this month');
+        $this->endDate->setTime(23, 59, 59);
+    
+        return $this->get_result();
+    }
+
+    public function get_quarter_by_month($month, $year) {
+        $month = (int) $month;
+        $quarter = ceil($month / 3);
+        $startMonth = ($quarter - 1) * 3 + 1;
+
+        $this->startDate = new DateTime("$year-$startMonth-01");
+        $this->startDate->modify('first day of this month');
+        $this->startDate->setTime(0, 0, 0);
+    
+        $endMonth = $startMonth + 2;
         $this->endDate = new DateTime("$year-$endMonth-01");
         $this->endDate->modify('last day of this month');
         $this->endDate->setTime(23, 59, 59);

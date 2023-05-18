@@ -6,7 +6,7 @@ import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import FilterActivity from "@components/FilterActivity.vue";
-import DataTableActivityDashboard from "@components/DataTableActivityDashboard/index.vue";
+import DataTableActivityDashboardV2 from "@components/DataTableActivityDashboardV2/index.vue";
 import DialogActivityDashboard from "@components/DialogActivityDashboard.vue";
 import SectionActivityDashboardCard from "@components/SectionActivityDashboardCard.vue";
 
@@ -96,7 +96,7 @@ const showCard = ref(false);
             <FilterActivity @apply="onFilterApply" :requireDivre="false" :autoApply="filterAutoApply" />
         </div>
         <div class="container-fluid dashboard-default-sec pb-5">
-            <DataTableActivityDashboard ref="datatable" />
+            <DataTableActivityDashboardV2 ref="datatable" />
         </div>
         <DialogActivityDashboard v-if="showDialogActivity" />
     </div>

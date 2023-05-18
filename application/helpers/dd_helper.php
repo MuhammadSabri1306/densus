@@ -42,3 +42,11 @@ function dd(...$items) {
 
     exit();
 }
+
+function dd_json(...$items) {
+    if(count($items) < 1) return;
+
+    header('Content-type: application/json');
+    echo json_encode($items);
+    exit();
+}

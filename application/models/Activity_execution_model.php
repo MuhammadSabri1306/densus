@@ -206,6 +206,12 @@ class Activity_execution_model extends CI_Model
         return $this->result;
     }
 
+    public function get_performance_v3_test($filter)
+    {
+        $this->use_module('get_performance_v3_test', [ 'filter' => $filter ]);
+        return $this->result;
+    }
+
     public function get_file_list()
     {
         $list = $this->db

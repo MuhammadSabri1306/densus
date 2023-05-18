@@ -40,14 +40,4 @@ td.activity-bg-danger {
     background-color: #ff658d!important;
 }
 
-td.exec-exists {
-    background-color: #6e9b94;
-    /* background-color: rgba(114,169,67,0.67); */
-}
-
-td.exec-not-exists {
-    background-color: #f57575;
-    /* background-color: rgba(210,45,61,0.9); */
-}
-
 </style>

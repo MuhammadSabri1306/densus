@@ -8,7 +8,8 @@ import { backendUrl } from "@/configs/base";
 
 import { allowSampleData } from "@/configs/base";
 import sampleSchedule from "@helpers/sample-data/schedule";
-import sampleExecution from "@helpers/sample-data/execution";
+// import sampleExecution from "@helpers/sample-data/execution";
+import sampleExecution from "@helpers/sample-data/activity-execution";
 import sampleCategory from "@helpers/sample-data/activity-category";
 import sampleAvailableMonth from "@helpers/sample-data/available-month";
 import sampleLocation from "@helpers/sample-data/location";
@@ -217,24 +218,23 @@ export const useActivityStore = defineStore("activity", {
 
         async getPerformance(callback) {
             const url = getApiPath("/activity/performance", this.filters);
-            const data = { month_list: [], category_list: [], performance: [] };
+            let data = { month_list: [], category_list: [], performance: [] };
             try {
                 const response = await http.get(url, this.fetchHeader);
                 const success = response.data.success;
                 const status = response.status;
 
-                if(!response.data.success) {
+                if(!response.data.success)
                     console.warn(response.data);
-                } else {
-                    data.month_list = response.data.month_list;
-                    data.category_list = response.data.category_list;
-                    data.performance = response.data.performance;
-                }
+                else
+                    data = response.data;
 
                 callback({ success, status, data });
 
             } catch(err) {
                 handlingFetchErr(err);
+                if(allowSampleData)
+                    data = sampleExecution;
                 callback({ success: false, status: err.response?.status, data });
             }
         },

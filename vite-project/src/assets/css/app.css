@@ -139,6 +139,10 @@
     width: 100%;
 }
 
+.listbox-wrapper.post-bottom {
+    top: 100%;
+}
+
 .listbox-wrapper .p-listbox-list-wrapper {
     max-height: 10rem;
 }

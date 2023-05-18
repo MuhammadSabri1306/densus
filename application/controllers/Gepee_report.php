@@ -20,7 +20,6 @@ class Gepee_report extends RestController
             case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
             default: $data = REST_ERR_DEFAULT_DATA; break;
         }
-        $status = 200;
 
         if($status === 200) {
             $divreCode = $this->input->get('divre');
@@ -62,4 +61,5 @@ class Gepee_report extends RestController
 
         $this->response($data, $status);
     }
+    
 }

@@ -12,7 +12,8 @@ const props = defineProps({
     level: String,
     divreValue: String,
     witelValue: String,
-    locationType: { type: String, default: "basic" }
+    locationType: { type: String, default: "basic" },
+    position: { type: String, default: "top" }
 });
 
 const locationTypeList = ["basic", "gepee"];
@@ -167,8 +168,8 @@ const validate = () => {
         if(isValid)
             isValid = props.requireWitel && !location.witel ? false : true;
     }
-
-    return isValid ? true : false;
+    
+    return isValid;
 };
 
 defineExpose({ validate });
@@ -178,14 +179,14 @@ defineExpose({ validate });
         <div v-show="showListbox.divre" :class="{ 'col-md-6': showListbox.witel }">
             <div class="mb-4">
                 <label for="inputDivre" class="col-form-label">Regional<span v-if="requireDivre" class="text-danger"> *</span></label>
-                <ListboxFilter ref="listboxDivre" inputId="inputDivre" inputPlaceholder="Pilih Divre"
+                <ListboxFilter ref="listboxDivre" :position="position" inputId="inputDivre" inputPlaceholder="Pilih Divre"
                     :isRequired="requireDivre" valueKey="divre_kode" labelKey="divre_name" @change="onDivreChange" />
             </div>
         </div>
         <div v-show="showListbox.witel" :class="{ 'col-md-6': showListbox.divre }">
             <div class="mb-4">
                 <label for="inputWitel" class="col-form-label">Witel<span v-if="requireWitel" class="text-danger"> *</span></label>
-                <ListboxFilter ref="listboxWitel" inputId="inputWitel" inputPlaceholder="Pilih Witel"
+                <ListboxFilter ref="listboxWitel" :position="position" inputId="inputWitel" inputPlaceholder="Pilih Witel"
                     :isRequired="requireWitel" valueKey="witel_kode" labelKey="witel_name" @change="onWitelChange" />
             </div>
         </div>

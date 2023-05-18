@@ -76,7 +76,7 @@ export const useUserStore = defineStore("user", {
         },
 
 		logout(callback = null) {
-            http.get("/logout", this.axiosAuthConfig);
+            // http.get("/logout", this.axiosAuthConfig);
             
 			deleteCookie("user");
             this.$reset();

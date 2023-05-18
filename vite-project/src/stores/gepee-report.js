@@ -3,7 +3,6 @@ import http from "@helpers/http-common";
 import { handlingFetchErr } from "@helpers/error-handler";
 import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
-import { backendUrl } from "@/configs/base";
 
 import { allowSampleData } from "@/configs/base";
 import sampleGepeeReport from "@helpers/sample-data/gepee-report";
@@ -51,11 +50,6 @@ export const useGepeeReportStore = defineStore("gepee-report", {
                 params.push("idLocation=" + filters.idLocation);
 
             return params.length < 1 ? "" : "/?" + params.join("&");
-        },
-
-        getExcelExportUrl() {
-            const urlParams = this.getUrlParams();
-            return backendUrl + "/export/excel/gepee-report" + urlParams;
         },
 
         async getReport(callback) {

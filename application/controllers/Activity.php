@@ -265,18 +265,23 @@ class Activity extends RestController
         }
 
         if($status === 200) {
+            $divre = $this->input->get('divre');
+            $witel = $this->input->get('witel');
+            $month = $this->input->get('month');
+            $year = $this->input->get('year');
+            
+            $this->load->library('datetime_range');
+            if(!$year) $year = date('Y');
+            if($month) {
+                $datetime = $this->datetime_range->get_by_month($month, $year);
+            } else {
+                $datetime = $this->datetime_range->get_by_year($year);
+            }
+
+            $filter = compact('divre', 'witel', 'datetime');
+
             $this->load->model('activity_execution_model');
-
-            $currUser = $this->auth_jwt->get_payload();
-            $this->activity_execution_model->currUser = $currUser;
-
-            $filter = [
-                'divre' => $this->input->get('divre'),
-                'witel' => $this->input->get('witel'),
-                'month' => $this->input->get('month')
-            ];
-
-            $data = $this->activity_execution_model->get_performance_v2($filter);
+            $data = $this->activity_execution_model->get_performance_v3($filter);
             if(is_array($data)) {
                 $data['success'] = true;
             } else {

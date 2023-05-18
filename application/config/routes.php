@@ -207,6 +207,24 @@ $route['api/pue/offline/(:num)']['delete'] = 'pue_offline/index/$1';
 
 $route['api/gepee-report']['get'] = 'gepee_report';
 
+$route['api/pue-target/report']['get'] = 'pue_target/report';
+$route['api/pue-target']['get'] = 'pue_target';
+$route['api/pue-target']['post'] = 'pue_target';
+$route['api/pue-target/(:num)']['put'] = 'pue_target/index/$1';
+$route['api/pue-target/(:num)']['delete'] = 'pue_target/index/$1';
+
+$route['api/oxisp/list/(:num)/(:num)/(:num)']['get'] = 'oxisp_activity/sto_month_data/$1/$2/$3';
+$route['api/oxisp/list']['get'] = 'oxisp_activity/performance';
+$route['api/oxisp/location']['get'] = 'oxisp_activity/location';
+$route['api/oxisp/location']['post'] = 'oxisp_activity/location';
+$route['api/oxisp/location/(:num)']['put'] = 'oxisp_activity/location/$1';
+$route['api/oxisp/location/(:num)']['delete'] = 'oxisp_activity/location/$1';
+$route['api/oxisp/approve/(:num)']['put'] = 'oxisp_activity/approve/$1';
+$route['api/oxisp/reject/(:num)']['put'] = 'oxisp_activity/reject/$1';
+$route['api/oxisp/(:num)/(:num)']['post'] = 'oxisp_activity/index/$1/$2';
+$route['api/oxisp/(:num)']['put'] = 'oxisp_activity/index/$1';
+$route['api/oxisp/(:num)']['delete'] = 'oxisp_activity/index/$1';
+
 $route['api/user/(:any)']['get'] = 'user/index/$1';
 $route['api/user/(:any)']['put'] = 'user/index/$1';
 $route['api/user/(:any)/general']['put'] = 'user/update/$1';
@@ -219,10 +237,12 @@ $route['api/profile']['get'] = 'user/profile';
 /* ENDPOINT EXPORT DATA */
 $route['export/excel/pue'] = 'excel_export/pue';
 $route['export/excel/activity/performance'] = 'excel_export/activity_performance';
+$route['test/activity/performance'] = 'excel_export/activity_performance_test';
 $route['export/excel/activity/schedule'] = 'excel_export/activity_schedule';
 // $route['export/excel/activity/schedule'] = 'activity_schedule/index_v3';
 $route['export/excel/activity/execution'] = 'excel_export/activity_execution';
 $route['export/excel/gepee-report'] = 'excel_export/gepee_report';
+$route['export/excel/opnimus-sto'] = 'excel_export/get_opnimus_master_sto';
 
 /* ENDPOINT FILE ATTACHMENT */
 // $route['api/attachment/activity/check']['get'] = 'attachment/check_activity_execution';
@@ -232,6 +252,8 @@ $route['api/attachment/gepee-evidence']['post'] = 'attachment/store_gepee_eviden
 $route['api/attachment/gepee-evidence/(:any)']['delete'] = 'attachment/del_gepee_evidence/$1';
 $route['api/attachment/pue/offline']['post'] = 'attachment/store_pue_evidence';
 $route['api/attachment/pue/offline/(:any)']['delete'] = 'attachment/del_pue_evidence/$1';
+$route['api/attachment/oxisp']['post'] = 'attachment/store_oxisp_evidence';
+$route['api/attachment/oxisp/(:any)']['delete'] = 'attachment/del_oxisp_evidence/$1';
 
 $route['test/get_pue_chart_data'] = 'test/get_pue_chart_data';
 $route['test/cron_store_pue_counter'] = 'test/cron_store_pue_counter';

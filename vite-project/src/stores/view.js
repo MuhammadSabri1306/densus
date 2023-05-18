@@ -28,8 +28,9 @@ export const useViewStore = defineStore("view", {
         filters: {
             divre: null,
             witel: null,
+            year: null,
             month: null,
-            year: null
+            quarter: null
         }
     }),
     getters: {
@@ -82,10 +83,12 @@ export const useViewStore = defineStore("view", {
                 this.filters.divre = filter.divre;
             if(filter.witel !== undefined)
                 this.filters.witel = filter.witel;
-            if(filter.month !== undefined)
-                this.filters.month = Number(filter.month);
             if(filter.year !== undefined)
                 this.filters.year = Number(filter.year);
+            if(filter.month !== undefined)
+                this.filters.month = Number(filter.month);
+            if(filter.quarter !== undefined)
+                this.filters.quarter = Number(filter.quarter);
         },
 
         async getDivre(locationKey = "basic") {

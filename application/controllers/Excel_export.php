@@ -119,6 +119,7 @@ class Excel_export extends CI_Controller
         $monthList = isset($data['month_list']) ? $data['month_list'] : [];
         $categoryList = isset($data['category_list']) ? $data['category_list'] : [];
         $performanceList = isset($data['performance']) ? $data['performance'] : [];
+        // dd_json($performanceList);
         
         $this->excel
             ->selectCell([2, 2], [2, 3])
@@ -225,6 +226,32 @@ class Excel_export extends CI_Controller
         }
         
         $this->excel->createDownload('GEPEE Activity Performansi '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
+    }
+
+    public function activity_performance_test()
+    {
+        $divre = $this->input->get('divre');
+        $witel = $this->input->get('witel');
+        $month = $this->input->get('month');
+        $year = $this->input->get('year');
+        
+        $this->load->library('datetime_range');
+        if(!$year) $year = date('Y');
+        if($month) {
+            $datetime = $this->datetime_range->get_by_month($month, $year);
+        } else {
+            $datetime = $this->datetime_range->get_by_year($year);
+        }
+
+        $filter = compact('divre', 'witel', 'datetime');
+
+        $this->load->model('activity_execution_model');
+        $data = $this->activity_execution_model->get_performance_v3_test($filter);
+        $monthList = isset($data['month_list']) ? $data['month_list'] : [];
+        $categoryList = isset($data['category_list']) ? $data['category_list'] : [];
+        $performanceList = isset($data['performance']) ? $data['performance'] : [];
+        
+        dd_json($performanceList);
     }
 
     public function activity_schedule()
@@ -687,7 +714,27 @@ class Excel_export extends CI_Controller
         }
         
         $this->excel->createDownload('GEPEE Management Report '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
-        // header('Content-type: application/json');
-        // echo json_encode($dataGepee);
+    }
+
+    public function get_opnimus_master_sto()
+    {
+        $this->load->model('opnimus_master_sto_model');
+        $data = $this->opnimus_master_sto_model->get_master_lokasi_gepee_cross_data();
+        
+        $this->excel->setField([
+            'divre_kode' => 'KODE DIVRE',
+            'divre_name' => 'NAMA DIVRE',
+            'witel_kode' => 'KODE WITEL',
+            'witel_name' => 'NAMA WITEL',
+            'datel' => 'DATEL',
+            'sto_kode' => 'KODE STO',
+            'sto_name' => 'NAMA STO'
+        ]);
+        
+        $this->excel
+            ->selectCell([1, 1])
+            ->fill($data);
+
+        $this->excel->createDownload('master_sto_densus '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
     }
 }

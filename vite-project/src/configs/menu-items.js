@@ -82,7 +82,18 @@ export const menuGepeePerformance = {
     icon: "award",
     child: [
         { key: "report", to: "/gepee-performance/management-report", title: "Management Report" },
-        { key: "pue_target", to: "#", title: "Target Pencapaian PUE" }
+        { key: "pue_target", to: "/gepee-performance/pue-target", title: "Target Pencapaian PUE" }
+    ],
+    roles: ["admin", "viewer", "teknisi"]
+};
+
+export const menuOxisp = {
+    key: "oxisp",
+    title: "OXISP",
+    icon: "award",
+    child: [
+        { key: "dashboard", to: "#", title: "Dashboard" },
+        { key: "activity", to: "/oxisp/activity", title: "Input Activity" }
     ],
     roles: ["admin", "viewer", "teknisi"]
 };
@@ -97,6 +108,7 @@ export default (() => {
         menuGepee,
         menuGepeeEvidence,
         menuGepeePerformance,
+        menuOxisp,
         menuUser
     ];
     return menu.map(item => {

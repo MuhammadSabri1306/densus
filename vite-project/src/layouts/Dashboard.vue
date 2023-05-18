@@ -179,5 +179,4 @@ const profileUpdateData = ref(null);
     margin-bottom: 30px;
 }
 
-
 </style>

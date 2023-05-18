@@ -36,9 +36,9 @@ const showDialogExport = ref(false);
                     <div class="col-sm-6">
                         <h3>
                             <VueFeather type="feather" size="1.2em" class="font-primary middle" />
-                            <span class="middle ms-3">PUE Offline</span>
+                            <span class="middle ms-3">Management Report</span>
                         </h3>
-                        <DashboardBreadcrumb :items="['Monitoring PUE', 'PUE Offline']" class="ms-4" />
+                        <DashboardBreadcrumb :items="['GEPEE Performance', 'Management Report']" class="ms-4" />
                     </div>
                 </div>
             </div>

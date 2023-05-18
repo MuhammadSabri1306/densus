@@ -39,6 +39,10 @@ import GepeeEvidenceDivre from "@views/GepeeEvidenceDivre.vue";
 import GepeeEvidenceWitel from "@views/GepeeEvidenceWitel.vue";
 
 import GepeeReport from "@views/GepeeReport.vue";
+import PueTarget from "@views/PueTarget.vue";
+import PueTargetDetail from "@views/PueTargetDetail.vue";
+
+import OxispActivity from "@views/OxispActivity.vue";
 
 const routes = [
     {
@@ -168,6 +172,26 @@ const routes = [
     {
         path: "/gepee-performance/management-report", component: GepeeReport,
         meta: { menuKey: ["gepee_performance", "report"], requiresAuth: true }
+    },
+    {
+        path: "/gepee-performance/pue-target", component: PueTarget,
+        meta: { menuKey: ["gepee_performance", "pue_target"], requiresAuth: true }
+    },
+    {
+        path: "/gepee-performance/pue-target/target", component: PueTargetDetail,
+        meta: { menuKey: ["gepee_performance", "pue_target", "target"], requiresAuth: true }
+    },
+    {
+        path: "/oxisp/activity/:year(\\d+)/:month(\\d+)/:idLocation(\\d+)", component: OxispActivity,
+        meta: { menuKey: ["oxisp", "activity"], requiresAuth: true }
+    },
+    {
+        path: "/oxisp/activity/:idLocation(\\d+)", component: OxispActivity,
+        meta: { menuKey: ["oxisp", "activity"], requiresAuth: true }
+    },
+    {
+        path: "/oxisp/activity", component: OxispActivity,
+        meta: { menuKey: ["oxisp", "activity"], requiresAuth: true }
     },
     {
         path: "/login", name: "login", component: Login,

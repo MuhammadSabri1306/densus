@@ -12,7 +12,9 @@ const props = defineProps({
     valueKey: { type: String, required: true },
     labelKey: { type: String, required: true },
     useResetItem: { type: Boolean, default: false },
-    resetTitle: { type: String, default: "Reset Selection" }
+    resetTitle: { type: String, default: "Reset Selection" },
+    useSearchField: { type: Boolean, default: true },
+    position: { type: String, default: "top" }
 });
 
 const list = ref([]);
@@ -71,6 +73,13 @@ const onChange = e => {
     emit("change", e.value);
     showList.value = false;
 };
+
+const wrapperClass = computed(() => {
+    const position = props.position;
+    if(position == "bottom")
+        return "post-bottom";
+    return;
+});
 </script>
 <template>
     <div class="position-relative">
@@ -78,9 +87,9 @@ const onChange = e => {
         <div v-if="isLoading" class="position-absolute top-50 end-0 translate-middle mr-2 d-flex align-items-center">
             <VueFeather type="loader" animation="spin" size="1rem" />
         </div>
-        <div v-if="showList" class="listbox-wrapper">
+        <div v-if="showList" :class="wrapperClass" class="listbox-wrapper">
             <Listbox v-model="selected" @change="onChange" @click.stop="" :options="list"
-                :optionValue="valueKey" :optionLabel="labelKey" :filter="true"
+                :optionValue="valueKey" :optionLabel="labelKey" :filter="useSearchField"
                 :filterPlaceholder="inputPlaceholder" :disabled="isDisabled" />
         </div>
     </div>
