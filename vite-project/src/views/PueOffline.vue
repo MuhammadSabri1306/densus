@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { useViewStore } from "@stores/view";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterGepee from "@components/FilterGepee.vue";
+import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
 import DatatablePueOffline from "@components/DatatablePueOffline.vue";
 
 const viewStore = useViewStore();
@@ -41,7 +41,7 @@ const onFilterApply = filterValue => {
             </div>
         </div>
         <div class="container-fluid dashboard-default-sec">
-            <FilterGepee requireDivre @apply="onFilterApply" :autoApply="filterAutoApply" />
+            <FilterGepeeV2 useMonth requireYear @apply="onFilterApply" :autoApply="filterAutoApply" />
         </div>
         <div class="container-fluid dashboard-default-sec pb-5">
             <DatatablePueOffline ref="datatable" />

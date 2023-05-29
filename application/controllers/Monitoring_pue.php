@@ -21,13 +21,13 @@ class Monitoring_pue extends RestController
         }
 
         if($status === 200) {
+            $currUser = $this->auth_jwt->get_payload();
             $zone = [
                 'witel' => $currUser['level'] == 'witel' ? $currUser['locationId'] : $this->input->get('witel'),
                 'divre' => $currUser['level'] == 'divre' ? $currUser['locationId'] : $this->input->get('divre'),
                 'rtu' => $this->input->get('rtu')
             ];
 
-            $currUser = $this->auth_jwt->get_payload();
             $this->load->model('pue_counter2_model');
 
             $dataLevel = $this->pue_counter2_model->get_data_level_by_filter($zone);
@@ -73,12 +73,12 @@ class Monitoring_pue extends RestController
         }
 
         if($status === 200) {
+            $currUser = $this->auth_jwt->get_payload();
             $zone = [
-                'witel' => $currUser['level'] == 'witel' ? $currUser['locationId'] : $this->input->get('divre'),
-                'divre' => $currUser['level'] == 'divre' ? $currUser['locationId'] : $this->input->get('witel')
+                'witel' => $currUser['level'] == 'witel' ? $currUser['locationId'] : $this->input->get('witel'),
+                'divre' => $currUser['level'] == 'divre' ? $currUser['locationId'] : $this->input->get('divre')
             ];
 
-            $currUser = $this->auth_jwt->get_payload();
             $this->load->model('pue_counter2_model');
 
             $dataLevel = $this->pue_counter2_model->get_data_level_by_filter($zone);
@@ -120,13 +120,13 @@ class Monitoring_pue extends RestController
         }
 
         if($status === 200) {
+            $currUser = $this->auth_jwt->get_payload();
             $zone = [
                 'witel' => $currUser['level'] == 'witel' ? $currUser['locationId'] : $this->input->get('witel'),
                 'divre' => $currUser['level'] == 'divre' ? $currUser['locationId'] : $this->input->get('divre'),
                 'rtu' => $this->input->get('rtu')
             ];
 
-            $currUser = $this->auth_jwt->get_payload();
             $this->load->model('pue_counter2_model');
 
             $dataLevel = $this->pue_counter2_model->get_data_level_by_filter($zone);
@@ -176,13 +176,13 @@ class Monitoring_pue extends RestController
         }
 
         if($status === 200) {
+            $currUser = $this->auth_jwt->get_payload();
             $zone = [
-                'witel' => $currUser['level'] == 'witel' ? $currUser['locationId'] : $this->input->get('divre'),
-                'divre' => $currUser['level'] == 'divre' ? $currUser['locationId'] : $this->input->get('witel'),
+                'witel' => $currUser['level'] == 'witel' ? $currUser['locationId'] : $this->input->get('witel'),
+                'divre' => $currUser['level'] == 'divre' ? $currUser['locationId'] : $this->input->get('divre'),
                 'rtu' => $this->input->get('rtu')
             ];
 
-            $currUser = $this->auth_jwt->get_payload();
             $this->load->model('pue_counter2_model');
 
             $dataLevel = $this->pue_counter2_model->get_data_level_by_filter($zone);
@@ -223,13 +223,13 @@ class Monitoring_pue extends RestController
         }
 
         if($status === 200) {
+            $currUser = $this->auth_jwt->get_payload();
             $zone = [
-                'witel' => $currUser['level'] == 'witel' ? $currUser['locationId'] : $this->input->get('divre'),
-                'divre' => $currUser['level'] == 'divre' ? $currUser['locationId'] : $this->input->get('witel'),
+                'witel' => $currUser['level'] == 'witel' ? $currUser['locationId'] : $this->input->get('witel'),
+                'divre' => $currUser['level'] == 'divre' ? $currUser['locationId'] : $this->input->get('divre'),
                 'rtu' => $this->input->get('rtu')
             ];
 
-            $currUser = $this->auth_jwt->get_payload();
             $this->load->model('pue_counter2_model');
 
             $dataLevel = $this->pue_counter2_model->get_data_level_by_filter($zone);
@@ -270,18 +270,16 @@ class Monitoring_pue extends RestController
         }
 
         if($status === 200) {
+            $currUser = $this->auth_jwt->get_payload();
             $zone = [
-                'witel' => $currUser['level'] == 'witel' ? $currUser['locationId'] : $this->input->get('divre'),
-                'divre' => $currUser['level'] == 'divre' ? $currUser['locationId'] : $this->input->get('witel'),
+                'witel' => $currUser['level'] == 'witel' ? $currUser['locationId'] : $this->input->get('witel'),
+                'divre' => $currUser['level'] == 'divre' ? $currUser['locationId'] : $this->input->get('divre'),
                 'rtu' => $this->input->get('rtu')
             ];
-
-            $currUser = $this->auth_jwt->get_payload();
             $this->load->model('pue_counter2_model');
 
             $dataLevel = $this->pue_counter2_model->get_data_level_by_filter($zone);
             $data = [ 'request_location' => $dataLevel ];
-
             $forbiddWitel = $currUser['level'] == 'witel' && $dataLevel['witel_kode'] != $currUser['locationId'];
             $forbiddDivre = $currUser['level'] == 'divre' && $dataLevel['divre_kode'] != $currUser['locationId'];
             if($forbiddWitel || $forbiddDivre) {

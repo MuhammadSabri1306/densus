@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
@@ -8,37 +8,50 @@ import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
 import DatatableOxispInput from "@components/DatatableOxispInput.vue";
 import DialogOxisp from "@components/DialogOxisp.vue";
 import DialogOxispAdmin from "@components/DialogOxispAdmin.vue";
-import DialogOxispLocationAdd from "@components/DialogOxispLocationAdd.vue";
+import DialogOxispLocationSelect from "@components/DialogOxispLocationSelect.vue";
 import DialogOxispLocationDetail from "@components/DialogOxispLocationDetail.vue";
-
-const route = useRoute();
-const year = computed(() => route.params.year);
-const month = computed(() => route.params.month);
-const idLocation = computed(() => route.params.idLocation);
 
 const userStore = useUserStore();
 const isAdmin = computed(() => userStore.role == "admin");
 
-const showDialogDetail = computed(() => {
-    return (!isAdmin.value && year.value && month.value & idLocation.value) ? true : false;
-});
-const showDialogDetailAdmin = computed(() => {
-    return (isAdmin.value && year.value && month.value & idLocation.value) ? true : false;
-});
-const showDialogLocDetail = computed(() => {
-    if(idLocation.value && !year.value && !month.value)
-        return true;
-    return false;
-});
-const showDialogLocAdd = ref(false);
+const showDialogDetail = ref(false);
+const showDialogDetailAdmin = ref(false);
+const showDialogLocDetail = ref(false);
+const showDialogSelect = ref(false);
+
+const route = useRoute();
+
+const watcherSrc = () => {
+    const year = route.params.year;
+    const month = route.params.month;
+    const idLocation = route.params.idLocation;
+    return { year, month, idLocation };
+};
+
+const watcherCall = ({ year, month, idLocation }) => {
+    if(!isAdmin.value && year && month && idLocation)
+        showDialogDetail.value = true;
+    else showDialogDetail.value = false;
+
+    if(isAdmin.value && year && month && idLocation)
+        showDialogDetailAdmin.value = true;
+    else showDialogDetailAdmin.value = false;
+
+    if(!year && !month && idLocation)
+        showDialogLocDetail.value = true;
+    else showDialogLocDetail.value = false;
+};
+
+watch(watcherSrc, watcherCall);
+watcherCall(watcherSrc());
 
 const viewStore = useViewStore();
 if(!viewStore.filters.month) {
     const date = new Date();
-    if(year.value)
-        date.setFullYear(year.value);
-    if(month.value)
-        date.setMonth(month.value - 1);
+    if(route.params.year)
+        date.setFullYear(route.params.year);
+    if(route.params.month)
+        date.setMonth(route.params.month - 1);
     viewStore.setFilter({
         month: date.getMonth() + 1,
         year: date.getFullYear()
@@ -52,6 +65,17 @@ const filterAutoApply = () => true;
 const onFilterApply = filterValue => {
     viewStore.setFilter(filterValue);
     fetchData();
+};
+
+const getOxispUrl = idLocation => {
+    let year = viewStore.filters.year;
+    let month = viewStore.filters.month;
+
+    const currDate = new Date();
+    if(!year) year = currDate.getFullYear();
+    if(!month) month = currDate.getMonth() + 1;
+
+    return `/oxisp/activity/${ year }/${ month }/${ idLocation }`;
 };
 </script>
 <template>
@@ -72,12 +96,12 @@ const onFilterApply = filterValue => {
         <div class="container-fluid dashboard-default-sec">
             <FilterGepeeV2 useMonth @apply="onFilterApply" :autoApply="filterAutoApply" />
         </div>
-        <div v-if="isAdmin" class="container-fluid py-4">
+        <div v-if="!isAdmin" class="container-fluid py-4">
             <div class="d-flex justify-content-end">
-                <button type="button" @click="showDialogLocAdd = true"
+                <button type="button" @click="showDialogSelect = true"
                     class="btn btn-outline-info bg-white btn-icon px-3">
                     <VueFeather type="plus" size="1.2em" />
-                    <span class="middle ms-2">Lokasi Baru</span>
+                    <span class="middle ms-2">Data Baru</span>
                 </button>
             </div>
         </div>
@@ -86,8 +110,8 @@ const onFilterApply = filterValue => {
         </div>
         <DialogOxisp v-if="showDialogDetail" />
         <DialogOxispAdmin v-if="showDialogDetailAdmin" />
-        <DialogOxispLocationAdd v-if="showDialogLocAdd" @save="fetchData"
-            @close="showDialogLocAdd = false" />
+        <DialogOxispLocationSelect v-if="showDialogSelect" @close="showDialogSelect = false"
+            @select="idLoc => $router.push(getOxispUrl(idLoc))"/>
         <DialogOxispLocationDetail v-if="showDialogLocDetail" @update="fetchData" />
     </div>
 </template>

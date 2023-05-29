@@ -257,4 +257,108 @@ class Location extends RestController
 
         $this->response($data, $status);
     }
+
+    // sssssssssssssssssssssss
+    public function sto_master_divre_get()
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        if($status === 200) {
+
+            $currUser = $this->auth_jwt->get_payload();
+            $this->load->model('master_sto_densus_model');
+            $this->master_sto_densus_model->currUser = $currUser;
+			$dataDivre = $this->master_sto_densus_model->get_divre();
+
+			$data = [ 'divre' => $dataDivre, 'success' => true ];
+			$this->response($data, 200);
+
+        } else {
+
+            switch($status) {
+                case REST_ERR_AUTH_CODE: $data = REST_ERR_AUTH_DATA; break;
+                case REST_ERR_EXP_CODE: $data = REST_ERR_EXP_DATA; break;
+                default: $data = null;
+            }
+            $this->response($data, $status);
+
+        }
+    }
+
+    public function sto_master_witel_get($witelCode = null)
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        if($status === 200) {
+
+            $currUser = $this->auth_jwt->get_payload();
+            $this->load->model('master_sto_densus_model');
+            $this->master_sto_densus_model->currUser = $currUser;
+			$dataWitel = $this->master_sto_densus_model->get_witel([ 'witel' => $witelCode ]);
+
+			$data = [ 'witel' => $dataWitel, 'success' => true ];
+			$this->response($data, 200);
+
+        } else {
+
+            switch($status) {
+                case REST_ERR_AUTH_CODE: $data = REST_ERR_AUTH_DATA; break;
+                case REST_ERR_EXP_CODE: $data = REST_ERR_EXP_DATA; break;
+                default: $data = null;
+            }
+            $this->response($data, $status);
+
+        }
+    }
+
+    public function sto_master_witel_by_divre_get($divreCode)
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        if($status === 200) {
+
+            $currUser = $this->auth_jwt->get_payload();
+            $this->load->model('master_sto_densus_model');
+            $this->master_sto_densus_model->currUser = $currUser;
+			$dataWitel = $this->master_sto_densus_model->get_witel([ 'divre' => $divreCode ]);
+
+			$data = [ 'witel' => $dataWitel, 'success' => true ];
+			$this->response($data, 200);
+
+        } else {
+
+            switch($status) {
+                case REST_ERR_AUTH_CODE: $data = REST_ERR_AUTH_DATA; break;
+                case REST_ERR_EXP_CODE: $data = REST_ERR_EXP_DATA; break;
+                default: $data = null;
+            }
+            $this->response($data, $status);
+
+        }
+    }
+
+    public function sto_master_sto_get($divreCode = null, $witelCode = null)
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        if($status === 200) {
+            $filter = [
+                'divre' => $divreCode,
+                'witel' => $witelCode
+            ];
+
+            $this->load->model('master_sto_densus_model');
+            $this->master_sto_densus_model->currUser = $currUser;
+			$dataSto = $this->master_sto_densus_model->get($filter);
+
+			$data = [ 'sto' => $dataSto, 'success' => true ];
+			$this->response($data, 200);
+
+        } else {
+
+            switch($status) {
+                case REST_ERR_AUTH_CODE: $data = REST_ERR_AUTH_DATA; break;
+                case REST_ERR_EXP_CODE: $data = REST_ERR_EXP_DATA; break;
+                default: $data = null;
+            }
+            $this->response($data, $status);
+
+        }
+    }
 }

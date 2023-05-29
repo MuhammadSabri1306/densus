@@ -4,7 +4,7 @@ import { useRoute } from "vue-router";
 import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterActivity from "@components/FilterActivity.vue";
+import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
 import DataTableActivityExecution from "@components/DataTableActivityExecution/index.vue";
 import DialogActivityExec from "@components/DialogActivityExec.vue";
 import DialogActivityExecAdmin from "@components/DialogActivityExecAdmin.vue";
@@ -67,7 +67,7 @@ const showDataTable = computed(() => {
             </div>
         </div>
         <div v-if="showDataTable" class="container-fluid dashboard-default-sec">
-            <FilterActivity @apply="applyFilter" :autoApply="filterAutoApply" />
+            <FilterGepeeV2 useMonth @apply="applyFilter" :autoApply="filterAutoApply" />
             <div class="pb-5">
                 <DataTableActivityExecution ref="datatableExecution" />
             </div>

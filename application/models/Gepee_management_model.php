@@ -9,7 +9,6 @@ class Gepee_management_model extends CI_Model
     protected $tablePueOfflineName = 'pue_offline';
     protected $tablePueOnlineName = 'pue_counter';
     protected $tablePueTargetName = 'pue_location_target';
-
     public $currUser;
 
     public function __construct()
@@ -91,6 +90,15 @@ class Gepee_management_model extends CI_Model
         ]);
         return $this->result;
     }
+
+    public function get_report_v2($filter, $pueLowLimit = 1.8)
+    {
+        $this->use_module('get_report_v2', [
+            'filter' => $filter,
+            'pueLowLimit' => $pueLowLimit
+        ]);
+        return $this->result;
+    }
     
     public function get_report_summary_nasional($filter, $pueLowLimit)
     {
@@ -104,6 +112,12 @@ class Gepee_management_model extends CI_Model
     public function get_pue_report($filter = [])
     {
         $this->use_module('get_pue_report', [ 'filter' => $filter ]);
+        return $this->result;
+    }
+
+    public function get_location_status($filter = [])
+    {
+        $this->use_module('get_location_status', [ 'filter' => $filter ]);
         return $this->result;
     }
 }

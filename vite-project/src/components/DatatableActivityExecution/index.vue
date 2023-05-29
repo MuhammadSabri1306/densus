@@ -1,10 +1,10 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useActivityStore } from "@stores/activity";
-import { useViewStore } from "@stores/view";
 import Skeleton from "primevue/skeleton";
 import DialogActivityCategory from "@components/DialogActivityCategory.vue";
 import Datatable from "./Datatable.vue";
+import DialogExportLinkVue from "@components/ui/DialogExportLink.vue";
 
 const show = ref(false);
 const isLoading = ref(true);
@@ -18,15 +18,24 @@ const fetch = () => {
 };
 
 defineExpose({ fetch });
+const showDialogExport = ref(false);
 </script>
 <template>
     <div v-if="show">
         <div v-if="!isLoading">
-            <div class="py-4 d-flex justify-content-end">
-                <button type="button" @click="showCategory = true" class="btn btn-outline-info bg-white btn-icon px-3">
-                    <VueFeather type="info" size="1em" />
-                    <span class="ms-2">Keterangan Activity Categories</span>
-                </button>
+            <div class="py-4 row g-4 justify-content-end">
+                <div class="col-auto">
+                    <button type="button" @click="showCategory = true" class="btn btn-outline-info bg-white btn-icon px-3">
+                        <VueFeather type="info" size="1em" />
+                        <span class="ms-2">Keterangan Activity Categories</span>
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <button type="button" @click="showDialogExport = true" class="btn btn-outline-info bg-white btn-icon px-3">
+                        <VueFeather type="download" size="1em" />
+                        <span class="ms-2">Export</span>
+                    </button>
+                </div>
             </div>
             <Datatable />
         </div>
@@ -40,5 +49,7 @@ defineExpose({ fetch });
             </div>
         </div>
         <DialogActivityCategory v-model:visible="showCategory" />
+        <DialogExportLinkVue v-if="showDialogExport" baseUrl="/export/excel/activity/execution" title="Export Data Activity Pelaksanaan"
+            useDivre useWitel useYear requireYear @close="showDialogExport = false" />
     </div>
 </template>

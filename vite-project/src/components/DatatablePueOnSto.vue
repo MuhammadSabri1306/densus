@@ -119,7 +119,7 @@ const getDetailUrl = item => {
                 </tbody>
             </table>
         </div>
-        <DialogExportLinkVue v-if="showDialogExport" baseUrl="/export/excel/pues" title="Export Data PUE Online"
+        <DialogExportLinkVue v-if="showDialogExport" baseUrl="/export/excel/pue" title="Export Data PUE Online"
             useDivre useWitel useYear requireYear @close="showDialogExport = false" />
     </div>
 </template>

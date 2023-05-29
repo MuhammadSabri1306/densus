@@ -70,6 +70,34 @@ class Master_sto_densus_model extends CI_Model
         return $result;
     }
 
+    public function get_witel($filter = [])
+    {
+        $filterLoc = $this->get_loc_filter($filter);
+        $query = $this->db
+            ->select('divre_kode, divre_name, witel_kode, witel_name')
+            ->from($this->tableName)
+            ->where($filterLoc)
+            ->group_by('witel_kode')
+            ->get();
+
+        $result = isset($filter['witel']) ? $query->row_array() : $query->result_array();
+        return $result;
+    }
+    
+    public function get_divre($filter = [])
+    {
+        $filterLoc = $this->get_loc_filter($filter);
+        $query = $this->db
+            ->select('divre_kode, divre_name')
+            ->from($this->tableName)
+            ->where($filterLoc)
+            ->group_by('divre_kode')
+            ->get();
+
+        $result = isset($filter['divre']) ? $query->row_array() : $query->result_array();
+        return $result;
+    }
+
     public function save($body, $id = null)
     {
         if(is_null($id)) {

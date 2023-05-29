@@ -96,7 +96,6 @@ const groupData = data => {
 
 const table1 = ref(null);
 const table2 = ref(null);
-
 const showTable = ref(false);
 
 const updateTableData = () => {
@@ -135,6 +134,6 @@ defineExpose({ fetch });
             <h4 class="text-center">Belum ada data.</h4>
         </div>
         <Table1 ref="table1" v-show="showTable" class="mb-5" />
-        <Table2 ref="table2" v-show="showTable" />
+        <Table2 ref="table2" v-show="showTable" class="mb-5" />
     </div>
 </template>

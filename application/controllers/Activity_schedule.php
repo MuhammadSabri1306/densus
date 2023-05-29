@@ -235,10 +235,23 @@ class Activity_schedule extends RestController
             $currUser = $this->auth_jwt->get_payload();
             $this->activity_schedule_model->currUser = $currUser;
 
+            $divre = $this->input->get('divre');
+            $witel = $this->input->get('witel');
+            $year = $this->input->get('year');
+            $month = $this->input->get('month');
+
+            if(!$year) $year = date('Y');
+            $this->load->library('datetime_range');
+            if($month) {
+                $datetime = $this->datetime_range->get_by_month($month, $year);
+            } else {
+                $datetime = $this->datetime_range->get_by_year($year);
+            }
+
             $filter = [
-                'divre' => $this->input->get('divre'),
-                'witel' => $this->input->get('witel'),
-                'month' => $this->input->get('month')
+                'divre' => $divre,
+                'witel' => $witel,
+                'datetime' => $datetime
             ];
 
             $data = [

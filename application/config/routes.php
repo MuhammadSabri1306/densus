@@ -166,6 +166,15 @@ $route['api/location/gepee/sto/(:any)/(:any)']['get'] = 'location/gepee_sto/$1/$
 $route['api/location/gepee/sto/(:any)']['get'] = 'location/gepee_sto/$1';
 $route['api/location/gepee/sto']['get'] = 'location/gepee_sto';
 $route['api/location/gepee']['post'] = 'location/gepee';
+
+$route['api/location/sto-master/divre']['get'] = 'location/sto_master_divre';
+$route['api/location/sto-master/divre/(:any)/witel']['get'] = 'location/sto_master_witel_by_divre/$1';
+$route['api/location/sto-master/witel/(:any)']['get'] = 'location/sto_master_witel/$1';
+$route['api/location/sto-master/witel']['get'] = 'location/sto_master_witel';
+$route['api/location/sto-master/sto/(:any)/(:any)']['get'] = 'location/sto_master_sto/$1/$2';
+$route['api/location/sto-master/sto/(:any)']['get'] = 'location/sto_master_sto/$1';
+$route['api/location/sto-master/sto']['get'] = 'location/sto_master_sto';
+
 $route['api/location/divre']['get'] = 'location/divre';
 $route['api/location/divre/(:any)/witel']['get'] = 'location/witel_by_divre/$1';
 $route['api/location/witel/(:any)']['get'] = 'location/witel/$1';
@@ -206,8 +215,10 @@ $route['api/pue/offline/(:num)']['put'] = 'pue_offline/index/$1';
 $route['api/pue/offline/(:num)']['delete'] = 'pue_offline/index/$1';
 
 $route['api/gepee-report']['get'] = 'gepee_report';
+$route['api/gepee-report-v2']['get'] = 'gepee_report/index_v2';
 
 $route['api/pue-target/report']['get'] = 'pue_target/report';
+$route['api/pue-target/report/location-status']['get'] = 'pue_target/location_status';
 $route['api/pue-target']['get'] = 'pue_target';
 $route['api/pue-target']['post'] = 'pue_target';
 $route['api/pue-target/(:num)']['put'] = 'pue_target/index/$1';
@@ -242,6 +253,7 @@ $route['export/excel/activity/schedule'] = 'excel_export/activity_schedule';
 // $route['export/excel/activity/schedule'] = 'activity_schedule/index_v3';
 $route['export/excel/activity/execution'] = 'excel_export/activity_execution';
 $route['export/excel/gepee-report'] = 'excel_export/gepee_report';
+$route['export/excel/gepee-evidence'] = 'excel_export/gepee_evidence';
 $route['export/excel/opnimus-sto'] = 'excel_export/get_opnimus_master_sto';
 
 /* ENDPOINT FILE ATTACHMENT */

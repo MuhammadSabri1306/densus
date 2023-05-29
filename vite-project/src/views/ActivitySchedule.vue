@@ -4,7 +4,7 @@ import { onBeforeRouteLeave } from "vue-router";
 import { useActivityStore } from "@stores/activity";
 import { useViewStore } from "@stores/view";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterActivity from "@components/FilterActivity.vue";
+import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
 import DataTableActivitySchedule from "@components/DataTableActivitySchedule/index.vue";
 
 const viewStore = useViewStore();
@@ -71,7 +71,7 @@ const onDatatableUpdated = () => activityStore.setHasScheduleChanged(false);
             </div>
         </div>
         <div class="container-fluid dashboard-default-sec">
-            <FilterActivity @apply="onFilterApply" :autoApply="filterAutoApply" />
+            <FilterGepeeV2 useMonth @apply="onFilterApply" :autoApply="filterAutoApply" />
         </div>
         <div class="container-fluid dashboard-default-sec pb-5">
             <DataTableActivitySchedule ref="datatableSchedule" @update="onDatatableUpdated" />

@@ -31,7 +31,8 @@ class Gepee_evidence extends RestController
             if(!$year) $year = date('Y');
             if(!$semester) $semester = 1;
 
-            list($startDate, $endDate) = datetime_range_semester($semester, $year);
+            $this->load->library('datetime_range');
+            list($startDate, $endDate) = $this->datetime_range->get_by_semester($semester, $year);
             $filter = [
                 'divre' => $divreCode,
                 'witel' => $witelCode,

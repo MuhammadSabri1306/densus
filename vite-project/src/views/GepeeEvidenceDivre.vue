@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useUserStore } from "@stores/user";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import SectionGepeeEvidenceInfo from "@components/SectionGepeeEvidenceInfo.vue";
 import SectionGepeeEvidenceGrid from "@components/SectionGepeeEvidenceGrid.vue";
@@ -13,6 +14,9 @@ const onFilterApply = () => {
     if(panelGrid.value)
         panelGrid.value.fetch();
 };
+
+const userStore = useUserStore();
+const showBtnBack = computed(() => userStore.level == "nasional");
 </script>
 <template>
     <div>
@@ -26,7 +30,7 @@ const onFilterApply = () => {
                         </h3>
                         <DashboardBreadcrumb :items="['Gepee Evidence', 'Regional']" class="ms-4" />
                     </div>
-                    <div class="col-auto ms-auto">
+                    <div v-if="showBtnBack" class="col-auto ms-auto">
                         <RouterLink to="/gepee-evidence" class="btn btn-light btn-icon mt-4">
                             <VueFeather type="chevron-left" size="1.2em" class="middle" />
                             <span class="ms-1">Nasional</span>

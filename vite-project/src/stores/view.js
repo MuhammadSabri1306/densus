@@ -91,8 +91,17 @@ export const useViewStore = defineStore("view", {
                 this.filters.quarter = Number(filter.quarter);
         },
 
+        getLocationUrlKey($locationKey) {
+            const list = {
+                "basic": "",
+                "gepee": "/gepee",
+                "sto_master": "/sto-master"
+            };
+            return list[$locationKey];
+        },
+
         async getDivre(locationKey = "basic") {
-            const urlKey = locationKey == "gepee" ? "/gepee" : "";
+            const urlKey = this.getLocationUrlKey(locationKey);
             const url = `/location${ urlKey }/divre`;
             try {
 
@@ -109,8 +118,8 @@ export const useViewStore = defineStore("view", {
         },
 
         async getWitel(witelCode = null, locationKey = "basic") {
+            const urlKey = this.getLocationUrlKey(locationKey);
             witelCode = witelCode ? "/" + witelCode : "";
-            const urlKey = locationKey == "gepee" ? "/gepee" : "";
             const url = `/location${ urlKey }/witel${ witelCode }`;
             try {
 
@@ -130,7 +139,7 @@ export const useViewStore = defineStore("view", {
         },
 
         async getWitelByDivre(divreCode, locationKey = "basic") {
-            const urlKey = locationKey == "gepee" ? "/gepee" : "";
+            const urlKey = this.getLocationUrlKey(locationKey);
             const url = `/location${ urlKey }/divre/${ divreCode }/witel`;
             try {
 
@@ -150,7 +159,7 @@ export const useViewStore = defineStore("view", {
         },
 
         async getSto(filter = {}, locationKey = "basic") {
-            const urlKey = locationKey == "gepee" ? "/gepee" : "";
+            const urlKey = this.getLocationUrlKey(locationKey);
             let url = `/location${ urlKey }/sto`;
 
             if(filter.divre)

@@ -154,14 +154,15 @@ onMounted(() => {
                                 <div class="mb-2">
                                     <label for="inputDivre" :class="{ 'required': requireDivre }">Regional</label>
                                     <ListboxFilter ref="listboxDivre" inputId="inputDivre" inputPlaceholder="Pilih Divre"
-                                        isRequired valueKey="divre_kode" labelKey="divre_name" @change="onDivreChange" />
+                                        isRequired valueKey="divre_kode" labelKey="divre_name" :useResetItem="!requireDivre" resetTitle="Pilih Semua"
+                                        @change="onDivreChange" />
                                 </div>
                             </div>
                             <div class="col-md-4 col-xl-3">
                                 <div class="mb-2">
                                     <label for="inputWitel" :class="{ 'required': requireWitel }">Witel</label>
                                     <ListboxFilter ref="listboxWitel" inputId="inputWitel" inputPlaceholder="Pilih Witel"
-                                        valueKey="witel_kode" labelKey="witel_name" useResetItem resetTitle="Pilih Semua"
+                                        valueKey="witel_kode" labelKey="witel_name" :useResetItem="requireWitel" resetTitle="Pilih Semua"
                                         @change="onWitelChange" />
                                 </div>
                             </div>

@@ -9,6 +9,8 @@ $filterDateSch = $this->get_datetime_filter('created_at', $filter, 'sch');
 $filterDatePueOff = $this->get_datetime_filter('created_at', $filter, 'pue');
 $filterDatePueOn = $this->get_datetime_filter('timestamp', $filter, 'pue');
 
+$filterDateSchYear = $this->get_datetime_filter('created_at', [ 'datetime' => $filter['datetimeYear'] ], 'sch');
+
 /*
  * get Location data
  */
@@ -59,6 +61,11 @@ foreach($locationData as $location) {
             'count_approved' => 0,
             'percentage' => 0
         ],
+        'performance_summary_yearly' => [
+            'count_all' => 0,
+            'count_approved' => 0,
+            'percentage' => 0
+        ],
         'pue' => [
             'offline' => null,
             'online' => null,
@@ -90,26 +97,131 @@ foreach($locationData as $location) {
         ->where($filterDateSch)
         ->where('exc.status', 'approved');
     $countApprovedQuery = $this->db->get_compiled_select();
+
+    /*
+     * get Category data on Year
+     */
+    $this->db
+        ->select('COUNT(exc.id)')
+        ->from("$this->tableScheduleName AS sch")
+        ->join("$this->tableExecutionName AS exc", 'exc.id_schedule=sch.id')
+        ->where('sch.id_category=cat.id')
+        ->where('sch.id_lokasi', $location['id'])
+        ->where($filterDateSchYear);
+    $countAllQueryYear = $this->db->get_compiled_select();
     
+    $this->db
+        ->select('COUNT(exc.id)')
+        ->from("$this->tableScheduleName AS sch")
+        ->join("$this->tableExecutionName AS exc", 'exc.id_schedule=sch.id')
+        ->where('sch.id_category=cat.id')
+        ->where('sch.id_lokasi', $location['id'])
+        ->where($filterDateSchYear)
+        ->where('exc.status', 'approved');
+    $countApprovedQueryYear = $this->db->get_compiled_select();
+
+    /*
+     * has Schedule
+     */
+    $this->db
+        ->select('IF(COUNT(sch.id)>0, 1, 0)')
+        ->from("$this->tableScheduleName AS sch")
+        ->where('sch.value=1')
+        ->where('sch.id_category=cat.id')
+        ->where('sch.id_lokasi', $location['id'])
+        ->where($filterDateSch);
+    $hasScheduleQuery = $this->db->get_compiled_select();
+
+    /*
+     * has Schedule on year
+     */
+    $this->db
+        ->select('IF(COUNT(sch.id)>0, 1, 0)')
+        ->from("$this->tableScheduleName AS sch")
+        ->where('sch.value=1')
+        ->where('sch.id_category=cat.id')
+        ->where('sch.id_lokasi', $location['id'])
+        ->where($filterDateSchYear);
+    $hasScheduleOnYearQuery = $this->db->get_compiled_select();
+    
+    $selectQuery = "cat.id, cat.alias, cat.activity, ($hasScheduleQuery) AS has_schedule,
+        ($hasScheduleQuery) AS has_schedule_on_year, ($countAllQuery) AS count_all, ($countApprovedQuery) AS count_approved,
+        ($countAllQueryYear) AS count_all_yearly, ($countApprovedQueryYear) AS count_approved_yearly";
     $categoryData = $this->db
-        ->select("cat.id, cat.alias, cat.activity, ($countAllQuery) AS count_all, ($countApprovedQuery) AS count_approved")
+        ->select($selectQuery)
         ->from("$this->tableCategoryName AS cat")
         ->get()
         ->result_array();
-    
+
+    $percentageSummary = [];
+    $percentageSummaryYear = [];
+
     foreach($categoryData as $category) {
         $perfm = $category;
         $perfm['count_all'] = (int) $perfm['count_all'];
         $perfm['count_approved'] = (int) $perfm['count_approved'];
-        $perfm['percentage'] = $perfm['count_all'] < 1 ? 0 : $perfm['count_approved'] / $perfm['count_all'] * 100;
+
+        $percent = 0;
+        $perfm['has_schedule'] = boolval($perfm['has_schedule']);
+
+        // if($location['id'] == 406 && $category['id'] == 4) {
+        //     dd($perfm['has_schedule']);
+        // }
+
+        if($perfm['count_all'] < 1) {
+
+            if(!$perfm['has_schedule']) {
+                $percent = 100;
+            } else {
+                $row['performance_summary']['count_all'] += 1;
+            }
+
+        } else {
+
+            $percent = $perfm['count_approved'] / $perfm['count_all'] * 100;
+            $row['performance_summary']['count_all'] += $perfm['count_all'];
+            $row['performance_summary']['count_approved'] += $perfm['count_approved'];
+        
+        }
+        
+        $perfm['percentage'] = $percent;
         array_push($row['performance'], $perfm);
+        array_push($percentageSummary, $percent);
 
-        $row['performance_summary']['count_all'] += $perfm['count_all'];
-        $row['performance_summary']['count_approved'] += $perfm['count_approved'];
+
+        $countAllYearly = (int) $perfm['count_all_yearly'];
+        $countApprovedYearly = (int) $perfm['count_approved_yearly'];
+
+        $percentageYear = 0;
+        $hasScheduleOnYear = boolval($perfm['has_schedule_on_year']);
+        
+        if($countAllYearly < 1) {
+
+            if(!$hasScheduleOnYear) {
+                $percentageYear = 100;
+            } else {
+                $row['performance_summary_yearly']['count_all'] += 1;
+            }
+
+        } else {
+
+            $percentageYear = $countApprovedYearly / $countAllYearly * 100;
+            $row['performance_summary_yearly']['count_all'] += $countAllYearly;
+            $row['performance_summary_yearly']['count_approved'] += $countApprovedYearly;
+        
+        }
+        
+        array_push($percentageSummaryYear, $percentageYear);
+
+        // $row['performance_summary']['count_all'] += $perfm['count_all'] ? $perfm['count_all'] : 1;
+        // $row['performance_summary']['count_approved'] += $perfm['count_approved'];
     }
-
-    if($row['performance_summary']['count_all'] > 0) {
-        $row['performance_summary']['percentage'] = $row['performance_summary']['count_approved'] / $row['performance_summary']['count_all'] * 100;
+    
+    if(count($percentageSummary) > 0) {
+        $row['performance_summary']['percentage'] = array_sum($percentageSummary) / count($percentageSummary);
+    }
+    if(count($percentageSummaryYear) > 0) {
+        $row['performance_summary_yearly']['percentage'] = array_sum($percentageSummaryYear) / count($percentageSummaryYear);
     }
 
     /*

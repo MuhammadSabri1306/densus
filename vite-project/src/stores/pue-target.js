@@ -6,6 +6,7 @@ import { useViewStore } from "@stores/view";
 
 import { allowSampleData } from "@/configs/base";
 import samplePueTargetReport from "@helpers/sample-data/pue-target/report";
+import samplePueLocationStatus from "@helpers/sample-data/pue-target/location-status";
 
 export const usePueTargetStore = defineStore("pue-target", {
     getters: {
@@ -15,7 +16,7 @@ export const usePueTargetStore = defineStore("pue-target", {
             return userStore.axiosAuthConfig;
         },
 
-        filters: state => {
+        filters: () => {
             const viewStore = useViewStore();
             const divre = viewStore.filters.divre;
             const witel = viewStore.filters.witel;
@@ -136,6 +137,33 @@ export const usePueTargetStore = defineStore("pue-target", {
             } catch(err) {
                 handlingFetchErr(err);
                 callback && callback({ success: false, status: err.response?.status });
+            }
+        },
+
+        async getLocationStatus(callback) {
+            const urlParams = this.getUrlParams("year", "quarter");
+            const url = "/pue-target/report/location-status" + urlParams;
+            const result = { success: true, status: false, data: {} };
+            try {
+    
+                const response = await http.get(url, this.fetchHeader);
+                result.status = response.status;
+                if(!response.data.pue_status) {
+                    result.success = false;
+                    console.warn(response.data);
+                }
+                result.data = response.data;
+    
+            } catch(err) {
+                
+                handlingFetchErr(err);
+                if(allowSampleData)
+                    result.data = samplePueLocationStatus;
+                result.status = err.response?.status;
+                result.success = false;
+    
+            } finally {
+                callback(result);
             }
         }
 

@@ -39,7 +39,7 @@ export const usePueV2Store = defineStore("pueV2", {
             return "";
         },
 
-        filters: state => {
+        filters: () => {
             const viewStore = useViewStore();
             const divre = viewStore.filters.divre;
             const witel = viewStore.filters.witel;
@@ -88,6 +88,7 @@ export const usePueV2Store = defineStore("pueV2", {
             if(zone.rtu) this.currRtu = zone.rtu;
             else if(zone.witel) this.currWitel = zone.witel;
             else if(zone.divre) this.currDivre = zone.divre;
+            console.log(zone)
         },
 
         buildUrlParams(filters) {
@@ -121,6 +122,7 @@ export const usePueV2Store = defineStore("pueV2", {
 
         async getLatestPue(callback) {
             const zoneUrlParams = this.zoneUrlParams;
+            console.log(this.zoneUrlParams)
             try {
                 const response = await http.get("/pue/latest_value" + zoneUrlParams, this.fetchHeader);
                 if(!response.data.latestValue) {

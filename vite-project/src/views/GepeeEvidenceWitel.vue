@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
+import { useUserStore } from "@stores/user";
 import { useRoute } from "vue-router";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import SectionGepeeEvidenceInfo from "@components/SectionGepeeEvidenceInfo.vue";
@@ -30,6 +31,9 @@ const onFilterApply = () => {
 
 const route = useRoute();
 const showDialog = computed(() => route.params.idCategory ? true : false);
+
+const userStore = useUserStore();
+const showBtnBack = computed(() => userStore.level != "witel");
 </script>
 <template>
     <div>
@@ -43,7 +47,7 @@ const showDialog = computed(() => route.params.idCategory ? true : false);
                         </h3>
                         <DashboardBreadcrumb :items="['Gepee Evidence', 'Witel']" class="ms-4" />
                     </div>
-                    <div class="col-auto ms-auto">
+                    <div v-if="showBtnBack" class="col-auto ms-auto">
                         <RouterLink v-if="divreCode" :to="'/gepee-evidence/divre/'+divreCode" class="btn btn-light btn-icon mt-4">
                             <VueFeather type="chevron-left" size="1.2em" class="middle" />
                             <span class="ms-1">Regional</span>

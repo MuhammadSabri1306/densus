@@ -2,6 +2,7 @@
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { usePueStore } from "@stores/pue";
+import { usePueV2Store } from "@stores/pue-v2";
 import Skeleton from "primevue/skeleton";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 
@@ -17,6 +18,7 @@ const route = useRoute();
 const rtuCode = computed(() => route.params.rtuCode);
 
 const pueStore = usePueStore();
+const pue2Store = usePueV2Store();
 const location = computed(() => pueStore.pue ? pueStore.pue.req_level : null);
 
 const latestValue = computed(() => pueStore.pue ? pueStore.pue.latestValue : {});
@@ -39,7 +41,7 @@ const getYear = computed(() => {
 const isLoading = ref(true);
 setTimeout(() => pueStore.fetchOnRtu(rtuCode.value, false, () => isLoading.value = false), 1000);
 
-pueStore.setCurrentZone({ rtu: rtuCode.value });
+pue2Store.setCurrentZone({ rtu: rtuCode.value });
 const excelExportUrl = computed(() => pueStore.excelExportUrl);
 </script>
 <template>

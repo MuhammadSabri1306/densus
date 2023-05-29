@@ -728,4 +728,158 @@ class Excel_export extends CI_Controller
 
         $this->excel->createDownload('master_sto_densus '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
     }
+
+    public function gepee_evidence()
+    {
+        $divreCode = $this->input->get('divre');
+        $witelCode = $this->input->get('witel');
+        $idLocation = $this->input->get('idLocation');
+        $year = $this->input->get('year');
+        $semester = $this->input->get('semester');
+
+        if(!$year) $year = date('Y');
+        if(!$semester) $semester = 1;
+        
+        $this->load->library('datetime_range');
+        if($semester) {
+            $datetime = $this->datetime_range->get_by_semester($semester, $year);
+        } else {
+            $datetime = $this->datetime_range->get_by_year($year);
+        }
+
+        $filter = [
+            'divre' => $divreCode,
+            'witel' => $witelCode,
+            'idLocation' => $idLocation,
+            'datetime' => $datetime
+        ];
+
+        $this->load->model('gepee_evidence_model');
+        $data = $this->gepee_evidence_model->get_excel_data($filter);
+        // dd_json($data);
+        $gepeeEvd = $data['location_list'];
+        $categoryList = $data['category'];
+        
+        $this->excel
+            ->selectCell([2, 2], [2, 3])
+            ->mergeCell()
+            ->setAlignment('left')
+            ->setValue('Mulai tanggal : '.$datetime[0], 2, 2);
+        $this->excel
+            ->selectCell([3, 2], [3, 3])
+            ->mergeCell()
+            ->setAlignment('left')
+            ->setValue('Sampai tanggal : '.$datetime[1], 3, 2);
+        
+        $this->excel->useColSizeAuto = true;
+        $startRow = 5; $currRow = $startRow;
+        $startCol = 2; $currCol = $startCol;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('Regional', $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('Witel', $currRow, $currCol);
+
+        $currCol++;
+        $c = 0;
+        foreach($categoryList as $cat) {
+            if($cat['sub']) {
+                $this->excel
+                    ->selectCell([$currRow, $currCol], [$currRow, ($currCol + count($cat['sub']) - 1)])
+                    ->mergeCell()
+                    ->setValue($cat['category'], $currRow, $currCol);
+                for($i=0; $i<count($cat['sub']); $i++) {
+                    $this->excel->setValue($i + 1, ($currRow + 1), $currCol);
+                    $currCol++;
+                }
+                
+            } else {
+                
+                $this->excel
+                    ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+                    ->mergeCell()
+                    ->setValue($cat['category'], $currRow, $currCol);
+                $currCol++;
+
+            }
+        }
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('Persentase (%)', $currRow, $currCol);
+
+        $currRow++;
+        $this->excel
+            ->selectCell([$startRow, $startCol], [$currRow, $currCol])
+            ->setAlignment('center')
+            ->setFill($this->colorScheme['primary']['argb'])
+            ->setColor($this->colorScheme['white']['argb'])
+            ->setBorderColor($this->colorScheme['white']['argb'])
+            ->setBold(true);
+
+        foreach($gepeeEvd as $item) {
+            
+            $currCol = $startCol;
+            $currRow++;
+            $this->excel->setValue($item['location']['divre_name'], $currRow, $currCol);
+            
+            $currCol++;
+            $this->excel->setValue($item['location']['witel_name'], $currRow, $currCol);
+            
+            $currCol++;
+            foreach($item['category_data'] as $catItem) {
+                if($catItem['use_target']) {
+                    for($i=0; $i<count($catItem['checklist']); $i++) {
+                        if($catItem['checklist'][$i]) {
+                            $this->excel
+                                ->setValue('V', $currRow, $currCol)
+                                ->setAlignment('center')
+                                ->setFill($this->colorScheme['gepee_exec_success']['argb'])
+                                ->setBorderColor($this->colorScheme['white']['argb']);
+                        }
+                        $currCol++;
+                    }
+                } else {
+                    $this->excel
+                        ->setValue($catItem['count'], $currRow, $currCol)
+                        ->setAlignment(true)
+                        ->setAlignment('center');
+                    $currCol++;
+                }
+            }
+            
+            $this->excel->setValue($item['summary']['percentage'], $currRow, $currCol);
+
+        }
+
+        // if($cat['sub']) {
+
+        //     $currCol++;
+        //     $this->excel
+        //         ->selectCell([$currRow, $currCol], [$currRow, ($currCol + count($cat['sub']) - 1)])
+        //         ->mergeCell()
+        //         ->setValue($cat['category'], $currRow, $currCol);
+        //     for($i=0; $i<count($cat['checklis']); $i++) {
+        //         $isCheck = $cat['checklis'][$i];
+        //         if($isCheck) {
+        //             $this->excel
+        //                 ->setValue('V', ($currRow + 1), $currCol + $i)
+        //                 ->setAlignment('center')
+        //                 ->setFill($this->colorScheme['primary']['argb'])
+        //                 ->setColor($this->colorScheme['white']['argb'])
+        //                 ->setBorderColor($this->colorScheme['white']['argb'])
+        //                 ->setBold(true);
+        //         }
+        //     }
+
+        // }
+        $this->excel->createDownload('GEPEE Evidence '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
+    }
 }

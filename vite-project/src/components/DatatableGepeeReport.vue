@@ -2,6 +2,7 @@
 import { ref, computed } from "vue";
 import { useGepeeReportStore } from "@/stores/gepee-report";
 import { useUserStore } from "@stores/user";
+import { useViewStore } from "@stores/view";
 import { useCollapseRow } from "@helpers/collapse-row";
 import { getPueBgClass } from "@helpers/pue-color";
 import { getPercentageTextClass } from "@helpers/percentage-color";
@@ -25,71 +26,103 @@ const level = computed(() => {
     return filters.witel ? "witel" : filters.divre ? "divre" : userLevel;
 });
 
+
+const arrSum = arr => {
+    return arr.reduce((sum, item) => {
+        sum += item;
+        return sum;
+    });
+};
+
 const getGroupAvg = (data, groupKey) => {
-    const currItem = JSON.parse(JSON.stringify(data[0]));
     let rowCount = 0;
+    const perfSum = [];
     const sum = {
-        exc: [],
-        excSummary: { countAll: 0, countApproved: 0 },
-        pue: { online: 0, offline: 0 }
+        summMonthly: 0,
+        summYearly: 0,
+        pueOnline: null,
+        pueOffline: null
     };
+    
+    const currItem = JSON.parse(JSON.stringify(data[0]));
+    currItem.performance_summary = 0;
+    currItem.performance_summary_yearly = 0;
 
     data.forEach(item => {
         if(item.location[groupKey] != currItem.location[groupKey])
             return;
-
-        for(let i=0; i<item.performance.length; i++) {
-            if(sum.exc.length < (i + 1)) {
-                sum.exc.push({
-                    countAll: 0,
-                    countApproved: 0
-                });
+        
+        item.performance.forEach((perf, i) => {
+            if(perfSum.length < (i + 1)) {
+                perfSum[i] = {
+                    count_all: 0,
+                    count_approved: 0,
+                    percentage: 0,
+                    has_schedule: false
+                };
             }
 
-            sum.exc[i].countAll += item.performance[i].count_all;
-            sum.exc[i].countApproved += item.performance[i].count_approved;
+            if(perf.has_schedule) {
+                perfSum[i].has_schedule = true;
+                perfSum[i].count_all += perf.count_all;
+                perfSum[i].count_approved += perf.count_approved;
+                perfSum[i].percentage += perf.percentage;
+            }
+        });
 
-            sum.excSummary.countAll += item.performance[i].count_all;
-            sum.excSummary.countApproved += item.performance[i].count_approved;
+        if(item.performance_summary)
+            sum.summMonthly += item.performance_summary;
+            
+        if(item.performance_summary_yearly)
+            sum.summYearly += item.performance_summary_yearly;
+
+        if(item.pue.online) {
+            if(sum.pueOnline === null)
+                sum.pueOnline = 0;
+            sum.pueOnline += item.pue.online;
         }
 
-        if(item.pue.online)
-            sum.pue.online += item.pue.online;
-        if(item.pue.offline)
-            sum.pue.offline += item.pue.offline;
+        if(item.pue.offline) {
+            if(sum.pueOffline === null)
+                sum.pueOffline = 0;
+            sum.pueOffline += item.pue.offline;
+        }
+
         rowCount++;
-
     });
 
-    sum.exc.forEach((sumItem, index) => {
-
-        currItem.performance[index].count_all = sumItem.countAll;
-        currItem.performance[index].count_approved = sumItem.countApproved;
-        currItem.performance[index].percentage = (sumItem.countAll < 1) ? 0
-            : sumItem.countApproved / sumItem.countAll * 100;
-
+    perfSum.forEach((item, i) => {
+        currItem.performance[i].has_schedule = item.has_schedule;
+        currItem.performance[i].count_all = item.count_all;
+        currItem.performance[i].count_approved = item.count_approved;
+        currItem.performance[i].percentage = item.percentage / rowCount;
     });
+    
+    currItem.performance_summary = sum.summMonthly / rowCount;
+    currItem.performance_summary_yearly = sum.summYearly / rowCount;
 
-    currItem.performance_summary.count_all = sum.excSummary.countAll;
-    currItem.performance_summary.count_approved = sum.excSummary.countApproved;
-    currItem.performance_summary.percentage = (sum.excSummary.countAll < 1) ? 0
-        : sum.excSummary.countApproved / sum.excSummary.countAll * 100;
+    currItem.pue.online = sum.pueOnline === null ? null : (sum.pueOnline / rowCount);
+    currItem.pue.offline = sum.pueOffline === null ? null : (sum.pueOffline / rowCount);
 
-    currItem.pue.online = rowCount > 0 ? sum.pue.online / rowCount : null;
-    currItem.pue.offline = rowCount > 0 ? sum.pue.offline / rowCount : null;
-
-    const pueValue = currItem.pue.online !== null ? currItem.pue.online
-        : currItem.pue.offline !== null ? currItem.pue.offline
-        : 0;
-    currItem.pue.isReachTarget = pueLowLimit.value === null ? false
-        : pueValue > pueLowLimit.value;
+    let pueValue = null;
+    if(currItem.pue.online !== null)
+        pueValue = currItem.pue.online;
+    if(currItem.pue.offline !== null)
+        pueValue = currItem.pue.offline;
+    
+    if(pueValue == null)
+        currItem.pue.isReachTarget = false;
+    else if(!pueLowLimit.value)
+        currItem.pue.isReachTarget = true;
+    else
+        currItem.pue.isReachTarget = pueValue > pueLowLimit.value;
     
     return currItem;
 };
 
 const groupData = data => {
     const groupKeys = { divre: "", witel: "" };
-    return data.reduce((result, item, index) => {
+    const groupedData = data.reduce((result, item, index) => {
 
         let type = null;
         let title = null;
@@ -118,6 +151,8 @@ const groupData = data => {
         return result;
         
     }, []);
+    // console.log(groupedData);
+    return groupedData;
 };
 
 const isLoading = ref(true);
@@ -177,6 +212,16 @@ const getColClassNumber = (type, itemNumb) => {
     if(type == "percent")
         return getPercentageTextClass(toFixedNumber(itemNumb));
 };
+
+const viewStore = useViewStore();
+const monthList = viewStore.monthList;
+const selectedMonth = computed(() => {
+    const monthNumber = viewStore.filters.month;
+    const month = monthList[monthNumber - 1];
+    return month ? month?.name : monthNumber;
+});
+
+const selectedYear = computed(() => viewStore.filters.year);
 </script>
 <template>
     <div v-if="hasInit">
@@ -205,7 +250,8 @@ const getColClassNumber = (type, itemNumb) => {
                         <th class="bg-success" :colspan="categoryList.length+1">
                             Presentase Pencapaian Aktivitas GePEE (Dihitung 100% jika sudah dilaksanakan)
                         </th>
-                        <th rowspan="2">% Gepee Activity</th>
+                        <th rowspan="2">% Gepee Activity<br><small>(Bulan {{ selectedMonth }})</small></th>
+                        <th rowspan="2">% Gepee Activity<br><small>(Tahun {{ selectedYear }})</small></th>
                     </tr>
                     <tr>
                         <th>OFFLINE</th>
@@ -247,6 +293,7 @@ const getColClassNumber = (type, itemNumb) => {
                             class="middle text-center f-w-700">
                             {{ formatItemNumber(summaryNasional.performance_summary.percentage) }}%
                         </td>
+                        <td>-</td>
                     </tr>
                     <tr v-for="item in tableData" :class="getRowClass(item)">
                         <td class="sticky-column">
@@ -285,12 +332,17 @@ const getColClassNumber = (type, itemNumb) => {
                         <td class="middle text-center">-</td>
                         <td v-for="category in item.performance" :class="getColClassNumber('percent', category.percentage)"
                             class="middle text-center f-w-700">
-                            {{ formatItemNumber(category.percentage) }}%
+                            <span v-if="!category.has_schedule">-</span>
+                            <span v-else>{{ formatItemNumber(category.percentage) }}%</span>
                         </td>
-                        <td class="middle text-center">-</td>
-                        <td :class="getColClassNumber('percent', item.performance_summary.percentage)"
+                        <td class="middle text-center f-w-700">-</td>
+                        <td :class="getColClassNumber('percent', item.performance_summary)"
                             class="middle text-center f-w-700">
-                            {{ formatItemNumber(item.performance_summary.percentage) }}%
+                            {{ formatItemNumber(item.performance_summary) }}%
+                        </td>
+                        <td :class="getColClassNumber('percent', item.performance_summary_yearly)"
+                            class="middle text-center f-w-700">
+                            {{ formatItemNumber(item.performance_summary_yearly) }}%
                         </td>
                     </tr>
                 </tbody>

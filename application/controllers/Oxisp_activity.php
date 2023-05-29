@@ -310,17 +310,6 @@ class Oxisp_activity extends RestController
 
         if($status === 200) {
             $body = $input['body'];
-            $locValidation = [
-                $currUser['level'] == 'divre' && $currUser['locationId'] != $body['divre_kode'],
-                $currUser['level'] == 'witel' && $currUser['locationId'] != $body['witel_kode']
-            ];
-            if(in_array(true, $locValidation)) {
-                $status = REST_ERR_BAD_REQ_STATUS;
-                $data = REST_ERR_BAD_REQ_DATA;
-            }
-        }
-
-        if($status === 200) {
             $body['status'] = 'submitted';
             $body['user_id'] = $currUser['id'];
             $body['user_username'] = $currUser['username'];
@@ -380,17 +369,6 @@ class Oxisp_activity extends RestController
 
         if($status === 200) {
             $body = $input['body'];
-            $locValidation = [
-                $currUser['level'] == 'divre' && $currUser['locationId'] != $body['divre_kode'],
-                $currUser['level'] == 'witel' && $currUser['locationId'] != $body['witel_kode']
-            ];
-            if(in_array(true, $locValidation)) {
-                $status = REST_ERR_BAD_REQ_STATUS;
-                $data = REST_ERR_BAD_REQ_DATA;
-            }
-        }
-
-        if($status === 200) {
             $body['status'] = 'submitted';
             $body['user_id'] = $currUser['id'];
             $body['user_username'] = $currUser['username'];

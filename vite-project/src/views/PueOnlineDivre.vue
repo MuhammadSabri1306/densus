@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
-import { usePueStore } from "@stores/pue";
+import { usePueV2Store } from "@stores/pue-v2";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 
 import CardPueRtuInfo from "@components/CardPueRtuInfo.vue";
@@ -16,7 +16,7 @@ const route = useRoute();
 const divreCode = computed(() => route.params.divreCode);
 const location = ref(null);
 
-const pueStore = usePueStore();
+const pueStore = usePueV2Store();
 pueStore.setCurrentZone({ divre: divreCode.value });
 </script>
 <template>

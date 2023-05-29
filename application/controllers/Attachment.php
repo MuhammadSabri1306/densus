@@ -263,7 +263,7 @@ class Attachment extends RestController
 
     public function store_oxisp_evidence_post()
     {
-        $status = $this->auth_jwt->auth('admin');
+        $status = $this->auth_jwt->auth('viewer', 'teknisi');
         switch($status) {
             case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
             case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
@@ -286,7 +286,7 @@ class Attachment extends RestController
 
     public function del_oxisp_evidence_delete($filename)
     {
-        $status = $this->auth_jwt->auth('admin');
+        $status = $this->auth_jwt->auth('viewer', 'teknisi');
         switch($status) {
             case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
             case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;

@@ -4,11 +4,11 @@ import { useRoute } from "vue-router";
 import { toRoman } from "@helpers/number-format";
 import { useGepeeEvdStore } from "@stores/gepee-evidence";
 import { categoryList } from "@/configs/gepee-evidence";
-import { toFixedNumber } from "@helpers/number-format";
 import { BuildingOffice2Icon } from "@heroicons/vue/24/solid";
 import CheckedScoreGepeeEvidence from "@components/CheckedScoreGepeeEvidence.vue";
 import Skeleton from "primevue/skeleton";
 import StarScore from "@components/ui/StarScore.vue";
+import DialogExportLinkVue from "@components/ui/DialogExportLink.vue";
 
 const emit = defineEmits(["fetched"]);
 const info = reactive({
@@ -89,6 +89,8 @@ const semesterText = computed(() => {
     const year = gepeeEvdStore.filters.year;
     return `Semester ${ toRoman(semester) } ${ year }`;
 });
+
+const showDialogExport = ref(false);
 </script>
 <template>
     <div class="row dashboard-default-sec">
@@ -114,10 +116,16 @@ const semesterText = computed(() => {
         </div>
         <div class="col-md-6 col-lg-8">
             <div class="card card-body">
-                <div class="card-header pb-0">
+                <div class="card-header d-flex align-items-end pb-0">
                     <div class="header-top">
                         <h5>Target Capaian</h5>
                         <span class="f-12">{{ semesterText }}</span>
+                    </div>
+                    <div class="position-absolute top-0 end-0">
+                        <button type="button" @click="showDialogExport = true" class="btn-icon ms-auto py-1 px-3">
+                            <VueFeather type="download" size="1em" />
+                            <span class="ms-2">Export</span>
+                        </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -142,6 +150,8 @@ const semesterText = computed(() => {
                 </div>
             </div>
         </div>
+        <DialogExportLinkVue v-if="showDialogExport" baseUrl="/export/excel/gepee-evidence" title="Export Persentase Gepee Evidence"
+            useDivre useWitel useYear requireYear @close="showDialogExport = false" />
     </div>
 </template>
 <style scoped>

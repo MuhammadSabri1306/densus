@@ -16,7 +16,7 @@ const props = defineProps({
     position: { type: String, default: "top" }
 });
 
-const locationTypeList = ["basic", "gepee"];
+const locationTypeList = ["basic", "gepee", "sto_master"];
 const fetchKey = (locationTypeList.indexOf(props.locationType) < 0) ? locationTypeList[0] : props.locationType;
 
 const level = computed(() => props.level);

@@ -220,7 +220,7 @@ class Pue_target extends RestController
             case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
             default: $data = REST_ERR_DEFAULT_DATA; break;
         }
-
+        
         if($status === 200) {
             $divreCode = $this->input->get('divre');
             $witelCode = $this->input->get('witel');
@@ -249,6 +249,38 @@ class Pue_target extends RestController
             $data = [
                 'pue_category' => $this->gepee_management_model->get_pue_category_item(),
                 'pue_target' => $this->gepee_management_model->get_pue_report($filter),
+                'timestamp' => date('Y-m-d H:i:s'),
+                'success' => true
+            ];
+        }
+
+        $this->response($data, $status);
+    }
+
+    public function location_status_get()
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+        
+        if($status === 200) {
+            $divreCode = $this->input->get('divre');
+            $witelCode = $this->input->get('witel');
+
+            $filter = [
+                'divre' => $divreCode,
+                'witel' => $witelCode
+            ];
+
+            $this->load->model('gepee_management_model');
+            $currUser = $this->auth_jwt->get_payload();
+            $this->gepee_management_model->currUser = $currUser;
+
+            $data = [
+                'pue_status' => $this->gepee_management_model->get_location_status($filter),
                 'timestamp' => date('Y-m-d H:i:s'),
                 'success' => true
             ];

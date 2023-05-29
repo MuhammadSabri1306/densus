@@ -1,6 +1,6 @@
 <?php
 
-$filterLocMain = $this->get_loc_filter($filter);
+$filterLocMain = $this->get_loc_filter($filter, 'loc');
 $filterLocOxisp = $this->get_loc_filter($filter, 'loc');
 $filterDateOxisp = $this->get_datetime_filter($filter, 'oxisp');
 
@@ -13,10 +13,17 @@ $this->db
     ->where($filterDateOxisp);
 $oxisp = $this->db->get()->result_array();
 
+$isOxispExistsQuery = $this->db
+    ->select()
+    ->from("$this->tableName AS oxisp")
+    ->where('oxisp.id_sto=loc.id_sto')
+    ->limit(1)
+    ->get_compiled_select();
 $this->db
     ->select()
-    ->from($this->tableLocationName)
+    ->from("$this->tableLocationName AS loc")
     ->where($filterLocMain)
+    ->where("EXISTS($isOxispExistsQuery)")
     ->order_by('divre_kode')
     ->order_by('witel_kode')
     ->order_by('sto_name');
