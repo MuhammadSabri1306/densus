@@ -195,6 +195,7 @@ $route['api/activity/performance']['get'] = 'activity/performance';
 $route['api/activity/availablemonth']['get'] = 'activity_schedule/available_month';
 $route['api/activity/schedule/(.*)']['get'] = 'activity_schedule';
 $route['api/activity/schedule']['get'] = 'activity_schedule/index_v2';
+$route['api/activity/schedule-v2']['get'] = 'activity_schedule/index_v3';
 $route['api/activity/schedule']['post'] = 'activity_schedule/index_v2';
 
 $route['api/activity/execution/(:any)']['get'] = 'activity_execution/index/$1';
