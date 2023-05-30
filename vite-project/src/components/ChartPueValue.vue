@@ -59,11 +59,9 @@ const setupSeries = pueValues => {
 
 const pueStore = usePueV2Store();
 const isLoading = ref(true);
-pueStore.getChartData(({ data }) => {
-    if(data.chart)
-        series.value = setupSeries(data.chart);
-    if(data.request_location)
-        emit("loaded", data.request_location);
+pueStore.fetchChartData(success => {
+    if(success && pueStore.chartData)
+        series.value = setupSeries(pueStore.chartData);
     isLoading.value = false;
 });
 </script>

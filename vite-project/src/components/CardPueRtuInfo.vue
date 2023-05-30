@@ -1,13 +1,16 @@
 <script setup>
 import { computed } from "vue";
 import { useRoute } from "vue-router";
+import { usePueV2Store } from "@stores/pue-v2";
 import Skeleton from "primevue/skeleton";
 
 const props = defineProps({
     data: { type: Object, default: {} }
 });
 
-const location = computed(() => props.data);
+const pueStore = usePueV2Store();
+const isLoading = computed(() => pueStore.isLoading.chartData);
+
 const route = useRoute();
 const level = computed(() => {
     const rtuCode = route.params.rtuCode;
@@ -21,17 +24,19 @@ const level = computed(() => {
 
 const headingText = computed(() => {
     const levelVal = level.value;
-    const loc = location.value;
+    const loc = pueStore.requestLocation;
     if(levelVal == "rtu")
-        return loc.value?.rtu_name || null;
+        return loc?.rtu_name || null;
     if(levelVal == "witel")
-        return loc.value?.witel_name || null;
+        return loc?.witel_name || null;
+    if(levelVal == "divre")
+        return loc?.divre_name || null;
     return null;
 });
 
 const titleFirstLine = computed(() => {
     const levelVal = level.value;
-    const loc = location.value;
+    const loc = pueStore.requestLocation;
     if(levelVal == "rtu")
         return loc?.witel_name || null;
     if(levelVal == "witel")
@@ -40,13 +45,12 @@ const titleFirstLine = computed(() => {
 });
 
 const titleSecondLine = computed(() => {
-    const loc = location.value;
-    return loc?.rtu_name || null;
-});
+    const levelVal = level.value;
+    const loc = pueStore.requestLocation;
 
-const isLoaded = computed(() => {
-    const loc = location.value;
-    return loc && loc.divre_name ? true : false;
+    if(levelVal == "rtu")
+        return loc?.divre_name || null;
+    return null;
 });
 </script>
 <template>
@@ -55,16 +59,16 @@ const isLoaded = computed(() => {
             <div class="round-box">
                 <VueFeather type="zap" style="enable-background:new 0 0 448.057 448.057;color:#24695c;" xml:space="preserve" />
             </div>
-            <div v-if="!isLoaded" class="d-flex flex-column justify-content-center">
-                <Skeleton height="1.5rem" width="12rem" class="mb-2" />
-                <Skeleton height="1rem" width="20rem" />
-                <Skeleton height="1rem" width="16rem" />
+            <div v-if="isLoading" class="tw-flex tw-flex-col tw-gap-4">
+                <Skeleton height="1.7rem" class="tw-w-full tw-max-w-[12rem]" />
+                <Skeleton height="1.2rem" class="tw-w-full tw-max-w-[20rem]" />
+                <Skeleton height="1.2rem" class="tw-w-full tw-max-w-[16rem]" />
             </div>
             <h5 v-else-if="level == 'nasional'">Nasional</h5>
             <div v-else class="d-flex flex-column justify-content-center">
                 <h5 v-if="headingText">{{ headingText }}</h5>
-                <p v-if="titleFirstLine" class="small mb-0">{{ titleFirstLine }}</p>
-                <p v-if="titleSecondLine" class="small">{{ titleSecondLine }}</p>
+                <p v-if="titleFirstLine" class="small !tw-font-semibold mb-0">{{ titleFirstLine }}</p>
+                <p v-if="titleSecondLine" class="small !tw-font-semibold">{{ titleSecondLine }}</p>
             </div>
             <div class="parrten">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewbox="0 0 448.057 448.057" style="enable-background:new 0 0 448.057 448.057;" xml:space="preserve">

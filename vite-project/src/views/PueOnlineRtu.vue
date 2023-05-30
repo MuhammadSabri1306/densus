@@ -62,8 +62,8 @@ const excelExportUrl = computed(() => pueStore.excelExportUrl);
         <div class="container-fluid dashboard-default-sec">
             <div class="row align-items-end">
                 <div class="col-md-4">
-                    <CardPueRtuInfo :data="location" />
-                    <CardPueCurrent @loaded="loc => location = loc" />
+                    <CardPueRtuInfo />
+                    <CardPueCurrent />
                     <CardPueMax title="Nilai PUE tertinggi tahun ini" />
                 </div>
                 <div class="col-md-8">

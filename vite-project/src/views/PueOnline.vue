@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from "vue";
 import { usePueStore } from "@stores/pue";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 
@@ -9,6 +10,8 @@ import ChartPueValue from "@components/ChartPueValue.vue";
 import CardContentPueAverage from "@components/CardContentPueAverage.vue";
 import CardContentPuePerformance from "@components/CardContentPuePerformance.vue";
 import DatatablePueOnSto from "@components/DatatablePueOnSto.vue";
+
+const location = ref(null);
 
 const pueStore = usePueStore();
 pueStore.setCurrentZone({});
@@ -32,7 +35,7 @@ pueStore.setCurrentZone({});
             <div class="row align-items-end">
                 <div class="col-md-4">
                     <CardPueRtuInfo />
-                    <CardPueCurrent />
+                    <CardPueCurrent @loaded="loc => location = loc" />
                     <CardPueMax title="Nilai Rata-Rata PUE tertinggi tahun ini" />
                 </div>
                 <div class="col-md-8">

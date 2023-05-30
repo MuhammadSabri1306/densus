@@ -8,7 +8,7 @@ import { backendUrl } from "@/configs/base";
 import { allowSampleData } from "@/configs/base";
 import samplePueOfflineByLocation from "@helpers/sample-data/pue/offline_by_location";
 import sampleLatestValue from "@helpers/sample-data/pue/latest-value";
-import sampleCchartData from "@helpers/sample-data/pue/chart-data";
+import sampleChartData from "@helpers/sample-data/pue/chart-data";
 import sampleMaxValue from "@helpers/sample-data/pue/max-value";
 import sampleAvg from "@helpers/sample-data/pue/avg";
 import samplePerformance from "@helpers/sample-data/pue/performance";
@@ -19,7 +19,14 @@ export const usePueV2Store = defineStore("pueV2", {
 
         currDivre: null,
         currWitel: null,
-        currRtu: null
+        currRtu: null,
+
+        requestLocation: null,
+        chartData: null,
+
+        isLoading: {
+            chartData: false
+        }
         
     }),
     getters: {
@@ -75,6 +82,15 @@ export const usePueV2Store = defineStore("pueV2", {
         monthList: () => {
             const viewStore = useViewStore();
             return viewStore.monthList;
+        },
+
+        maxValue: state => {
+            const chartData = JSON.parse(JSON.stringify(state.chartData));
+            if(!chartData)
+                return null;
+
+            const descOrdered = chartData.sort((a, b) => b.pue_value - a.pue_value);
+            return descOrdered[0];
         }
 
     },
@@ -100,6 +116,35 @@ export const usePueV2Store = defineStore("pueV2", {
             return params.length < 1 ? "" : "/?" + params.join("&");
         },
 
+        async fetchChartData(callback = null) {
+            const url = "/pue/chart_data" + this.zoneUrlParams;
+            this.isLoading.chartData = true;
+            try {
+                const response = await http.get(url, this.fetchHeader);
+                if(!response.data.chart) {
+                    console.warn(response.data);
+                    callback && callback(false);
+                    return;
+                }
+                
+                this.chartData = response.data.chart;
+                this.requestLocation = response.data.request_location;
+                callback && callback(true);
+            } catch(err) {
+                handlingFetchErr(err);
+                if(allowSampleData) {
+                    this.chartData = sampleChartData.chart;
+                    this.requestLocation = sampleChartData.request_location;
+                    console.log(this.requestLocation)
+                    callback && callback(true);
+                    return;
+                }
+                callback && callback(false);
+            } finally {
+                this.isLoading.chartData = false;
+            }
+        },
+
         async getChartData(callback) {
             const zoneUrlParams = this.zoneUrlParams;
             try {
@@ -114,7 +159,7 @@ export const usePueV2Store = defineStore("pueV2", {
             } catch(err) {
                 handlingFetchErr(err);
                 if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: sampleCchartData });
+                    callback({ success: true, status: err.response?.status, data: sampleChartData });
                 else
                     callback({ success: false, status: err.response?.status, data: {} });
             }
@@ -122,10 +167,9 @@ export const usePueV2Store = defineStore("pueV2", {
 
         async getLatestPue(callback) {
             const zoneUrlParams = this.zoneUrlParams;
-            console.log(this.zoneUrlParams)
             try {
                 const response = await http.get("/pue/latest_value" + zoneUrlParams, this.fetchHeader);
-                if(!response.data.latestValue) {
+                if(response.data.latestValue === undefined) {
                     console.warn(response.data);
                     callback({ success: false, status: response.status, data: {} });
                     return;

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, reactive } from "vue";
+import { computed, reactive } from "vue";
 import { usePueV2Store } from "@stores/pue-v2";
 import { toFixedNumber } from "@helpers/number-format";
 import Blobs from "@components/Blobs/index.vue";
@@ -15,34 +15,31 @@ const dataPue = reactive({
     timestamp: null
 });
 
+const pueStore = usePueV2Store();
+const isLoading = computed(() => pueStore.isLoading.chartData);
+
 const pueValue = computed(() => {
-    if(dataPue.maxValue)
-        return toFixedNumber(dataPue.maxValue, 2);
-    return null;
+    const pueMax = pueStore.maxValue;
+    if(!pueMax)
+        return null;
+    return toFixedNumber(pueMax.pue_value, 2);
 });
 
 const datetime = computed(() => {
-    const timestamp = dataPue.timestamp;
+    const pueMax = pueStore.maxValue;
     let date = null;
     let time = null;
+    if(!pueMax)
+        return { date, time };
 
-    if(timestamp) {
-        const dateObj = new Date(dataPue.timestamp);
-        date = new Intl.DateTimeFormat('id', { dateStyle: 'long' }).format(dateObj);
-        time = new Intl.DateTimeFormat('id', { timeStyle: 'short' }).format(dateObj);
-    }
+    const dateObj = new Date(pueMax.timestamp);
+    date = new Intl.DateTimeFormat('id', { dateStyle: 'long' }).format(dateObj);
+    time = new Intl.DateTimeFormat('id', { timeStyle: 'short' }).format(dateObj);
     return { date, time };
 });
 
-const pueStore = usePueV2Store();
-const isLoading = ref(false);
-pueStore.getMaxPue(({ data }) => {
-    if(data.maxValue && data.maxValue.pue_value)
-        dataPue.maxValue = data.maxValue.pue_value;
-    if(data.maxValue.timestamp && data.maxValue.timestamp)
-        dataPue.timestamp = data.maxValue.timestamp;
-    isLoading.value = false;
-});
+
+// pueStore.
 </script>
 <template>
     <Skeleton v-if="isLoading" width="100%" height="5rem" class="mb-4" />
