@@ -50,63 +50,28 @@ if(isset($filter['datetime'])) {
     $endMonth = (int) date('m', strtotime($filter['datetime'][1]));
 }
 
-$result = [
-    'category_list' => $categoryList,
-    'month_list' => [],
-    'schedule' => []
-];
+$monthList = range($startMonth, $endMonth);
+$schedule = [];
+foreach($locationList as $loc) {
 
-foreach($locationList as $location) {
-
-    $row = [
-        'location' => $location,
-        'month_item' => []
-    ];
-
-    for($month=$startMonth; $month<=$endMonth; $month++) {
-
-        if(!in_array($month, $result['month_list'])) {
-            array_push($result['month_list'], $month);
-        }
-
-        $monthData = [
-            'month' => $month,
-            'category_item' => []
-        ];
-
-        foreach($categoryList as $category) {
-            
-            $locId = $location['id'];
-            $catId = $category['id'];
-            $categoryData = [
-                'category' => $category,
-                'schedule_data' => null
-            ];
-
-            for($i=0; $i<count($scheduleList); $i++) {
-                
-                $isMonthMatch = $scheduleList[$i]['month'] == $month;
-                $isLocMatch = $scheduleList[$i]['id_lokasi'] == $locId;
-                $isCatMatch = $scheduleList[$i]['id_category'] == $catId;
-                $isScheduleMatch = $isMonthMatch && $isLocMatch && $isCatMatch;
-
-                if($isScheduleMatch) {
-
-                    $scheduleList[$i]['is_enabled'] = $this->is_time_updatable($scheduleList[$i]['created_at']);
-                    $categoryData['schedule_data'] = $scheduleList[$i];
-                    array_splice($scheduleList, $i, 1);
-                    $i = count($scheduleList) + 1;
-                }
-
-            }
-            
-            array_push($monthData['category_item'], $categoryData);
-        }
-
-        array_push($row['month_item'], $monthData);
+    $divreCode = $loc['divre_kode'];
+    if(!isset($schedule[$divreCode])) {
+        $schedule[$divreCode] = [];
     }
 
-    array_push($result['schedule'], $row);
+    $witelCode = $loc['witel_kode'];
+    if(!isset($schedule[$divreCode][$witelCode])) {
+        $schedule[$divreCode][$witelCode] = [];
+    }
+
+    $stoCode = $loc['sto_kode'];
+    if(!isset($schedule[$divreCode][$witelCode][$stoCode])) {
+        $schedule[$divreCode][$witelCode][$stoCode] = [];
+    }
 }
 
-$this->result = $result;
+$this->result = [
+    'category_list' => $categoryList,
+    'month_list' => $monthList,
+    'schedule' => $schedule
+];

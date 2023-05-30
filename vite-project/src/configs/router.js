@@ -32,6 +32,7 @@ import RtuEdit from "@views/RtuEdit.vue";
 
 import ActivityDashboard from "@views/ActivityDashboard.vue";
 import ActivitySchedule from "@views/ActivitySchedule.vue";
+import ActivityScheduleV2 from "@views/ActivityScheduleV2.vue";
 import ActivityExecution from "@views/ActivityExecution.vue";
 
 import GepeeEvidence from "@views/GepeeEvidence.vue";
@@ -134,7 +135,7 @@ const routes = [
         meta: { menuKey: ["gepee", "dashboard"], requiresAuth: true }
     },
     {
-        path: "/gepee/schedule", component: ActivitySchedule,
+        path: "/gepee/schedule", component: ActivityScheduleV2,
         meta: { menuKey: ["gepee", "schedule"], requiresAuth: true }
     },
     {

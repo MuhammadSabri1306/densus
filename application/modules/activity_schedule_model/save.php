@@ -67,21 +67,25 @@ $isInsertSuccess = true;
 if($isUpdateSuccess && count($schedule) > 0) {
     
     $insertData = [];
-    list($currYear, $currDate, $currTime) = explode('-', date('Y-d-H:i:s'));
-    $currDateTime = new DateTime('now');
+    $datetime = new DateTime();
+
     foreach($schedule as $insertItem) {
 
-        $itemDateTimeStr = "$currYear-".$insertItem['month']."-$currDate $currTime";
+        $datetime->setDate($datetime->format('Y'), $insertItem['month'], 1);
+        $itemDateTimeStr = $datetime->format('Y-m-d H:i:s');
+        
         $isInsertable = $this->is_time_updatable($itemDateTimeStr);
         $isInsertable = $isInsertable && in_array($insertItem['location'], array_column($locationList, 'id'));
         if($isInsertable) {
-            array_push($insertData, [
+
+            $row = [
                 'id_category' => (int) $insertItem['category'],
                 'id_lokasi' => (int) $insertItem['location'],
                 'value' => $insertItem['value'],
                 'created_at' => $itemDateTimeStr,
                 'updated_at' => $itemDateTimeStr
-            ]);
+            ];
+            array_push($insertData, $row);
         }
     }
     

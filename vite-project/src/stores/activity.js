@@ -215,6 +215,23 @@ export const useActivityStore = defineStore("activity", {
                 callback && callback({ success: false, status: err.response.status });
             }
         },
+        
+        async saveScheduleV2(schedule, callback = null) {
+            const body = { schedule };
+            const url = getApiPath("/activity/schedule-v3", this.filters);
+            try {
+                const response = await http.post(url, body, this.fetchHeader);
+                if(!response.data.success) {
+                    console.warn(response.data);
+                    callback && callback({ success: false, status: response.status });
+                    return;
+                }
+                callback && callback({ success: true, status: response.status });
+            } catch(err) {
+                handlingFetchErr(err);
+                callback && callback({ success: false, status: err.response.status });
+            }
+        },
 
         async getPerformance(callback) {
             const url = getApiPath("/activity/performance", this.filters);
