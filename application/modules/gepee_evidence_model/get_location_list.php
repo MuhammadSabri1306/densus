@@ -76,8 +76,6 @@ if(is_array($locationList)) {
         }
 
         $temp['scores'] = $totalAll > 0 ? $countAll / $totalAll * 100 : 0;
-        $temp['test'] = [$countAll, $totalAll];
-        
         array_push($result, $temp);
 
     }

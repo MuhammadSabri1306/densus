@@ -93,10 +93,19 @@ class Gepee_evidence extends RestController
             $this->load->model('gepee_evidence_model');
 
             $this->gepee_evidence_model->currUser = $currUser;
+            $count = $this->gepee_evidence_model->get_location_detail($filter);
+            $location = $this->gepee_evidence_model->get_request_level($filter);
+
+            if($witelCode) {
+                $score = $this->gepee_evidence_model->get_location_score($filter);
+            } else {
+                $score = $this->gepee_evidence_model->get_avg_score($filter);
+            }
+
             $data = [
-                'count' => $this->gepee_evidence_model->get_location_detail($filter),
-                'location' => $this->gepee_evidence_model->get_request_level($filter),
-                'score' => $this->gepee_evidence_model->get_location_score($filter),
+                'count' => $count,
+                'location' => $location,
+                'score' => $score,
                 'success' => true
             ];
         }

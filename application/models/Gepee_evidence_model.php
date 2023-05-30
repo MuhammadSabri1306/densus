@@ -156,6 +156,12 @@ class Gepee_evidence_model extends CI_Model
         return $this->result;
     }
 
+    public function get_avg_score($filter)
+    {
+        $this->use_module('get_avg_score', [ 'filter' => $filter ]);
+        return $this->result;
+    }
+
     public function get_category_data($filter)
     {
         $this->use_module('get_category_data', [ 'filter' => $filter ]);
