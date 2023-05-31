@@ -227,8 +227,8 @@ const onReject = () => {
                         <textarea v-model="rejectDesc" :class="{ 'is-invalid': (isRejectSubmitted && !rejectDesc) || isRejectSubmitted && rejectDesc.length < 1 }" class="form-control" rows="5"></textarea>
                     </div>
                     <div class="d-flex justify-content-between align-items-end">
-                        <button type="submit" class="btn btn-lg btn-danger">Reject</button>
                         <button type="button" @click="hideRejectSection" class="btn btn-light">Cancel</button>
+                        <button type="submit" class="btn btn-lg btn-danger">Reject</button>
                     </div>
                 </form>
             </div>

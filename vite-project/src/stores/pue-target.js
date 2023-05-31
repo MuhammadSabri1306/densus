@@ -9,6 +9,15 @@ import samplePueTargetReport from "@helpers/sample-data/pue-target/report";
 import samplePueLocationStatus from "@helpers/sample-data/pue-target/location-status";
 
 export const usePueTargetStore = defineStore("pue-target", {
+    state: () => ({
+
+        isLoading: {
+            report: false
+        },
+        target: null,
+        category: null
+
+    }),
     getters: {
 
         fetchHeader: () => {
@@ -67,6 +76,46 @@ export const usePueTargetStore = defineStore("pue-target", {
                 else
                     callback({ success: false, status: err.response?.status, data: {} });
                     
+            }
+        },
+
+        async fetchReport(force = false, callback = null) {
+            this.isLoading.report = true;
+            if(!force && this.report) {
+                this.isLoading.report = false;
+                callback && callback(true);
+                return;
+            }
+
+            const urlParams = this.getUrlParams();
+            const url = "/pue-target/report" + urlParams;
+            try {
+
+                const response = await http.get(url, this.fetchHeader);
+                if(!response.data.pue_target) {
+                    console.warn(response.data);
+                    callback && callback(false);
+                    return;
+                }
+
+                this.target = response.data.pue_target;
+                this.category = response.data.pue_category;
+                this.isLoading.report = false;
+                
+                callback && callback(true);
+
+            } catch(err) {
+                handlingFetchErr(err);
+                if(allowSampleData) {
+                    this.target = samplePueTargetReport.pue_target;
+                    this.category = samplePueTargetReport.pue_category;
+                    this.isLoading.report = false;
+                    callback && callback(true);
+                    return;
+                }
+
+                this.isLoading.report = false;
+                callback && callback(false);
             }
         },
 

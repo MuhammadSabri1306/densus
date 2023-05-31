@@ -188,8 +188,8 @@ const onSubmit = async () => {
                 </div>
             </div>
             <div class="d-flex justify-content-between align-items-end mt-5">
-                <button type="submit" :class="{ 'btn-loading': isLoading }" class="btn btn-success btn-lg">Simpan</button>
                 <button type="button" @click="showDialog = false" class="btn btn-secondary">Batalkan</button>
+                <button type="submit" :class="{ 'btn-loading': isLoading }" class="btn btn-success btn-lg">Simpan</button>
             </div>
         </form>
     </Dialog>

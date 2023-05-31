@@ -71,8 +71,8 @@ const onFileRemoved = event => data.evidence = event.latestUpload;
             accept=".jpg, .jpeg, .png, .pdf" acceptText="(*.jpg, *.jpeg, *.png, *.pdf)"
             @uploaded="onFileUploaded" @removed="onFileRemoved" class="mb-5" />
         <div class="d-flex justify-content-between align-items-end">
-            <button type="submit" :class="{ 'btn-loading': isLoading }" class="btn btn-lg btn-primary">Save</button>
             <button type="button" @click="$emit('cancel')" class="btn btn-danger">Cancel</button>
+            <button type="submit" :class="{ 'btn-loading': isLoading }" class="btn btn-lg btn-primary">Save</button>
         </div>
     </form>
 </template>
