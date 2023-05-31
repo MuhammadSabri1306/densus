@@ -69,8 +69,37 @@ $countAprQuery = $this->db
     ->where('exc.id_schedule=sch.id')
     ->where('exc.status', 'approved')
     ->get_compiled_select();
+$countRejtQuery = $this->db
+    ->select('COUNT(exc.id)')
+    ->from("$this->tableExecutionName AS exc")
+    ->where('exc.id_schedule=sch.id')
+    ->where('exc.status', 'rejected')
+    ->get_compiled_select();
+$countSubmQuery = $this->db
+    ->select('COUNT(exc.id)')
+    ->from("$this->tableExecutionName AS exc")
+    ->where('exc.id_schedule=sch.id')
+    ->where('exc.status', 'submitted')
+    ->get_compiled_select();
+$countConfQuery = $this->db
+    ->select('COUNT(exc.id)')
+    ->from("$this->tableExecutionName AS exc")
+    ->where('exc.id_schedule=sch.id')
+    ->where('exc.status !=', 'submitted')
+    ->get_compiled_select();
+
+$selectQuery = [
+    'sch.*',
+    'MONTH(sch.created_at) AS month',
+    "($countAllQuery) AS count_all",
+    "($countAprQuery) AS count_approved",
+    "($countRejtQuery) AS count_rejected",
+    "($countSubmQuery) AS count_submitted",
+    "($countConfQuery) AS count_confirmed"
+];
+
 $this->db
-    ->select("sch.*, MONTH(sch.created_at) AS month, ($countAllQuery) AS count_all, ($countAprQuery) AS count_approved")
+    ->select(implode(', ', $selectQuery))
     ->from("$this->tableScheduleName AS sch")
     ->join("$this->tableLocationName AS loc", 'loc.id=sch.id_lokasi')
     ->where('sch.value', 1)
@@ -100,12 +129,18 @@ $schData = array_reduce($sch, function($res, $row) {
     if(!isset($res[$idLoc][$month][$idCat])) {
         $res[$idLoc][$month][$idCat] = [
             'countAll' => 0,
-            'countApr' => 0
+            'countApr' => 0,
+            'countRejt' => 0,
+            'countSubm' => 0,
+            'countConf' => 0,
         ];
     }
 
     $res[$idLoc][$month][$idCat]['countAll'] += $row['count_all'];
     $res[$idLoc][$month][$idCat]['countApr'] += $row['count_approved'];
+    $res[$idLoc][$month][$idCat]['countRejt'] += $row['count_rejected'];
+    $res[$idLoc][$month][$idCat]['countSubm'] += $row['count_submitted'];
+    $res[$idLoc][$month][$idCat]['countConf'] += $row['count_confirmed'];
     return $res;
 
 }, []);
@@ -131,22 +166,18 @@ foreach($locationData as $location) {
             $schItem = $hasSchedule ? $schData[$idLoc][$month][$idCat] : [];
             
             $item = [
-                'count_all' => 0,
-                'count_approved' => 0,
-                'percentage' => null,
+                'count_all' => $hasSchedule ? (int) $schItem['countAll'] : 0,
+                'count_approved' => $hasSchedule ? (int) $schItem['countApr'] : 0,
+                'count_rejected' => $hasSchedule ? (int) $schItem['countRejt'] : 0,
+                'count_submitted' => $hasSchedule ? (int) $schItem['countSubm'] : 0,
+                'count_confirmed' => $hasSchedule ? (int) $schItem['countConf'] : 0,
+                'percentage' => !$hasSchedule ? 100 : 0,
                 'has_schedule' => $hasSchedule,
                 'id_schedule' => $hasSchedule ? $schItem['id'] : null
             ];
             
-            if(!$hasSchedule) {
-                $item['percentage'] = 100;
-            } elseif($schItem['countAll'] < 1) {
-                $item['count_approved'] = (int) $schItem['countApr'];
-                $item['percentage'] = 0;
-            } else {
-                $item['count_all'] = (int) $schItem['countAll'];
-                $item['count_approved'] = (int) $schItem['countApr'];
-                $item['percentage'] = $item['count_approved'] / $item['count_all'] * 100;
+            if($item['count_all'] > 0) {
+                $item['percentage'] = $item['count_confirmed'] / $item['count_all'] * 100;
             }
             
             array_push($perfMonthData, $item);

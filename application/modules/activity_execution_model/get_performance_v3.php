@@ -31,7 +31,6 @@ $this->db
     ->order_by('loc.witel_kode')
     ->order_by('month')
     ->order_by('sch.id_category');
-// dd($this->db->get_compiled_select());
 $execList = $this->db->get()->result_array();
 
 $startMonth = 1;
@@ -64,7 +63,10 @@ foreach($locationList as $locData) {
             $colItem = [
                 'id_schedule' => null,
                 'exec_count' => 0,
-                'approved_count' => 0
+                'submitted_count' => 0,
+                'confirmed_count' => 0,
+                'approved_count' => 0,
+                'rejected_count' => 0
             ];
             for($i=0; $i<count($execList); $i++) {
 
@@ -81,6 +83,12 @@ foreach($locationList as $locData) {
                     $colItem['exec_count']++;
                     if($execList[$i]['status'] == 'approved') {
                         $colItem['approved_count']++;
+                        $colItem['confirmed_count']++;
+                    } elseif($execList[$i]['status'] == 'rejected') {
+                        $colItem['rejected_count']++;
+                        $colItem['confirmed_count']++;
+                    } else {
+                        $colItem['submitted_count']++;
                     }
 
                     $execList[$i] = null;
@@ -90,7 +98,7 @@ foreach($locationList as $locData) {
             }
 
             $execList = array_values(array_filter($execList));
-            $colItem['percent'] = $colItem['exec_count'] < 1 ? 0 : $colItem['approved_count'] / $colItem['exec_count'] * 100;
+            $colItem['percent'] = $colItem['exec_count'] < 1 ? 0 : $colItem['confirmed_count'] / $colItem['exec_count'] * 100;
             $colItem['isExists'] = $colItem['id_schedule'] ? true : false;
             array_push($item['item'], $colItem);
                             
