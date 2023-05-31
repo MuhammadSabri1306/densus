@@ -106,12 +106,13 @@ class EnvPattern {
         $endTime->setTime(23, 59, 59);
 
         // First time on this month
-        // $startTime->modify('first day of this month');
+        $startTime->modify('first day of this month');
+
         // First time on this year
-        $startTime->modify('first day of January ' . $startTime->format('Y'));
+        // $startTime->modify('first day of January ' . $startTime->format('Y'));
+
         // Last time on this month
         $endTime->modify('last day of this month');
-
         return (object) [
             'start' => $toString ? $startTime->format('Y-m-d H:i:s') : $startTime->getTimestamp(),
             'end' => $toString ? $endTime->format('Y-m-d H:i:s') : $endTime->getTimestamp()
