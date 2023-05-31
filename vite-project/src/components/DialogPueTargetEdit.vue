@@ -46,9 +46,8 @@ const onSubmit = async () => {
 };
 </script>
 <template>
-    <Dialog header="Form Update Target PUE" v-model:visible="showDialog"
-        maximizable modal draggable @afterHide="$emit('close')" contentClass="tw-overflow-y-visible"
-        :style="{ width: '50vw' }" :breakpoints="{ '960px': '80vw', '641px': '100vw' }">
+    <Dialog header="Form Update Target PUE" v-model:visible="showDialog" maximizable modal draggable
+        @afterHide="$emit('close')" class="dialog-basic" contentClass="tw-overflow-y-visible">
         <div class="p-4">
             <form @submit.prevent="onSubmit">
                 <div class="mb-4">

@@ -14,7 +14,7 @@ activityStore.fetchCategory(false, () => {
 });
 </script>
 <template>
-    <Dialog header="Activity Categories" :modal="true">
+    <Dialog header="Activity Categories" :modal="true" class="dialog-basic">
         <div class="px-4 py-4 py-md-0">
             <table class="table p-datatable-table">
                 <thead>

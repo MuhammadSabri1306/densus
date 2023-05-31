@@ -58,12 +58,12 @@ const onLocationChange = loc => {
 };
 </script>
 <template>
-    <Dialog header="Form Input Target PUE" v-model:visible="showDialog"
-        maximizable modal draggable @afterHide="$emit('close')" contentClass="tw-overflow-y-visible"
-        :style="{ width: '50vw' }" :breakpoints="{ '960px': '80vw', '641px': '100vw' }">
+    <Dialog header="Form Input Target PUE" v-model:visible="showDialog" maximizable modal draggable
+        @afterHide="$emit('close')" class="dialog-basic" contentClass="tw-overflow-y-visible">
         <div class="p-4">
             <form @submit.prevent="onSubmit">
-                <InputGroupLocation ref="inputLocation" requireDivre requireWitel locationType="gepee" @change="onLocationChange" />
+                <InputGroupLocation ref="inputLocation" requireDivre requireWitel locationType="gepee"
+                    @change="onLocationChange" />
                 <div class="row px-4 mb-5">
                     <div class="col-md-6">
                         <div class="form-group mb-5">

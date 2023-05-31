@@ -70,9 +70,8 @@ const onFileRemoved = event => {
 };
 </script>
 <template>
-    <Dialog header="Form Input Lokasi PUE Offline" v-model:visible="showDialog"
-        maximizable modal draggable @afterHide="$emit('close')"
-        :style="{ width: '50vw' }" :breakpoints="{ '960px': '80vw', '641px': '100vw' }">
+    <Dialog header="Form Update Lokasi PUE Offline" v-model:visible="showDialog" maximizable
+        modal draggable class="dialog-basic" @afterHide="$emit('close')">
         <div class="py-4 px-md-4">
             <form @submit.prevent="onSubmit">
                 <h6 class="mb-4 mb-md-0">Daya Esensial</h6>

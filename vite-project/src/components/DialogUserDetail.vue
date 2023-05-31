@@ -6,7 +6,7 @@ const props = defineProps({
 });
 </script>
 <template>
-    <Dialog header="Detail User" modal maximizable draggable dismissableMask>
+    <Dialog header="Detail User" modal maximizable draggable dismissableMask class="dialog-basic">
         <div class="p-4">
             <div class="tw-grid tw-grid-cols-[auto_1fr] tw-gap-x-2 tw-gap-y-4">
                 <b>Nama</b>

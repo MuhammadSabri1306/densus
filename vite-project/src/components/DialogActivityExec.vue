@@ -237,7 +237,8 @@ const isEnabled = computed(() => currSchedule.value && currSchedule.value.is_ena
                 <FormActivityExecAdd @cancel="showDialogAdd = false" @save="dialog.onFormAddSave" />
             </div>
         </Dialog>
-        <Dialog header="Update Activity" v-model:visible="showDialogEdit" modal maximizable draggable @afterHide="dialog.onFormEditHide">
+        <Dialog header="Update Activity" v-model:visible="showDialogEdit" modal maximizable
+            draggable @afterHide="dialog.onFormEditHide" class="dialog-basic">
             <div class="pb-4 pt-4 pt-md-0">
                 <div class="card card-body bg-light text-dark p-t-25 p-b-25 p-l-30 p-r-30">
                     <div class="row">

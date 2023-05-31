@@ -73,7 +73,7 @@ const onSubmit = async () => {
 </script>
 <template>
     <Dialog header="Form Input Lokasi PUE Offline" v-model:visible="showDialog"
-        maximizable modal draggable @afterHide="$emit('close')" contentClass="tw-overflow-y-visible">
+        maximizable modal draggable @afterHide="$emit('close')" class="dialog-basic" contentClass="tw-overflow-y-visible">
         <div class="p-4">
             <form @submit.prevent="onSubmit">
                 <div class="form-group">

@@ -33,9 +33,8 @@ const periode = computed(() => {
 });
 </script>
 <template>
-    <Dialog header="Data PUE Offline" v-model:visible="showDialog"
-        maximizable modal draggable @afterHide="$emit('close')"
-        :style="{ width: '50vw' }" :breakpoints="{ '960px': '80vw', '641px': '100vw' }">
+    <Dialog header="Data PUE Offline" v-model:visible="showDialog" maximizable modal draggable
+        class="dialog-basic" @afterHide="$emit('close')">
         <div class="p-4">
             <p class="text-end">Periode {{ periode }}</p>
             <div class="mb-4">

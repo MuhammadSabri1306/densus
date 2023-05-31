@@ -80,7 +80,8 @@ const onSubmit = () => {
 };
 </script>
 <template>
-    <Dialog header="Edit Data User" v-model:visible="showDialog" modal maximizable draggable @afterHide="$emit('die')">
+    <Dialog header="Edit Data User" v-model:visible="showDialog" modal maximizable draggable
+        class="dialog-basic" @afterHide="$emit('die')">
         <form @submit.prevent="onSubmit" class="p-4">
             <div class="mb-4">
                 <label for="inputNama">Nama<span class="text-danger"> *</span></label>

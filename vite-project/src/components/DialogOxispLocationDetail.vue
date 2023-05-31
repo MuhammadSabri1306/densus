@@ -108,8 +108,7 @@ const onDelete = () => {
 </script>
 <template>
     <Dialog header="Detail Lokasi OXISP" v-model:visible="showDialog" modal maximizable draggable
-        :style="{ width: '40vw' }" :breakpoints="{ '960px': '60vw', '641px': '100vw' }"
-        @afterHide="$router.push('/oxisp/activity')">
+        class="dialog-basic" @afterHide="$router.push('/oxisp/activity')">
         <div class="pt-4 pt-md-0">
             <div v-if="isLocFetched && !useEdit && isAdmin" class="row justify-content-end g-4">
                 <div class="col-auto">

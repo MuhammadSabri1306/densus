@@ -87,7 +87,8 @@ const onReject = () => {
 };
 </script>
 <template>
-    <Dialog header="Checklist Activity" modal maximizable draggable @show="fetch" @hide="$router.push('/gepee/exec')">
+    <Dialog header="Checklist Activity" modal maximizable draggable class="dialog-basic"
+        @show="fetch" @hide="$router.push('/gepee/exec')">
         <div class="pb-4 pt-4 pt-md-0">
             <div class="row align-items-end">
                 <div class="col-auto mb-4">

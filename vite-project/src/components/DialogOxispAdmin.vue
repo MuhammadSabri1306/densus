@@ -122,11 +122,10 @@ const isCurrDetailImg = computed(() => {
 });
 
 const dialogProps = {
+    class: "dialog-basic",
     modal: true,
     maximizable: true,
-    draggable: true,
-    style: { width: "40vw" },
-    breakpoints: { "960px": "60vw", "641px": "100vw" }
+    draggable: true
 };
 
 const dialogTitle = computed(() => {
@@ -159,7 +158,7 @@ const getStatusClass = status => {
                 <div v-if="isLoading">
                     <Skeleton v-for="n in 4" class="block mb-3" />
                 </div>
-                <div v-else-if="activityList.length > 0">
+                <div v-else-if="activityList.length > 0" class="table-responsive">
                     <table class="table table-head-primary">
                         <thead>
                             <tr>

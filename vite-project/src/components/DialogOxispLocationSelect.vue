@@ -42,11 +42,10 @@ const onStoSubmit = () => {
 };
 
 const dialogProps = {
+    class: "dialog-basic",
     modal: true,
     maximizable: true,
-    draggable: true,
-    style: { width: "40vw" },
-    breakpoints: { "960px": "60vw", "641px": "100vw" }
+    draggable: true
 };
 </script>
 <template>

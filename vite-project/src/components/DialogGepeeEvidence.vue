@@ -136,10 +136,17 @@ const isCurrDetailImg = computed(() => {
         return false;
     return isFileImg(currDetailData.file);
 });
+
+const dialogProps = {
+    class: "dialog-basic",
+    modal: true,
+    maximizable: true,
+    draggable: true
+};
 </script>
 <template>
     <div>
-        <Dialog :header="categoryHeading" v-model:visible="showDialogList" modal maximizable draggable @afterHide="dialog.onListHide">
+        <Dialog :header="categoryHeading" v-model:visible="showDialogList" v-bind="dialogProps" @afterHide="dialog.onListHide">
             <div class="pb-4 pt-4 pt-md-0">
                 <div class="card card-body bg-light text-dark p-t-25 p-b-25 p-l-30 p-r-30">
                     <div class="row">
@@ -193,7 +200,7 @@ const isCurrDetailImg = computed(() => {
                 </div>
             </div>
         </Dialog>
-        <Dialog header="Input Gepee Evidence" v-model:visible="showDialogAdd" modal maximizable draggable @afterHide="dialog.onFormAddHide">
+        <Dialog header="Input Gepee Evidence" v-model:visible="showDialogAdd" v-bind="dialogProps" @afterHide="dialog.onFormAddHide">
             <div class="pb-4 pt-4 pt-md-0">
                 <div class="card card-body bg-light text-dark p-t-25 p-b-25 p-l-30 p-r-30">
                     <div class="row">
@@ -212,7 +219,7 @@ const isCurrDetailImg = computed(() => {
                 <FormGepeeEvidence v-if="showDialogAdd" :locationId="locationId" @cancel="showDialogAdd = false" @save="dialog.onFormAddSave" />
             </div>
         </Dialog>
-        <Dialog header="Update Gepee Evidence" v-model:visible="showDialogEdit" modal maximizable draggable @afterHide="dialog.onFormEditHide">
+        <Dialog header="Update Gepee Evidence" v-model:visible="showDialogEdit" v-bind="dialogProps" @afterHide="dialog.onFormEditHide">
             <div class="pb-4 pt-4 pt-md-0">
                 <div class="card card-body bg-light text-dark p-t-25 p-b-25 p-l-30 p-r-30">
                     <div class="row">
@@ -231,7 +238,7 @@ const isCurrDetailImg = computed(() => {
                 <FormGepeeEvidence v-if="showDialogEdit" :locationId="locationId" :initData="currUpdate" @cancel="showDialogEdit = false" @save="dialog.onFormEditSave" />
             </div>
         </Dialog>
-        <Dialog header="Detail Gepee Evidence" v-model:visible="showDialogDetail" modal maximizable draggable @afterHide="dialog.onDetailHide">
+        <Dialog header="Detail Gepee Evidence" v-model:visible="showDialogDetail" v-bind="dialogProps" @afterHide="dialog.onDetailHide">
             <div class="pb-4 pt-4 pt-md-0">
                 <div class="card card-body bg-light text-dark p-t-25 p-b-25 p-l-30 p-r-30">
                     <div class="row">

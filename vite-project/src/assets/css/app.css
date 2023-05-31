@@ -366,3 +366,19 @@ label.required:after {
         min-width: 16rem;
     }
 }
+
+.dialog-basic.p-dialog:not(.p-dialog-maximized) {
+    width: 100vw;
+}
+
+@media screen(md) {
+    .dialog-basic.p-dialog:not(.p-dialog-maximized) {
+        width: 75vw;
+    }
+}
+
+@media screen(lg) {
+    .dialog-basic.p-dialog:not(.p-dialog-maximized) {
+        width: 50vw;
+    }
+}
