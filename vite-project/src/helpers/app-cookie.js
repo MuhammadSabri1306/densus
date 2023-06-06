@@ -3,8 +3,8 @@ import Cookies from "js-cookie";
 const cookiePrefix = "densus_app_cookie";
 const getName = key => cookiePrefix + "_" + key;
 
-export const getCookie = key => {
-	const data = Cookies.get(getName(key));
+export const getCookie = (key, globalScope = false) => {
+	const data = globalScope ? Cookies.get(key) : Cookies.get(getName(key));
 	if(data === undefined)
 		return null;
 	return JSON.parse(data);

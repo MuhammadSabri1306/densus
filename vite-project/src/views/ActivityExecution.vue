@@ -5,7 +5,7 @@ import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
-import DataTableActivityExecution from "@components/DataTableActivityExecution/index.vue";
+import DataTableActivityExecution from "@components/DataTableActivityExecutionV2/index.vue";
 import DialogActivityExec from "@components/DialogActivityExec.vue";
 import DialogActivityExecAdmin from "@components/DialogActivityExecAdmin.vue";
 
