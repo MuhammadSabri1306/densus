@@ -202,20 +202,20 @@ class Attachment extends RestController
 
     public function store_pue_evidence_post()
     {
-        $status = $this->auth_jwt->auth('admin');
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
         switch($status) {
             case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
             case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
             default: $data = REST_ERR_DEFAULT_DATA; break;
         }
 
-        if($status === 200) {
-            $currUser = $this->auth_jwt->get_payload();
-            if($currUser['level'] != 'nasional') {
-                $status = REST_ERR_UNAUTH_STATUS;
-                $data = REST_ERR_UNAUTH_DATA;
-            }
-        }
+        // if($status === 200) {
+        //     $currUser = $this->auth_jwt->get_payload();
+        //     if($currUser['level'] != 'nasional') {
+        //         $status = REST_ERR_UNAUTH_STATUS;
+        //         $data = REST_ERR_UNAUTH_DATA;
+        //     }
+        // }
 
         if($status === 200) {
             $this->allowedTypes = 'jpg|jpeg|png|pdf';
@@ -232,7 +232,7 @@ class Attachment extends RestController
 
     public function del_pue_evidence_delete($filename)
     {
-        $status = $this->auth_jwt->auth('admin');
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
         switch($status) {
             case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
             case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;

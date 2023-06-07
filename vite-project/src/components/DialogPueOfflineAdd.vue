@@ -72,59 +72,59 @@ const onFileRemoved = event => {
         modal draggable class="dialog-basic" @afterHide="$emit('close')">
         <div class="py-4 px-md-4">
             <form @submit.prevent="onSubmit">
-                <h6 class="mb-4 mb-md-0">Daya Esensial</h6>
+                <h6 class="mb-4">Daya Esensial</h6>
                 <div class="ps-3">
                     <div class="row align-items-end gx-5 mb-4">
                         <div class="col-md-6 col-lg-3">
                             <div class="form-group">
-                                <label for="dayaSdpA" class="required">SDP AC</label>
+                                <label for="dayaSdpA" class="required">Daya Total SDP Air Conditioner (AC) Essential - [Watt]</label>
                                 <input type="text" v-model="v$.daya_sdp_a.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_sdp_a.$invalid }"
                                     class="form-control" id="dayaSdpA" placeholder="Cth. 345000">
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
                             <div class="form-group">
-                                <label for="dayaSdpB" class="required">SDP Lampu & Exhaust Fan</label>
+                                <label for="dayaSdpB" class="required">Daya Total SDP Lampu & Exhaust Fan Essential - [Watt]</label>
                                 <input type="text" v-model="v$.daya_sdp_b.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_sdp_b.$invalid }"
                                     class="form-control" id="dayaSdpB" placeholder="Cth. 345000">
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
                             <div class="form-group">
-                                <label for="dayaSdpC" class="required">SDP Rectifier & Inverter</label>
+                                <label for="dayaSdpC" class="required">Daya Total SDP Rectifier & Inverter Essential - [Watt]</label>
                                 <input type="text" v-model="v$.daya_sdp_c.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_sdp_c.$invalid }"
                                     class="form-control" id="dayaSdpC" placeholder="Cth. 345000">
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
                             <div class="form-group">
-                                <label for="powerFactorSdp">Power Factor SDP AC</label>
+                                <label for="powerFactorSdp">Power Factor SDP Air Conditioner Essential - [Cos Phi]</label>
                                 <input type="text" v-model="v$.power_factor_sdp.$model" :class="{ 'is-invalid': hasSubmitted && v$.power_factor_sdp.$invalid }"
                                     class="form-control" id="powerFactorSdp" placeholder="">
                             </div>
                         </div>
                     </div>
                 </div>
-                <h6 class="mb-4 mb-md-0">Daya ICT Equipment</h6>
+                <h6 class="mb-4">Daya ICT Equipment</h6>
                 <div class="ps-3">
                     <div class="row align-items-end gx-5 mb-4">
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
-                                <label for="dayaEqA" class="required">Beban Rectifier AC</label>
+                                <label for="dayaEqA" class="required">Daya Total Beban Rectifier Source A - [Watt]</label>
                                 <input type="text" v-model="v$.daya_eq_a.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_eq_a.$invalid }"
                                     class="form-control" id="dayaEqA" placeholder="Cth. 345000">
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
-                                <label for="dayaEqB" class="required">Beban Rectifier Lampu & Exhaust Fan</label>
+                                <label for="dayaEqB" class="required">Daya Total Beban Rectifier Source B - [Watt]</label>
                                 <input type="text" v-model="v$.daya_eq_b.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_eq_b.$invalid }"
                                     class="form-control" id="dayaEqB" placeholder="Cth. 345000">
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
-                                <label for="dayaEqC" class="required">Beban Rectifier & Inverter</label>
+                                <label for="dayaEqC" class="required">Daya Total Beban UPS - [Watt]</label>
                                 <input type="text" v-model="v$.daya_eq_c.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_eq_c.$invalid }"
                                     class="form-control" id="dayaEqC" placeholder="Cth. 345000">
                             </div>

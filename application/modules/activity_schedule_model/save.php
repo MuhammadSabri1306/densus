@@ -5,7 +5,7 @@ $savedSchedule = $this->db
     ->select('s.*, MONTH(s.created_at) AS month')
     ->from("$this->tableName AS s")
     ->join("$this->tableLocationName AS l", 'l.id=s.id_lokasi')
-    ->where($this->mysql_updatable_time('s.created_at'))
+    ->where($this->mysql_schedule_time('s.created_at'))
     ->get()
     ->result_array();
     
@@ -23,7 +23,7 @@ $currTimestamp = date('Y-m-d H:i:s');
 $updateData = [];
 for($j=0; $j<count($savedSchedule); $j++) {
 
-    $isUpdatable = $this->is_time_updatable($savedSchedule[$j]['created_at']);
+    $isUpdatable = $this->is_schedule_updatable($savedSchedule[$j]['created_at']);
     if($isUpdatable) {
         
         $savedItem = $savedSchedule[$j];
@@ -74,7 +74,7 @@ if($isUpdateSuccess && count($schedule) > 0) {
         $datetime->setDate($datetime->format('Y'), $insertItem['month'], 1);
         $itemDateTimeStr = $datetime->format('Y-m-d H:i:s');
         
-        $isInsertable = $this->is_time_updatable($itemDateTimeStr);
+        $isInsertable = $this->is_schedule_updatable($itemDateTimeStr);
         $isInsertable = $isInsertable && in_array($insertItem['location'], array_column($locationList, 'id'));
         if($isInsertable) {
 

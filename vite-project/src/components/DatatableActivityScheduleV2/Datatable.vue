@@ -32,7 +32,7 @@ const dataSchedule = ref([]);
 const setupData = () => {
     const schedule = activityStore.schedule;
     const location = activityStore.location;
-    const updatableTime = activityStore.updatableTime;
+    const updatableTime = activityStore.updatableTime.schedule;
     
     const dataSetup = location.map((locItem, locationIndex) => {
         const col = monthList.value.reduce((monthCol, monthItem) => {
@@ -60,7 +60,7 @@ const setupData = () => {
                 if(scheduleCol) {
                     colItem.scheduleId = scheduleCol.id;
                     colItem.value = scheduleCol.value == 1;
-                    colItem.isDisabled = scheduleCol.is_enabled == 1 ? false : true;
+                    colItem.isDisabled = scheduleCol.updatable?.schedule == 1 ? false : true;
                 } else if(updatableTime.start) {
                     const itemDate = new Date();
                     itemDate.setMonth(monthItem.number - 1);

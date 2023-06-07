@@ -52,7 +52,7 @@ const setupData = () => {
                     dataItem.isExists = true;
                     dataItem.isChecked = scheduleCol.execution_count > 0;
                     dataItem.scheduleId = scheduleCol.id;
-                    dataItem.isDisabled = !isAdmin.value && scheduleCol.is_enabled == 0;
+                    dataItem.isDisabled = !isAdmin.value && scheduleCol.updatable?.execution == 0;
                     dataItem.label = `${ categoryItem.activity } bulan ${ monthItem.number }`;
                     dataItem.execCount = scheduleCol.execution_count || 0;
                     dataItem.apprCount = scheduleCol.approved_count || 0;

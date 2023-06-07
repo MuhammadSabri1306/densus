@@ -45,21 +45,21 @@ const periode = computed(() => {
                     </tr>
                     <tr>
                         <td class="tw-w-[1px]"></td>
-                        <td>Daya SDP Air Conditioner</td>
+                        <td>Daya Total SDP Air Conditioner (AC) Essential - [Watt]</td>
                         <td>: {{ toNumberText(dataPue.daya_sdp_a) }}</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>Daya SDP Lampu & Exhaust Fan</td>
+                        <td>Daya Total SDP Lampu & Exhaust Fan Essential - [Watt]</td>
                         <td>: {{ toNumberText(dataPue.daya_sdp_b) }}</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>Daya SDP Rectifier & Inverter</td>
+                        <td>Daya Total SDP Rectifier & Inverter Essential - [Watt]</td>
                         <td>: {{ toNumberText(dataPue.daya_sdp_c) }}</td>
                     </tr>
                     <tr>
-                        <td colspan="2"><b>Power Factor SDP Air Conditioner</b></td>
+                        <td colspan="2"><b>Power Factor SDP Air Conditioner Essential - [Cos Phi]</b></td>
                         <td>: <b>{{ toNumberText(dataPue.power_factor_sdp) }}</b></td>
                     </tr>
                     <tr>
@@ -68,17 +68,17 @@ const periode = computed(() => {
                     </tr>
                     <tr>
                         <td></td>
-                        <td>Daya Rectifier Air Conditioner</td>
+                        <td>Daya Total Beban Rectifier Source A - [Watt]</td>
                         <td>: {{ toNumberText(dataPue.daya_eq_a) }}</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>Daya Rectifier Lampu & Exhaust Fan</td>
+                        <td>Daya Total Beban Rectifier Source B - [Watt]</td>
                         <td>: {{ toNumberText(dataPue.daya_eq_b) }}</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>Daya Rectifier & Inverter</td>
+                        <td>Daya Total Beban UPS - [Watt]</td>
                         <td>: {{ toNumberText(dataPue.daya_eq_c) }}</td>
                     </tr>
                     <tr>

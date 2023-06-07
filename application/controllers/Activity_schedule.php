@@ -167,23 +167,9 @@ class Activity_schedule extends RestController
 
         if($status === 200) {
             $schedule = $input['body']['schedule'];
-            if(count($schedule) > 0 && !is_array($schedule[0])) {
-                $data = [ 'success' => false, 'message' => 'Endpoint ini sedang dalam perbaikan.' ];
-                $status = REST_ERR_BAD_REQ;
-            }
-            // foreach($input['body']['schedule'] as $key => $value) {
-            //     $temp = explode('&', $key);
-            //     if(count($temp) != 3) {
-            //         $data = [ 'success' => false, 'message' => 'Params store as wrong format.' ];
-            //         $status = REST_ERR_BAD_REQ;
-            //     } else {
-            //         array_push($schedule, [
-            //             'id_category' => $temp[2],
-            //             'month' => $temp[1],
-            //             'id_lokasi' => $temp[0],
-            //             'value' => $value
-            //         ]);
-            //     }
+            // if(count($schedule) > 0 && !is_array($schedule[0])) {
+            //     $data = [ 'success' => false, 'message' => 'Endpoint ini sedang dalam perbaikan.' ];
+            //     $status = REST_ERR_BAD_REQ;
             // }
         }
 
@@ -327,6 +313,10 @@ class Activity_schedule extends RestController
             $data = [
                 'schedule' => $this->activity_schedule_model->get($filter),
                 'updatableTime' => EnvPattern::getUpdatableActivityTime(true),
+                'updatable_time' => [
+                    'schedule' => EnvPattern::getActivityScheduleTime(true),
+                    'execution' => EnvPattern::getActivityExecutionTime(true)
+                ],
                 'success' => true
             ];
 

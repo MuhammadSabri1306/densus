@@ -1,445 +1,699 @@
 export default {
     "schedule": [
         {
-            "id": "26304",
+            "id": "35400",
             "id_category": "1",
             "id_lokasi": "383",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
-            "execution_count": "0",
-            "approved_count": "0"
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
+            "execution_count": "1",
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26305",
+            "id": "35401",
             "id_category": "2",
             "id_lokasi": "383",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
-            "execution_count": "0",
-            "approved_count": "0"
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
+            "execution_count": "1",
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26306",
+            "id": "35402",
             "id_category": "3",
             "id_lokasi": "383",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
-            "execution_count": "0",
-            "approved_count": "0"
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
+            "execution_count": "1",
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26307",
+            "id": "35403",
             "id_category": "4",
             "id_lokasi": "383",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
-            "execution_count": "0",
-            "approved_count": "0"
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
+            "execution_count": "1",
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26308",
+            "id": "35404",
             "id_category": "5",
             "id_lokasi": "383",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26309",
+            "id": "35405",
             "id_category": "6",
             "id_lokasi": "383",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26310",
+            "id": "35406",
             "id_category": "7",
             "id_lokasi": "383",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26311",
+            "id": "35407",
             "id_category": "8",
             "id_lokasi": "383",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26312",
+            "id": "35408",
             "id_category": "1",
             "id_lokasi": "384",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
-            "execution_count": "0",
-            "approved_count": "0"
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
+            "execution_count": "1",
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26313",
+            "id": "35409",
             "id_category": "2",
             "id_lokasi": "384",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
-            "execution_count": "0",
-            "approved_count": "0"
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
+            "execution_count": "1",
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26314",
+            "id": "35410",
             "id_category": "3",
             "id_lokasi": "384",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
-            "execution_count": "0",
-            "approved_count": "0"
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
+            "execution_count": "1",
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26315",
+            "id": "35411",
             "id_category": "4",
             "id_lokasi": "384",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
-            "execution_count": "0",
-            "approved_count": "0"
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
+            "execution_count": "1",
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26316",
+            "id": "35412",
             "id_category": "5",
             "id_lokasi": "384",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26317",
+            "id": "35413",
             "id_category": "6",
             "id_lokasi": "384",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26318",
+            "id": "35414",
             "id_category": "7",
             "id_lokasi": "384",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26319",
+            "id": "35415",
             "id_category": "8",
             "id_lokasi": "384",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26320",
+            "id": "35416",
             "id_category": "1",
             "id_lokasi": "388",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26321",
+            "id": "35417",
             "id_category": "2",
             "id_lokasi": "388",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26322",
+            "id": "35418",
             "id_category": "3",
             "id_lokasi": "388",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26323",
+            "id": "35419",
             "id_category": "4",
             "id_lokasi": "388",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26324",
+            "id": "35420",
             "id_category": "5",
             "id_lokasi": "388",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26325",
+            "id": "35421",
             "id_category": "6",
             "id_lokasi": "388",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26326",
+            "id": "35422",
             "id_category": "7",
             "id_lokasi": "388",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26327",
+            "id": "35423",
             "id_category": "8",
             "id_lokasi": "388",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26328",
+            "id": "35424",
             "id_category": "1",
             "id_lokasi": "390",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
-            "execution_count": "0",
-            "approved_count": "0"
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
+            "execution_count": "1",
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26329",
+            "id": "35425",
             "id_category": "2",
             "id_lokasi": "390",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
-            "execution_count": "0",
-            "approved_count": "0"
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
+            "execution_count": "1",
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26330",
+            "id": "35426",
             "id_category": "3",
             "id_lokasi": "390",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
-            "execution_count": "0",
-            "approved_count": "0"
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
+            "execution_count": "1",
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26331",
+            "id": "35427",
             "id_category": "4",
             "id_lokasi": "390",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26332",
+            "id": "35428",
             "id_category": "5",
             "id_lokasi": "390",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26333",
+            "id": "35429",
             "id_category": "6",
             "id_lokasi": "390",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26334",
+            "id": "35430",
             "id_category": "7",
             "id_lokasi": "390",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26335",
+            "id": "35431",
             "id_category": "8",
             "id_lokasi": "390",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26336",
+            "id": "35432",
             "id_category": "1",
             "id_lokasi": "398",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
-            "execution_count": "0",
-            "approved_count": "0"
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
+            "execution_count": "1",
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26337",
+            "id": "35433",
             "id_category": "2",
             "id_lokasi": "398",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
-            "execution_count": "0",
-            "approved_count": "0"
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
+            "execution_count": "1",
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26338",
+            "id": "35434",
             "id_category": "3",
             "id_lokasi": "398",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
-            "execution_count": "0",
-            "approved_count": "0"
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
+            "execution_count": "1",
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26339",
+            "id": "35435",
             "id_category": "4",
             "id_lokasi": "398",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26340",
+            "id": "35436",
             "id_category": "5",
             "id_lokasi": "398",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26341",
+            "id": "35437",
             "id_category": "6",
             "id_lokasi": "398",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26342",
+            "id": "35438",
             "id_category": "7",
             "id_lokasi": "398",
             "value": "1",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         },
         {
-            "id": "26343",
+            "id": "35439",
             "id_category": "8",
             "id_lokasi": "398",
-            "value": "0",
-            "created_at": "2023-04-05 18:55:30",
-            "updated_at": "2023-04-05 18:56:21",
-            "is_enabled": "1",
+            "value": "1",
+            "created_at": "2023-06-01 19:28:57",
+            "updated_at": "2023-06-01 19:28:57",
+            "divre_kode": "TLK-r7000000",
+            "witel_kode": "DTT-ka200000",
+            "is_enabled": true,
             "execution_count": "0",
-            "approved_count": "0"
+            "approved_count": "0",
+            "updatable": {
+                "schedule": true,
+                "execution": true
+            }
         }
     ],
+    "updatableTime": {
+        "start": "2023-06-01 00:00:00",
+        "end": "2023-06-30 23:59:59"
+    },
+    "updatable_time": {
+        "schedule": {
+            "start": "2023-06-01 00:00:00",
+            "end": "2023-12-31 23:59:59"
+        },
+        "execution": {
+            "start": "2023-06-01 00:00:00",
+            "end": "2023-06-30 23:59:59"
+        }
+    },
     "success": true
 };

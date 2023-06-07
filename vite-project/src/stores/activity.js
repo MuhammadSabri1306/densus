@@ -28,9 +28,16 @@ export const useActivityStore = defineStore("activity", {
 
         schedule: [],
         hasScheduleChanged: false,
+        
         updatableTime: {
-            start: null,
-            end: null
+            schedule: {
+                start: null,
+                end: null
+            },
+            execution: {
+                start: null,
+                end: null
+            },
         },
 
         execution: [],
@@ -435,9 +442,15 @@ export const useActivityStore = defineStore("activity", {
         },
 
         initUpdatableTime(data) {
-            if(!this.updatableTime.start && data.updatableTime) {
-                this.updatableTime.start = new Date(data.updatableTime.start);
-                this.updatableTime.end = new Date(data.updatableTime.end);
+            if(!data.updatable_time)
+                return;
+            if(data.updatable_time.schedule) {
+                this.updatableTime.schedule.start = new Date(data.updatable_time.schedule.start);
+                this.updatableTime.schedule.end = new Date(data.updatable_time.schedule.end);
+            }
+            if(data.updatable_time.execution) {
+                this.updatableTime.execution.start = new Date(data.updatable_time.execution.start);
+                this.updatableTime.execution.end = new Date(data.updatable_time.execution.end);
             }
         }
 

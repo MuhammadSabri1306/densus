@@ -22,9 +22,33 @@ class Activity_schedule_model extends CI_Model
         return $itemEpoch >= $updatableTime->start && $itemEpoch <= $updatableTime->end;
     }
 
+    protected function is_schedule_updatable($dateTimeString)
+    {
+        $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $dateTimeString);
+        $itemEpoch = $dateTime->getTimestamp();
+        
+        $updatableTime = EnvPattern::getActivityScheduleTime();
+        return $itemEpoch >= $updatableTime->start && $itemEpoch <= $updatableTime->end;
+    }
+
+    protected function is_execution_updatable($dateTimeString)
+    {
+        $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $dateTimeString);
+        $itemEpoch = $dateTime->getTimestamp();
+        
+        $updatableTime = EnvPattern::getActivityExecutionTime();
+        return $itemEpoch >= $updatableTime->start && $itemEpoch <= $updatableTime->end;
+    }
+
     protected function mysql_updatable_time($fieldName)
     {
         $updatableTime = EnvPattern::getUpdatableActivityTime();
+        return "UNIX_TIMESTAMP($fieldName)>=$updatableTime->start AND UNIX_TIMESTAMP($fieldName)<=$updatableTime->end";
+    }
+
+    protected function mysql_schedule_time($fieldName)
+    {
+        $updatableTime = EnvPattern::getActivityScheduleTime();
         return "UNIX_TIMESTAMP($fieldName)>=$updatableTime->start AND UNIX_TIMESTAMP($fieldName)<=$updatableTime->end";
     }
 
