@@ -18,7 +18,7 @@ const { data, v$ } = useDataForm({
     power_factor_sdp: { decimal },
     daya_eq_a: { required, integer },
     daya_eq_b: { required, integer },
-    daya_eq_c: { required, integer },
+    daya_eq_c: { integer },
     evidence: { required },
 });
 
@@ -72,35 +72,35 @@ const onFileRemoved = event => {
         modal draggable class="dialog-basic" @afterHide="$emit('close')">
         <div class="py-4 px-md-4">
             <form @submit.prevent="onSubmit">
-                <h6 class="mb-4">Daya Esensial</h6>
+                <h6 class="mb-4">Daya Essential Facility</h6>
                 <div class="ps-3">
                     <div class="row align-items-end gx-5 mb-4">
                         <div class="col-md-6 col-lg-3">
                             <div class="form-group">
-                                <label for="dayaSdpA" class="required">Daya Total SDP Air Conditioner (AC) Essential - [Watt]</label>
+                                <label for="dayaSdpA" class="required">Daya Total Air Conditioner (AC) Essential - [Watt]</label>
                                 <input type="text" v-model="v$.daya_sdp_a.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_sdp_a.$invalid }"
                                     class="form-control" id="dayaSdpA" placeholder="Cth. 345000">
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
                             <div class="form-group">
-                                <label for="dayaSdpB" class="required">Daya Total SDP Lampu & Exhaust Fan Essential - [Watt]</label>
+                                <label for="dayaSdpB" class="required">Daya Total Lampu & Exhaust Fan Essential - [Watt]</label>
                                 <input type="text" v-model="v$.daya_sdp_b.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_sdp_b.$invalid }"
                                     class="form-control" id="dayaSdpB" placeholder="Cth. 345000">
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
                             <div class="form-group">
-                                <label for="dayaSdpC" class="required">Daya Total SDP Rectifier & Inverter Essential - [Watt]</label>
+                                <label for="dayaSdpC" class="required">Daya Total Rectifier & Inverter Essential - [Watt]</label>
                                 <input type="text" v-model="v$.daya_sdp_c.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_sdp_c.$invalid }"
                                     class="form-control" id="dayaSdpC" placeholder="Cth. 345000">
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
                             <div class="form-group">
-                                <label for="powerFactorSdp">Power Factor SDP Air Conditioner Essential - [Cos Phi]</label>
+                                <label for="powerFactorSdp">Power Factor Air Conditioner Essential - [Cos Phi]</label>
                                 <input type="text" v-model="v$.power_factor_sdp.$model" :class="{ 'is-invalid': hasSubmitted && v$.power_factor_sdp.$invalid }"
-                                    class="form-control" id="powerFactorSdp" placeholder="">
+                                    class="form-control" id="powerFactorSdp" placeholder="Cth. 0.9">
                             </div>
                         </div>
                     </div>
@@ -124,7 +124,7 @@ const onFileRemoved = event => {
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
-                                <label for="dayaEqC" class="required">Daya Total Beban UPS - [Watt]</label>
+                                <label for="dayaEqC">Daya ICT Equipment Lain - [Watt]</label>
                                 <input type="text" v-model="v$.daya_eq_c.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_eq_c.$invalid }"
                                     class="form-control" id="dayaEqC" placeholder="Cth. 345000">
                             </div>
@@ -136,8 +136,8 @@ const onFileRemoved = event => {
                         acceptText="(*.jpg, *.jpeg, *.png, *.pdf)" @uploaded="onFileUploaded" @removed="onFileRemoved" class="mb-5" />
                 </div>
                 <div class="d-flex justify-content-between align-items-end">
-                    <button type="submit" :class="{ 'btn-loading': isLoading }" class="btn btn-lg btn-primary">Simpan</button>
                     <button type="button" @click="showDialog = false" class="btn btn-danger">Batalkan</button>
+                    <button type="submit" :class="{ 'btn-loading': isLoading }" class="btn btn-lg btn-primary">Simpan</button>
                 </div>
             </form>
         </div>

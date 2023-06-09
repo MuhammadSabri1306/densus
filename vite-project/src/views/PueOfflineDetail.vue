@@ -173,7 +173,7 @@ const onFilterApply = filterValue => {
                 </Column>
                 <Column field="power_factor_sdp" header="Power Factor SDP AC" :sortable="true">
                     <template #body="slotProps">
-                        {{ toNumberText(slotProps.data.power_factor_sdp) }}
+                        {{ slotProps.data.power_factor_sdp ? toNumberText(slotProps.data.power_factor_sdp) : null }}
                     </template>
                 </Column>
                 <Column field="ictEquip" header="Total Daya ICT Equipment" :sortable="true">

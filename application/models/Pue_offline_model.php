@@ -18,7 +18,7 @@ class Pue_offline_model extends CI_Model
             'power_factor_sdp' => ['double'],
             'daya_eq_a' => ['int', 'required'],
             'daya_eq_b' => ['int', 'required'],
-            'daya_eq_c' => ['int', 'required'],
+            'daya_eq_c' => ['int'],
             'evidence' => ['string', 'required']
         ]
     ];
@@ -256,7 +256,14 @@ class Pue_offline_model extends CI_Model
     {
         $cosPhi = isset($body['power_factor_sdp']) ? $body['power_factor_sdp'] : 1;
         $powerTotal = ($body['daya_sdp_a'] + $body['daya_sdp_b'] + $body['daya_sdp_c']) * $cosPhi;
-        $powerEqp = $body['daya_eq_a'] + $body['daya_eq_b'] + $body['daya_eq_c'];
+        if(isset($body['power_factor_sdp'])) {
+            $powerTotal *= $body['power_factor_sdp']; // for Cos Phi
+        }
+        
+        $powerEqp = $body['daya_eq_a'] + $body['daya_eq_b'];
+        if(isset($body['daya_eq_c'])) {
+            $powerEqp += $body['daya_eq_c'];
+        }
 
         $body['pue_value'] = $powerTotal / $powerEqp;
         $body['updated_at'] = date('Y-m-d H:i:s');
@@ -269,9 +276,9 @@ class Pue_offline_model extends CI_Model
         } else {
             
             $mainFilter = $this->get_filter([ 'id' => $id ]);
-            if(!isset($body['power_factor_sdp'])) {
-                $body['power_factor_sdp'] = $this->default_cos_phi;
-            }
+            // if(!isset($body['power_factor_sdp'])) {
+            //     $body['power_factor_sdp'] = $this->default_cos_phi;
+            // }
 
             $this->db->where($mainFilter);
             $success = $this->db->update($this->tableName, $body);

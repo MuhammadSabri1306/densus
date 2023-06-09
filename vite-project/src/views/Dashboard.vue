@@ -1,10 +1,12 @@
 <script setup>
 import { computed } from "vue";
 import { useUserStore } from "@stores/user";
+import { testApi } from "@/helpers/newosase-test";
 
 const userStore = useUserStore();
 const name = computed(() => userStore.name);
 const location = computed(() => userStore.location);
+const testOnClick = () => testApi();
 </script>
 <template>
     <div>
@@ -113,6 +115,9 @@ const location = computed(() => userStore.location);
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="button" @click="testOnClick" class="btn btn-light btn-sm">Test@</button>
         </div>
     </div>
 </template>

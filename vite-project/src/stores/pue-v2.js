@@ -110,7 +110,7 @@ export const usePueV2Store = defineStore("pueV2", {
         buildUrlParams(filters) {
             const params = [];
             for(let key in filters) {
-                if(filters[key] !== null || filters[key] !== undefined)
+                if(filters[key] !== null && filters[key] !== undefined)
                     params.push(`${ key }=${ filters[key] }`);
             }
             return params.length < 1 ? "" : "/?" + params.join("&");

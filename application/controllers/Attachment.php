@@ -310,26 +310,29 @@ class Attachment extends RestController
 
     public function test_api_get()
     {
-        $url = 'https://newosase.telkom.co.id/api/v1/dashboard-service/operation/rtu/status?regional=%%&datel=%%&alarm=%%&id_m_location=%%&id_tags=%%&witel=%%';
+        $url = 'https://newosase.telkom.co.id/api/v1/dashboard-service/dashboard/rtu/port-sensors?searchRtuName=PLN_CONS';
         $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfaWQiOiJ3ckIyRWtrWjQyVUNuZGxsNDI1eCIsInRva2VuIjoicDVjVVRfeTVFeklXUzRrY2VkTFdBUHdXeWlsVkpNZzNSNkdFaEduVW5VakZaS2VlVE8iLCJpYXQiOjE2NzI5NjgzNjQsImV4cCI6MTY3MzA1NDc2NH0.CE7j2PmC9qB3D_eIBlY-Ro3tNRrXUiwl_4VRXLsX_4Y';
-        // $options = array(
-        //     'https'=>array(
-        //         'method'=>"GET",
-        //         'header'=>"token: $token"
-        //     )
-        // );
+        
+        $curl = curl_init();
+        
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 
-        // $context = stream_context_create($options);
-        // $content = file_get_contents($url, false, $context);
-        // dd($content);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+            'Accept: application/json'
+        ]);
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array("token: $token"));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
 
-        $result = curl_exec($ch);
-        dd($result);
-        curl_close($ch);
+        curl_close($curl);
+        if($err) {
+            dd_json($err);
+        } else {
+            $response = json_decode($response);
+            dd_json($response);
+        }
     }
 }

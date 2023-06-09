@@ -40,27 +40,27 @@ const periode = computed(() => {
             <div class="mb-4">
                 <table class="table table-bordered">
                     <tr>
-                        <td colspan="2"><b>Total Daya Esensial</b></td>
+                        <td colspan="2"><b>Total Daya Essential Facility</b></td>
                         <td>: <b>{{ toNumberText(dayaEsensial) }}</b></td>
                     </tr>
                     <tr>
                         <td class="tw-w-[1px]"></td>
-                        <td>Daya Total SDP Air Conditioner (AC) Essential - [Watt]</td>
+                        <td>Daya Total Air Conditioner (AC) Essential - [Watt]</td>
                         <td>: {{ toNumberText(dataPue.daya_sdp_a) }}</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>Daya Total SDP Lampu & Exhaust Fan Essential - [Watt]</td>
+                        <td>Daya Total Lampu & Exhaust Fan Essential - [Watt]</td>
                         <td>: {{ toNumberText(dataPue.daya_sdp_b) }}</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td>Daya Total SDP Rectifier & Inverter Essential - [Watt]</td>
+                        <td>Daya Total Rectifier & Inverter Essential - [Watt]</td>
                         <td>: {{ toNumberText(dataPue.daya_sdp_c) }}</td>
                     </tr>
                     <tr>
-                        <td colspan="2"><b>Power Factor SDP Air Conditioner Essential - [Cos Phi]</b></td>
-                        <td>: <b>{{ toNumberText(dataPue.power_factor_sdp) }}</b></td>
+                        <td colspan="2"><b>Power Factor Air Conditioner Essential - [Cos Phi]</b></td>
+                        <td>: <b>{{ dataPue.power_factor_sdp ? toNumberText(dataPue.power_factor_sdp): '-' }}</b></td>
                     </tr>
                     <tr>
                         <td colspan="2"><b>Total Daya ICT Equipment</b></td>
@@ -78,8 +78,8 @@ const periode = computed(() => {
                     </tr>
                     <tr>
                         <td></td>
-                        <td>Daya Total Beban UPS - [Watt]</td>
-                        <td>: {{ toNumberText(dataPue.daya_eq_c) }}</td>
+                        <td>Daya ICT Equipment Lain - [Watt]</td>
+                        <td>: {{ dataPue.daya_eq_c ? toNumberText(dataPue.daya_eq_c) : '-' }}</td>
                     </tr>
                     <tr>
                         <td colspan="2"><b>Nilai PUE</b></td>
@@ -103,3 +103,10 @@ const periode = computed(() => {
         </div>
     </Dialog>
 </template>
+<style scoped>
+
+.table-bordered>:not(caption)>*>* {
+    @apply tw-border-0 tw-p-0 tw-shadow-none;
+}
+
+</style>
