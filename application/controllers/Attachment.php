@@ -307,4 +307,29 @@ class Attachment extends RestController
 
         $this->response($data, $status);
     }
+
+    public function test_api_get()
+    {
+        $url = 'https://newosase.telkom.co.id/api/v1/dashboard-service/operation/rtu/status?regional=%%&datel=%%&alarm=%%&id_m_location=%%&id_tags=%%&witel=%%';
+        $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfaWQiOiJ3ckIyRWtrWjQyVUNuZGxsNDI1eCIsInRva2VuIjoicDVjVVRfeTVFeklXUzRrY2VkTFdBUHdXeWlsVkpNZzNSNkdFaEduVW5VakZaS2VlVE8iLCJpYXQiOjE2NzI5NjgzNjQsImV4cCI6MTY3MzA1NDc2NH0.CE7j2PmC9qB3D_eIBlY-Ro3tNRrXUiwl_4VRXLsX_4Y';
+        // $options = array(
+        //     'https'=>array(
+        //         'method'=>"GET",
+        //         'header'=>"token: $token"
+        //     )
+        // );
+
+        // $context = stream_context_create($options);
+        // $content = file_get_contents($url, false, $context);
+        // dd($content);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array("token: $token"));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $result = curl_exec($ch);
+        dd($result);
+        curl_close($ch);
+    }
 }

@@ -170,8 +170,6 @@ const fetch = () => {
 
         if(data.gepee_summary_nasional)
             summaryNasional.value = data.gepee_summary_nasional;
-        else
-            summaryNasional.value = null;
 
         isLoading.value = false;
     });
@@ -269,31 +267,34 @@ const selectedYear = computed(() => viewStore.filters.year);
                         <td class="sticky-column !tw-bg-[#24695c] text-white">
                             <b class="px-3">SUMMARY NASIONAL</b>
                         </td>
-                        <td></td>
-                        <td :class="getColClassNumber('pue', summaryNasional.pue.offline)"
+                        <td class="middle text-center">-</td>
+                        <td :class="getColClassNumber('pue', summaryNasional.pue_offline)"
                             class="middle text-center f-w-700">
-                            {{ formatItemNumber(summaryNasional.pue.offline) }}
+                            {{ formatItemNumber(summaryNasional.pue_offline) }}
                         </td>
-                        <td :class="getColClassNumber('pue', summaryNasional.pue.online)"
+                        <td :class="getColClassNumber('pue', summaryNasional.pue_online)"
                             class="middle text-center f-w-700">
-                            {{ formatItemNumber(summaryNasional.pue.online) }}
+                            {{ formatItemNumber(summaryNasional.pue_online) }}
                         </td>
                         <td></td>
                         <td class="middle text-center">
-                            {{ isPueReachTarget(summaryNasional) ? "TIDAK" : "YA" }}
+                            {{ summaryNasional.isPueReachTarget ? "TIDAK" : "YA" }}
                         </td>
                         <td class="middle text-center">-</td>
-                        <td v-for="category in summaryNasional.performance"
-                            :class="getColClassNumber('percent', category.percentage)"
+                        <td v-for="percentage in summaryNasional.performance"
+                            :class="getColClassNumber('percent', percentage)"
                             class="middle text-center f-w-700">
-                            {{ formatItemNumber(category.percentage) }}%
+                            {{ formatItemNumber(percentage) }}%
                         </td>
                         <td class="middle text-center">-</td>
-                        <td :class="getColClassNumber('percent', summaryNasional.performance_summary.percentage)"
+                        <td :class="getColClassNumber('percent', summaryNasional.performance_summary)"
                             class="middle text-center f-w-700">
-                            {{ formatItemNumber(summaryNasional.performance_summary.percentage) }}%
+                            {{ formatItemNumber(summaryNasional.performance_summary) }}%
                         </td>
-                        <td>-</td>
+                        <td :class="getColClassNumber('percent', summaryNasional.performance_summary_yearly)"
+                            class="middle text-center f-w-700">
+                            {{ formatItemNumber(summaryNasional.performance_summary_yearly) }}%
+                        </td>
                     </tr>
                     <tr v-for="item in tableData" :class="getRowClass(item)">
                         <td class="sticky-column">

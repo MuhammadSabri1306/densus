@@ -100,6 +100,15 @@ class Gepee_management_model extends CI_Model
         return $this->result;
     }
     
+    public function get_report_sum_nasional($filter, $pueLowLimit)
+    {
+        $this->use_module('get_report_sum_nasional', [
+            'filter' => $filter,
+            'pueLowLimit' => $pueLowLimit
+        ]);
+        return $this->result;
+    }
+    
     public function get_report_summary_nasional($filter, $pueLowLimit)
     {
         $this->use_module('get_report_summary_nasional', [
