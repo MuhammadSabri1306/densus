@@ -168,17 +168,17 @@ const onFilterApply = filterValue => {
                 </Column>
                 <Column field="dayaEsensial" header="Total Daya Esensial" :sortable="true">
                     <template #body="slotProps">
-                        {{ toNumberText(slotProps.data.dayaEsensial) }}
+                        {{ toNumberText(slotProps.data.dayaEsensial) + " Watt" }}
                     </template>
                 </Column>
                 <Column field="power_factor_sdp" header="Power Factor SDP AC" :sortable="true">
                     <template #body="slotProps">
-                        {{ slotProps.data.power_factor_sdp ? toNumberText(slotProps.data.power_factor_sdp) : null }}
+                        {{ slotProps.data.power_factor_sdp ? toNumberText(slotProps.data.power_factor_sdp) : "-" }}
                     </template>
                 </Column>
                 <Column field="ictEquip" header="Total Daya ICT Equipment" :sortable="true">
                     <template #body="slotProps">
-                        {{ toNumberText(slotProps.data.ictEquip) }}
+                        {{ toNumberText(slotProps.data.ictEquip) + " Watt" }}
                     </template>
                 </Column>
                 <Column header="Action">

@@ -333,7 +333,8 @@
     }
 }
 
-label.required:after {
+label.required:after,
+label .required:after {
     content: "*";
     @apply tw-text-danger tw-ml-0.5;
 }

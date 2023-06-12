@@ -15,10 +15,10 @@ class Pue_offline_model extends CI_Model
             'daya_sdp_a' => ['int', 'required'],
             'daya_sdp_b' => ['int', 'required'],
             'daya_sdp_c' => ['int', 'required'],
-            'power_factor_sdp' => ['double'],
+            'power_factor_sdp' => ['double', 'nullable'],
             'daya_eq_a' => ['int', 'required'],
             'daya_eq_b' => ['int', 'required'],
-            'daya_eq_c' => ['int'],
+            'daya_eq_c' => ['int', 'nullable'],
             'evidence' => ['string', 'required']
         ]
     ];
@@ -266,11 +266,9 @@ class Pue_offline_model extends CI_Model
         }
 
         $body['pue_value'] = $powerTotal / $powerEqp;
-        $body['updated_at'] = date('Y-m-d H:i:s');
 
         if(is_null($id)) {
             
-            $body['created_at'] = $body['updated_at'];
             $success = $this->db->insert($this->tableName, $body);
 
         } else {

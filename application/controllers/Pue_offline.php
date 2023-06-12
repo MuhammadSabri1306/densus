@@ -236,6 +236,18 @@ class Pue_offline extends RestController
             $this->load->library('input_custom');
             $this->load->model('pue_offline_model');
 
+            $month = $this->input->get('month');
+            $year = $this->input->get('year');
+            if(!$month && !$year) {
+                $timestamp = date('Y-m-d H:i:s');
+            } else {
+                if(!$month) $month = date('n');
+                if(!$year) $year = date('Y');
+                $day = '01';
+                $time = '00:00:00';
+                $timestamp = date('Y-m-d H:i:s', strtotime("$year-$month-$day $time"));
+            }
+
             $currUser = $this->auth_jwt->get_payload();
             $fields = $this->pue_offline_model->get_insertable_fields();
             
@@ -249,8 +261,12 @@ class Pue_offline extends RestController
         }
 
         if($status === 200) {
+            $body = $input['body'];
+            $body['created_at'] = $timestamp;
+            $body['updated_at'] = $timestamp;
+            
             $this->pue_offline_model->currUser = $currUser;
-            $success = $this->pue_offline_model->save($input['body']);
+            $success = $this->pue_offline_model->save($body);
             if($success) {
 
                 $data = [ 'success' => true ];
@@ -296,8 +312,11 @@ class Pue_offline extends RestController
         }
 
         if($status === 200) {
+            $body = $input['body'];
+            $body['updated_at'] = date('Y-m-d H:i:s');
+
             $this->pue_offline_model->currUser = $currUser;
-            $success = $this->pue_offline_model->save($input['body'], $id);
+            $success = $this->pue_offline_model->save($body, $id);
             if($success) {
 
                 $data = [ 'success' => true ];

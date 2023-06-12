@@ -359,8 +359,9 @@ export const usePueV2Store = defineStore("pueV2", {
         },
 
         async createOffline(body, callback = null) {
+            const urlParams = this.buildUrlParams({ year: this.filters.year, month: this.filters.month });
             try {
-                const response = await http.post("/pue/offline", body, this.fetchHeader);
+                const response = await http.post("/pue/offline" + urlParams, body, this.fetchHeader);
                 if(!response.data.success) {
                     console.warn(response.data);
                     callback && callback({ success: false, status: response.status });
