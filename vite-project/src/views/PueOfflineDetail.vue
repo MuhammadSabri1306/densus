@@ -166,12 +166,12 @@ const onFilterApply = filterValue => {
                         {{ toNumberText(slotProps.data.pue_value) }}
                     </template>
                 </Column>
-                <Column field="dayaEsensial" header="Total Daya Esensial" :sortable="true">
+                <Column field="dayaEsensial" header="Total Daya Essential Facility" :sortable="true">
                     <template #body="slotProps">
                         {{ toNumberText(slotProps.data.dayaEsensial) + " Watt" }}
                     </template>
                 </Column>
-                <Column field="power_factor_sdp" header="Power Factor SDP AC" :sortable="true">
+                <Column field="power_factor_sdp" header="Power Factor Air Conditioner Essential (Cos Phi)" :sortable="true">
                     <template #body="slotProps">
                         {{ slotProps.data.power_factor_sdp ? toNumberText(slotProps.data.power_factor_sdp) : "-" }}
                     </template>
