@@ -237,19 +237,31 @@ class Pue_offline extends RestController
             $this->load->model('pue_offline_model');
 
             $month = $this->input->get('month');
+            if(!$month) $month = date('n');
+
             $year = $this->input->get('year');
-            if(!$month && !$year) {
+            if(!$year) $year = date('Y');
+
+            if($year == date('Y') && $month == date('n')) {
                 $timestamp = date('Y-m-d H:i:s');
             } else {
-                if(!$month) $month = date('n');
-                if(!$year) $year = date('Y');
                 $day = '01';
                 $time = '00:00:00';
                 $timestamp = date('Y-m-d H:i:s', strtotime("$year-$month-$day $time"));
             }
 
             $currUser = $this->auth_jwt->get_payload();
-            $fields = $this->pue_offline_model->get_insertable_fields();
+            $fields = [
+                'id_location' => ['int', 'required'],
+                'daya_sdp_a' => ['string', 'required'],
+                'daya_sdp_b' => ['string', 'required'],
+                'daya_sdp_c' => ['string', 'required'],
+                'power_factor_sdp' => ['string', 'nullable'],
+                'daya_eq_a' => ['string', 'required'],
+                'daya_eq_b' => ['string', 'required'],
+                'daya_eq_c' => ['string', 'nullable'],
+                'evidence' => ['string', 'required']
+            ];
             
             $this->input_custom->set_fields($fields);
             $input = $this->input_custom->get_body('post');
@@ -264,6 +276,17 @@ class Pue_offline extends RestController
             $body = $input['body'];
             $body['created_at'] = $timestamp;
             $body['updated_at'] = $timestamp;
+            
+            $getIntStr = fn($str) => (int) preg_replace('/(^(0+)|[^0-9])/', '', $str);
+            $getDecStr = fn($str) => (double) str_replace(',', '.', preg_replace('/[^0-9.,]/', '', $str));
+            
+            $body['daya_sdp_a'] = $getIntStr($body['daya_sdp_a']);
+            $body['daya_sdp_b'] = $getIntStr($body['daya_sdp_b']);
+            $body['daya_sdp_c'] = $getIntStr($body['daya_sdp_c']);
+            $body['daya_eq_a'] = $getIntStr($body['daya_eq_a']);
+            $body['daya_eq_b'] = $getIntStr($body['daya_eq_b']);
+            if(isset($body['daya_eq_c'])) $body['daya_eq_c'] = $getIntStr($body['daya_eq_c']);
+            if(isset($body['power_factor_sdp'])) $body['power_factor_sdp'] = $getDecStr($body['power_factor_sdp']);
             
             $this->pue_offline_model->currUser = $currUser;
             $success = $this->pue_offline_model->save($body);
@@ -314,6 +337,17 @@ class Pue_offline extends RestController
         if($status === 200) {
             $body = $input['body'];
             $body['updated_at'] = date('Y-m-d H:i:s');
+
+            $getIntStr = fn($str) => (int) preg_replace('/(^(0+)|[^0-9])/', '', $str);
+            $getDecStr = fn($str) => (double) str_replace(',', '.', preg_replace('/[^0-9.,]/', '', $str));
+            
+            $body['daya_sdp_a'] = $getIntStr($body['daya_sdp_a']);
+            $body['daya_sdp_b'] = $getIntStr($body['daya_sdp_b']);
+            $body['daya_sdp_c'] = $getIntStr($body['daya_sdp_c']);
+            $body['daya_eq_a'] = $getIntStr($body['daya_eq_a']);
+            $body['daya_eq_b'] = $getIntStr($body['daya_eq_b']);
+            $body['daya_eq_c'] = isset($body['daya_eq_c']) ? $getIntStr($body['daya_eq_c']) : null;
+            $body['power_factor_sdp'] = isset($body['power_factor_sdp']) ? $getDecStr($body['power_factor_sdp']) : null;
 
             $this->pue_offline_model->currUser = $currUser;
             $success = $this->pue_offline_model->save($body, $id);

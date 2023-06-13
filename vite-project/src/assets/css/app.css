@@ -383,3 +383,11 @@ label .required:after {
         width: 50vw;
     }
 }
+
+.tooltip-error-input .p-tooltip-text {
+    @apply tw-bg-danger/90 tw-text-white;
+}
+
+.tooltip-error-input .p-tooltip-arrow {
+    @apply !tw-border-r-danger;
+}

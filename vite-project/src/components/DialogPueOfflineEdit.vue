@@ -6,8 +6,6 @@ import Dialog from "primevue/dialog";
 import { required, integer, decimal } from "@vuelidate/validators";
 import { useDataForm } from "@/helpers/data-form";
 import FileUpload from "@components/ui/FileUpload.vue";
-import FormLabel from "@components/ui/FormLabel.vue";
-import InputTextNumber from "@components/ui/InputTextNumber.vue";
 
 const emit = defineEmits(["close", "save"]);
 const props = defineProps({
@@ -70,6 +68,20 @@ const onFileUploaded = event => {
 const onFileRemoved = event => {
     data.evidence = event.latestUpload;
 };
+
+const setupAttrTooltip = (inputKey, errMesage) => {
+    const field = v$.value[inputKey];
+    const isInvalid = field && field.$invalid && hasSubmitted.value;
+    if(!isInvalid)
+        return null;
+    return {
+        value: errMesage,
+        class: "tooltip-error-input"
+    };
+};
+
+const dayaAttrTooltip = inputKey => setupAttrTooltip(inputKey, "Nilai daya dalam satuan Watt (tanpa koma)");
+const cosphiAttrTooltip = inputKey => setupAttrTooltip(inputKey, "Pastikan menggunakan titik(.) untuk angka desimal");
 </script>
 <template>
     <Dialog header="Form Update Lokasi PUE Offline" v-model:visible="showDialog" maximizable
@@ -81,39 +93,30 @@ const onFileRemoved = event => {
                     <div class="row align-items-end gx-5 mb-4">
                         <div class="col-md-6 col-lg-3">
                             <div class="form-group">
-                                <FormLabel for="dayaSdpA" isRequired>
-                                    <template #text>Daya Total Air Conditioner (AC) Essential</template>
-                                    <template #info>Nilai daya dalam satuan Watt (tanpa koma)</template>
-                                </FormLabel>
-                                <InputTextNumber type="text" v-model="v$.daya_sdp_a.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_sdp_a.$invalid }"
-                                    class="form-control" id="dayaSdpA" placeholder="Cth. 345.000" />
+                                <label for="dayaSdpA" class="required">Daya Total Air Conditioner (AC) Essential - [Watt]</label>
+                                <input type="text" v-model="v$.daya_sdp_a.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_sdp_a.$invalid }"
+                                    class="form-control" id="dayaSdpA" placeholder="Cth. 345000" v-tooltip="dayaAttrTooltip('daya_sdp_a')" />
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
                             <div class="form-group">
-                                <FormLabel for="dayaSdpB" isRequired>
-                                    <template #text>Daya Total Lampu & Exhaust Fan Essential</template>
-                                    <template #info>Nilai daya dalam satuan Watt (tanpa koma)</template>
-                                </FormLabel>
-                                <InputTextNumber type="text" v-model="v$.daya_sdp_b.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_sdp_b.$invalid }"
-                                    class="form-control" id="dayaSdpB" placeholder="Cth. 345.000" />
+                                <label for="dayaSdpB" class="required">Daya Total Lampu & Exhaust Fan Essential - [Watt]</label>
+                                <input type="text" v-model="v$.daya_sdp_b.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_sdp_b.$invalid }"
+                                    class="form-control" id="dayaSdpB" placeholder="Cth. 345000" v-tooltip="dayaAttrTooltip('daya_sdp_b')" />
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
                             <div class="form-group">
-                                <FormLabel for="dayaSdpC" isRequired>
-                                    <template #text>Daya Total Rectifier & Inverter Essential</template>
-                                    <template #info>Nilai daya dalam satuan Watt (tanpa koma)</template>
-                                </FormLabel>
-                                <InputTextNumber type="text" v-model="v$.daya_sdp_c.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_sdp_c.$invalid }"
-                                    class="form-control" id="dayaSdpC" placeholder="Cth. 345.000" />
+                                <label for="dayaSdpC" class="required">Daya Total Rectifier & Inverter Essential - [Watt]</label>
+                                <input type="text" v-model="v$.daya_sdp_c.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_sdp_c.$invalid }"
+                                    class="form-control" id="dayaSdpC" placeholder="Cth. 345000" v-tooltip="dayaAttrTooltip('daya_sdp_c')" />
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
                             <div class="form-group">
-                                <label for="powerFactorSdp">Power Factor Air Conditioner Essential (Cos Phi)</label>
-                                <InputTextNumber type="text" v-model="v$.power_factor_sdp.$model" :class="{ 'is-invalid': hasSubmitted && v$.power_factor_sdp.$invalid }"
-                                    class="form-control" id="powerFactorSdp" placeholder="Cth. 0.9" />
+                                <label for="powerFactorSdp">Power Factor Air Conditioner Essential - [Cos Phi]</label>
+                                <input type="text" v-model="v$.power_factor_sdp.$model" :class="{ 'is-invalid': hasSubmitted && v$.power_factor_sdp.$invalid }"
+                                    class="form-control" id="powerFactorSdp" placeholder="Cth. 0.9" v-tooltip="cosphiAttrTooltip('power_factor_sdp')" />
                             </div>
                         </div>
                     </div>
@@ -123,32 +126,23 @@ const onFileRemoved = event => {
                     <div class="row align-items-end gx-5 mb-4">
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
-                                <FormLabel for="dayaEqA" isRequired>
-                                    <template #text>Daya Total Beban Output DC Rectifier Source A</template>
-                                    <template #info>Nilai daya dalam satuan Watt (tanpa koma)</template>
-                                </FormLabel>
-                                <InputTextNumber type="text" v-model="v$.daya_eq_a.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_eq_a.$invalid }"
-                                    class="form-control" id="dayaEqA" placeholder="Cth. 345.000" />
+                                <label for="dayaEqA" class="required">Daya Total Beban Output DC Rectifier Source A - [Watt]</label>
+                                <input type="text" v-model="v$.daya_eq_a.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_eq_a.$invalid }"
+                                    class="form-control" id="dayaEqA" placeholder="Cth. 345000" v-tooltip="dayaAttrTooltip('daya_eq_a')" />
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
-                                <FormLabel for="dayaEqB" isRequired>
-                                    <template #text>Daya Total Beban Output DC Rectifier Source B</template>
-                                    <template #info>Nilai daya dalam satuan Watt (tanpa koma)</template>
-                                </FormLabel>
-                                <InputTextNumber type="text" v-model="v$.daya_eq_b.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_eq_b.$invalid }"
-                                    class="form-control" id="dayaEqB" placeholder="Cth. 345.000" />
+                                <label for="dayaEqB" class="required">Daya Total Beban Output DC Rectifier Source B - [Watt]</label>
+                                <input type="text" v-model="v$.daya_eq_b.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_eq_b.$invalid }"
+                                    class="form-control" id="dayaEqB" placeholder="Cth. 345000" v-tooltip="dayaAttrTooltip('daya_eq_b')" />
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group">
-                                <FormLabel for="dayaEqC">
-                                    <template #text>Daya ICT Equipment Lain</template>
-                                    <template #info>Nilai daya dalam satuan Watt (tanpa koma)</template>
-                                </FormLabel>
-                                <InputTextNumber type="text" v-model="v$.daya_eq_c.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_eq_c.$invalid }"
-                                    class="form-control" id="dayaEqC" placeholder="Cth. 345.000" />
+                                <label for="dayaEqC">Daya ICT Equipment Lain - [Watt]</label>
+                                <input type="text" v-model="v$.daya_eq_c.$model" :class="{ 'is-invalid': hasSubmitted && v$.daya_eq_c.$invalid }"
+                                    class="form-control" id="dayaEqC" placeholder="Cth. 345000" v-tooltip="dayaAttrTooltip('daya_eq_c')" />
                             </div>
                         </div>
                     </div>

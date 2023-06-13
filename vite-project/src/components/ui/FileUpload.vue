@@ -105,25 +105,22 @@ const removeFile = async (index) => {
     isLoading.value = true;
 
     try {
-        const response = await http.delete(url, requestConfig.value);
-        if(response.data.success) {
-
-            const fileList = uploadedFiles.value.filter((i, itemIndex) => itemIndex !== index);
-            uploadedFiles.value = fileList;
-            isLoading.value = false;
-
-            emit("removed", {
-                isInvalid: isInvalid.value,
-                files: uploadedFiles.value.map(item => item.file_name),
-                latestUpload: fileList.length < 1 ? null : fileList[fileList.length - 1].file_name,
-                latestRemove: filename
-            });
-        
-        }
+        await http.delete(url, requestConfig.value);
     } catch(err) {
         console.error(err);
         isLoading.value = false;
-        viewStore.showToast("Hapus file", `Gagal menghapus file ${ filename }.`, false);
+        // viewStore.showToast("Hapus file", `Gagal menghapus file ${ filename }.`, false);
+    } finally {
+        const fileList = uploadedFiles.value.filter((i, itemIndex) => itemIndex !== index);
+        uploadedFiles.value = fileList;
+        isLoading.value = false;
+
+        emit("removed", {
+            isInvalid: isInvalid.value,
+            files: uploadedFiles.value.map(item => item.file_name),
+            latestUpload: fileList.length < 1 ? null : fileList[fileList.length - 1].file_name,
+            latestRemove: filename
+        });
     }
 };
 
