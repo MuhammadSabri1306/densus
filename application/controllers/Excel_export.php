@@ -39,10 +39,123 @@ class Excel_export extends CI_Controller
     {
         $filter = [
             'witel' => $this->input->get('witel'),
-            'divre' => $this->input->get('divre'),
-            'rtu' => $this->input->get('rtu')
+            'divre' => $this->input->get('divre')
         ];
+
+        $this->load->model('pue_counter2_model');
+        $pue = $this->pue_counter2_model->get_curr_year_avg_on_sto($filter);
         
+        $this->excel->useColSizeAuto = true;
+        $startRow = 1; $currRow = $startRow;
+        $startCol = 1; $currCol = $startCol;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('Kode Regional', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('Regional', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('Kode Witel', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('Witel', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('Kode RTU', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('RTU', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 2)])
+            ->mergeCell()
+            ->setValue('Rata-Rata PUE', $currRow, $currCol);
+        $this->excel->setValue('Hari ini', ($currRow + 1), $currCol);
+        $currCol++;
+        $this->excel->setValue('Minggu ini', ($currRow + 1), $currCol);
+        $currCol++;
+        $this->excel->setValue('Bulan ini', ($currRow + 1), $currCol);
+        
+        $currRow++;
+        $this->excel
+            ->selectCell([$startRow, $startCol], [$currRow, $currCol])
+            ->setFill($this->colorScheme['primary']['argb'])
+            ->setColor($this->colorScheme['white']['argb'])
+            ->setBorderColor($this->colorScheme['white']['argb'])
+            ->setBold(true)
+            ->setAlignment('center');
+        
+        $currRow++;
+        foreach($pue['data'] as $item) {
+
+            $currCol = $startCol;
+
+            $this->excel->setValue($item->divre_kode, $currRow, $currCol);
+            $currCol++;
+            $this->excel->setValue($item->divre_name, $currRow, $currCol);
+            $currCol++;
+            
+            $this->excel->setValue($item->witel_kode, $currRow, $currCol);
+            $currCol++;
+            $this->excel->setValue($item->witel_name, $currRow, $currCol);
+            $currCol++;
+
+            $this->excel->setValue($item->rtu_kode, $currRow, $currCol);
+            $currCol++;
+            $this->excel->setValue($item->rtu_name, $currRow, $currCol);
+            $currCol++;
+            
+            $this->excel
+                ->setValue($item->currDay, $currRow, $currCol)
+                ->setAlignment('center');
+            $currCol++;
+
+            $this->excel
+                ->setValue($item->currWeek, $currRow, $currCol)
+                ->setAlignment('center');
+            $currCol++;
+
+            $this->excel
+                ->setValue($item->currMonth, $currRow, $currCol)
+                ->setAlignment('center');
+
+            $currRow++;
+
+        }
+
+        $fileName = 'Nilai PUE';
+        if($filter['witel']) {
+            $fileName .= ' '.$filter['witel'];
+        } elseif($filter['divre']) {
+            $fileName .= ' '.$filter['divre'];
+        }
+        $fileName .= ' '.date('Y_m_d_\jH_\mi_\ds_\w\i\b');
+
+        $this->excel->createDownload($fileName);
+    }
+
+    public function pue_rtu()
+    {
+        $rtuCode = $this->input->get('rtu');
         $month = $this->input->get('month');
         $year = $this->input->get('year');
         
@@ -55,8 +168,11 @@ class Excel_export extends CI_Controller
             $datetime = $this->datetime_range->get_by_year($year);
         }
 
-        $filter['startDate'] = $datetime[0];
-        $filter['endDate'] = $datetime[1];
+        $filter = [
+            'rtu' => $rtuCode,
+            'startDate' => $datetime[0],
+            'endDate' => $datetime[1]
+        ];
 
         $this->load->model('Pue_counter2_model');
         $data = $this->Pue_counter2_model->get_all($filter);
@@ -85,7 +201,7 @@ class Excel_export extends CI_Controller
             ->selectCell([5, 1])
             ->fill($data);
 
-        $this->excel->createDownload('Nilai PUE '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
+        $this->excel->createDownload('Nilai PUE '.$rtuCode.' '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
     }
 
     public function activity_performance()
