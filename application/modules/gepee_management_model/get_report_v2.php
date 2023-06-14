@@ -265,6 +265,9 @@ foreach($locationData as $location) {
                 $pueOnline['count']++;
                 $pueOnlineData[$i] = null;
             }
+            // if($location['id'] == 305) {
+            //     dd_json($pueOnlineData);
+            // }
 
         }
         
@@ -273,7 +276,7 @@ foreach($locationData as $location) {
             $pueOnlineData = array_filter($pueOnlineData);
         }
     }
-
+    
     if(!is_null($row['pue']['online'])) {
 
         $row['pue']['isReachTarget'] = $row['pue']['online'] > $pueLowLimit;
