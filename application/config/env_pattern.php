@@ -162,6 +162,31 @@ class EnvPattern {
         ];
     }
 
+    public static function getPueOfflineTime($toString = false)
+    {
+        $startTime = new DateTime('now');
+        $startTime->setTime(0, 0, 0);
+
+        $endTime = new DateTime('now');
+        $endTime->setTime(23, 59, 59);
+
+        // ====== First time on this month
+        // $startTime->modify('first day of this month');
+
+        // ====== First time on this year
+        $startTime->modify('first day of January ' . $startTime->format('Y'));
+
+        // ====== Last time on this month
+        $endTime->modify('last day of this month');
+
+        return (object) [
+            'start' => $toString ? $startTime->format('Y-m-d H:i:s') : $startTime->getTimestamp(),
+            'end' => $toString ? $endTime->format('Y-m-d H:i:s') : $endTime->getTimestamp()
+        ];
+    }
+
+    // ================== CODE LAMA ==================
+
     public static function getUpdatableActivityTime($toString = false)
     {
         $startTime = new DateTime('now');
