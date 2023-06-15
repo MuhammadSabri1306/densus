@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed, onMounted } from "vue";
+import { ref, reactive, computed } from "vue";
 import { useViewStore } from "@stores/view";
 import { useUserStore } from "@stores/user";
 import { getYearConfig } from "@/configs/filter";
@@ -20,6 +20,8 @@ const props = defineProps({
     requireYear: { type: Boolean, default: false },
     useMonth: { type: Boolean, default: false },
     requireMonth: { type: Boolean, default: false },
+    initCurrDate: { type: Boolean, default: false },
+    optionalParams: String,
     autoApply: { type: Function, default: () => false }
 });
 
@@ -29,7 +31,7 @@ const viewStore = useViewStore();
 const exportFilter = reactive({
     divre: viewStore.filters.divre,
     witel: viewStore.filters.witel,
-    date: null
+    date: props.initCurrDate ? new Date() : null
 });
 
 const getFiltersValue = () => {
@@ -99,6 +101,8 @@ const isExternalUrl = computed(() => {
     return url && url[0] == "/";
 });
 
+const urlOptionalParams = computed(() => props.optionalParams || null);
+
 const generateUrl = () => {
     isGenerating.value = true;
 
@@ -113,6 +117,8 @@ const generateUrl = () => {
         params.push("year=" + filters.year);
     if(props.useMonth && filters.month)
         params.push("month=" + filters.month);
+    if(urlOptionalParams.value)
+        params.push(urlOptionalParams.value);
 
     let url = props.baseUrl;
     const urlParams = params.join("&");

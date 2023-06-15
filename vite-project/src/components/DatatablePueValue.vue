@@ -10,13 +10,20 @@ const props = defineProps({
 });
 
 const tabledata = computed(() => {
-    return props.pueValues.map((item, index) => {
+    const value = props.pueValues;
+    if(!value)
+        return [];
+    return value.map((item, index) => {
         const no = index + 1;
         return { no, ...item };
     });
 });
 
-const getDateTime = timestamp => new Intl.DateTimeFormat('id', { dateStyle: 'long', timeStyle: 'short' }).format(new Date(timestamp));
+const getDateTime = timestamp => {
+    return new Intl
+        .DateTimeFormat('id', { dateStyle: 'long', timeStyle: 'short' })
+        .format(new Date(timestamp));
+};
 </script>
 <template>
     <DataTable :value="tabledata" showGridlines :paginator="true" :rows="10"

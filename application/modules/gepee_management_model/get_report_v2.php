@@ -243,14 +243,14 @@ foreach($locationData as $location) {
         if($pueOfflineData[$i]['id_location'] == $location['id']) {
             $pueOffline['sum'] += (double) $pueOfflineData[$i]['pue_value'];
             $pueOffline['count']++;
-            $pueOfflineData[$i] = null;
+            // $pueOfflineData[$i] = false;
         }
 
     }
     
     if($pueOffline['count'] > 0) {
         $row['pue']['offline'] = $pueOffline['sum'] / $pueOffline['count'];
-        $pueOfflineData = array_filter($pueOfflineData);
+        // $pueOfflineData = array_filter($pueOfflineData, fn($pueItem) => $pueItem !== false);
     }
 
     /*
@@ -263,7 +263,7 @@ foreach($locationData as $location) {
             if($pueOnlineData[$i]['id_lokasi_gepee'] == $location['id']) {
                 $pueOnline['sum'] += (double) $pueOnlineData[$i]['pue_value'];
                 $pueOnline['count']++;
-                $pueOnlineData[$i] = null;
+                // $pueOnlineData[$i] = false;
             }
             // if($location['id'] == 305) {
             //     dd_json($pueOnlineData);
@@ -273,7 +273,7 @@ foreach($locationData as $location) {
         
         if($pueOnline['count'] > 0) {
             $row['pue']['online'] = $pueOnline['sum'] / $pueOnline['count'];
-            $pueOnlineData = array_filter($pueOnlineData);
+            // $pueOnlineData = array_filter($pueOnlineData, fn($pueItem) => $pueItem !== false);
         }
     }
     

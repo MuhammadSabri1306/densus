@@ -5,6 +5,7 @@ import { usePueStore } from "@stores/pue";
 import { usePueV2Store } from "@stores/pue-v2";
 import Skeleton from "primevue/skeleton";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
+import DialogExportLinkVue from "@components/ui/DialogExportLink.vue";
 
 import CardPueRtuInfo from "@components/CardPueRtuInfo.vue";
 import CardPueCurrent from "@components/CardPueCurrent.vue";
@@ -19,13 +20,8 @@ const rtuCode = computed(() => route.params.rtuCode);
 
 const pueStore = usePueStore();
 const pue2Store = usePueV2Store();
-const location = computed(() => pueStore.pue ? pueStore.pue.req_level : null);
 
-const latestValue = computed(() => pueStore.pue ? pueStore.pue.latestValue : {});
-const maxPue = computed(() => pueStore.pue ? pueStore.pue.maxValue : {});
 const valueOnYear = computed(() => pueStore.pue ? pueStore.pue.valueOnYear : []);
-const averages = computed(() => pueStore.pue ? pueStore.pue.averages : {});
-const performances = computed(() => pueStore.pue ? pueStore.pue.performances : {});
 
 const getYear = computed(() => {
     const val = pueStore.pue;
@@ -42,7 +38,12 @@ const isLoading = ref(true);
 setTimeout(() => pueStore.fetchOnRtu(rtuCode.value, false, () => isLoading.value = false), 1000);
 
 pue2Store.setCurrentZone({ rtu: rtuCode.value });
-const excelExportUrl = computed(() => pueStore.excelExportUrl);
+
+const showDialogExport = ref(false);
+const exportOptParams = computed(() => {
+    const rtu = route.params.rtuCode;
+    return "rtu=" + rtu;
+});
 </script>
 <template>
     <div>
@@ -80,10 +81,10 @@ const excelExportUrl = computed(() => pueStore.excelExportUrl);
                         <div class="card-header pb-0 d-flex align-items-center">
                             <h5 v-if="getYear">Tabel nilai PUE tahun {{ getYear }}</h5>
                             <h5 v-else>Tabel nilai PUE tahun ini</h5>
-                            <a :href="excelExportUrl" target="_blank" class="btn-icon ms-auto">
-                                <VueFeather type="download" size="1.2em" />
-                                <span class="ms-1">Download</span>
-                            </a>
+                            <button type="button" @click="showDialogExport = true" class="btn-icon ms-auto px-3">
+                                <VueFeather type="download" size="1em" />
+                                <span class="ms-2">Export</span>
+                            </button>
                         </div>
                         <div v-if="!isLoading" class="card-body">
                             <DatatablePueValue :pueValues="valueOnYear" />
@@ -100,6 +101,8 @@ const excelExportUrl = computed(() => pueStore.excelExportUrl);
                 </div>
             </div>
         </div>
+        <DialogExportLinkVue v-if="showDialogExport" baseUrl="/export/excel/pue/rtu" title="Export Data PUE Online"
+            useYear requireYear initCurrDate :optionalParams="exportOptParams" @close="showDialogExport = false" />
     </div>
 </template>
 <style scoped>

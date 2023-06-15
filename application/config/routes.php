@@ -250,6 +250,7 @@ $route['api/profile']['get'] = 'user/profile';
 
 /* ENDPOINT EXPORT DATA */
 $route['export/excel/pue'] = 'excel_export/pue';
+$route['export/excel/pue/rtu'] = 'excel_export/pue_rtu';
 $route['export/excel/activity/performance'] = 'excel_export/activity_performance';
 $route['test/activity/performance'] = 'excel_export/activity_performance_test';
 $route['export/excel/activity/schedule'] = 'excel_export/activity_schedule';

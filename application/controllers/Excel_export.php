@@ -156,31 +156,33 @@ class Excel_export extends CI_Controller
     public function pue_rtu()
     {
         $rtuCode = $this->input->get('rtu');
-        $month = $this->input->get('month');
+        // $month = $this->input->get('month');
         $year = $this->input->get('year');
         
         $this->load->library('datetime_range');
         if(!$year) $year = date('Y');
 
-        if($month) {
-            $datetime = $this->datetime_range->get_by_month($month, $year);
-        } else {
-            $datetime = $this->datetime_range->get_by_year($year);
-        }
+        // if($month) {
+        //     $datetime = $this->datetime_range->get_by_month($month, $year);
+        // } else {
+        //     $datetime = $this->datetime_range->get_by_year($year);
+        // }
+        $datetime = $this->datetime_range->get_by_year($year);
 
         $filter = [
             'rtu' => $rtuCode,
             'startDate' => $datetime[0],
             'endDate' => $datetime[1]
         ];
-
-        $this->load->model('Pue_counter2_model');
-        $data = $this->Pue_counter2_model->get_all($filter);
         
+        $this->load->model('pue_counter2_model');
+        $data = $this->pue_counter2_model->get_all($filter);
+        
+        $this->excel->useColSizeAuto = true;
         $this->excel->setValue('Mulai tanggal :', 2, 2);
-        $this->excel->setValue($startDate, 2, 3);
+        $this->excel->setValue($filter['startDate'], 2, 3);
         $this->excel->setValue('Sampai tanggal :', 3, 2);
-        $this->excel->setValue($endDate, 3, 3);
+        $this->excel->setValue($filter['endDate'], 3, 3);
 
         $this->excel->setField([
             'divre_kode' => 'KODE DIVRE',
@@ -200,6 +202,15 @@ class Excel_export extends CI_Controller
         $this->excel
             ->selectCell([5, 1])
             ->fill($data);
+
+        $this->excel
+            ->selectCell([5, 1], [5, 12])
+            ->setFill($this->colorScheme['primary']['argb'])
+            ->setColor($this->colorScheme['white']['argb'])
+            ->setBorderColor($this->colorScheme['white']['argb'])
+            ->setBold(true)
+            ->setAlignment('center')
+            ->setWidthAuto();
 
         $this->excel->createDownload('Nilai PUE '.$rtuCode.' '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
     }
