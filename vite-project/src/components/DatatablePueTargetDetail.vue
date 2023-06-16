@@ -89,10 +89,10 @@ const getRowClass = item => {
 };
 
 const onQuarterClick = targetItem => {
-    if(targetItem)
+    if(targetItem.value !== null)
         emit("edit", targetItem);
     else
-        emit("create");
+        emit("create", targetItem);
 };
 </script>
 <template>
@@ -133,9 +133,9 @@ const onQuarterClick = targetItem => {
                                 <small :class="{ 'ms-5': level == 'nasional' }" class="fw-semibold">{{ item.title }}</small>
                             </p>
                         </td>
-                        <td v-for="target in item.target" class="position-relative f-w-700 middle text-center">
-                            <a v-if="item.type != 'divre'" role="button" @click="onQuarterClick(target)" class="stretched-link">{{ target ? target.value : "-" }}</a>
-                            <span v-else>{{ target ? target.value : "-" }}</span>
+                        <td v-for="target in item.target" class="position-relative middle text-center">
+                            <a v-if="item.type != 'divre'" role="button" @click="onQuarterClick(target)" class="stretched-link f-w-700">{{ target && target.value !== null ? target.value : "-" }}</a>
+                            <span v-else class="f-w-700 tw-opacity-90">{{ target && target.value !== null ? target.value : "-" }}</span>
                         </td>
                     </tr>
                 </tbody>

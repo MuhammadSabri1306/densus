@@ -124,7 +124,7 @@ const getRowClass = item => {
     <div v-if="tableData || isLoading">
         <div v-if="isLoading" class="card">
             <div class="card-header bg-primary">
-                <h5>Target PUE</h5>
+                <h5>Range PUE</h5>
             </div>
             <div class="card-body">
                 <div class="row gy-4">

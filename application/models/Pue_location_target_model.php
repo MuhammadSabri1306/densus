@@ -12,7 +12,8 @@ class Pue_location_target_model extends CI_Model
         'divre_name' => ['string', 'required'],
         'witel_kode' => ['string', 'required'],
         'witel_name' => ['string', 'required'],
-        'target' => ['int', 'required']
+        'target' => ['int', 'required'],
+        'quartal' => ['int', 'required'],
     ];
 
     public function __construct()

@@ -51,11 +51,12 @@ const getGroupAvg = (data, groupKey) => {
     currItem.target = sum.target;
     currItem.gap = 0;
     currItem.percentage = 0;
-    if(sum.categoryCount > 0) {
-        currItem.gap = sum.target - sum.categoryCount[0];
+    if(sum.categoryCount[0] > 0) {
+        currItem.gap = sum.categoryCount[0] - sum.target;
         if(sum.target)
             currItem.percentage = sum.categoryCount[0] / sum.target * 100;
     }
+    // console.log(sum.target, sum.categoryCount)
 
     delete currItem.witel.witel_kode;
     delete currItem.witel.witel_name;

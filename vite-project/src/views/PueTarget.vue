@@ -50,7 +50,7 @@ const onFilterApply = filterValue => {
             </div>
         </div>
         <div class="container-fluid dashboard-default-sec pb-4">
-            <div class="d-flex flex-wrap gx-4">
+            <div class="tw-flex tw-flex-wrap tw-gap-x-8">
                 <div class="w-100 tw-max-w-[50rem]">
                     <DatatablePueTargetTarget class="mb-5" />
                 </div>

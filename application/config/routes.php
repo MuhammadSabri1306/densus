@@ -197,7 +197,6 @@ $route['api/activity/schedule/(.*)']['get'] = 'activity_schedule/index_v2';
 $route['api/activity/schedule']['get'] = 'activity_schedule/index_v2';
 $route['api/activity/schedule-v2']['get'] = 'activity_schedule/index_v3';
 $route['api/activity/schedule']['post'] = 'activity_schedule/index_v2';
-// $route['api/activity/schedule-v3']['post'] = 'activity_schedule/index_v3';
 
 $route['api/activity/execution/(:any)']['get'] = 'activity_execution/index/$1';
 $route['api/activity/execution/(:any)']['post'] = 'activity_execution/index/$1';
@@ -252,9 +251,7 @@ $route['api/profile']['get'] = 'user/profile';
 $route['export/excel/pue'] = 'excel_export/pue';
 $route['export/excel/pue/rtu'] = 'excel_export/pue_rtu';
 $route['export/excel/activity/performance'] = 'excel_export/activity_performance';
-$route['test/activity/performance'] = 'excel_export/activity_performance_test';
 $route['export/excel/activity/schedule'] = 'excel_export/activity_schedule';
-// $route['export/excel/activity/schedule'] = 'activity_schedule/index_v3';
 $route['export/excel/activity/execution'] = 'excel_export/activity_execution';
 $route['export/excel/gepee-report'] = 'excel_export/gepee_report';
 $route['export/excel/gepee-evidence'] = 'excel_export/gepee_evidence';
@@ -270,10 +267,10 @@ $route['api/attachment/pue/offline']['post'] = 'attachment/store_pue_evidence';
 $route['api/attachment/pue/offline/(:any)']['delete'] = 'attachment/del_pue_evidence/$1';
 $route['api/attachment/oxisp']['post'] = 'attachment/store_oxisp_evidence';
 $route['api/attachment/oxisp/(:any)']['delete'] = 'attachment/del_oxisp_evidence/$1';
-$route['api/attachment/test-api']['get'] = 'attachment/test_api';
 
 $route['test/get_pue_chart_data'] = 'test/get_pue_chart_data';
 $route['test/cron_store_pue_counter'] = 'test/cron_store_pue_counter';
+$route['test/newosase-api'] = 'test/newosase_api';
 
 $route['login'] = 'vue';
 $route['monitoring/(:any)/(:any)'] = 'vue';

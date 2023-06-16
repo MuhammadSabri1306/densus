@@ -28,12 +28,18 @@ const showDialogCreate = ref(false);
 const showDialogUpdate = ref(false);
 const currTargetData = ref(null);
 
+const onShowAddDialog = data => {
+    currTargetData.value = data;
+    showDialogCreate.value = true;
+};
+
 const onShowEditDialog = data => {
     currTargetData.value = data;
     showDialogUpdate.value = true;
 };
 
-const onEditDialogClose = () => {
+const onFormDialogClose = () => {
+    showDialogCreate.value = false;
     showDialogUpdate.value = false;
     currTargetData.value = null;
 };
@@ -57,9 +63,9 @@ const onEditDialogClose = () => {
             <FilterGepeeV2 useYear requireYear @apply="onFilterApply" :autoApply="filterAutoApply" />
         </div>
         <div class="container-fluid dashboard-default-sec pb-5">
-            <DatatablePueTargetDetail ref="datatable" @create="showDialogCreate = true" @edit="onShowEditDialog" />
+            <DatatablePueTargetDetail ref="datatable" @create="onShowAddDialog" @edit="onShowEditDialog" />
         </div>
-        <DialogPueTargetAdd v-if="showDialogCreate" @close="showDialogCreate = false" @save="fetchData" />
-        <DialogPueTargetEdit v-if="showDialogUpdate" :initData="currTargetData" @close="onEditDialogClose" @save="fetchData" />
+        <DialogPueTargetAdd v-if="showDialogCreate" :initData="currTargetData" @close="onFormDialogClose" @save="fetchData" />
+        <DialogPueTargetEdit v-if="showDialogUpdate" :initData="currTargetData" @close="onFormDialogClose" @save="fetchData" />
     </div>
 </template>

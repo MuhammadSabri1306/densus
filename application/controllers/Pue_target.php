@@ -53,7 +53,11 @@ class Pue_target extends RestController
 
     public function index_post()
     {
-        $status = $this->auth_jwt->auth('admin');
+        $status = REST_ERR_BAD_REQ_STATUS;
+        $data = [ 'success' => false, 'message' => 'Fitur sedang dalam perbaikan.' ];
+
+        // $status = $this->auth_jwt->auth('admin');
+        $status = $this->auth_jwt->auth('admin', 'viewew', 'teknisi');
         switch($status) {
             case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
             case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
@@ -62,10 +66,10 @@ class Pue_target extends RestController
         
         if($status === 200) {
             $currUser = $this->auth_jwt->get_payload();
-            if($currUser['level'] != 'nasional') {
-                $data = [ 'success' => false ];
-                $status = REST_ERR_DEFAULT_STATUS;
-            }
+            // if($currUser['level'] != 'nasional') {
+            //     $data = [ 'success' => false ];
+            //     $status = REST_ERR_DEFAULT_STATUS;
+            // }
         }
 
         if($status === 200) {

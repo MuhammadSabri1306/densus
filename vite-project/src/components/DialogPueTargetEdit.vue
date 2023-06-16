@@ -48,28 +48,19 @@ const onSubmit = async () => {
 <template>
     <Dialog header="Form Update Target PUE" v-model:visible="showDialog" maximizable modal draggable
         @afterHide="$emit('close')" class="dialog-basic" contentClass="tw-overflow-y-visible">
-        <div class="p-4">
+        <div class="py-4 py-md-0">
             <form @submit.prevent="onSubmit">
-                <div class="mb-4">
-                    <table class="table">
-                        <tr>
-                            <td>Regional</td>
-                            <td>:</td>
-                            <th>{{ initData.divre_name }}</th>
-                        </tr>
-                        <tr>
-                            <td>Witel</td>
-                            <td>:</td>
-                            <th>{{ initData.witel_name }}</th>
-                        </tr>
-                    </table>
+                <div class="mb-5 card card-body bg-primary p-4">
+                    <h5 class="mb-2">Quartal ke-{{ initData.quartal }}</h5>
+                    <p class="mb-1"><b>{{ initData.witel_name }}</b></p>
+                    <p class="mb-0">{{ initData.divre_name }}</p>
                 </div>
-                <div class="row px-4 mb-5">
+                <div class="row px-4 mb-4">
                     <div class="col-md-6">
                         <div class="form-group mb-5">
                             <label for="inputTarget" class="required">Target Lokasi PUE</label>
                             <input type="text" v-model="v$.target.$model" :class="{ 'is-invalid': hasSubmitted && v$.target.$invalid }"
-                                class="form-control" id="inputTarget" placeholder="Cth. 5">
+                                class="form-control form-control-lg" id="inputTarget" placeholder="Cth. 5">
                         </div>
                     </div>
                 </div>

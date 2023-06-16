@@ -13,7 +13,8 @@ $this->db
     ->where('tgt.witel_kode=loc.witel_kode')
     ->where($filterLocTarget)
     ->where($filterDateTarget)
-    ->order_by('id', 'DESC');
+    ->order_by('id', 'DESC')
+    ->limit(1);
 $targetQuery = $this->db->get_compiled_select();
 
 $this->db
