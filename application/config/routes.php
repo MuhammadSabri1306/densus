@@ -219,7 +219,8 @@ $route['api/gepee-report']['get'] = 'gepee_report'; // hapus nanti
 $route['api/gepee-report-v2']['get'] = 'gepee_report/index_v2';
 $route['api/gepee-report/nasional']['get'] = 'gepee_report/nasional';
 
-$route['api/pue-target/report']['get'] = 'pue_target/report';
+$route['api/pue-target/report']['get'] = 'pue_target/report_v2';
+// $route['api/pue-target/report-v2']['get'] = 'pue_target/report_v2';
 $route['api/pue-target/report/location-status']['get'] = 'pue_target/location_status';
 $route['api/pue-target']['get'] = 'pue_target';
 $route['api/pue-target']['post'] = 'pue_target';
@@ -271,6 +272,7 @@ $route['api/attachment/oxisp/(:any)']['delete'] = 'attachment/del_oxisp_evidence
 $route['test/get_pue_chart_data'] = 'test/get_pue_chart_data';
 $route['test/cron_store_pue_counter'] = 'test/cron_store_pue_counter';
 $route['test/newosase-api'] = 'test/newosase_api';
+$route['test/uploaded-list'] = 'test/list_uploaded_file';
 
 $route['login'] = 'vue';
 $route['monitoring/(:any)/(:any)'] = 'vue';

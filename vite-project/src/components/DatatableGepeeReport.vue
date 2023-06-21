@@ -111,7 +111,7 @@ const getGroupAvg = (data, groupKey) => {
         pueValue = currItem.pue.offline;
     
     if(pueValue == null)
-        currItem.pue.isReachTarget = false;
+        currItem.pue.isReachTarget = true;
     else if(!pueLowLimit.value)
         currItem.pue.isReachTarget = true;
     else
@@ -191,7 +191,7 @@ const getRowClass = item => {
 };
 
 const isLocationOnline = item => item.type == "sto" && item.location.is_online;
-const isPueReachTarget = item => item.type == "sto" && item.pue.isReachTarget;
+const isPueReachTarget = item => item.pue.isReachTarget;
 const formatItemNumber = itemNumb => {
     if(itemNumb === null)
         return "-";

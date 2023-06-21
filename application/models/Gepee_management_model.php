@@ -124,6 +124,12 @@ class Gepee_management_model extends CI_Model
         return $this->result;
     }
 
+    public function get_pue_report_v2($filter = [])
+    {
+        $this->use_module('get_pue_report_v2', [ 'filter' => $filter ]);
+        return $this->result;
+    }
+
     public function get_location_status($filter = [])
     {
         $this->use_module('get_location_status', [ 'filter' => $filter ]);

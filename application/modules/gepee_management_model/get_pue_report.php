@@ -46,42 +46,45 @@ $this->db
     ->order_by('rtu.divre_kode')
     ->order_by('rtu.witel_kode');
 $pueOnlineData = $this->db->get()->result_array();
+// dd_json($pueOnlineData);
 $dataSto = [];
 foreach($locationList as $loc) {
     $row = [
         'location' => $loc,
-        'pue_value' => 0
+        'pue_value' => null
     ];
 
     $pueOffline = [];
     for($i=0; $i<count($pueOfflineData); $i++) {
         if($pueOfflineData[$i]['witel_kode'] == $loc['witel_kode']) {
             array_push($pueOffline, (double) $pueOfflineData[$i]['pue_value']);
-            $pueOfflineData[$i] = null;
+            // $pueOfflineData[$i] = null;
         }
 
     }
-    $pueOfflineData = array_values(array_filter($pueOfflineData));
+    // $pueOfflineData = array_values(array_filter($pueOfflineData));
 
     $pueOnline = [];
     for($i=0; $i<count($pueOnlineData); $i++) {
 
         if($pueOnlineData[$i]['witel_kode'] == $loc['witel_kode']) {
             array_push($pueOnline, (double) $pueOnlineData[$i]['pue_value']);
-            $pueOnlineData[$i] = null;
+            // $pueOnlineData[$i] = null;
         }
 
     }
-    $pueOnlineData = array_filter($pueOnlineData);
+    // $pueOnlineData = array_values(array_filter($pueOnlineData));
 
     if(count($pueOnline) > 0) {
-        $row['pue_value'] =array_sum($pueOnline) / count($pueOnline);
+        $row['pue_value'] = array_sum($pueOnline) / count($pueOnline);
     } elseif(count($pueOffline) > 0) {
-        $row['pue_value'] =array_sum($pueOffline) / count($pueOffline);
+        $row['pue_value'] = array_sum($pueOffline) / count($pueOffline);
     }
 
     array_push($dataSto, $row);
 }
+
+// dd_json($dataSto);
 
 $result = [];
 foreach($dataSto as $item) {
@@ -94,7 +97,10 @@ foreach($dataSto as $item) {
         }
     }
 
-    $categoryCode = $this->get_pue_category($item['pue_value']);
+    $categoryCode = is_null($item['pue_value']) ? null : $this->get_pue_category($item['pue_value']);
+    // if($item['location']['witel_kode'] == 'DTB-ba200000') {
+    //     dd_json($item['pue_value']);
+    // }
     if($resultIndex < 0) {
         array_push($result, [
             'witel' => $item['location'],

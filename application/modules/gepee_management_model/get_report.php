@@ -20,7 +20,8 @@ $this->db
     ->join("$this->tableRtuName AS rtu", 'rtu.id_lokasi_gepee=loc.id', 'left')
     ->where($filterLocGepee)
     ->order_by('loc.divre_kode')
-    ->order_by('loc.witel_kode');
+    ->order_by('loc.witel_kode')
+    ->order_by('loc.sto_kode');
 $locationData = $this->db->get()->result_array();
 
 /*
@@ -69,7 +70,7 @@ foreach($locationData as $location) {
         'pue' => [
             'offline' => null,
             'online' => null,
-            'isReachTarget' => false
+            'isReachTarget' => true
         ],
         'tagihan_pln' => null,
         'replacement' => null

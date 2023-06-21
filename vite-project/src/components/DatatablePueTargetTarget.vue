@@ -49,14 +49,14 @@ const getGroupAvg = (data, groupKey) => {
     currItem.categoryCount = sum.categoryCount;
     currItem.stoCount = sum.stoCount;
     currItem.target = sum.target;
-    currItem.gap = 0;
-    currItem.percentage = 0;
-    if(sum.categoryCount[0] > 0) {
-        currItem.gap = sum.categoryCount[0] - sum.target;
-        if(sum.target)
-            currItem.percentage = sum.categoryCount[0] / sum.target * 100;
-    }
-    // console.log(sum.target, sum.categoryCount)
+    currItem.gap = sum.target - sum.categoryCount[0];
+    currItem.percentage = sum.target < 1 ? 100 : sum.categoryCount[0] / sum.target * 100;
+
+    // if(sum.target > 0) {
+    //     currItem.gap = sum.target - sum.categoryCount[0];
+        // if(sum.target)
+        //     currItem.percentage = sum.categoryCount[0] / sum.target * 100;
+    // }
 
     delete currItem.witel.witel_kode;
     delete currItem.witel.witel_name;
@@ -88,11 +88,9 @@ const groupData = data => {
         
         item.gap = 0;
         item.percentage = 0;
-        if(categoryCount.length > 0){
-            item.gap = categoryCount[0] - item.target;
-            if(item.target)
-                item.percentage = categoryCount[0] / item.target * 100;
-        }
+        item.gap = item.target - item.categoryCount[0];
+        item.percentage = item.target < 1 ? 100 : item.categoryCount[0] / item.target * 100;
+        
         result.push({ type, title, ...item });
         return result;
         
@@ -171,7 +169,7 @@ const getRowClass = item => {
                         <td v-if="categoryList.length > 0" class="middle text-center">{{ item.categoryCount[0] }}</td>
                         <td class="middle text-center">{{ item.target }}</td>
                         <td class="middle text-center">{{ item.gap }}</td>
-                        <td class="middle text-center">{{ item.percentage ? toNumberText(item.percentage) : null }}%</td>
+                        <td class="middle text-center">{{ item.percentage !== null ? toNumberText(item.percentage) : null }}%</td>
                     </tr>
                 </tbody>
             </table>

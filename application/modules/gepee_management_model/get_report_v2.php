@@ -228,7 +228,7 @@ foreach($locationData as $location) {
         'pue' => [
             'offline' => null,
             'online' => null,
-            'isReachTarget' => false
+            'isReachTarget' => true
         ],
         'tagihan_pln' => null,
         'replacement' => null
