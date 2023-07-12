@@ -273,6 +273,7 @@ $route['test/get_pue_chart_data'] = 'test/get_pue_chart_data';
 $route['test/cron_store_pue_counter'] = 'test/cron_store_pue_counter';
 $route['test/newosase-api'] = 'test/newosase_api';
 $route['test/uploaded-list'] = 'test/list_uploaded_file';
+$route['test/setup-db-opnimus'] = 'test/setup_db_opnimus_new';
 
 $route['login'] = 'vue';
 $route['monitoring/(:any)/(:any)'] = 'vue';

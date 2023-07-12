@@ -56,6 +56,21 @@ class EnvPattern {
         ]
     ];
 
+    public static $db_opnimus_new = [
+        'local' => [
+            'hostname' => 'localhost',
+            'username' => 'root',
+            'password' => '',
+            'database' => ''
+        ],
+        'cloud' => [
+            'hostname' => '10.60.164.18',
+            'username' => 'admindb',
+            'password' => '@Dm1ndb#2020',
+            'database' => 'juan5684_opnimus_new'
+        ]
+    ];
+
     public static $db_mockapi = [
         'local' => [
             'hostname' => 'localhost',
@@ -91,6 +106,7 @@ class EnvPattern {
             'db_default' => (object) EnvPattern::$db_default[$key],
             'db_densus' => (object) EnvPattern::$db_densus[$key],
             'db_opnimus' => (object) EnvPattern::$db_opnimus[$key],
+            'db_opnimus_new' => (object) EnvPattern::$db_opnimus_new[$key],
             'db_mockapi' => (object) EnvPattern::$db_mockapi[$key],
             'api_osase' => EnvPattern::$api_osase[$key],
             'timezone' => (object) EnvPattern::$timezone

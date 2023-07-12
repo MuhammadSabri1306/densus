@@ -7,6 +7,14 @@ class Test extends CI_Controller
       parent::__construct();
     }
 
+    private function load_test($testName, $params = [])
+    {
+        $filePath = APPPATH."modules/test/$testName.php";
+
+        if(count($params) > 0) extract($params);
+        require $filePath;
+    }
+
     public function get_pue_chart_data()
     {
         $zone = [ 'divre' => 'TLK-r7000000' ];
@@ -71,89 +79,11 @@ class Test extends CI_Controller
 
     public function list_uploaded_file()
     {
-        $this->load->database('densus');
-        $tableList = [
-            [ 'title' => 'Activity Execution', 'tableName' => 'activity_execution', 'tableField' => 'evidence', 'uploadPath' => UPLOAD_ACTIVITY_EVIDENCE_PATH ],
-            [ 'title' => 'Gepee Evidence', 'tableName' => 'gepee_evidence', 'tableField' => 'file', 'uploadPath' => UPLOAD_GEPEE_EVIDENCE_PATH ],
-            [ 'title' => 'Pue Offline', 'tableName' => 'pue_offline', 'tableField' => 'evidence', 'uploadPath' => UPLOAD_PUE_EVIDENCE_PATH ],
-            [ 'title' => 'OXISP', 'tableName' => 'oxisp_activity', 'tableField' => 'evidence', 'uploadPath' => UPLOAD_OXISP_EVIDENCE_PATH ],
-        ];
+        $this->load_test('list_uploaded_file');
+    }
 
-        $data = [];
-        foreach($tableList as $tableItem) {
-            $this->db
-                ->select($tableItem['tableField'].' AS file, updated_at')
-                ->from($tableItem['tableName']);
-            $result = $this->db->get()->result_array();
-            
-            foreach($result as $item) {
-                $row = [
-                    'title' => $tableItem['title'],
-                    'dir' => $tableItem['uploadPath'],
-                    'path' => $tableItem['uploadPath'].$item['file'],
-                    'fullpath' => FCPATH.$tableItem['uploadPath'].$item['file'],
-                    'filename' => $item['file'],
-                    'updated_at' => $item['updated_at']
-                ];
-                $row['isExists'] = file_exists($row['fullpath']);
-                array_push($data, $row);
-            }
-
-        }
-
-        $no = 1;
-        ?><style>
-            .table-responsive { width: 100%; height: 90vh; overflow: auto; border: 1px solid black; }
-            .table-responsive table { min-width:100% }
-            .table-responsive tr:first-child th { position: sticky; top: 0; }
-            .table-responsive tr *:nth-child(2) { position: sticky; left: 0; z-index: 2; }
-            .table-responsive tr:first-child *:nth-child(2) { z-index: 3; }
-            table { border: none; border-collapse: separate; border-spacing: 0; }
-            td, th { border: 1px solid #000; background: #fff; }
-        </style>
-        <div class="table-responsive"><table>
-            <tr>
-                <th>No</th>
-                <th>Tipe</th>
-                <th>Direktori</th>
-                <th>File Path</th>
-                <th>Full Path</th>
-                <th>Filename (raw DB)</th>
-                <th>Tgl. Update</th>
-                <th>Exists</th>
-            </tr><?php
-
-            foreach($data as $row) {
-
-                ?><tr>
-                    <td><?=$no?></td>
-                    <td><?=$row['title']?></td>
-                    <td><?=$row['dir']?></td>
-                    <td><?=$row['path']?></td>
-                    <td><?=$row['fullpath']?></td>
-                    <td><?=$row['filename']?></td>
-                    <td><?=$row['updated_at']?></td>
-                    <td><?=$row['isExists'] ? 'Ada' : 'Tidak Ada'?></td>
-                </tr><?php
-
-                $no++;
-            }
-
-        ?></table></div><?php
+    public function setup_db_opnimus_new()
+    {
+        $this->load_test('setup_db_opnimus_new');
     }
 }
-// MySQL Table1 name = activity_execution
-// MySQL Table1 file field = evidence
-// PHP path Constant1 = UPLOAD_ACTIVITY_EVIDENCE_PATH
-
-// MySQL Table2 name = gepee_evidence
-// MySQL Table2 file field = file
-// PHP path Constant2 = UPLOAD_GEPEE_EVIDENCE_PATH
-
-// MySQL Table3 name = pue_offline
-// MySQL Table3 file field = evidence
-// PHP path Constant3 = UPLOAD_PUE_EVIDENCE_PATH
-
-// MySQL Table4 name = oxisp_activity
-// MySQL Table4 file field = evidence
-// PHP path Constant4 = UPLOAD_OXISP_EVIDENCE_PATH

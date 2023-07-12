@@ -274,16 +274,14 @@ class Pue_target extends RestController
             $divreCode = $this->input->get('divre');
             $witelCode = $this->input->get('witel');
             $year = $this->input->get('year');
-            $quarter = $this->input->get('quarter');
+            $month = $this->input->get('month');
 
             if(!$year) $year = date('Y');
-            if(!$quarter) {
-                $month = (int) date('n');
-                $quarter = ceil($month / 3);
-            }
+            if(!$month) $month = date('n');
+            $quarter = ceil($month / 3);
 
             $this->load->library('datetime_range');
-            $datetime = $this->datetime_range->get_by_quarter($quarter, $year);
+            $datetime = $this->datetime_range->get_by_month($month, $year);
             
             $filter = [
                 'divre' => $divreCode,
