@@ -28,5 +28,15 @@ export const useCollapseRow = () => {
             expandRow(type, code);
     };
 
-    return { collapsedDivre, collapsedWitel, toggleRowCollapse };
+    const initCollapseDivre = codes => {
+        if(Array.isArray(codes))
+            codes.forEach(code => collapseRow("divre", code));
+    };
+
+    const initCollapseWitel = codes => {
+        if(Array.isArray(codes))
+            codes.forEach(code => collapseRow("witel", code));
+    };
+
+    return { collapsedDivre, collapsedWitel, toggleRowCollapse, initCollapseDivre, initCollapseWitel };
 };

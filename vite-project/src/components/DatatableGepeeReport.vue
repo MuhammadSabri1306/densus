@@ -6,6 +6,7 @@ import { useViewStore } from "@stores/view";
 import { useCollapseRow } from "@helpers/collapse-row";
 import { getPueBgClass } from "@helpers/pue-color";
 import { getPercentageTextClass } from "@helpers/percentage-color";
+import DataList from "@helpers/data-list";
 import { toNumberText, toFixedNumber } from "@helpers/number-format";
 import Skeleton from "primevue/skeleton";
 
@@ -26,16 +27,13 @@ const level = computed(() => {
     return filters.witel ? "witel" : filters.divre ? "divre" : userLevel;
 });
 
-
-const arrSum = arr => {
-    return arr.reduce((sum, item) => {
-        sum += item;
-        return sum;
-    });
-};
-
 const getGroupAvg = (data, groupKey) => {
-    let rowCount = 0;
+    let rowCountPerf = [];
+    let rowCountSummMonthly = 0;
+    let rowCountSummYearly = 0;
+    let rowCountPueOnline = 0;
+    let rowCountPueOffline = 0;
+
     const perfSum = [];
     const sum = {
         summMonthly: 0,
@@ -60,6 +58,7 @@ const getGroupAvg = (data, groupKey) => {
                     percentage: 0,
                     has_schedule: false
                 };
+                rowCountPerf[i] = 0;
             }
 
             if(perf.has_schedule) {
@@ -67,42 +66,47 @@ const getGroupAvg = (data, groupKey) => {
                 perfSum[i].count_all += perf.count_all;
                 perfSum[i].count_approved += perf.count_approved;
                 perfSum[i].percentage += perf.percentage;
+                rowCountPerf[i]++;
             }
         });
 
-        if(item.performance_summary)
+        if(item.performance_summary) {
             sum.summMonthly += item.performance_summary;
+            rowCountSummMonthly++;
+        }
             
-        if(item.performance_summary_yearly)
+        if(item.performance_summary_yearly) {
             sum.summYearly += item.performance_summary_yearly;
+            rowCountSummYearly++;
+        }
 
         if(item.pue.online) {
             if(sum.pueOnline === null)
                 sum.pueOnline = 0;
             sum.pueOnline += item.pue.online;
+            rowCountPueOnline++;
         }
 
         if(item.pue.offline) {
             if(sum.pueOffline === null)
                 sum.pueOffline = 0;
             sum.pueOffline += item.pue.offline;
+            rowCountPueOffline++;
         }
-
-        rowCount++;
     });
 
     perfSum.forEach((item, i) => {
         currItem.performance[i].has_schedule = item.has_schedule;
         currItem.performance[i].count_all = item.count_all;
         currItem.performance[i].count_approved = item.count_approved;
-        currItem.performance[i].percentage = item.percentage / rowCount;
+        currItem.performance[i].percentage = rowCountPerf[i] > 0 ? item.percentage / rowCountPerf[i] : 0;
     });
     
-    currItem.performance_summary = sum.summMonthly / rowCount;
-    currItem.performance_summary_yearly = sum.summYearly / rowCount;
+    currItem.performance_summary = rowCountSummMonthly > 0 ? sum.summMonthly / rowCountSummMonthly : 0;
+    currItem.performance_summary_yearly = rowCountSummYearly > 0 ? sum.summYearly / rowCountSummYearly : 0;
 
-    currItem.pue.online = sum.pueOnline === null ? null : (sum.pueOnline / rowCount);
-    currItem.pue.offline = sum.pueOffline === null ? null : (sum.pueOffline / rowCount);
+    currItem.pue.online = sum.pueOnline === null ? null : (sum.pueOnline / rowCountPueOnline);
+    currItem.pue.offline = sum.pueOffline === null ? null : (sum.pueOffline / rowCountPueOffline);
 
     let pueValue = null;
     if(currItem.pue.online !== null)
@@ -120,6 +124,7 @@ const getGroupAvg = (data, groupKey) => {
     return currItem;
 };
 
+const hasCollapseInit = ref(false);
 const groupData = data => {
     const groupKeys = { divre: "", witel: "" };
     const groupedData = data.reduce((result, item, index) => {
@@ -134,6 +139,9 @@ const groupData = data => {
             
             result.push({ type, title, ...divreData });
             groupKeys.divre = item.location.divre_kode;
+            
+            if(!hasCollapseInit.value && collapsedDivre.value.indexOf(item.location.divre_kode) < 0)
+                toggleRowCollapse("divre", item.location.divre_kode);
         }
         
         if(groupKeys.witel !== item.location.witel_kode && level.value != "witel") {
@@ -143,6 +151,9 @@ const groupData = data => {
 
             result.push({ type, title, ...witelData });
             groupKeys.witel = item.location.witel_kode;
+
+            if(!hasCollapseInit.value && collapsedWitel.value.indexOf(item.location.witel_kode) < 0)
+                toggleRowCollapse("witel", item.location.witel_kode);
         }
         
         type = "sto";
@@ -152,6 +163,8 @@ const groupData = data => {
         
     }, []);
     // console.log(groupedData);
+    if(!hasCollapseInit.value)
+        hasCollapseInit.value = true;
     return groupedData;
 };
 
@@ -165,8 +178,10 @@ const fetch = () => {
             pueLowLimit.value = data.pueLowLimit;
         if(data.category)
             categoryList.value = data.category;
-        if(data.gepee)
+        if(data.gepee) {
+            hasCollapseInit.value = false;
             tableData.value = groupData(data.gepee);
+        }
 
         if(data.gepee_summary_nasional)
             summaryNasional.value = data.gepee_summary_nasional;

@@ -20,7 +20,7 @@ if(!viewStore.filters.quarter) {
 const pueTargetStore = usePueTargetStore();
 const fetchData = () => pueTargetStore.fetchReport();
 
-const filterAutoApply = appliedFilter => appliedFilter.year && appliedFilter.quarter ? true : false;
+const filterAutoApply = () => true;
 const onFilterApply = filterValue => {
     viewStore.setFilter(filterValue);
     fetchData();
@@ -42,7 +42,7 @@ const onFilterApply = filterValue => {
             </div>
         </div>
         <div class="container-fluid dashboard-default-sec">
-            <FilterGepeeV2 useQuarter requireQuarter @apply="onFilterApply" :autoApply="filterAutoApply" />
+            <FilterGepeeV2 useMonth requireMonth @apply="onFilterApply" :autoApply="filterAutoApply" />
         </div>
         <div class="container-fluid py-4">
             <div class="d-flex justify-content-end">

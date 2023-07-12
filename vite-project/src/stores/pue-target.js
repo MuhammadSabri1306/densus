@@ -30,9 +30,9 @@ export const usePueTargetStore = defineStore("pue-target", {
             const divre = viewStore.filters.divre;
             const witel = viewStore.filters.witel;
             const year = viewStore.filters.year;
-            const quarter = viewStore.filters.quarter;
+            const month = viewStore.filters.month;
             
-            return { divre, witel, year, quarter };
+            return { divre, witel, year, month };
         },
 
     },
@@ -48,8 +48,8 @@ export const usePueTargetStore = defineStore("pue-target", {
                 params.push("witel=" + filters.witel);
             if(exclude.indexOf("year") < 0 && filters.year)
                 params.push("year=" + filters.year);
-            if(exclude.indexOf("quarter") < 0 && filters.quarter)
-                params.push("quarter=" + filters.quarter);
+            if(exclude.indexOf("month") < 0 && filters.month)
+                params.push("month=" + filters.month);
 
             return params.length < 1 ? "" : "/?" + params.join("&");
         },
@@ -120,7 +120,7 @@ export const usePueTargetStore = defineStore("pue-target", {
         },
 
         async getTarget(callback) {
-            const urlParams = this.getUrlParams(["quarter"]);
+            const urlParams = this.getUrlParams(["month"]);
             const url = "/pue-target" + urlParams;
             try {
 
