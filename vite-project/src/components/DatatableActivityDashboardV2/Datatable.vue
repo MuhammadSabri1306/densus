@@ -18,9 +18,12 @@ const level = computed(() => {
 });
 
 const getGroupAvg = (data, index, groupKey) => {
-    let count = 0;
     const sum = [];
     const currItem = JSON.parse(JSON.stringify(data[index]));
+    
+    currItem.isExists = false;
+    currItem.exec_count = 0;
+    currItem.approved_count = 0;
 
     data.forEach(dataItem => {
         if(dataItem.location[groupKey] != currItem.location[groupKey])
@@ -28,17 +31,20 @@ const getGroupAvg = (data, index, groupKey) => {
 
         for(let i=0; i<currItem.item.length; i++) {
             if(sum.length <= i)
-                sum[i] = 0;
-            sum[i] += Number(dataItem.item[i].percent);
-        }
+                sum[i] = [];
 
-        count++;
+            if(dataItem.item[i].isExists) {
+                sum[i].push(dataItem.item[i].percent);
+                currItem.item[i].isExists = true;
+            }
+        }
     });
 
     for(let i=0; i<currItem.item.length; i++) {
-        currItem.item[i].percent = count < 1 ? 0 : sum[i] / count;
-        currItem.item[i].isExists = true;
-
+        const sumAll = sum[i].reduce((total, item) => total += item, 0);
+        const count = sum[i].length;
+        currItem.item[i].percent = sum[i].length < 1 ? 0 : sumAll / count;
+        
         delete currItem.item[i].id_schedule;
         delete currItem.item[i].exec_count;
         delete currItem.item[i].approved_count;

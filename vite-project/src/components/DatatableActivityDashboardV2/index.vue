@@ -12,14 +12,9 @@ const show = ref(false);
 const showCategory = ref(false);
 const isLoading = ref(true);
 
-const monthList = ref([]);
-const categoryList = ref([]);
-const performance = ref([]);
-
 const viewStore = useViewStore();
-const monthListView = viewStore.monthList;
-
 const activityStore = useActivityStore();
+
 const isFetchSuccess = ref(false);
 const excelDownloadUrl = computed(() => activityStore.performanceExcelExportUrl);
 

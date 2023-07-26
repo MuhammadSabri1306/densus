@@ -6,7 +6,6 @@ import { useViewStore } from "@stores/view";
 import { useCollapseRow } from "@helpers/collapse-row";
 import { getPueBgClass } from "@helpers/pue-color";
 import { getPercentageTextClass } from "@helpers/percentage-color";
-import DataList from "@helpers/data-list";
 import { toNumberText, toFixedNumber } from "@helpers/number-format";
 import Skeleton from "primevue/skeleton";
 
