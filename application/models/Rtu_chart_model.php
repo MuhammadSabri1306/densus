@@ -278,14 +278,21 @@ class Rtu_chart_model extends CI_Model {
 			$index=0;
 			if ($time=="daily") {
 				//LAST 3 days
-				$sql_daily="SELECT kwh_value,timestamp
-				FROM kwh_counter 
-				WHERE rtu_kode='$rtu' AND DATE(timestamp) BETWEEN CURRENT_DATE-2 AND CURRENT_DATE
-				 ORDER BY kwh_counter.timestamp DESC";
+				// $sql_daily = "SELECT kwh_value,timestamp FROM kwh_counter WHERE rtu_kode='$rtu' AND DATE(timestamp) BETWEEN CURRENT_DATE-2 AND CURRENT_DATE ORDER BY kwh_counter.timestamp DESC";
+				$currentDate = new DateTime();
+				$currentDate->modify('-2 days');
+				$date = $currentDate->format('Y-m-d');
+
+				$sql_daily = "SELECT kwh_value,timestamp FROM kwh_counter WHERE rtu_kode='$rtu' AND DATE(timestamp)>='$date' ORDER BY kwh_counter.timestamp";
 				$query = $this->db->query($sql_daily);
 				$chart_content = $query->result();
 			}
-			return $chart_content;
+			$result = array_map(function($item) {
+				$datetime = new DateTime($item->timestamp);
+				$item->timestamp = $datetime->getTimestamp() * 1000;
+				return $item;
+			}, $chart_content);
+			return $result;
 		}
 		
 		
