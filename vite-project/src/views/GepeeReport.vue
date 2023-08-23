@@ -67,6 +67,6 @@ const showDialogExport = ref(false);
         </div>
         <DialogActivityCategory v-model:visible="showDialogCategory" />
         <DialogExportLinkVue v-if="showDialogExport" baseUrl="/export/excel/gepee-report" title="Export Gepee Management Report"
-            useDivre useWitel useYear requireYear @close="showDialogExport = false" />
+            useDivre useWitel useYear useMonth requireMonth @close="showDialogExport = false" />
     </div>
 </template>

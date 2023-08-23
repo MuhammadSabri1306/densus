@@ -162,7 +162,7 @@ onMounted(() => {
                                 <div class="mb-2">
                                     <label for="inputWitel" :class="{ 'required': requireWitel }">Witel</label>
                                     <ListboxFilter ref="listboxWitel" inputId="inputWitel" inputPlaceholder="Pilih Witel"
-                                        valueKey="witel_kode" labelKey="witel_name" :useResetItem="requireWitel" resetTitle="Pilih Semua"
+                                        valueKey="witel_kode" labelKey="witel_name" :useResetItem="!requireWitel" resetTitle="Pilih Semua"
                                         @change="onWitelChange" />
                                 </div>
                             </div>

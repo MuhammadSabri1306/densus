@@ -35,6 +35,24 @@ class Excel_export extends CI_Controller
         // $this->load->library('session');
     }
 
+    private function valueToText(
+        $value,
+        string $fallbackText = '-',
+        string $patternText = '[[VAL]]',
+        $customChecker = null
+    )
+    {
+        $checker = $customChecker;
+        if(!is_callable($checker)) {
+            $checker = fn($val) => !empty($val);
+        }
+
+        if(!$checker($value)) {
+            return $fallbackText;
+        }
+        return str_replace('[[VAL]]', $value, $patternText);
+    }
+
     public function pue()
     {
         $filter = [
@@ -629,31 +647,31 @@ class Excel_export extends CI_Controller
         $month = $this->input->get('month');
 
         if(!$year) $year = date('Y');
-        // if(!$month) $month = date('m');
+        if(!$month) $month = date('m');
 
         $this->load->library('datetime_range');
-        if($month) {
-            $datetime = $this->datetime_range->get_by_month($month, $year);
-        } else {
-            $datetime = $this->datetime_range->get_by_year($year);
-        }
+        $datetime = $this->datetime_range->get_by_month($month, $year);
+        $datetimeYear = $this->datetime_range->get_by_year($year);
 
         $filter = [
             'divre' => $divreCode,
             'witel' => $witelCode,
-            'datetime' => $datetime
+            'datetime' => $datetime,
+            'datetimeYear' => $datetimeYear,
+            'year' => (int) ($this->input->get('year') ?? date('Y')),
+            'month' => (int) ($this->input->get('month') ?? date('n')),
         ];
 
         $this->load->model('gepee_management_model');
         $this->load->model('activity_category_model');
 
-        $pueLowLimit = 1.8;
+        $pueLowLimit = 1.8;        
         $categoryList = $this->activity_category_model->get();
-        $dataGepee = $this->gepee_management_model->get_report($filter, $pueLowLimit);
-        // $summaryGepeeNasional = null;
-        // if(!isset($divreCode) && !isset($witelCode)) {
-        //     $summaryGepeeNasional = $this->gepee_management_model->get_report_summary_nasional($filter, $pueLowLimit);
-        // }
+        $data = $this->gepee_management_model->get_report_v2($filter, $pueLowLimit);
+
+        $monthList = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+            'Oktober', 'November', 'Desember'];
+        $monthName = $monthList[$filter['month'] - 1];
 
         $this->excel
             ->selectCell([2, 2], [2, 3])
@@ -695,37 +713,45 @@ class Excel_export extends CI_Controller
         $currCol++;
 
         $this->excel
-            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 1)])
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
             ->mergeCell()
-            ->setValue('PUE (Diukur Bulanan)', $currRow, $currCol);
+            ->setValue('Tipe Perhitungan', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue("IKE (bulan $monthName)", $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 3)])
+            ->mergeCell()
+            ->setValue("PUE (bulan $monthName)", $currRow, $currCol);
+        $this->excel->setValue('OFFLINE/ONLINE', ($currRow + 1), $currCol);
+        $currCol++;
         $this->excel->setValue('OFFLINE', ($currRow + 1), $currCol);
         $currCol++;
         $this->excel->setValue('ONLINE', ($currRow + 1), $currCol);
         $currCol++;
-
-        $this->excel
-            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
-            ->mergeCell()
-            ->setValue('OFFLINE/ONLINE', $currRow, $currCol);
+        $this->excel->setValue('PUE <= 1.8', ($currRow + 1), $currCol);
         $currCol++;
 
         $this->excel
-            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 2)])
             ->mergeCell()
-            ->setValue('PUE <= 1.8', $currRow, $currCol);
+            ->setValue('Tagihan PLN', $currRow, $currCol);
+        $this->excel->setValue("Rp. Tagihan PLN ($monthName)", ($currRow + 1), $currCol);
         $currCol++;
-
-        $this->excel
-            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
-            ->mergeCell()
-            ->setValue('Tagihan PLN (Bulanan)', $currRow, $currCol);
+        $this->excel->setValue('Jumlah Saving', ($currRow + 1), $currCol);
+        $currCol++;
+        $this->excel->setValue('% Saving', ($currRow + 1), $currCol);
         $currCol++;
         
         $this->excel
             ->selectCell([$currRow, $currCol], [$currRow, ($currCol + count($categoryList))])
             ->mergeCell()
             ->setValue('Presentase Pencapaian Aktivitas GePEE (Dihitung 100% jika sudah dilaksanakan)', $currRow, $currCol);
-        // $currCol++;
 
         foreach($categoryList as $cat) {
             $this->excel->setValue($cat->alias, ($currRow + 1), $currCol);
@@ -738,7 +764,13 @@ class Excel_export extends CI_Controller
         $this->excel
             ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
             ->mergeCell()
-            ->setValue('% GEPEE Activity', $currRow, $currCol);
+            ->setValue("% GEPEE Activity ($monthName)", $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue("% GEPEE Activity ($year)", $currRow, $currCol);
 
         $currRow++;
         $this->excel
@@ -748,9 +780,9 @@ class Excel_export extends CI_Controller
             ->setBorderColor($this->colorScheme['white']['argb'])
             ->setBold(true)
             ->setAlignment('center');
-        
+
         $currRow++;
-        foreach($dataGepee as $item) {
+        foreach($data['gepee'] as $item) {
 
             $currCol = $startCol;
 
@@ -766,24 +798,46 @@ class Excel_export extends CI_Controller
             $this->excel->setValue($item['location']['id_pel_pln'], $currRow, $currCol);
             $currCol++;
 
-            $this->excel->setValue($item['pue']['offline'], $currRow, $currCol);
+            $typeText = $item['is_pue'] ? 'PUE' : ($item['is_ike'] ? 'IKE' : ''); 
+            $this->excel
+                ->setValue($typeText, $currRow, $currCol)
+                ->setAlignment('center');
             $currCol++;
 
-            $this->excel->setValue($item['pue']['online'], $currRow, $currCol);
+            $this->excel
+                ->setValue(( $item['is_ike'] ? $item['ike'] : null ), $currRow, $currCol)
+                ->setAlignment('center');
             $currCol++;
 
-            $isOnlineText = $item['location']['is_online'] ? 'ONLINE' : 'OFFLINE';
+            $isOnlineText = !$item['is_pue'] ? null : ($item['pue']['is_online'] ? 'ONLINE' : 'OFFLINE');
             $this->excel
                 ->setValue($isOnlineText, $currRow, $currCol)
                 ->setAlignment('center');
             $currCol++;
 
-            $isReachTargetText = $item['pue']['isReachTarget'] ? 'TIDAK' : 'YA';
+            $this->excel->setValue(( !$item['is_pue'] ? null : $item['pue']['offline'] ), $currRow, $currCol);
+            $currCol++;
+
+            $this->excel->setValue(( !$item['is_pue'] ? null : $item['pue']['online'] ), $currRow, $currCol);
+            $currCol++;
+
+            $isReachTargetText = !$item['is_pue'] ? null : ($item['pue']['isReachTarget'] ? 'TIDAK' : 'YA');
             $this->excel
                 ->setValue($isReachTargetText, $currRow, $currCol)
                 ->setAlignment('center');
-            // $currCol++;
             $currCol++;
+            
+            $this->excel->setValue($item['tagihan_pln'], $currRow, $currCol);
+            $currCol++;
+            
+            $this->excel->setValue($item['pln_saving'], $currRow, $currCol);
+            $currCol++;
+            
+            $percentText = (string) $item['pln_saving_percent'];
+            $percentText .= "%";
+            $this->excel
+                ->setValue($percentText, $currRow, $currCol)
+                ->setAlignment('center');
 
             foreach($item['performance'] as $perf) {
                 $currCol++;
@@ -795,7 +849,14 @@ class Excel_export extends CI_Controller
             }
 
             $currCol += 2;
-            $percentText = (string) $item['performance_summary']['percentage'];
+            $percentText = (string) $item['performance_summary'];
+            $percentText .= "%";
+            $this->excel
+                ->setValue($percentText, $currRow, $currCol)
+                ->setAlignment('center');
+            $currCol++;
+
+            $percentText = (string) $item['performance_summary_yearly'];
             $percentText .= "%";
             $this->excel
                 ->setValue($percentText, $currRow, $currCol)

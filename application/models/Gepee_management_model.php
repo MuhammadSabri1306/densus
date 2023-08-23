@@ -9,6 +9,7 @@ class Gepee_management_model extends CI_Model
     protected $tablePueOfflineName = 'pue_offline';
     protected $tablePueOnlineName = 'pue_counter';
     protected $tablePueTargetName = 'pue_location_target';
+    protected $tableIkeName = 'ike_master';
     public $currUser;
 
     public function __construct()
@@ -91,12 +92,13 @@ class Gepee_management_model extends CI_Model
         return $this->result;
     }
 
-    public function get_report_v2($filter, $pueLowLimit = 1.8)
+    public function get_report_v2($filter, $pueLowLimit = 1.8, $sumNasional = false)
     {
         $this->load->helper('array');
         $this->use_module('get_report_v2', [
             'filter' => $filter,
-            'pueLowLimit' => $pueLowLimit
+            'pueLowLimit' => $pueLowLimit,
+            'sumNasional' => $sumNasional
         ]);
         return $this->result;
     }

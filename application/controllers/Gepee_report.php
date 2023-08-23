@@ -102,7 +102,7 @@ class Gepee_report extends RestController
             $this->gepee_management_model->currUser = $currUser;
 
             $pueLowLimit = 1.8;
-            $dataReport = $this->gepee_management_model->get_report_v2($filter, $pueLowLimit);
+            $dataReport = $this->gepee_management_model->get_report_v2($filter, $pueLowLimit, true);
             $data = [
                 'pueLowLimit' => $pueLowLimit,
                 'gepee' => $dataReport['gepee'],

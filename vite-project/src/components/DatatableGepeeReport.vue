@@ -32,6 +32,7 @@ const getGroupAvg = (data, groupKey) => {
     let rowCountSummYearly = 0;
     let rowCountPueOnline = 0;
     let rowCountPueOffline = 0;
+    let rowCountIke = 0;
     let rowCountPlnSaving = 0;
     let rowCountPlnSavingPercent = 0;
 
@@ -43,7 +44,8 @@ const getGroupAvg = (data, groupKey) => {
         plnSaving: null,
         plnSavingPercent: null,
         pueOnline: null,
-        pueOffline: null
+        pueOffline: null,
+        ike: null
     };
     
     const currItem = JSON.parse(JSON.stringify(data[0]));
@@ -107,18 +109,25 @@ const getGroupAvg = (data, groupKey) => {
             rowCountPlnSavingPercent++;
         }
 
-        if(item.pue.online) {
+        if(item.is_pue && item.pue.online) {
             if(sum.pueOnline === null)
                 sum.pueOnline = 0;
             sum.pueOnline += item.pue.online;
             rowCountPueOnline++;
         }
 
-        if(item.pue.offline) {
+        if(item.is_pue && item.pue.offline) {
             if(sum.pueOffline === null)
                 sum.pueOffline = 0;
             sum.pueOffline += item.pue.offline;
             rowCountPueOffline++;
+        }
+
+        if(item.is_ike && item.ike) {
+            if(sum.ike === null)
+                sum.ike = 0;
+            sum.ike += item.ike;
+            rowCountIke++;
         }
     });
 
@@ -138,6 +147,8 @@ const getGroupAvg = (data, groupKey) => {
 
     currItem.pue.online = sum.pueOnline === null ? null : (sum.pueOnline / rowCountPueOnline);
     currItem.pue.offline = sum.pueOffline === null ? null : (sum.pueOffline / rowCountPueOffline);
+
+    currItem.ike = sum.ike === null ? null : (sum.ike / rowCountIke);
 
     let pueValue = null;
     if(currItem.pue.online !== null)
@@ -240,7 +251,6 @@ const getRowClass = item => {
     return { "row-collapsed": collapsed };
 };
 
-const isLocationOnline = item => item.type == "sto" && item.location.is_online;
 const isPueReachTarget = item => item.pue.isReachTarget;
 const formatItemNumber = (itemNumb, nullText = "-", pattern = "[value]") => {
     if(itemNumb === null)
@@ -299,11 +309,9 @@ const selectedYear = computed(() => viewStore.filters.year);
                     <tr>
                         <th class="bg-success sticky-column" rowspan="2">Lingkup Kerja</th>
                         <th class="bg-success" rowspan="2">ID Pelanggan</th>
-                        <th class="bg-success" colspan="2">PUE <small>(Diukur Bulanan)</small></th>
-                        <th class="bg-success" rowspan="2">OFFLINE/<br>ONLINE</th>
-                        <th class="bg-success" rowspan="2">
-                            PUE &lt;= {{ pueLowLimit }}<br><small>YA/TIDAK</small>
-                        </th>
+                        <th class="bg-success" rowspan="2">Tipe<br>Perhitungan</th>
+                        <th class="bg-success" rowspan="2">Nilai IKE<br><small>(Bulan {{ selectedMonth }})</small></th>
+                        <th class="bg-success" colspan="4">PUE <small>(Bulan {{ selectedMonth }})</small></th>
                         <th class="bg-success" colspan="3">Tagihan PLN</th>
                         <th class="bg-success" :colspan="categoryList.length+1">
                             Presentase Pencapaian Aktivitas GePEE (Dihitung 100% jika sudah dilaksanakan)
@@ -312,8 +320,10 @@ const selectedYear = computed(() => viewStore.filters.year);
                         <th rowspan="2">% Gepee Activity<br><small>(Tahun {{ selectedYear }})</small></th>
                     </tr>
                     <tr>
+                        <th>OFFLINE/<br>ONLINE</th>
                         <th>OFFLINE</th>
                         <th>ONLINE</th>
+                        <th>PUE &lt;= {{ pueLowLimit }}<br><small>(YA/TIDAK)</small></th>
                         <th class="tw-whitespace-nowrap">Rp. Tagihan PLN<br><small>(Bulan {{ selectedMonth }})</small></th>
                         <th class="tw-whitespace-nowrap">Jumlah Saving<br><small>(Dibanding bulan kemarin)</small></th>
                         <th class="tw-whitespace-nowrap">% Saving<br><small>(Dibanding bulan kemarin)</small></th>
@@ -330,7 +340,12 @@ const selectedYear = computed(() => viewStore.filters.year);
                         <td class="sticky-column !tw-bg-[#24695c] text-white">
                             <b class="px-3">SUMMARY NASIONAL</b>
                         </td>
-                        <td class="middle text-center">-</td>
+                        <td class="bg-cell-mute"></td>
+                        <td class="bg-cell-mute"></td>
+                        <td class="middle text-center f-w-700 text-muted">
+                            {{ formatItemNumber(summaryNasional.ike) }}
+                        </td>
+                        <td class="bg-cell-mute"></td>
                         <td :class="getColClassNumber('pue', summaryNasional.pue_offline)"
                             class="middle text-center f-w-700">
                             {{ formatItemNumber(summaryNasional.pue_offline) }}
@@ -339,7 +354,6 @@ const selectedYear = computed(() => viewStore.filters.year);
                             class="middle text-center f-w-700">
                             {{ formatItemNumber(summaryNasional.pue_online) }}
                         </td>
-                        <td></td>
                         <td class="middle text-center">
                             {{ summaryNasional.isPueReachTarget ? "TIDAK" : "YA" }}
                         </td>
@@ -390,17 +404,46 @@ const selectedYear = computed(() => viewStore.filters.year);
                             </p>
                             
                         </td>
-                        <td class="middle text-center">{{ (item.type == 'sto') ? item.location.id_pel_pln : '-' }}</td>
-                        <td :class="getColClassNumber('pue', item.pue.offline)" class="middle text-center f-w-700">
-                            {{ formatItemNumber(item.pue.offline) }}
+
+                        <td v-if="item.type == 'sto'" class="middle text-center">{{ item.location.id_pel_pln }}</td>
+                        <td v-else class="bg-cell-mute"></td>
+                        
+                        <td v-if="item.type == 'sto'" class="middle text-center tw-whitespace-nowrap">
+                            {{ item.is_pue ? "PUE" : item.is_ike ? "IKE" : "-" }}
                         </td>
-                        <td :class="getColClassNumber('pue', item.pue.online)" class="middle text-center f-w-700">
-                            {{ formatItemNumber(item.pue.online) }}
-                        </td>
-                        <td class="middle text-center">
-                            {{ (item.type != 'sto') ? '' : isLocationOnline(item) ? "ONLINE" : "OFFLINE" }}
-                        </td>
-                        <td class="middle text-center">{{ isPueReachTarget(item) ? "TIDAK" : "YA" }}</td>
+                        <td v-else class="bg-cell-mute"></td>
+
+                        <template v-if="item.is_ike || item.type != 'sto'">
+                            <td class="middle text-center">
+                                {{ formatItemNumber(item.ike) }}
+                            </td>
+                        </template>
+                        <template v-else>
+                            <td class="bg-cell-mute"></td>
+                        </template>
+
+                        <template v-if="item.is_pue || item.type != 'sto'">
+                            
+                            <td v-if="item.type == 'sto'" class="middle text-center">
+                                {{ item.pue.is_online ? "ONLINE" : "OFFLINE" }}
+                            </td>
+                            <td v-else class="bg-cell-mute"></td>
+    
+                            <td :class="getColClassNumber('pue', item.pue.offline)" class="middle text-center f-w-700">
+                                {{ formatItemNumber(item.pue.offline) }}
+                            </td>
+    
+                            <td :class="getColClassNumber('pue', item.pue.online)" class="middle text-center f-w-700">
+                                {{ formatItemNumber(item.pue.online) }}
+                            </td>
+    
+                            <td class="middle text-center">{{ isPueReachTarget(item) ? "TIDAK" : "YA" }}</td>
+
+                        </template>
+                        <template v-else>
+                            <td v-for="col in 4" class="bg-cell-mute"></td>
+                        </template>
+
                         <td class="middle text-center tw-whitespace-nowrap">
                             {{ formatItemNumber(item.tagihan_pln, "-", "Rp [value]") }}
                         </td>
@@ -449,6 +492,10 @@ const selectedYear = computed(() => viewStore.filters.year);
 
 .category-tooltip:hover .badge {
     @apply tw-opacity-100;
+}
+
+.bg-cell-mute {
+    @apply !tw-bg-zinc-100/70;
 }
 
 </style>
