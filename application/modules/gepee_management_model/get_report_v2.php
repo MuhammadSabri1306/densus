@@ -162,6 +162,19 @@ $schData = array_reduce($sch, function($res, $row) {
 
 }, []);
 
+$dbAmc = $this->load->database('amc', TRUE);
+$dbAmc->select()
+    ->from("$dbAmc->database.t_pln_transaksi")
+    ->where('tahun', (int) $filter['year'])
+    ->order_by('id_pelanggan');
+$plnData = $dbAmc->get()->result_array();
+
+$plnMonthKeys = ['januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus',
+    'september', 'oktober', 'november', 'desember'];
+$plnMonthKey = $plnMonthKeys[($filter['month'] - 1)];
+$plnCurrMonth = array_column($plnData, $plnMonthKeys[($filter['month'] - 1)]);
+$plnPrevMonth = array_column($plnData, $plnMonthKeys[($filter['month'] - 2)]);
+
 $data = [];
 $dataNasional = [];
 foreach($locationData as $location) {
@@ -220,6 +233,21 @@ foreach($locationData as $location) {
     $perfSummary = $perfMonth[$selectedMonth - 1]['percent'];
     $perfSummaryYear = $perfPercentTotal / $perfPercentCount;
 
+    $plnIndex = findArrayIndex($plnData, fn($item) => $item['id_pelanggan'] == $location['id_pel_pln']);
+    $plnBill = null;
+    $plnSaving = null;
+    $plnSavingPercent = null;
+
+    if($plnIndex >= 0) {
+        $plnBill = (int) $plnCurrMonth[$plnIndex];
+        $plnPrevBill = (int) $plnPrevMonth[$plnIndex];
+
+        if($plnBill > 0 && $plnPrevBill > 0) {
+            $plnSaving = $plnBill - $plnPrevBill;
+            $plnSavingPercent = $plnSaving / $plnBill * 100;
+        }
+    }
+
     $row = [
         'location' => $location,
         'performance' => $perf,
@@ -230,7 +258,9 @@ foreach($locationData as $location) {
             'online' => null,
             'isReachTarget' => true
         ],
-        'tagihan_pln' => null,
+        'tagihan_pln' => $plnBill,
+        'pln_saving' => $plnSaving,
+        'pln_saving_percent' => $plnSavingPercent,
         'replacement' => null
     ];
     
@@ -243,14 +273,12 @@ foreach($locationData as $location) {
         if($pueOfflineData[$i]['id_location'] == $location['id']) {
             $pueOffline['sum'] += (double) $pueOfflineData[$i]['pue_value'];
             $pueOffline['count']++;
-            // $pueOfflineData[$i] = false;
         }
 
     }
     
     if($pueOffline['count'] > 0) {
         $row['pue']['offline'] = $pueOffline['sum'] / $pueOffline['count'];
-        // $pueOfflineData = array_filter($pueOfflineData, fn($pueItem) => $pueItem !== false);
     }
 
     /*
@@ -263,17 +291,12 @@ foreach($locationData as $location) {
             if($pueOnlineData[$i]['id_lokasi_gepee'] == $location['id']) {
                 $pueOnline['sum'] += (double) $pueOnlineData[$i]['pue_value'];
                 $pueOnline['count']++;
-                // $pueOnlineData[$i] = false;
             }
-            // if($location['id'] == 305) {
-            //     dd_json($pueOnlineData);
-            // }
 
         }
         
         if($pueOnline['count'] > 0) {
             $row['pue']['online'] = $pueOnline['sum'] / $pueOnline['count'];
-            // $pueOnlineData = array_filter($pueOnlineData, fn($pueItem) => $pueItem !== false);
         }
     }
     
@@ -302,7 +325,9 @@ foreach($locationData as $location) {
         'performance_summary' => $row['performance_summary'],
         'performance_summary_yearly' => $row['performance_summary_yearly'],
         'pue_online' => $row['pue']['online'],
-        'pue_offline' => $row['pue']['offline']
+        'tagihan_pln' => $row['tagihan_pln'],
+        'pln_saving' => $row['pln_saving'],
+        'pln_saving_percent' => $row['pln_saving_percent'],
     ]);
 }
 
@@ -338,38 +363,69 @@ foreach ($dataNasional as $item) {
     if (array_key_exists($divreKode, $groupedData)) {
         // Check if the witel_kode exists as a key in the inner array
         if (array_key_exists($witelKode, $groupedData[$divreKode])) {
+
             // If both keys exist, update the averages with the new values
             array_push($groupedData[$divreKode][$witelKode]['performance'], $item['performance']);
             $groupedData[$divreKode][$witelKode]['performance_summary'] += $item['performance_summary'];
             $groupedData[$divreKode][$witelKode]['performance_summary_yearly'] += $item['performance_summary_yearly'];
+
+            if($item['tagihan_pln'] !== null) {
+                if($groupedData[$divreKode][$witelKode]['tagihan_pln'] === null) {
+                    $groupedData[$divreKode][$witelKode]['tagihan_pln'] = 0;
+                }
+                $groupedData[$divreKode][$witelKode]['tagihan_pln'] += $item['tagihan_pln'];
+            }
+
+            if($item['pln_saving'] !== null) {
+                if($groupedData[$divreKode][$witelKode]['pln_saving'] === null) {
+                    $groupedData[$divreKode][$witelKode]['pln_saving'] = 0;
+                }
+                $groupedData[$divreKode][$witelKode]['pln_saving'] += $item['pln_saving'];
+                $groupedData[$divreKode][$witelKode]['count_pln_saving']++;
+            }
+
+            if($item['pln_saving_percent'] !== null) {
+                if($groupedData[$divreKode][$witelKode]['pln_saving_percent'] === null) {
+                    $groupedData[$divreKode][$witelKode]['pln_saving_percent'] = 0;
+                }
+                $groupedData[$divreKode][$witelKode]['pln_saving_percent'] += $item['pln_saving_percent'];
+                $groupedData[$divreKode][$witelKode]['count_pln_saving_percent']++;
+            }
+
             if ($item['pue_online'] !== null) {
                 if ($groupedData[$divreKode][$witelKode]['pue_online'] === null) {
-                    $groupedData[$divreKode][$witelKode]['pue_online'] = $item['pue_online'];
-                } else {
-                    $groupedData[$divreKode][$witelKode]['pue_online'] += $item['pue_online'];
+                    $groupedData[$divreKode][$witelKode]['pue_online'] = 0;
                 }
+                $groupedData[$divreKode][$witelKode]['pue_online'] += $item['pue_online'];
                 $groupedData[$divreKode][$witelKode]['count_pue_online']++;
             }
+
             if ($item['pue_offline'] !== null) {
                 if ($groupedData[$divreKode][$witelKode]['pue_offline'] === null) {
-                    $groupedData[$divreKode][$witelKode]['pue_offline'] = $item['pue_offline'];
-                } else {
-                    $groupedData[$divreKode][$witelKode]['pue_offline'] += $item['pue_offline'];
+                    $groupedData[$divreKode][$witelKode]['pue_offline'] = 0;
                 }
+                $groupedData[$divreKode][$witelKode]['pue_offline'] += $item['pue_offline'];
                 $groupedData[$divreKode][$witelKode]['count_pue_offline']++;
             }
+
             $groupedData[$divreKode][$witelKode]['count']++;
+
         } else {
             // If the witel_kode key doesn't exist, create a new entry with the current values
             $groupedData[$divreKode][$witelKode] = [
                 'performance' => [ $item['performance'] ],
                 'performance_summary' => $item['performance_summary'],
                 'performance_summary_yearly' => $item['performance_summary_yearly'],
+                'tagihan_pln' => $item['tagihan_pln'],
+                'pln_saving' => $item['pln_saving'],
+                'pln_saving_percent' => $item['pln_saving_percent'],
                 'pue_online' => $item['pue_online'],
                 'pue_offline' => $item['pue_offline'],
                 'count' => 1,
                 'count_pue_online' => ($item['pue_online'] !== null) ? 1 : 0,
                 'count_pue_offline' => ($item['pue_offline'] !== null) ? 1 : 0,
+                'count_pln_saving' => ($item['pln_saving'] !== null) ? 1 : 0,
+                'count_pln_saving_percent' => ($item['pln_saving_percent'] !== null) ? 1 : 0,
             ];
         }
     } else {
@@ -379,11 +435,15 @@ foreach ($dataNasional as $item) {
                 'performance' => [ $item['performance'] ],
                 'performance_summary' => $item['performance_summary'],
                 'performance_summary_yearly' => $item['performance_summary_yearly'],
+                'tagihan_pln' => $item['tagihan_pln'],
+                'pln_saving' => $item['pln_saving'],
                 'pue_online' => $item['pue_online'],
                 'pue_offline' => $item['pue_offline'],
                 'count' => 1,
                 'count_pue_online' => ($item['pue_online'] !== null) ? 1 : 0,
                 'count_pue_offline' => ($item['pue_offline'] !== null) ? 1 : 0,
+                'count_pln_saving' => ($item['pln_saving'] !== null) ? 1 : 0,
+                'count_pln_saving_percent' => ($item['pln_saving_percent'] !== null) ? 1 : 0,
             ],
         ];
     }
@@ -395,16 +455,24 @@ foreach ($groupedData as $divreKode => &$divreGroup) {
         $group['performance'] = getAvgPerformance($group['performance']);
         $group['performance_summary'] /= $group['count'];
         $group['performance_summary_yearly'] /= $group['count'];
+
+        if ($group['pln_saving'] !== null) {
+            $group['pln_saving'] /= $group['count_pln_saving'];
+        }
+
+        if ($group['pln_saving_percent'] !== null) {
+            $group['pln_saving_percent'] /= $group['count_pln_saving_percent'];
+        }
+
         if ($group['pue_online'] !== null) {
             $group['pue_online'] /= $group['count_pue_online'];
         }
+
         if ($group['pue_offline'] !== null) {
             $group['pue_offline'] /= $group['count_pue_offline'];
         }
     }
 }
-
-// dd_json($groupedData);
 
 foreach ($groupedData as $divreKode => &$divreGroup) {
 
@@ -412,68 +480,125 @@ foreach ($groupedData as $divreKode => &$divreGroup) {
         'performance' => [],
         'performance_summary' => 0,
         'performance_summary_yearly' => 0,
+        'tagihan_pln' => null,
+        'pln_saving' => null,
+        'pln_saving_percent' => null,
         'pue_online' => null,
         'pue_offline' => null,
         'count' => 0,
         'count_pue_online' => 0,
         'count_pue_offline' => 0,
+        'count_pln_saving' => 0,
+        'count_pln_saving_percent' => 0,
     ];
 
     foreach ($divreGroup as $witelKode => $group) {
+
         array_push($divreItem['performance'], $group['performance']);
         $divreItem['performance_summary'] += $group['performance_summary'];
         $divreItem['performance_summary_yearly'] += $group['performance_summary_yearly'];
         $divreItem['count']++;
+
+        if($group['tagihan_pln'] !== null) {
+            if($divreItem['tagihan_pln'] === null) {
+                $divreItem['tagihan_pln'] = 0;
+            }
+            $divreItem['tagihan_pln'] += $group['tagihan_pln'];
+        }
+
+        if($group['pln_saving'] !== null) {
+            $divreItem['pln_saving'] += $group['pln_saving'];
+            $divreItem['count_pln_saving']++;
+        }
+
+        if($group['pln_saving_percent'] !== null) {
+            $divreItem['pln_saving_percent'] += $group['pln_saving_percent'];
+            $divreItem['count_pln_saving_percent']++;
+        }
+
         if($group['pue_online'] !== null) {
             $divreItem['pue_online'] += $group['pue_online'];
             $divreItem['count_pue_online']++;
         }
+
         if($group['pue_offline'] !== null) {
             $divreItem['pue_offline'] += $group['pue_offline'];
             $divreItem['count_pue_offline']++;
         }
+
     }
 
     $divreGroup = [
         'performance' => getAvgPerformance($divreItem['performance']),
         'performance_summary' => $divreItem['performance_summary'] / $divreItem['count'],
         'performance_summary_yearly' => $divreItem['performance_summary_yearly'] / $divreItem['count'],
+        'tagihan_pln' => $divreItem['tagihan_pln'],
+        'pln_saving' => $divreItem['count_pln_saving'] < 1 ? null : $divreItem['pln_saving'] / $divreItem['count_pln_saving'],
+        'pln_saving_percent' => $divreItem['count_pln_saving_percent'] < 1 ? null : $divreItem['pln_saving_percent'] / $divreItem['count_pln_saving_percent'],
         'pue_online' => $divreItem['count_pue_online'] < 1 ? null : $divreItem['pue_online'] / $divreItem['count_pue_online'],
         'pue_offline' => $divreItem['count_pue_offline'] < 1 ? null : $divreItem['pue_offline'] / $divreItem['count_pue_offline']
     ];
 }
 
-// dd_json($groupedData);
 $nasionalItem = [
     'performance' => [],
     'performance_summary' => 0,
     'performance_summary_yearly' => 0,
+    'tagihan_pln' => null,
+    'pln_saving' => null,
+    'pln_saving_percent' => null,
     'pue_online' => null,
     'pue_offline' => null,
     'count' => 0,
     'count_pue_online' => 0,
     'count_pue_offline' => 0,
+    'count_pln_saving' => 0,
+    'count_pln_saving_percent' => 0,
 ];
 
 foreach($groupedData as $group) {
+
     array_push($nasionalItem['performance'], $group['performance']);
     $nasionalItem['performance_summary'] += $group['performance_summary'];
     $nasionalItem['performance_summary_yearly'] += $group['performance_summary_yearly'];
     $nasionalItem['count']++;
+
+    if($group['tagihan_pln'] !== null) {
+        if($nasionalItem['tagihan_pln'] === null) {
+            $nasionalItem['tagihan_pln'] = 0;
+        }
+        $nasionalItem['tagihan_pln'] += $group['tagihan_pln'];
+    }
+
+    if($group['pln_saving'] !== null) {
+        $nasionalItem['pln_saving'] += $group['pln_saving'];
+        $nasionalItem['count_pln_saving']++;
+    }
+
+    if($group['pln_saving_percent'] !== null) {
+        $nasionalItem['pln_saving_percent'] += $group['pln_saving_percent'];
+        $nasionalItem['count_pln_saving_percent']++;
+    }
+
     if($group['pue_online'] !== null) {
         $nasionalItem['pue_online'] += $group['pue_online'];
         $nasionalItem['count_pue_online']++;
     }
+
     if($group['pue_offline'] !== null) {
         $nasionalItem['pue_offline'] += $group['pue_offline'];
         $nasionalItem['count_pue_offline']++;
     }
+
 }
 
 $nasional = [
     'performance' => getAvgPerformance($nasionalItem['performance']),
     'performance_summary' => $nasionalItem['performance_summary'] / $nasionalItem['count'],
     'performance_summary_yearly' => $nasionalItem['performance_summary_yearly'] / $nasionalItem['count'],
+    'tagihan_pln' => $nasionalItem['tagihan_pln'],
+    'pln_saving' => $nasionalItem['count_pln_saving'] < 1 ? null : $nasionalItem['pln_saving'] / $nasionalItem['count_pln_saving'],
+    'pln_saving_percent' => $nasionalItem['count_pln_saving_percent'] < 1 ? null : $nasionalItem['pln_saving_percent'] / $nasionalItem['count_pln_saving'],
     'pue_online' => $nasionalItem['count_pue_online'] < 1 ? null : $nasionalItem['pue_online'] / $nasionalItem['count_pue_online'],
     'pue_offline' => $nasionalItem['count_pue_offline'] < 1 ? null : $nasionalItem['pue_offline'] / $nasionalItem['count_pue_offline']
 ];
@@ -481,168 +606,6 @@ $nasional = [
 $nasionalPueOnline = $nasional['pue_online'] !== null ? $nasional['pue_online'] : 0;
 $nasionalPueOffline = $nasional['pue_offline'] !== null ? $nasional['pue_offline'] : 0;
 $nasional['isPueReachTarget'] = max($nasionalPueOnline, $nasionalPueOffline) > $pueLowLimit;
-
-// $dataGroup = [];
-// foreach($dataNasional as $item) {
-
-//     $divreCode = $item['location']['divre_kode'];
-//     $witelCode = $item['location']['witel_kode'];
-
-//     if(!isset($dataGroup[$divreCode])) {
-//         $dataGroup[$divreCode] = [];
-//     }
-    
-//     if(!isset($dataGroup[$witelCode])) {
-//         $dataGroup[$divreCode][$witelCode] = [
-//             'performance' => [],
-//             'performance_summary' => [],
-//             'performance_summary_yearly' => [],
-//             'pue_online' => [],
-//             'pue_offline' => [],
-//         ];
-//     }
-
-//     for($i=0; $i<count($item['performance']); $i++) {
-//         if($i >= count($dataGroup[$divreCode][$witelCode]['performance'])) {
-//             $dataGroup[$divreCode][$witelCode]['performance'][$i] = [];
-//         }
-//         $perfValue = $item['performance'][$i]['has_schedule'] ? $item['performance'][$i]['percentage'] : null;
-//         array_push($dataGroup[$divreCode][$witelCode]['performance'][$i], $perfValue);
-//     }
-
-//     array_push($dataGroup[$divreCode][$witelCode]['performance_summary'], $item['performance_summary']);
-//     array_push($dataGroup[$divreCode][$witelCode]['performance_summary_yearly'], $item['performance_summary_yearly']);
-//     array_push($dataGroup[$divreCode][$witelCode]['pue_online'], $item['pue']['online']);
-//     array_push($dataGroup[$divreCode][$witelCode]['pue_offline'], $item['pue']['offline']);
-// }
-
-// $nasional = [
-//     'performance' => [],
-//     'performance_summary' => null,
-//     'performance_summary_yearly' => null,
-//     'pue_online' => null,
-//     'pue_offline' => null,
-//     'isReachTarget' => false
-// ];
-
-// $nasional = [];
-// $dataDivre = [];
-// foreach($dataGroup as $divreCode => $item) {
-
-//     $divreItem = [
-//         'performance' => [],
-//         'performance_summary' => [],
-//         'performance_summary_yearly' => [],
-//         'pue_online' => [],
-//         'pue_offline' => []
-//     ];
-//     foreach($item as $dataWitel) {
-//         $perfDivre = [];
-//         foreach($dataWitel['performance'] as $perfWitel) {
-//             $countPerfWitel = 0;
-//             $sumPerfWitel = null;
-            
-//             foreach($perfWitel as $perfWitelItem) {
-//                 if(is_null($sumPerfWitel) && !is_null($perfWitelItem)) {
-//                     $sumPerfWitel = $perfWitelItem;
-//                 } elseif(!is_null($sumPerfWitel)) {
-//                     $sumPerfWitel += $perfWitelItem;
-//                 }
-//                 $countPerfWitel++;
-//             }
-            
-//             $perfWitelAvg = is_null($sumPerfWitel) ? null : $sumPerfWitel / $countPerfWitel;
-//             array_push($perfDivre, $perfWitelAvg);
-//         }
-
-//         $perfDivreSummary = count($dataWitel['performance_summary']) < 1 ? null : array_sum($dataWitel['performance_summary']) / count($dataWitel['performance_summary']);
-//         $perfDivreSummaryNasional = count($dataWitel['performance_summary_yearly']) < 1 ? null : array_sum($dataWitel['performance_summary_yearly']) / count($dataWitel['performance_summary_yearly']);
-        
-//         $countPueOnline = 0;
-//         $sumPueOnline = null;
-//         foreach($dataWitel['pue_online'] as $pueOnlineItem) {
-//             if(is_null($sumPueOnline) && !is_null($pueOnlineItem)) {
-//                 $sumPueOnline = $pueOnlineItem;
-//             } elseif(!is_null($sumPueOnline)) {
-//                 $sumPueOnline += $pueOnlineItem;
-//             }
-//             $countPueOnline++;
-//         }
-//         $pueOnlineAvg = is_null($sumPueOnline) ? null : $sumPueOnline / $countPueOnline;
-        
-//         $countPueOffline = 0;
-//         $sumPueOffline = null;
-//         foreach($dataWitel['pue_offline'] as $pueOfflineItem) {
-//             if(is_null($sumPueOffline) && !is_null($pueOfflineItem)) {
-//                 $sumPueOffline = $pueOfflineItem;
-//             } elseif(!is_null($sumPueOffline)) {
-//                 $sumPueOffline += $pueOfflineItem;
-//             }
-//             $countPueOffline++;
-//         }
-//         $pueOfflineAvg = is_null($sumPueOffline) ? null : $sumPueOffline / $countPueOffline;
-
-//         array_push($divreItem['performance'], $perfDivre);
-//         array_push($divreItem['performance_summary'], $perfDivreSummary);
-//         array_push($divreItem['performance_summary_yearly'], $perfDivreSummaryNasional);
-//         array_push($divreItem['pue_online'], $pueOnlineAvg);
-//         array_push($divreItem['pue_offline'], $pueOfflineAvg);
-        
-//     }
-    
-//     $dataDivre[$divreCode] = [
-//         'performance' => [],
-//         'performance_summary' => null,
-//         'performance_summary_yearly' => null,
-//         'pue_online' => null,
-//         'pue_offline' => null
-//     ];
-
-//     $countDivreItem = 0;
-//     $sumDivreItem = null;
-//     for($i=0; $i<count($divreItem['performance']); $i++) {
-//         foreach($divreItem['performance'][$i] as $perfDivreItem) {
-//             if(is_null($sumDivreItem) && !is_null($perfDivreItem)) {
-//                 $sumDivreItem = $perfDivreItem;
-//             } elseif(!is_null($sumDivreItem)) {
-//                 $sumDivreItem = $perfDivreItem;
-//             }
-//             $countDivreItem++;
-//         }
-//         $perfDivreItemAvg = is_null($sumDivreItem) ? null : $sumDivreItem / $countDivreItem;
-//         array_push($dataDivre[$divreCode]['performance'], $perfDivreItemAvg);
-//     }
-
-//     $dataDivre[$divreCode]['performance_summary'] = count($divreItem['performance_summary']) < 1 ? 0 : array_sum($divreItem['performance_summary']) / count($divreItem['performance_summary']);
-//     $dataDivre[$divreCode]['performance_summary_yearly'] = count($divreItem['performance_summary_yearly']) < 1 ? 0 : array_sum($divreItem['performance_summary_yearly']) / count($divreItem['performance_summary_yearly']);
-
-//     $countDivreItem = 0;
-//     $sumDivreItem = null;
-//     foreach($divreItem['pue_online'] as $divrePueOnlineItem) {
-//         if(is_null($sumDivreItem) && !is_null($divrePueOnlineItem)) {
-//             $sumDivreItem = $divrePueOnlineItem;
-//         } else if(!is_null($sumDivreItem)) {
-//             $sumDivreItem += $divrePueOnlineItem;
-//         }
-//         $countDivreItem++;
-//     }
-//     $dataDivre[$divreCode]['pue_online'] = is_null($sumDivreItem) ? null : $sumDivreItem / $countDivreItem;
-
-//     $countDivreItem = 0;
-//     $sumDivreItem = null;
-//     foreach($divreItem['pue_offline'] as $divrePueOfflineItem) {
-//         if(is_null($sumDivreItem) && !is_null($divrePueOfflineItem)) {
-//             $sumDivreItem = $divrePueOfflineItem;
-//         } else if(!is_null($sumDivreItem)) {
-//             $sumDivreItem += $divrePueOfflineItem;
-//         }
-//         $countDivreItem++;
-//     }
-//     $dataDivre[$divreCode]['pue_offline'] = is_null($sumDivreItem) ? null : $sumDivreItem / $countDivreItem;
-// }
-
-
-// dd_json($dataDivre);
 
 $this->result = [
     'gepee' => $data,

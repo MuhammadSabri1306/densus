@@ -217,6 +217,7 @@ $route['api/pue/offline/(:num)']['delete'] = 'pue_offline/index/$1';
 
 $route['api/gepee-report']['get'] = 'gepee_report'; // hapus nanti
 $route['api/gepee-report-v2']['get'] = 'gepee_report/index_v2';
+$route['api/test_amc']['get'] = 'gepee_report/test_amc';
 $route['api/gepee-report/nasional']['get'] = 'gepee_report/nasional';
 
 $route['api/pue-target/report']['get'] = 'pue_target/report_v2';

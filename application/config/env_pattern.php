@@ -71,6 +71,21 @@ class EnvPattern {
         ]
     ];
 
+    public static $db_amc = [
+        'local' => [
+            'hostname' => 'localhost',
+            'username' => 'root',
+            'password' => '',
+            'database' => 'amcdb'
+        ],
+        'cloud' => [
+            'hostname' => '10.60.165.99',
+            'username' => 'gepee',
+            'password' => 'Juw00ss!!',
+            'database' => 'amcdb'
+        ]
+    ];
+
     public static $db_mockapi = [
         'local' => [
             'hostname' => 'localhost',
@@ -107,6 +122,7 @@ class EnvPattern {
             'db_densus' => (object) EnvPattern::$db_densus[$key],
             'db_opnimus' => (object) EnvPattern::$db_opnimus[$key],
             'db_opnimus_new' => (object) EnvPattern::$db_opnimus_new[$key],
+            'db_amc' => (object) EnvPattern::$db_amc[$key],
             'db_mockapi' => (object) EnvPattern::$db_mockapi[$key],
             'api_osase' => EnvPattern::$api_osase[$key],
             'timezone' => (object) EnvPattern::$timezone

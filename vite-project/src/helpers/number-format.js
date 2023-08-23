@@ -16,14 +16,23 @@ export const toIdrCurrency = numb => {
 	return result;
 };
 
-export const toFixedNumber = (numb, numbBehindComma = 2) => {
+export const toFixedNumber = (numb, numbBehindComma = 2, normalizeZero = false) => {
 	numb = Number(numb);
-	return (numb.toString().length > numbBehindComma + 1) ? numb.toFixed(numbBehindComma) : numb.toString();
+	const isNegative = numb < 0;
+	if(isNegative)
+		numb = Math.abs(numb);
+	const formattedNumber = (numb.toString().length > numbBehindComma + 1) ? numb.toFixed(numbBehindComma) : numb.toString();
+	if(normalizeZero && formattedNumber.search(/^[1-9]/) < 0)
+		return 0;
+	return isNegative ? "-" + formattedNumber : formattedNumber;
 };
 
-export const toNumberText = (numb, decimalLimit = 2) => {
+export const toNumberText = (numb, decimalLimit = 2, normalizeZero = false) => {
 	let numberStr = numb.toString();
-
+	const isNegative = numberStr.startsWith("-");
+	if(isNegative)
+		numberStr = numberStr.substring(1);
+  
 	const hasDecimal = numberStr.includes(".");
 	if(hasDecimal) {
 		const decimalPart = numberStr.split(".")[1];
@@ -42,8 +51,14 @@ export const toNumberText = (numb, decimalLimit = 2) => {
 	}
   
 	result = split[1] !== undefined ? result + "," + split[1] : result;
+
+	if(normalizeZero && result.search(/^[1-9]/) < 0)
+		return "0";
+	if(isNegative)
+		result = "-" + result;
+  
 	return result;
-};
+  };
 
 export const toZeroLeading = (numb, maxDigit) => {
 	numb = Number(numb).toString();

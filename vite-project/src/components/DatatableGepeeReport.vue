@@ -32,11 +32,16 @@ const getGroupAvg = (data, groupKey) => {
     let rowCountSummYearly = 0;
     let rowCountPueOnline = 0;
     let rowCountPueOffline = 0;
+    let rowCountPlnSaving = 0;
+    let rowCountPlnSavingPercent = 0;
 
     const perfSum = [];
     const sum = {
         summMonthly: 0,
         summYearly: 0,
+        plnBill: null,
+        plnSaving: null,
+        plnSavingPercent: null,
         pueOnline: null,
         pueOffline: null
     };
@@ -44,6 +49,9 @@ const getGroupAvg = (data, groupKey) => {
     const currItem = JSON.parse(JSON.stringify(data[0]));
     currItem.performance_summary = 0;
     currItem.performance_summary_yearly = 0;
+    currItem.tagihan_pln = null;
+    currItem.pln_saving = null;
+    currItem.pln_saving_percent = null;
 
     data.forEach(item => {
         if(item.location[groupKey] != currItem.location[groupKey])
@@ -73,10 +81,30 @@ const getGroupAvg = (data, groupKey) => {
             sum.summMonthly += item.performance_summary;
             rowCountSummMonthly++;
         }
-            
+
         if(item.performance_summary_yearly) {
             sum.summYearly += item.performance_summary_yearly;
             rowCountSummYearly++;
+        }
+
+        if(item.tagihan_pln) {
+            if(sum.plnBill === null)
+                sum.plnBill = 0;
+            sum.plnBill += item.tagihan_pln;
+        }
+
+        if(item.pln_saving) {
+            if(sum.plnSaving === null)
+                sum.plnSaving = 0;
+            sum.plnSaving += item.pln_saving;
+            rowCountPlnSaving++;
+        }
+
+        if(item.pln_saving_percent) {
+            if(sum.plnSavingPercent === null)
+                sum.plnSavingPercent = 0;
+            sum.plnSavingPercent += item.pln_saving_percent;
+            rowCountPlnSavingPercent++;
         }
 
         if(item.pue.online) {
@@ -103,6 +131,10 @@ const getGroupAvg = (data, groupKey) => {
     
     currItem.performance_summary = rowCountSummMonthly > 0 ? sum.summMonthly / rowCountSummMonthly : 0;
     currItem.performance_summary_yearly = rowCountSummYearly > 0 ? sum.summYearly / rowCountSummYearly : 0;
+    
+    currItem.tagihan_pln = sum.plnBill;
+    currItem.pln_saving = sum.plnSaving === null ? null : (sum.plnSaving / rowCountPlnSaving);
+    currItem.pln_saving_percent = sum.plnSavingPercent === null ? null : (sum.plnSavingPercent / sum.plnSaving * 100);
 
     currItem.pue.online = sum.pueOnline === null ? null : (sum.pueOnline / rowCountPueOnline);
     currItem.pue.offline = sum.pueOffline === null ? null : (sum.pueOffline / rowCountPueOffline);
@@ -139,7 +171,8 @@ const groupData = data => {
             result.push({ type, title, ...divreData });
             groupKeys.divre = item.location.divre_kode;
             
-            if(!hasCollapseInit.value && collapsedDivre.value.indexOf(item.location.divre_kode) < 0)
+            const hasDivreCollapsed = collapsedDivre.value.indexOf(item.location.divre_kode) >= 0;
+            if(!hasCollapseInit.value && !hasDivreCollapsed)
                 toggleRowCollapse("divre", item.location.divre_kode);
         }
         
@@ -151,7 +184,8 @@ const groupData = data => {
             result.push({ type, title, ...witelData });
             groupKeys.witel = item.location.witel_kode;
 
-            if(!hasCollapseInit.value && collapsedWitel.value.indexOf(item.location.witel_kode) < 0)
+            const hasWitelCollapsed = collapsedWitel.value.indexOf(item.location.witel_kode) >= 0;
+            if(!hasCollapseInit.value && !hasWitelCollapsed)
                 toggleRowCollapse("witel", item.location.witel_kode);
         }
         
@@ -161,7 +195,7 @@ const groupData = data => {
         return result;
         
     }, []);
-    // console.log(groupedData);
+    
     if(!hasCollapseInit.value)
         hasCollapseInit.value = true;
     return groupedData;
@@ -179,6 +213,8 @@ const fetch = () => {
             categoryList.value = data.category;
         if(data.gepee) {
             hasCollapseInit.value = false;
+            collapsedDivre.value = [];
+            collapsedWitel.value = [];
             tableData.value = groupData(data.gepee);
         }
 
@@ -206,10 +242,11 @@ const getRowClass = item => {
 
 const isLocationOnline = item => item.type == "sto" && item.location.is_online;
 const isPueReachTarget = item => item.pue.isReachTarget;
-const formatItemNumber = itemNumb => {
+const formatItemNumber = (itemNumb, nullText = "-", pattern = "[value]") => {
     if(itemNumb === null)
-        return "-";
-    return toNumberText(itemNumb);
+        return nullText;
+    const value = toNumberText(itemNumb, 2, true);
+    return pattern.replaceAll("[value]", value);
 };
 
 const getColClassNumber = (type, itemNumb) => {
@@ -223,6 +260,15 @@ const getColClassNumber = (type, itemNumb) => {
 
     if(type == "percent")
         return getPercentageTextClass(toFixedNumber(itemNumb));
+
+    if(type == "plnBill") {
+        itemNumb = Number(toFixedNumber(itemNumb, 2));
+        if(itemNumb < 0)
+            return "tc-percentage-good";
+        if(itemNumb > 0)
+            return "tc-percentage-danger";
+        return null;
+    }
 };
 
 const viewStore = useViewStore();
@@ -258,7 +304,7 @@ const selectedYear = computed(() => viewStore.filters.year);
                         <th class="bg-success" rowspan="2">
                             PUE &lt;= {{ pueLowLimit }}<br><small>YA/TIDAK</small>
                         </th>
-                        <th class="bg-success" rowspan="2">Tagihan PLN<br><small>(Tren Bulanan)</small></th>
+                        <th class="bg-success" colspan="3">Tagihan PLN</th>
                         <th class="bg-success" :colspan="categoryList.length+1">
                             Presentase Pencapaian Aktivitas GePEE (Dihitung 100% jika sudah dilaksanakan)
                         </th>
@@ -268,6 +314,9 @@ const selectedYear = computed(() => viewStore.filters.year);
                     <tr>
                         <th>OFFLINE</th>
                         <th>ONLINE</th>
+                        <th class="tw-whitespace-nowrap">Rp. Tagihan PLN<br><small>(Bulan {{ selectedMonth }})</small></th>
+                        <th class="tw-whitespace-nowrap">Jumlah Saving<br><small>(Dibanding bulan kemarin)</small></th>
+                        <th class="tw-whitespace-nowrap">% Saving<br><small>(Dibanding bulan kemarin)</small></th>
                         <th v-for="category in categoryList" @click="$emit('showCategory')"
                             class="tw-cursor-pointer btn-primary category-tooltip">
                             <p class="text-center mb-0">{{ category.alias }}</p>
@@ -294,20 +343,28 @@ const selectedYear = computed(() => viewStore.filters.year);
                         <td class="middle text-center">
                             {{ summaryNasional.isPueReachTarget ? "TIDAK" : "YA" }}
                         </td>
-                        <td class="middle text-center">-</td>
+                        <td class="middle text-center f-w-700 tw-whitespace-nowrap text-muted">
+                            {{ formatItemNumber(summaryNasional.tagihan_pln, "-", "Rp [value]") }}
+                        </td>
+                        <td :class="getColClassNumber('plnBill', summaryNasional.pln_saving)" class="middle text-center f-w-700 tw-whitespace-nowrap">
+                            {{ formatItemNumber(summaryNasional.pln_saving, "-", "Rp [value]") }}
+                        </td>
+                        <td :class="getColClassNumber('plnBill', summaryNasional.pln_saving)" class="middle text-center f-w-700 tw-whitespace-nowrap">
+                            {{ formatItemNumber(summaryNasional.pln_saving_percent, "-", "[value]%") }}
+                        </td>
                         <td v-for="percentage in summaryNasional.performance"
                             :class="getColClassNumber('percent', percentage)"
                             class="middle text-center f-w-700">
-                            {{ formatItemNumber(percentage) }}%
+                            {{ formatItemNumber(percentage, "-", "[value]%") }}
                         </td>
                         <td class="middle text-center">-</td>
                         <td :class="getColClassNumber('percent', summaryNasional.performance_summary)"
                             class="middle text-center f-w-700">
-                            {{ formatItemNumber(summaryNasional.performance_summary) }}%
+                            {{ formatItemNumber(summaryNasional.performance_summary, "-", "[value]%") }}
                         </td>
                         <td :class="getColClassNumber('percent', summaryNasional.performance_summary_yearly)"
                             class="middle text-center f-w-700">
-                            {{ formatItemNumber(summaryNasional.performance_summary_yearly) }}%
+                            {{ formatItemNumber(summaryNasional.performance_summary_yearly, "-", "[value]%") }}
                         </td>
                     </tr>
                     <tr v-for="item in tableData" :class="getRowClass(item)">
@@ -344,20 +401,30 @@ const selectedYear = computed(() => viewStore.filters.year);
                             {{ (item.type != 'sto') ? '' : isLocationOnline(item) ? "ONLINE" : "OFFLINE" }}
                         </td>
                         <td class="middle text-center">{{ isPueReachTarget(item) ? "TIDAK" : "YA" }}</td>
-                        <td class="middle text-center">-</td>
+                        <td class="middle text-center tw-whitespace-nowrap">
+                            {{ formatItemNumber(item.tagihan_pln, "-", "Rp [value]") }}
+                        </td>
+                        <td :class="getColClassNumber('plnBill', item.pln_saving)" class="middle text-center tw-whitespace-nowrap">
+                            {{ formatItemNumber(item.pln_saving, "-", "Rp [value]") }}
+                        </td>
+                        <td :class="getColClassNumber('plnBill', item.pln_saving)" class="middle text-center tw-whitespace-nowrap">
+                            {{ formatItemNumber(item.pln_saving_percent, "-", "[value]%") }}
+                        </td>
                         <td v-for="category in item.performance" :class="getColClassNumber('percent', category.percentage)"
                             class="middle text-center f-w-700">
                             <span v-if="!category.has_schedule">-</span>
-                            <span v-else>{{ formatItemNumber(category.percentage) }}%</span>
+                            <span v-else>
+                                {{ formatItemNumber(category.percentage, "-", "[value]%") }}
+                            </span>
                         </td>
                         <td class="middle text-center f-w-700">-</td>
                         <td :class="getColClassNumber('percent', item.performance_summary)"
                             class="middle text-center f-w-700">
-                            {{ formatItemNumber(item.performance_summary) }}%
+                            {{ formatItemNumber(item.performance_summary, "-", "[value]%") }}
                         </td>
                         <td :class="getColClassNumber('percent', item.performance_summary_yearly)"
                             class="middle text-center f-w-700">
-                            {{ formatItemNumber(item.performance_summary_yearly) }}%
+                            {{ formatItemNumber(item.performance_summary_yearly, "-", "[value]%") }}
                         </td>
                     </tr>
                 </tbody>

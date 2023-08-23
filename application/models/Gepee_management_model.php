@@ -13,7 +13,7 @@ class Gepee_management_model extends CI_Model
 
     public function __construct()
     {
-            $this->load->database('densus');
+        $this->load->database('densus');
     }
 
     protected function get_loc_filter($filter, $prefix = null)
@@ -93,6 +93,7 @@ class Gepee_management_model extends CI_Model
 
     public function get_report_v2($filter, $pueLowLimit = 1.8)
     {
+        $this->load->helper('array');
         $this->use_module('get_report_v2', [
             'filter' => $filter,
             'pueLowLimit' => $pueLowLimit
@@ -134,5 +135,18 @@ class Gepee_management_model extends CI_Model
     {
         $this->use_module('get_location_status', [ 'filter' => $filter ]);
         return $this->result;
+    }
+
+    public function test_amc($filter)
+    {
+        $dbAmc = $this->load->database('amc', TRUE);
+        $dbAmc->select()
+            ->from("$dbAmc->database.t_pln_transaksi")
+            ->where('tahun', (int) $filter['year'])
+            ->order_by('id_pelanggan');
+        // dd($this->db->get_compiled_select());
+        $plnData = $dbAmc->get()->result_array();
+
+        return $plnData;
     }
 }
