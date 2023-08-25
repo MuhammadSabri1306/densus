@@ -164,6 +164,7 @@ class Pue_offline_model extends CI_Model
         $locationList = $this->db
             ->select('id AS id_location, divre_kode, divre_name, witel_kode, witel_name, sto_name AS lokasi')
             ->from($this->tableLocationName)
+            ->where('tipe_perhitungan', 'pue')
             ->where($locFilter)
             ->order_by('divre_kode')
             ->order_by('witel_kode')
@@ -242,6 +243,7 @@ class Pue_offline_model extends CI_Model
             ->select(implode(', ', $selectFields))
             ->from("$this->tableName AS pue")
             ->join("$this->tableLocationName AS loc", 'loc.id=pue.id_location')
+            ->where('loc.tipe_perhitungan', 'pue')
             ->where($pueFilter)
             ->where($dateFilter)
             ->where($locFilter)

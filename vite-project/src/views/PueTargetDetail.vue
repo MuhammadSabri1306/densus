@@ -51,7 +51,7 @@ const onFormDialogClose = () => {
                 <div class="row">
                     <div class="col-sm-6">
                         <h3>
-                            <VueFeather type="feather" size="1.2em" class="font-primary middle" />
+                            <VueFeather type="activity" size="1.2em" class="font-primary middle" />
                             <span class="middle ms-3">Target Pencapaian PUE</span>
                         </h3>
                         <DashboardBreadcrumb :items="['GEPEE Performance', 'Target Pencapaian PUE']" class="ms-4" />

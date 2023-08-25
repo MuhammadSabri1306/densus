@@ -67,7 +67,11 @@ const setDisabled = val => {
     disable.value = val;
 };
 
-defineExpose({ validate, fetch, setValue, setDisabled });
+const reset = () => {
+    list.value = [];
+};
+
+defineExpose({ validate, fetch, setValue, setDisabled, reset });
 
 const onChange = e => {
     emit("change", e.value);

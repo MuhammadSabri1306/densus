@@ -7,7 +7,6 @@ import Dialog from "primevue/dialog";
 import { required, integer, decimal } from "@vuelidate/validators";
 import { useDataForm } from "@/helpers/data-form";
 import FileUpload from "@components/ui/FileUpload.vue";
-import FormLabel from "@components/ui/FormLabel.vue";
 
 const emit = defineEmits(["close", "save"]);
 const showDialog = ref(true);

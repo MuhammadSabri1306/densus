@@ -85,8 +85,8 @@ const getOxispUrl = idLocation => {
                 <div class="row">
                     <div class="col-sm-6">
                         <h3>
-                            <VueFeather type="feather" size="1.2em" class="font-primary middle" />
-                            <span class="middle ms-3">Input Activity</span>
+                            <VueFeather type="cloud-lightning" size="1.2em" class="font-primary middle" />
+                            <span class="middle ms-3">Input OXISP Activity</span>
                         </h3>
                         <DashboardBreadcrumb :items="['OXISP', 'Input Activity']" class="ms-4" />
                     </div>
@@ -94,7 +94,7 @@ const getOxispUrl = idLocation => {
             </div>
         </div>
         <div class="container-fluid dashboard-default-sec">
-            <FilterGepeeV2 useMonth @apply="onFilterApply" :autoApply="filterAutoApply" />
+            <FilterGepeeV2 useYear useMonth @apply="onFilterApply" :autoApply="filterAutoApply" />
         </div>
         <div v-if="!isAdmin" class="container-fluid py-4">
             <div class="d-flex justify-content-end">

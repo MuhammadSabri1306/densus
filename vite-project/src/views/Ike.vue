@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { useViewStore } from "@stores/view";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
-import DatatablePueOffline from "@components/DatatablePueOffline.vue";
+import DatatableIke from "@components/DatatableIke.vue";
 
 const viewStore = useViewStore();
 if(!viewStore.filters.month) {
@@ -33,18 +33,18 @@ const onFilterApply = filterValue => {
                     <div class="col-sm-6">
                         <h3>
                             <VueFeather type="feather" size="1.2em" class="font-primary middle" />
-                            <span class="middle ms-3">PUE Offline</span>
+                            <span class="middle ms-3">Monitoring IKE</span>
                         </h3>
-                        <DashboardBreadcrumb :items="['Monitoring PUE & IKE', 'PUE Offline']" class="ms-4" />
+                        <DashboardBreadcrumb :items="['Monitoring PUE & IKE', 'IKE']" class="ms-4" />
                     </div>
                 </div>
             </div>
         </div>
         <div class="container-fluid dashboard-default-sec">
-            <FilterGepeeV2 useMonth requireMonth @apply="onFilterApply" :autoApply="filterAutoApply" />
+            <FilterGepeeV2 useMonth @apply="onFilterApply" :autoApply="filterAutoApply" />
         </div>
         <div class="container-fluid dashboard-default-sec pb-5">
-            <DatatablePueOffline ref="datatable" />
+            <DatatableIke ref="datatable" />
         </div>
     </div>
 </template>

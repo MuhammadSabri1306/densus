@@ -55,7 +55,7 @@ const exportOptParams = computed(() => {
                             <VueFeather type="feather" size="1.2em" class="font-primary middle" />
                             <span class="middle ms-3">PUE Online</span>
                         </h3>
-                        <DashboardBreadcrumb :items="['Monitoring PUE', 'PUE Online', 'RTU']" class="ms-4" />
+                        <DashboardBreadcrumb :items="['Monitoring PUE & IKE', 'PUE Online', 'RTU']" class="ms-4" />
                     </div>
                 </div>
             </div>

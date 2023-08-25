@@ -76,7 +76,10 @@ const listboxQuarter = ref(null);
 
 const onDivreChange = val => {
     tempFilters.divre = val;
-    listboxWitel.value.fetch(() => viewStore.getWitelByDivre(val, "gepee"));
+    if(val === null)
+        listboxWitel.value.reset();
+    else
+        listboxWitel.value.fetch(() => viewStore.getWitelByDivre(val, "gepee"));
 };
 
 const onWitelChange = val => tempFilters.witel = val;

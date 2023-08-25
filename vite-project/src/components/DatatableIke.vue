@@ -1,19 +1,18 @@
 <script setup>
 import { ref, computed } from "vue";
-import { usePueV2Store } from "@/stores/pue-v2";
+import { useIkeStore } from "@/stores/ike";
 import { useUserStore } from "@stores/user";
 import { useCollapseRow } from "@helpers/collapse-row";
 import { toFixedNumber } from "@helpers/number-format";
 import Skeleton from "primevue/skeleton";
-import DialogPueOfflineLocation from "@components/DialogPueOfflineLocation.vue";
 
 const { collapsedDivre, collapsedWitel, toggleRowCollapse } = useCollapseRow();
 const userStore = useUserStore();
-const pueStore = usePueV2Store();
+const ikeStore = useIkeStore();
 
 const level = computed(() => {
     const userLevel = userStore.level;
-    const filters = pueStore.filters;
+    const filters = ikeStore.filters;
     return filters.witel ? "witel" : filters.divre ? "divre" : userLevel;
 });
 
@@ -27,27 +26,26 @@ const getGroupAvg = (data, index, groupKey) => {
         if(dataItem.location[groupKey] != currItem.location[groupKey])
             return;
 
-        for(let i=0; i<currItem.pue.length; i++) {
+        for(let i=0; i<currItem.ike.length; i++) {
             if(sum.length <= i) {
                 sum.push(0);
                 isExists.push(false);
             }
-            sum[i] += Number(dataItem.pue[i].pue_value);
-            if(dataItem.pue[i].isExists)
+            sum[i] += Number(dataItem.ike[i].ike_value);
+            if(dataItem.ike[i].isExists)
                 isExists[i] = true;
         }
         count++;
     });
     
-    for(let i=0; i<currItem.pue.length; i++) {
-        const pueValue = count < 1 ? 0 : sum[i] / count;
-        currItem.pue[i].pue_value = toFixedNumber(pueValue, 2);
-        currItem.pue[i].isExists = isExists[i];
+    for(let i=0; i<currItem.ike.length; i++) {
+        const ikeValue = count < 1 ? 0 : sum[i] / count;
+        currItem.ike[i].ike_value = toFixedNumber(ikeValue, 2);
+        currItem.ike[i].isExists = isExists[i];
     }
 
     return currItem;
 };
-
 
 const hasCollapseInit = ref(false);
 const resetCollapse = () => {
@@ -90,7 +88,7 @@ const groupData = data => {
         }
         
         type = "sto";
-        title = item.location.lokasi;
+        title = item.location.sto_name;
         result.push({ type, title, ...item });
         return result;
         
@@ -104,8 +102,8 @@ const groupData = data => {
 const monthGroup = ref([]);
 const colMonth = computed(() => {
     const fetchedMonth = monthGroup.value;
-    const monthList = pueStore.monthList;
-    const selectedMonth = pueStore.filters.month;
+    const monthList = ikeStore.monthList;
+    const selectedMonth = ikeStore.filters.month;
 
     if(fetchedMonth.length > 0)
         return fetchedMonth;
@@ -116,41 +114,41 @@ const colMonth = computed(() => {
 
 const tableData = ref([]);
 const setupData = rawDataLocation => {
-    const monthList = pueStore.monthList;
-    const selectedMonth = pueStore.filters.month;
+    const monthList = ikeStore.monthList;
+    const selectedMonth = ikeStore.filters.month;
     
     const month = !selectedMonth ? monthList : [ monthList[selectedMonth - 1] ];
     const data = [];
 
     rawDataLocation.forEach((item, rowIndex) => {
 
-        data.push({ location: item.location, pue: [] });
-        const pueOnLocation = item.pue;
+        data.push({ location: item.location, ike: [] });
+        const ikeOnLocation = item.ike;
         month.forEach(monthItem => {
             for(let weekNumber=1; weekNumber<=4; weekNumber++) {
 
-                const pueIndex = pueOnLocation.findIndex(pueItem => {
-                    if(!pueItem)
+                const ikeIndex = ikeOnLocation.findIndex(ikeItem => {
+                    if(!ikeItem)
                         return false;
-                    const isMonthMatched = Number(pueItem.month) === monthItem.number;
-                    const isWeekMatched = Number(pueItem.week) === weekNumber;
+                    const isMonthMatched = Number(ikeItem.month) == monthItem.number;
+                    const isWeekMatched = Number(ikeItem.week) == weekNumber;
                     return isMonthMatched && isWeekMatched;
                 });
                 
-                const pueCol = {
+                const ikeCol = {
                     month: monthItem.number,
                     week: weekNumber,
                 };
 
-                if(pueIndex < 0) {
-                    pueCol.isExists = false;
-                    pueCol.pue_value = 0;
+                if(ikeIndex < 0) {
+                    ikeCol.isExists = false;
+                    ikeCol.ike_value = 0;
                 } else {
-                    pueCol.isExists = true;
-                    pueCol.pue_value = toFixedNumber(pueOnLocation[pueIndex].pue_value, 2);
-                    pueOnLocation.splice(pueIndex, 1);
+                    ikeCol.isExists = true;
+                    ikeCol.ike_value = toFixedNumber(ikeOnLocation[ikeIndex].ike_value, 2);
+                    ikeOnLocation.splice(ikeIndex, 1);
                 }
-                data[rowIndex].pue.push(pueCol);
+                data[rowIndex].ike.push(ikeCol);
 
             }
         });
@@ -166,17 +164,16 @@ const hasInit = ref(false);
 const fetch = () => {
     isLoading.value = true;
     hasInit.value = true;
-    pueStore.getOfflineLocationData(({ data }) => {
-        if(data.location_data) {
+    ikeStore.getData(({ data }) => {
+        if(data.ike_data) {
             resetCollapse();
-            setupData(data.location_data);
+            setupData(data.ike_data);
         }
         isLoading.value = false;
     });
 };
 
 defineExpose({ fetch });
-const showFormAddLocation = ref(false);
 
 const getRowClass = item => {
     let collapsed = false;
@@ -234,18 +231,17 @@ const getRowClass = item => {
                                 </button>
                                 <small class="ms-2 tw-whitespace-nowrap fw-semibold">{{ item.title }}</small>
                             </div>
-                            <RouterLink v-else :to="'/pue/offline/'+item.location.id_location" class="d-flex align-items-center px-4 py-1 tw-group">
+                            <RouterLink v-else :to="'/ike/'+item.location.id" class="d-flex align-items-center px-4 py-1 tw-group">
                                 <small :class="{ 'ps-5': level != 'witel', 'ms-5': level == 'nasional' }" class="fw-semibold">{{ item.title }}</small>
                                 <VueFeather type="eye" size="1.2rem" class="ms-auto tw-transition-opacity tw-opacity-0 group-hover:tw-opacity-50" />
                             </RouterLink>
                         </td>
-                        <td v-for="pueItem in item.pue" class="middle text-center">
-                            {{ pueItem.isExists ? pueItem.pue_value : "-" }}
+                        <td v-for="ikeItem in item.ike" class="middle text-center">
+                            {{ ikeItem.isExists ? ikeItem.ike_value : "-" }}
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <DialogPueOfflineLocation v-if="showFormAddLocation" @close="showFormAddLocation = false" @save="fetch" />
     </div>
 </template>

@@ -25,6 +25,8 @@ import PueOnlineWitel from "@views/PueOnlineWitel.vue";
 import PueOnline from "@views/PueOnline.vue";
 import PueOffline from "@views/PueOffline.vue";
 import PueOfflineDetail from "@views/PueOfflineDetail.vue";
+import Ike from "@views/Ike.vue";
+import IkeDetail from "@views/IkeDetail.vue";
 
 import Rtu from "@views/Rtu.vue";
 import RtuAdd from "@views/RtuAdd.vue";
@@ -92,27 +94,35 @@ const routes = [
     },
     {
         path: "/pue/online", component: PueOnline,
-        meta: { menuKey: ["pue"], requiresAuth: true }
+        meta: { menuKey: ["pue", "online"], requiresAuth: true }
     },
     {
         path: "/pue/online/divre/:divreCode", component: PueOnlineDivre,
-        meta: { menuKey: ["pue"], requiresAuth: true }
+        meta: { menuKey: ["pue", "online"], requiresAuth: true }
     },
     {
         path: "/pue/online/witel/:witelCode", component: PueOnlineWitel,
-        meta: { menuKey: ["pue"], requiresAuth: true }
+        meta: { menuKey: ["pue", "online"], requiresAuth: true }
     },
     {
         path: "/pue/online/rtu/:rtuCode", component: PueOnlineRtu,
-        meta: { menuKey: ["pue"], requiresAuth: true }
+        meta: { menuKey: ["pue", "online"], requiresAuth: true }
     },
     {
         path: "/pue/offline", component: PueOffline,
-        meta: { menuKey: ["pue"], requiresAuth: true }
+        meta: { menuKey: ["pue", "offline"], requiresAuth: true }
     },
     {
         path: "/pue/offline/:locationId", component: PueOfflineDetail,
-        meta: { menuKey: ["pue"], requiresAuth: true }
+        meta: { menuKey: ["pue", "offline"], requiresAuth: true }
+    },
+    {
+        path: "/ike", component: Ike,
+        meta: { menuKey: ["pue", "ike"], requiresAuth: true }
+    },
+    {
+        path: "/ike/:locationId", component: IkeDetail,
+        meta: { menuKey: ["pue", "ike"], requiresAuth: true }
     },
     {
         path: "/rtu", component: Rtu,

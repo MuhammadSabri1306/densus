@@ -1,38 +1,43 @@
 <script setup>
 import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import { usePueV2Store } from "@stores/pue-v2";
+import { useIkeStore } from "@/stores/ike";
 import { useViewStore } from "@stores/view";
-import { toNumberText } from "@helpers/number-format";
+import { toNumberText, toRoman } from "@helpers/number-format";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import { FilterMatchMode } from "primevue/api";
 import ButtonGroupAction from "@/components/ButtonGroupAction.vue";
 import Skeleton from "primevue/skeleton";
-import DialogPueOfflineAdd from "@components/DialogPueOfflineAdd.vue";
+import DialogIkeAdd from "@components/DialogIkeAdd.vue";
+import DialogIkeEdit from "@components/DialogIkeEdit.vue";
 import DialogPueOfflineEdit from "@components/DialogPueOfflineEdit.vue";
 import DialogPueOfflineDetail from "@components/DialogPueOfflineDetail.vue";
 import FilterGepeeMonth from "@components/FilterGepeeMonth.vue";
 
-const pueStore = usePueV2Store();
+const ikeStore = useIkeStore();
 const route = useRoute();
 
 const locationData = ref({});
-const pueData = ref([]);
-const dataTable = computed(() => {
-    return pueData.value.map((item, index) => {
-        const no = index + 1;
-        const dayaEsensial = Number(item.daya_sdp_a) + Number(item.daya_sdp_b) + Number(item.daya_sdp_c);
-        const ictEquip = Number(item.daya_eq_a) + Number(item.daya_eq_b) + Number(item.daya_eq_c);
-        const dateText = new Intl
-            .DateTimeFormat('id', {
-                dateStyle: 'long',
-                timeStyle: 'short'
-            })
-            .format(new Date(item.created_at));
+const ikeData = ref([]);
+const inputableWeeks = ref([]);
 
-        return { no, dayaEsensial, ictEquip, dateText, ...item };
+const dataTable = computed(() => {
+    const monthList = ikeStore.monthList;
+
+    return ikeData.value.map(item => {
+        const createdAt = new Date(item.created_at);
+        const periodeText = `${ monthList[createdAt.getMonth()]?.name } ${ createdAt.getFullYear() } Minggu ${ toRoman(item.week) }`;
+
+        // const dateText = new Intl
+        //     .DateTimeFormat('id', {
+        //         dateStyle: 'long',
+        //         timeStyle: 'short'
+        //     })
+        //     .format(createdAt);
+
+        return { periodeText, ...item };
     });
 });
 
@@ -45,11 +50,13 @@ const fetchData = () => {
     const idLocation = route.params.locationId;
     isLoading.value = true;
 
-    pueStore.getOfflinePue(idLocation, ({ data }) => {
-        if(data.pue)
-            pueData.value = data.pue;
+    ikeStore.getLocationData(idLocation, ({ data }) => {
+        if(data.ike)
+            ikeData.value = data.ike;
         if(data.location)
             locationData.value = data.location;
+        if(data.inputable_weeks)
+            inputableWeeks.value = data.inputable_weeks;
         isLoading.value = false;
     });
 };
@@ -72,15 +79,15 @@ const showDialogDetail = item => {
 };
 
 const viewStore = useViewStore();
-const deletePueItem = pueId => {
-    const confirmed = confirm("Anda akan menghapus item Data PUE. Lanjutkan?");
+const deleteIkeItem = ikeId => {
+    const confirmed = confirm("Anda akan menghapus item Data IKE. Lanjutkan?");
     if(!confirmed)
         return;
 
-    pueStore.deleteOffline(pueId, ({ success }) => {
+    ikeStore.delete(ikeId, ({ success }) => {
         if(!success)
             return;
-        viewStore.showToast("PUE Offline", "Berhasil menghapus item.", true);
+        viewStore.showToast("Data IKE", "Berhasil menghapus item.", true);
         fetchData();
     });
 };
@@ -88,6 +95,13 @@ const deletePueItem = pueId => {
 const onFilterApply = filterValue => {
     viewStore.setFilter(filterValue);
     fetchData();
+};
+
+const formatNumber = (value, fallbackText = "-", patternText = "[value]") => {
+    if(value === undefined || value === null)
+        return fallbackText;
+    value = toNumberText(value);
+    return patternText.replaceAll("[value]", value);
 };
 </script>
 <template>
@@ -98,9 +112,9 @@ const onFilterApply = filterValue => {
                     <div class="col-sm-6">
                         <h3>
                             <VueFeather type="feather" size="1.2em" class="font-primary middle" />
-                            <span class="middle ms-3">PUE Offline</span>
+                            <span class="middle ms-3">Monitoring IKE</span>
                         </h3>
-                        <DashboardBreadcrumb :items="['Monitoring PUE & IKE', 'PUE Offline']" class="ms-4" />
+                        <DashboardBreadcrumb :items="['Monitoring PUE & IKE', 'IKE']" class="ms-4" />
                     </div>
                 </div>
             </div>
@@ -124,18 +138,20 @@ const onFilterApply = filterValue => {
                         </tr>
                         <tr>
                             <td>Lokasi</td>
-                            <td>: {{ locationData?.lokasi }}</td>
+                            <td>: {{ locationData?.sto_name }}</td>
                         </tr>
                     </table>
                 </div>
                 <div v-if="!isLoading" class="row align-items-center g-4 mt-2">
                     <div class="col-md-auto">
-                        <FilterGepeeMonth @apply="onFilterApply" class="d-flex align-items-center" labelClass="text-muted me-2" fieldClass="me-4" />
+                        <FilterGepeeMonth @apply="onFilterApply" class="d-flex align-items-center"
+                            labelClass="text-muted me-2" fieldClass="me-4" />
                     </div>
-                    <div class="col-auto ms-auto">
-                        <button type="button" @click="isDialogAddShow = true" class="btn btn-outline-info btn-icon">
+                    <div v-if="inputableWeeks.length > 0" class="col-auto ms-auto">
+                        <button type="button" @click="isDialogAddShow = true"
+                            class="btn btn-outline-info btn-icon">
                             <VueFeather type="plus" />
-                            <span>Input PUE Baru</span>
+                            <span>Input IKE Baru</span>
                         </button>
                     </div>
                 </div>
@@ -155,42 +171,48 @@ const onFilterApply = filterValue => {
             <DataTable v-else :value="dataTable" showGridlines :paginator="true" :rows="10"
                 v-model:filters="tableFilter" dataKey="id" responsiveLayout="scroll" stateStorage="session"
                 stateKey="dt-state-pue-offline" class="table-sm">
-                <Column field="no" header="No" :sortable="true" />
-                <Column field="created_at" header="Periode" :sortable="true">
-                    <template #body="slotProps">
-                        {{ slotProps.data.dateText }}
+                <Column field="created_at" header="No" :sortable="true">
+                    <template #body="{ index }">
+                        {{ (index + 1) }}
                     </template>
                 </Column>
-                <Column field="pue_value" header="Nilai PUE" :sortable="true">
-                    <template #body="slotProps">
-                        {{ toNumberText(slotProps.data.pue_value) }}
+                <Column field="created_at" header="Periode" :sortable="true" bodyClass="tw-whitespace-nowrap">
+                    <template #body="{ data }">
+                        {{ data.periodeText }}
                     </template>
                 </Column>
-                <Column field="dayaEsensial" header="Total Daya Essential Facility" :sortable="true">
-                    <template #body="slotProps">
-                        {{ toNumberText(slotProps.data.dayaEsensial) + " Watt" }}
+                <Column field="ike_value" :sortable="true" bodyClass="text-center">
+                    <template #header>
+                        <span>Nilai IKE <i class="fw-700">(kWh/m<sup>2</sup>)</i></span>
+                    </template>
+                    <template #body="{ data }">
+                        {{ formatNumber(data.ike_value) }}
                     </template>
                 </Column>
-                <Column field="power_factor_sdp" header="Power Factor Air Conditioner Essential (Cos Phi)" :sortable="true">
-                    <template #body="slotProps">
-                        {{ slotProps.data.power_factor_sdp ? toNumberText(slotProps.data.power_factor_sdp) : "-" }}
+                <Column field="kwh_usage" :sortable="true" bodyClass="text-center">
+                    <template #header>
+                        <span>Penggunaan Energi <i class="fw-700">(kWh)</i></span>
+                    </template>
+                    <template #body="{ data }">
+                        {{ formatNumber(data.kwh_usage) }}
                     </template>
                 </Column>
-                <Column field="ictEquip" header="Total Daya ICT Equipment" :sortable="true">
-                    <template #body="slotProps">
-                        {{ toNumberText(slotProps.data.ictEquip) + " Watt" }}
+                <Column field="area_value" :sortable="true" bodyClass="text-center">
+                    <template #header>
+                        <span>Luas Bangunan <i class="fw-700">(m<sup>2</sup>)</i></span>
+                    </template>
+                    <template #body="{ data }">
+                        {{ formatNumber(data.area_value) }}
                     </template>
                 </Column>
                 <Column header="Action">
-                    <template #body="slotProps">
-                        <ButtonGroupAction @detail="showDialogDetail(slotProps.data)"
-                            @edit="showDialogEdit(slotProps.data)" @delete="deletePueItem(slotProps.data.id)" />
+                    <template #body="{ data }">
+                        <ButtonGroupAction :useBtnDetail="false" @edit="showDialogEdit(data)" @delete="deleteIkeItem(data.id)" />
                     </template>
                 </Column>
             </DataTable>
         </div>
-        <DialogPueOfflineAdd v-if="isDialogAddShow" @close="isDialogAddShow = false" @save="fetchData" />
-        <DialogPueOfflineEdit v-if="isDialogEditShow" :dataPue="currItem" @close="isDialogEditShow = false" @save="fetchData" />
-        <DialogPueOfflineDetail v-if="isDialogDetailShow" :dataPue="currItem" @close="isDialogDetailShow = false" />
+        <DialogIkeAdd v-if="isDialogAddShow" :location="locationData" :allowWeeks="inputableWeeks" @close="isDialogAddShow = false" @save="fetchData" />
+        <DialogIkeEdit v-if="isDialogEditShow" :location="locationData" :ike="currItem" @close="isDialogEditShow = false" @save="fetchData" />
     </div>
 </template>

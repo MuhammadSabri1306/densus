@@ -214,6 +214,11 @@ $route['api/pue/offline/(:num)']['get'] = 'pue_offline/index/$1';
 $route['api/pue/offline']['post'] = 'pue_offline';
 $route['api/pue/offline/(:num)']['put'] = 'pue_offline/index/$1';
 $route['api/pue/offline/(:num)']['delete'] = 'pue_offline/index/$1';
+$route['api/ike']['get'] = 'monitoring_ike';
+$route['api/ike/(:num)']['get'] = 'monitoring_ike/detail/$1';
+$route['api/ike']['post'] = 'monitoring_ike';
+$route['api/ike/(:num)']['put'] = 'monitoring_ike/index/$1';
+$route['api/ike/(:num)']['delete'] = 'monitoring_ike/index/$1';
 
 $route['api/gepee-report']['get'] = 'gepee_report'; // hapus nanti
 $route['api/gepee-report-v2']['get'] = 'gepee_report/index_v2';

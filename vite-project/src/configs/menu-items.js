@@ -31,7 +31,7 @@ export const menuRtu = {
     child: [
         { key: "list", to: "/rtu", title: "List RTU tersedia" },
         { key: "add", to: "/rtu/add", title: "Registrasi RTU Baru" },
-        { key: "backup", to: "/", title: "Buat Backup" }
+        // { key: "backup", to: "/", title: "Buat Backup" }
     ],
     roles: ["admin", "viewer", "teknisi"]
 };
@@ -55,7 +55,7 @@ export const menuPue = {
     child: [
         { key: "online", to: "/pue/online", title: "PUE Online" },
         { key: "offline", to: "/pue/offline", title: "PUE Offline" },
-        { key: "ike", to: "#", title: "IKE" }
+        { key: "ike", to: "/ike", title: "IKE" }
     ],
     roles: ["admin", "viewer", "teknisi"]
 };
@@ -79,7 +79,7 @@ export const menuGepeeEvidence = {
 export const menuGepeePerformance = {
     key: "gepee_performance",
     title: "Gepee Performance",
-    icon: "award",
+    icon: "activity",
     child: [
         { key: "report", to: "/gepee-performance/management-report", title: "Management Report" },
         { key: "pue_target", to: "/gepee-performance/pue-target", title: "Target Pencapaian PUE" }
@@ -90,7 +90,7 @@ export const menuGepeePerformance = {
 export const menuOxisp = {
     key: "oxisp",
     title: "OXISP",
-    icon: "award",
+    icon: "cloud-lightning",
     child: [
         { key: "dashboard", to: "#", title: "Dashboard" },
         { key: "activity", to: "/oxisp/activity", title: "Input Activity" }
@@ -103,7 +103,7 @@ export default (() => {
         menuLanding,
         menuPue,
         menuMonitoring,
-        menuMonitoringEnergy,
+        // menuMonitoringEnergy,
         menuRtu,
         menuGepee,
         menuGepeeEvidence,
