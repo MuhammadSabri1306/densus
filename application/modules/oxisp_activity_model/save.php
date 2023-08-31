@@ -6,10 +6,7 @@ if(is_null($id)) {
 
 } else {
     
-    $filterLoc = $this->get_loc_filter([]);
-    $this->db
-        ->where('id', $id)
-        ->where($filterLoc);
+    $this->db->where('id', $id);
     $success = $this->db->update($this->tableName, $body);
 
 }
