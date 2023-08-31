@@ -5,7 +5,7 @@ import { useUserStore } from "@stores/user";
 import { useCollapseRow } from "@helpers/collapse-row";
 import { groupByLocation } from "@helpers/location-group";
 
-const emit = defineEmits("update", "showCategory");
+const emit = defineEmits(["update", "showCategory"]);
 const { collapsedDivre, collapsedWitel, toggleRowCollapse } = useCollapseRow();
 
 const activityStore = useActivityStore();

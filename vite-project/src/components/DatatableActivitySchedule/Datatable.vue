@@ -8,7 +8,7 @@ import Skeleton from "primevue/skeleton";
 import CheckColumn from "./CheckColumn.vue";
 import DialogActivityCategory from "@components/DialogActivityCategory.vue";
 
-const emit = defineEmits("update");
+const emit = defineEmits(["update"]);
 const { collapsedDivre, collapsedWitel, toggleRowCollapse } = useCollapseRow();
 const showCategory = ref(false);
 

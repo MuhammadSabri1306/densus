@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import Steps from "@components/ui/Steps.vue";
 
-defineEmits("navigate");
+defineEmits(["navigate"]);
 const props = defineProps({
     data: { type: Object, required: true },
     stepsPage: { type: Array, default: [] }
