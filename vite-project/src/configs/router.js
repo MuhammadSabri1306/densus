@@ -5,6 +5,7 @@ import Dashboard from "@views/Dashboard.vue";
 import User from "@views/User.vue";
 import Login from "@views/Login.vue";
 import ErrorNotFound from "@views/ErrorNotFound.vue";
+import ErrorMaintenance from "@views/ErrorMaintenance.vue";
 
 import Monitoring from "@views/Monitoring.vue";
 import MonitoringDetail from "@views/MonitoringDetail.vue";
