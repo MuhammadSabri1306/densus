@@ -35,6 +35,8 @@ const getGroupAvg = (data, groupKey) => {
     let rowCountIke = 0;
     let rowCountPlnSaving = 0;
     let rowCountPlnSavingPercent = 0;
+    let rowCountPlnSavingYoy = 0;
+    let rowCountPlnSavingYoyPercent = 0;
 
     const perfSum = [];
     const sum = {
@@ -43,6 +45,8 @@ const getGroupAvg = (data, groupKey) => {
         plnBill: null,
         plnSaving: null,
         plnSavingPercent: null,
+        plnSavingYoy: null,
+        plnSavingYoyPercent: null,
         pueOnline: null,
         pueOffline: null,
         ike: null
@@ -54,6 +58,8 @@ const getGroupAvg = (data, groupKey) => {
     currItem.tagihan_pln = null;
     currItem.pln_saving = null;
     currItem.pln_saving_percent = null;
+    currItem.pln_saving_yoy = null;
+    currItem.pln_saving_yoy_percent = null;
 
     data.forEach(item => {
         if(item.location[groupKey] != currItem.location[groupKey])
@@ -109,6 +115,20 @@ const getGroupAvg = (data, groupKey) => {
             rowCountPlnSavingPercent++;
         }
 
+        if(item.pln_saving_yoy) {
+            if(sum.plnSavingYoy === null)
+                sum.plnSavingYoy = 0;
+            sum.plnSavingYoy += item.pln_saving_yoy;
+            rowCountPlnSavingYoy++;
+        }
+
+        if(item.pln_saving_yoy_percent) {
+            if(sum.plnSavingYoyPercent === null)
+                sum.plnSavingYoyPercent = 0;
+            sum.plnSavingYoyPercent += item.pln_saving_yoy_percent;
+            rowCountPlnSavingYoyPercent++;
+        }
+
         if(item.is_pue && item.pue.online) {
             if(sum.pueOnline === null)
                 sum.pueOnline = 0;
@@ -144,6 +164,8 @@ const getGroupAvg = (data, groupKey) => {
     currItem.tagihan_pln = sum.plnBill;
     currItem.pln_saving = sum.plnSaving === null ? null : (sum.plnSaving / rowCountPlnSaving);
     currItem.pln_saving_percent = sum.plnSavingPercent === null ? null : (sum.plnSavingPercent / sum.plnSaving * 100);
+    currItem.pln_saving_yoy = sum.plnSavingYoy === null ? null : (sum.plnSavingYoy / rowCountPlnSavingYoy);
+    currItem.pln_saving_yoy_percent = sum.plnSavingYoyPercent === null ? null : (sum.plnSavingYoyPercent / sum.plnSavingYoy * 100);
 
     currItem.pue.online = sum.pueOnline === null ? null : (sum.pueOnline / rowCountPueOnline);
     currItem.pue.offline = sum.pueOffline === null ? null : (sum.pueOffline / rowCountPueOffline);
@@ -312,7 +334,7 @@ const selectedYear = computed(() => viewStore.filters.year);
                         <th class="bg-success" rowspan="2">Tipe<br>Perhitungan</th>
                         <th class="bg-success" rowspan="2">Nilai IKE<br><small>(Bulan {{ selectedMonth }})</small></th>
                         <th class="bg-success" colspan="4">PUE <small>(Bulan {{ selectedMonth }})</small></th>
-                        <th class="bg-success" colspan="3">Tagihan PLN</th>
+                        <th class="bg-success" colspan="4">Tagihan PLN</th>
                         <th class="bg-success" :colspan="categoryList.length+1">
                             Presentase Pencapaian Aktivitas GePEE (Dihitung 100% jika sudah dilaksanakan)
                         </th>
@@ -325,8 +347,9 @@ const selectedYear = computed(() => viewStore.filters.year);
                         <th>ONLINE</th>
                         <th>PUE &lt;= {{ pueLowLimit }}<br><small>(YA/TIDAK)</small></th>
                         <th class="tw-whitespace-nowrap">Rp. Tagihan PLN<br><small>(Bulan {{ selectedMonth }})</small></th>
-                        <th class="tw-whitespace-nowrap">Jumlah Saving<br><small>(Dibanding bulan kemarin)</small></th>
-                        <th class="tw-whitespace-nowrap">% Saving<br><small>(Dibanding bulan kemarin)</small></th>
+                        <th class="tw-whitespace-nowrap">Jumlah Saving<br><small>(Dibanding bulan sebelumnya)</small></th>
+                        <th class="tw-whitespace-nowrap">% Saving<br><small>(Dibanding bulan sebelumnya)</small></th>
+                        <th class="tw-whitespace-nowrap">% Saving YoY<br><small>(Dibanding bulan yang sama di tahun sebelumnya)</small></th>
                         <th v-for="category in categoryList" @click="$emit('showCategory')"
                             class="tw-cursor-pointer btn-primary category-tooltip">
                             <p class="text-center mb-0">{{ category.alias }}</p>
@@ -365,6 +388,9 @@ const selectedYear = computed(() => viewStore.filters.year);
                         </td>
                         <td :class="getColClassNumber('plnBill', summaryNasional.pln_saving)" class="middle text-center f-w-700 tw-whitespace-nowrap">
                             {{ formatItemNumber(summaryNasional.pln_saving_percent, "-", "[value]%") }}
+                        </td>
+                        <td :class="getColClassNumber('plnBill', summaryNasional.pln_saving_yoy)" class="middle text-center f-w-700 tw-whitespace-nowrap">
+                            {{ formatItemNumber(summaryNasional.pln_saving_yoy_percent, "-", "[value]%") }}
                         </td>
                         <td v-for="percentage in summaryNasional.performance"
                             :class="getColClassNumber('percent', percentage)"
@@ -452,6 +478,9 @@ const selectedYear = computed(() => viewStore.filters.year);
                         </td>
                         <td :class="getColClassNumber('plnBill', item.pln_saving)" class="middle text-center tw-whitespace-nowrap">
                             {{ formatItemNumber(item.pln_saving_percent, "-", "[value]%") }}
+                        </td>
+                        <td :class="getColClassNumber('plnBill', item.pln_saving_yoy)" class="middle text-center tw-whitespace-nowrap">
+                            {{ formatItemNumber(item.pln_saving_yoy_percent, "-", "[value]%") }}
                         </td>
                         <td v-for="category in item.performance" :class="getColClassNumber('percent', category.percentage)"
                             class="middle text-center f-w-700">

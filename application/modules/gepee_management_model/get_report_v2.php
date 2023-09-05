@@ -191,17 +191,25 @@ $schData = array_reduce($sch, function($res, $row) {
  * get PLN Bill Data
  */
 $dbAmc = $this->load->database('amc', TRUE);
+
 $dbAmc->select()
     ->from("$dbAmc->database.t_pln_transaksi")
     ->where('tahun', (int) $filter['year'])
     ->order_by('id_pelanggan');
-$plnData = $dbAmc->get()->result_array();
+$plnCurrYear = $dbAmc->get()->result_array();
+
+$dbAmc->select()
+    ->from("$dbAmc->database.t_pln_transaksi")
+    ->where('tahun', (int) ($filter['year'] - 1))
+    ->order_by('id_pelanggan');
+$plnPrevYearData = $dbAmc->get()->result_array();
 
 $plnMonthKeys = ['januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus',
     'september', 'oktober', 'november', 'desember'];
-$plnMonthKey = $plnMonthKeys[($filter['month'] - 1)];
-$plnCurrMonth = array_column($plnData, $plnMonthKeys[($filter['month'] - 1)]);
-$plnPrevMonth = array_column($plnData, $plnMonthKeys[($filter['month'] - 2)]);
+
+$plnCurrMonth = array_column($plnCurrYear, $plnMonthKeys[($filter['month'] - 1)]);
+$plnPrevMonth = array_column($plnCurrYear, $plnMonthKeys[($filter['month'] - 2)]);
+$plnPrevYear = array_column($plnPrevYearData, $plnMonthKeys[($filter['month'] - 1)]);
 
 $data = [];
 $dataNasional = [];
@@ -263,18 +271,27 @@ foreach($locationData as $location) {
     $perfSummary = $perfMonth[$selectedMonth - 1]['percent'];
     $perfSummaryYear = $perfPercentTotal / $perfPercentCount;
 
-    $plnIndex = findArrayIndex($plnData, fn($item) => $item['id_pelanggan'] == $location['id_pel_pln']);
+    $plnIndex = findArrayIndex($plnCurrYear, fn($item) => $item['id_pelanggan'] == $location['id_pel_pln']);
+    $plnPrevYearIndex = findArrayIndex($plnPrevYearData, fn($item) => $item['id_pelanggan'] == $location['id_pel_pln']);
     $plnBill = null;
     $plnSaving = null;
     $plnSavingPercent = null;
+    $plnSavingYoy = null;
+    $plnSavingYoyPercent = null;
 
     if($plnIndex >= 0) {
         $plnBill = (int) $plnCurrMonth[$plnIndex];
         $plnPrevBill = (int) $plnPrevMonth[$plnIndex];
+        $plnPrevYearBill = (int) $plnPrevYear[$plnPrevYearIndex];
 
         if($plnBill > 0 && $plnPrevBill > 0) {
             $plnSaving = $plnBill - $plnPrevBill;
             $plnSavingPercent = $plnSaving / $plnBill * 100;
+        }
+
+        if($plnBill > 0 && $plnPrevYearBill > 0) {
+            $plnSavingYoy = $plnBill - $plnPrevYearBill;
+            $plnSavingYoyPercent = $plnSavingYoy / $plnBill * 100;
         }
     }
 
@@ -295,6 +312,8 @@ foreach($locationData as $location) {
         'tagihan_pln' => $plnBill,
         'pln_saving' => $plnSaving,
         'pln_saving_percent' => $plnSavingPercent,
+        'pln_saving_yoy' => $plnSavingYoy,
+        'pln_saving_yoy_percent' => $plnSavingYoyPercent,
         'replacement' => null
     ];
 
@@ -382,6 +401,8 @@ foreach($locationData as $location) {
         'tagihan_pln' => $row['tagihan_pln'],
         'pln_saving' => $row['pln_saving'],
         'pln_saving_percent' => $row['pln_saving_percent'],
+        'pln_saving_yoy' => $row['pln_saving_yoy'],
+        'pln_saving_yoy_percent' => $row['pln_saving_yoy_percent'],
     ]);
 }
 
@@ -457,6 +478,22 @@ foreach ($dataNasional as $item) {
                 $groupedData[$divreKode][$witelKode]['count_pln_saving_percent']++;
             }
 
+            if($item['pln_saving_yoy'] !== null) {
+                if($groupedData[$divreKode][$witelKode]['pln_saving_yoy'] === null) {
+                    $groupedData[$divreKode][$witelKode]['pln_saving_yoy'] = 0;
+                }
+                $groupedData[$divreKode][$witelKode]['pln_saving_yoy'] += $item['pln_saving_yoy'];
+                $groupedData[$divreKode][$witelKode]['count_pln_saving_yoy']++;
+            }
+
+            if($item['pln_saving_yoy_percent'] !== null) {
+                if($groupedData[$divreKode][$witelKode]['pln_saving_yoy_percent'] === null) {
+                    $groupedData[$divreKode][$witelKode]['pln_saving_yoy_percent'] = 0;
+                }
+                $groupedData[$divreKode][$witelKode]['pln_saving_yoy_percent'] += $item['pln_saving_yoy_percent'];
+                $groupedData[$divreKode][$witelKode]['count_pln_saving_yoy_percent']++;
+            }
+
             if ($item['pue_online'] !== null) {
                 if ($groupedData[$divreKode][$witelKode]['pue_online'] === null) {
                     $groupedData[$divreKode][$witelKode]['pue_online'] = 0;
@@ -492,6 +529,8 @@ foreach ($dataNasional as $item) {
                 'tagihan_pln' => $item['tagihan_pln'],
                 'pln_saving' => $item['pln_saving'],
                 'pln_saving_percent' => $item['pln_saving_percent'],
+                'pln_saving_yoy' => $item['pln_saving_yoy'],
+                'pln_saving_yoy_percent' => $item['pln_saving_yoy_percent'],
                 'pue_online' => $item['pue_online'],
                 'pue_offline' => $item['pue_offline'],
                 'ike' => $item['ike'],
@@ -501,6 +540,8 @@ foreach ($dataNasional as $item) {
                 'count_ike' => ($item['ike'] !== null) ? 1 : 0,
                 'count_pln_saving' => ($item['pln_saving'] !== null) ? 1 : 0,
                 'count_pln_saving_percent' => ($item['pln_saving_percent'] !== null) ? 1 : 0,
+                'count_pln_saving_yoy' => ($item['pln_saving'] !== null) ? 1 : 0,
+                'count_pln_saving_yoy_percent' => ($item['pln_saving_yoy_percent'] !== null) ? 1 : 0,
             ];
         }
     } else {
@@ -512,6 +553,9 @@ foreach ($dataNasional as $item) {
                 'performance_summary_yearly' => $item['performance_summary_yearly'],
                 'tagihan_pln' => $item['tagihan_pln'],
                 'pln_saving' => $item['pln_saving'],
+                'pln_saving_percent' => $item['pln_saving_percent'],
+                'pln_saving_yoy' => $item['pln_saving_yoy'],
+                'pln_saving_yoy_percent' => $item['pln_saving_yoy_percent'],
                 'pue_online' => $item['pue_online'],
                 'pue_offline' => $item['pue_offline'],
                 'ike' => $item['ike'],
@@ -521,6 +565,8 @@ foreach ($dataNasional as $item) {
                 'count_ike' => ($item['ike'] !== null) ? 1 : 0,
                 'count_pln_saving' => ($item['pln_saving'] !== null) ? 1 : 0,
                 'count_pln_saving_percent' => ($item['pln_saving_percent'] !== null) ? 1 : 0,
+                'count_pln_saving_yoy' => ($item['pln_saving_yoy'] !== null) ? 1 : 0,
+                'count_pln_saving_yoy_percent' => ($item['pln_saving_yoy_percent'] !== null) ? 1 : 0,
             ],
         ];
     }
@@ -539,6 +585,14 @@ foreach ($groupedData as $divreKode => &$divreGroup) {
 
         if ($group['pln_saving_percent'] !== null) {
             $group['pln_saving_percent'] /= $group['count_pln_saving_percent'];
+        }
+
+        if ($group['pln_saving_yoy'] !== null) {
+            $group['pln_saving_yoy'] /= $group['count_pln_saving_yoy'];
+        }
+
+        if ($group['pln_saving_yoy_percent'] !== null) {
+            $group['pln_saving_yoy_percent'] /= $group['count_pln_saving_yoy_percent'];
         }
 
         if ($group['pue_online'] !== null) {
@@ -564,6 +618,8 @@ foreach ($groupedData as $divreKode => &$divreGroup) {
         'tagihan_pln' => null,
         'pln_saving' => null,
         'pln_saving_percent' => null,
+        'pln_saving_yoy' => null,
+        'pln_saving_yoy_percent' => null,
         'pue_online' => null,
         'pue_offline' => null,
         'ike' => null,
@@ -573,6 +629,8 @@ foreach ($groupedData as $divreKode => &$divreGroup) {
         'count_ike' => 0,
         'count_pln_saving' => 0,
         'count_pln_saving_percent' => 0,
+        'count_pln_saving_yoy' => 0,
+        'count_pln_saving_yoy_percent' => 0,
     ];
 
     foreach ($divreGroup as $witelKode => $group) {
@@ -599,6 +657,16 @@ foreach ($groupedData as $divreKode => &$divreGroup) {
             $divreItem['count_pln_saving_percent']++;
         }
 
+        if($group['pln_saving_yoy'] !== null) {
+            $divreItem['pln_saving_yoy'] += $group['pln_saving_yoy'];
+            $divreItem['count_pln_saving_yoy']++;
+        }
+
+        if($group['pln_saving_yoy_percent'] !== null) {
+            $divreItem['pln_saving_yoy_percent'] += $group['pln_saving_yoy_percent'];
+            $divreItem['count_pln_saving_yoy_percent']++;
+        }
+
         if($group['pue_online'] !== null) {
             $divreItem['pue_online'] += $group['pue_online'];
             $divreItem['count_pue_online']++;
@@ -623,6 +691,8 @@ foreach ($groupedData as $divreKode => &$divreGroup) {
         'tagihan_pln' => $divreItem['tagihan_pln'],
         'pln_saving' => $divreItem['count_pln_saving'] < 1 ? null : $divreItem['pln_saving'] / $divreItem['count_pln_saving'],
         'pln_saving_percent' => $divreItem['count_pln_saving_percent'] < 1 ? null : $divreItem['pln_saving_percent'] / $divreItem['count_pln_saving_percent'],
+        'pln_saving_yoy' => $divreItem['count_pln_saving_yoy'] < 1 ? null : $divreItem['pln_saving_yoy'] / $divreItem['count_pln_saving_yoy'],
+        'pln_saving_yoy_percent' => $divreItem['count_pln_saving_yoy_percent'] < 1 ? null : $divreItem['pln_saving_yoy_percent'] / $divreItem['count_pln_saving_yoy_percent'],
         'pue_online' => $divreItem['count_pue_online'] < 1 ? null : $divreItem['pue_online'] / $divreItem['count_pue_online'],
         'pue_offline' => $divreItem['count_pue_offline'] < 1 ? null : $divreItem['pue_offline'] / $divreItem['count_pue_offline'],
         'ike' => $divreItem['count_ike'] < 1 ? null : $divreItem['ike'] / $divreItem['count_ike']
@@ -636,6 +706,8 @@ $nasionalItem = [
     'tagihan_pln' => null,
     'pln_saving' => null,
     'pln_saving_percent' => null,
+    'pln_saving_yoy' => null,
+    'pln_saving_yoy_percent' => null,
     'pue_online' => null,
     'pue_offline' => null,
     'ike' => null,
@@ -645,6 +717,8 @@ $nasionalItem = [
     'count_ike' => 0,
     'count_pln_saving' => 0,
     'count_pln_saving_percent' => 0,
+    'count_pln_saving_yoy' => 0,
+    'count_pln_saving_yoy_percent' => 0,
 ];
 
 foreach($groupedData as $group) {
@@ -671,6 +745,16 @@ foreach($groupedData as $group) {
         $nasionalItem['count_pln_saving_percent']++;
     }
 
+    if($group['pln_saving_yoy'] !== null) {
+        $nasionalItem['pln_saving_yoy'] += $group['pln_saving_yoy'];
+        $nasionalItem['count_pln_saving_yoy']++;
+    }
+
+    if($group['pln_saving_yoy_percent'] !== null) {
+        $nasionalItem['pln_saving_yoy_percent'] += $group['pln_saving_yoy_percent'];
+        $nasionalItem['count_pln_saving_yoy_percent']++;
+    }
+
     if($group['pue_online'] !== null) {
         $nasionalItem['pue_online'] += $group['pue_online'];
         $nasionalItem['count_pue_online']++;
@@ -695,6 +779,8 @@ $nasional = [
     'tagihan_pln' => $nasionalItem['tagihan_pln'],
     'pln_saving' => $nasionalItem['count_pln_saving'] < 1 ? null : $nasionalItem['pln_saving'] / $nasionalItem['count_pln_saving'],
     'pln_saving_percent' => $nasionalItem['count_pln_saving_percent'] < 1 ? null : $nasionalItem['pln_saving_percent'] / $nasionalItem['count_pln_saving'],
+    'pln_saving_yoy' => $nasionalItem['count_pln_saving_yoy'] < 1 ? null : $nasionalItem['pln_saving_yoy'] / $nasionalItem['count_pln_saving_yoy'],
+    'pln_saving_yoy_percent' => $nasionalItem['count_pln_saving_yoy_percent'] < 1 ? null : $nasionalItem['pln_saving_yoy_percent'] / $nasionalItem['count_pln_saving_yoy'],
     'pue_online' => $nasionalItem['count_pue_online'] < 1 ? null : $nasionalItem['pue_online'] / $nasionalItem['count_pue_online'],
     'pue_offline' => $nasionalItem['count_pue_offline'] < 1 ? null : $nasionalItem['pue_offline'] / $nasionalItem['count_pue_offline'],
     'ike' => $nasionalItem['count_ike'] < 1 ? null : $nasionalItem['ike'] / $nasionalItem['count_ike'],

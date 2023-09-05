@@ -24,32 +24,32 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 2,
+                    "count_approved": 2,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 2,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 4,
+                    "count_approved": 4,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 4,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 1,
-                    "count_approved": 0,
+                    "count_all": 5,
+                    "count_approved": 5,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 5,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -104,13 +104,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 84.09598214285715,
+            "performance_summary": 100,
+            "performance_summary_yearly": 87.5,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.9509336099585062,
+                "online": 1.9514171974522265,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -118,6 +118,8 @@ export default {
             "tagihan_pln": 126625115,
             "pln_saving": 12739639,
             "pln_saving_percent": 10.060910112500194,
+            "pln_saving_yoy": 15270857,
+            "pln_saving_yoy_percent": 12.05989585873229,
             "replacement": null
         },
         {
@@ -143,32 +145,32 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 1,
-                    "count_approved": 0,
+                    "count_all": 5,
+                    "count_approved": 5,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 5,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 1,
-                    "count_approved": 0,
+                    "count_all": 4,
+                    "count_approved": 4,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 4,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -223,13 +225,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 80.79594017094017,
+            "performance_summary": 100,
+            "performance_summary_yearly": 84.61538461538461,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.6320206185567008,
+                "online": 1.2725562700964628,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -237,6 +239,8 @@ export default {
             "tagihan_pln": 88419635,
             "pln_saving": 3359239,
             "pln_saving_percent": 3.799200256820784,
+            "pln_saving_yoy": -597751,
+            "pln_saving_yoy_percent": -0.6760387554189745,
             "replacement": null
         },
         {
@@ -262,32 +266,32 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 4,
+                    "count_approved": 4,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 4,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 5,
+                    "count_approved": 5,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 5,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -342,13 +346,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 84.09598214285715,
+            "performance_summary": 100,
+            "performance_summary_yearly": 87.5,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.1934511434511452,
+                "online": 2.2302396166134204,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -356,6 +360,8 @@ export default {
             "tagihan_pln": 39049550,
             "pln_saving": 1115597,
             "pln_saving_percent": 2.8568754313429987,
+            "pln_saving_yoy": 0,
+            "pln_saving_yoy_percent": 0,
             "replacement": null
         },
         {
@@ -467,7 +473,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.8298329853862216,
+                "online": 2.7740397350993415,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -475,6 +481,8 @@ export default {
             "tagihan_pln": 78077977,
             "pln_saving": -635668,
             "pln_saving_percent": -0.8141450693580342,
+            "pln_saving_yoy": -4765920,
+            "pln_saving_yoy_percent": -6.104051594472024,
             "replacement": null
         },
         {
@@ -594,6 +602,8 @@ export default {
             "tagihan_pln": 14013766,
             "pln_saving": -367098,
             "pln_saving_percent": -2.6195528025799772,
+            "pln_saving_yoy": -3442143,
+            "pln_saving_yoy_percent": -24.562583676650515,
             "replacement": null
         },
         {
@@ -713,6 +723,8 @@ export default {
             "tagihan_pln": 33733806,
             "pln_saving": 688082,
             "pln_saving_percent": 2.0397401941541964,
+            "pln_saving_yoy": 2065806,
+            "pln_saving_yoy_percent": 6.123845023594432,
             "replacement": null
         },
         {
@@ -824,7 +836,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.0131893004115216,
+                "online": 2.0034034416826008,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -832,6 +844,8 @@ export default {
             "tagihan_pln": 104960823,
             "pln_saving": -501317,
             "pln_saving_percent": -0.47762296985800123,
+            "pln_saving_yoy": -6981986,
+            "pln_saving_yoy_percent": -6.65199242959442,
             "replacement": null
         },
         {
@@ -951,6 +965,8 @@ export default {
             "tagihan_pln": 23137191,
             "pln_saving": 212949,
             "pln_saving_percent": 0.9203753385620579,
+            "pln_saving_yoy": 2067511,
+            "pln_saving_yoy_percent": 8.935877306800121,
             "replacement": null
         },
         {
@@ -1062,7 +1078,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.2970204081632635,
+                "online": 2.29486268174475,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -1070,6 +1086,8 @@ export default {
             "tagihan_pln": 27221358,
             "pln_saving": 529194,
             "pln_saving_percent": 1.9440396764922603,
+            "pln_saving_yoy": -2005533,
+            "pln_saving_yoy_percent": -7.3674979771398625,
             "replacement": null
         },
         {
@@ -1181,7 +1199,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.578322981366461,
+                "online": 1.5665451664025365,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -1189,6 +1207,8 @@ export default {
             "tagihan_pln": 68678946,
             "pln_saving": 1861322,
             "pln_saving_percent": 2.710178458475469,
+            "pln_saving_yoy": -3585644,
+            "pln_saving_yoy_percent": -5.220878025705287,
             "replacement": null
         },
         {
@@ -1300,7 +1320,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.9039330543933057,
+                "online": 1.9780889621087316,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -1308,6 +1328,8 @@ export default {
             "tagihan_pln": 74937776,
             "pln_saving": 2650735,
             "pln_saving_percent": 3.537248022946397,
+            "pln_saving_yoy": -30178338,
+            "pln_saving_yoy_percent": -40.271195131277985,
             "replacement": null
         },
         {
@@ -1427,6 +1449,8 @@ export default {
             "tagihan_pln": 24107986,
             "pln_saving": 859799,
             "pln_saving_percent": 3.566448893740025,
+            "pln_saving_yoy": -563751,
+            "pln_saving_yoy_percent": -2.338440880129929,
             "replacement": null
         },
         {
@@ -1538,7 +1562,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.2268396226415086,
+                "online": 2.139737762237761,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -1546,6 +1570,8 @@ export default {
             "tagihan_pln": 45160479,
             "pln_saving": 2679770,
             "pln_saving_percent": 5.933883030780077,
+            "pln_saving_yoy": -1043653,
+            "pln_saving_yoy_percent": -2.3109874454608863,
             "replacement": null
         },
         {
@@ -1657,7 +1683,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.4679375,
+                "online": 2.4648878205128213,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -1665,6 +1691,8 @@ export default {
             "tagihan_pln": 22089748,
             "pln_saving": 445727,
             "pln_saving_percent": 2.0178002936022628,
+            "pln_saving_yoy": -6900212,
+            "pln_saving_yoy_percent": -31.237169387355618,
             "replacement": null
         },
         {
@@ -1776,7 +1804,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.3876091476091448,
+                "online": 2.3920859872611464,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -1784,6 +1812,8 @@ export default {
             "tagihan_pln": 142760164,
             "pln_saving": 5087233,
             "pln_saving_percent": 3.5634821770028227,
+            "pln_saving_yoy": 19357693,
+            "pln_saving_yoy_percent": 13.5595900548279,
             "replacement": null
         },
         {
@@ -1814,37 +1844,37 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -1889,13 +1919,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 50,
-            "performance_summary_yearly": 79.16666666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 83.33333333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.23695945945946,
+                "online": 2.262745762711867,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -1903,6 +1933,8 @@ export default {
             "tagihan_pln": 32609311,
             "pln_saving": 1367229,
             "pln_saving_percent": 4.192756479890054,
+            "pln_saving_yoy": -5954285,
+            "pln_saving_yoy_percent": -18.259462765097982,
             "replacement": null
         },
         {
@@ -1933,37 +1965,37 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -2008,13 +2040,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 50,
-            "performance_summary_yearly": 79.16666666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 83.33333333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.4136213235294117,
+                "online": 2.408549488054604,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -2022,6 +2054,8 @@ export default {
             "tagihan_pln": 443149135,
             "pln_saving": 14627215,
             "pln_saving_percent": 3.3007432136813266,
+            "pln_saving_yoy": -5585409,
+            "pln_saving_yoy_percent": -1.260390364972731,
             "replacement": null
         },
         {
@@ -2052,7 +2086,27 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -2062,28 +2116,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -2127,13 +2161,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 50,
-            "performance_summary_yearly": 79.16666666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 83.33333333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.1953925619834704,
+                "online": 2.189633173843699,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -2141,6 +2175,8 @@ export default {
             "tagihan_pln": 205518281,
             "pln_saving": 5218259,
             "pln_saving_percent": 2.5390729109883905,
+            "pln_saving_yoy": 6868049,
+            "pln_saving_yoy_percent": 3.3418190180366487,
             "replacement": null
         },
         {
@@ -2252,7 +2288,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.373830227743267,
+                "online": 2.3858252427184454,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -2260,6 +2296,8 @@ export default {
             "tagihan_pln": 131026954,
             "pln_saving": 2053439,
             "pln_saving_percent": 1.5671882290723174,
+            "pln_saving_yoy": -8534998,
+            "pln_saving_yoy_percent": -6.5139253714163265,
             "replacement": null
         },
         {
@@ -2371,7 +2409,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.9471607515657605,
+                "online": 1.943181076672103,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -2379,6 +2417,8 @@ export default {
             "tagihan_pln": 78265085,
             "pln_saving": -21834926,
             "pln_saving_percent": -27.898680490796117,
+            "pln_saving_yoy": 0,
+            "pln_saving_yoy_percent": 0,
             "replacement": null
         },
         {
@@ -2498,6 +2538,8 @@ export default {
             "tagihan_pln": 249806891,
             "pln_saving": 8145450,
             "pln_saving_percent": 3.260698681046393,
+            "pln_saving_yoy": -7969059,
+            "pln_saving_yoy_percent": -3.190087738612463,
             "replacement": null
         },
         {
@@ -2523,32 +2565,32 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 2,
+                    "count_approved": 2,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 2,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -2603,13 +2645,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 84.375,
+            "performance_summary": 100,
+            "performance_summary_yearly": 87.5,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.694708333333331,
+                "online": 2.6976504854368932,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -2617,6 +2659,8 @@ export default {
             "tagihan_pln": 351005440,
             "pln_saving": -2676318,
             "pln_saving_percent": -0.7624719434547794,
+            "pln_saving_yoy": -32786001,
+            "pln_saving_yoy_percent": -9.340596259704693,
             "replacement": null
         },
         {
@@ -2642,32 +2686,32 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 2,
+                    "count_approved": 2,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 2,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -2692,12 +2736,12 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -2722,13 +2766,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 50,
-            "performance_summary_yearly": 83.33333333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 87.5,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 3.120291060291059,
+                "online": 3.140506822612087,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -2736,6 +2780,8 @@ export default {
             "tagihan_pln": 649159811,
             "pln_saving": 23915865,
             "pln_saving_percent": 3.6841259416781735,
+            "pln_saving_yoy": 202271655,
+            "pln_saving_yoy_percent": 31.158992219251846,
             "replacement": null
         },
         {
@@ -2761,32 +2807,32 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 2,
+                    "count_approved": 2,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 2,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 2,
+                    "count_approved": 2,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 2,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -2841,8 +2887,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 84.375,
+            "performance_summary": 100,
+            "performance_summary_yearly": 87.5,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -2855,6 +2901,8 @@ export default {
             "tagihan_pln": 23982254,
             "pln_saving": 379783,
             "pln_saving_percent": 1.5836001069791021,
+            "pln_saving_yoy": -615615,
+            "pln_saving_yoy_percent": -2.5669605534158717,
             "replacement": null
         },
         {
@@ -2880,30 +2928,30 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
+                    "count_all": 1,
                     "count_approved": 0,
                     "count_rejected": 0,
-                    "count_submitted": 0,
+                    "count_submitted": 1,
                     "count_confirmed": 0,
                     "percentage": 0,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
+                    "count_all": 1,
                     "count_approved": 0,
                     "count_rejected": 0,
-                    "count_submitted": 0,
+                    "count_submitted": 1,
                     "count_confirmed": 0,
                     "percentage": 0,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
+                    "count_all": 1,
                     "count_approved": 0,
                     "count_rejected": 0,
-                    "count_submitted": 0,
+                    "count_submitted": 1,
                     "count_confirmed": 0,
                     "percentage": 0,
                     "has_schedule": true,
@@ -2966,7 +3014,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.902352941176471,
+                "online": 1.9149774774774775,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -2974,6 +3022,8 @@ export default {
             "tagihan_pln": 117139987,
             "pln_saving": -968796,
             "pln_saving_percent": -0.8270412391287016,
+            "pln_saving_yoy": -8966577,
+            "pln_saving_yoy_percent": -7.654582546607249,
             "replacement": null
         },
         {
@@ -2999,43 +3049,43 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
+                    "count_all": 1,
                     "count_approved": 0,
                     "count_rejected": 0,
-                    "count_submitted": 0,
+                    "count_submitted": 1,
                     "count_confirmed": 0,
                     "percentage": 0,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
+                    "count_all": 1,
                     "count_approved": 0,
                     "count_rejected": 0,
-                    "count_submitted": 0,
+                    "count_submitted": 1,
                     "count_confirmed": 0,
                     "percentage": 0,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
+                    "count_all": 1,
                     "count_approved": 0,
                     "count_rejected": 0,
-                    "count_submitted": 0,
+                    "count_submitted": 1,
                     "count_confirmed": 0,
                     "percentage": 0,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
+                    "count_all": 1,
                     "count_approved": 0,
                     "count_rejected": 0,
-                    "count_submitted": 0,
+                    "count_submitted": 1,
                     "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
+                    "percentage": 0,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
@@ -3079,13 +3129,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 64.58333333333333,
+            "performance_summary": 50,
+            "performance_summary_yearly": 63.541666666666664,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.608634686346864,
+                "online": 1.6277714285714286,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -3093,6 +3143,8 @@ export default {
             "tagihan_pln": 135908065,
             "pln_saving": -3513780,
             "pln_saving_percent": -2.585409482505692,
+            "pln_saving_yoy": 0,
+            "pln_saving_yoy_percent": 0,
             "replacement": null
         },
         {
@@ -3118,30 +3170,30 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
+                    "count_all": 1,
                     "count_approved": 0,
                     "count_rejected": 0,
-                    "count_submitted": 0,
+                    "count_submitted": 1,
                     "count_confirmed": 0,
                     "percentage": 0,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
+                    "count_all": 1,
                     "count_approved": 0,
                     "count_rejected": 0,
-                    "count_submitted": 0,
+                    "count_submitted": 1,
                     "count_confirmed": 0,
                     "percentage": 0,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
+                    "count_all": 1,
                     "count_approved": 0,
                     "count_rejected": 0,
-                    "count_submitted": 0,
+                    "count_submitted": 1,
                     "count_confirmed": 0,
                     "percentage": 0,
                     "has_schedule": true,
@@ -3204,7 +3256,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.4013333333333318,
+                "online": 2.3861716171617147,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -3212,6 +3264,8 @@ export default {
             "tagihan_pln": 30514119,
             "pln_saving": 1133079,
             "pln_saving_percent": 3.7132941639245756,
+            "pln_saving_yoy": -103295,
+            "pln_saving_yoy_percent": -0.33851542625235226,
             "replacement": null
         },
         {
@@ -3232,27 +3286,27 @@ export default {
                 "sto_name": "BTA \/ BATURAJA",
                 "tipe": "STO",
                 "rtu_kode": "",
-                "tipe_perhitungan": null,
+                "tipe_perhitungan": "pue",
                 "is_online": true
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -3317,13 +3371,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 75,
-            "performance_summary_yearly": 89.58333333333333,
-            "is_pue": false,
+            "performance_summary": 100,
+            "performance_summary_yearly": 91.66666666666667,
+            "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": null,
+                "online": 2.000537459283381,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -3331,6 +3385,8 @@ export default {
             "tagihan_pln": 55818473,
             "pln_saving": -313066,
             "pln_saving_percent": -0.5608645008974,
+            "pln_saving_yoy": -3793348,
+            "pln_saving_yoy_percent": -6.795864874340077,
             "replacement": null
         },
         {
@@ -3351,37 +3407,37 @@ export default {
                 "sto_name": "PGC \/ PALEMBANG CENTRUM",
                 "tipe": "STO",
                 "rtu_kode": "",
-                "tipe_perhitungan": null,
+                "tipe_perhitungan": "pue",
                 "is_online": true
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -3436,13 +3492,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 84.375,
-            "is_pue": false,
+            "performance_summary": 100,
+            "performance_summary_yearly": 87.5,
+            "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": null,
+                "online": 2.3321774193548346,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -3450,6 +3506,8 @@ export default {
             "tagihan_pln": 262611155,
             "pln_saving": 7521878,
             "pln_saving_percent": 2.8642644673643054,
+            "pln_saving_yoy": -12689939,
+            "pln_saving_yoy_percent": -4.83221628570957,
             "replacement": null
         },
         {
@@ -3470,37 +3528,37 @@ export default {
                 "sto_name": "TLK \/ TALANG KELAPA",
                 "tipe": "STO",
                 "rtu_kode": "",
-                "tipe_perhitungan": null,
+                "tipe_perhitungan": "pue",
                 "is_online": true
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -3555,20 +3613,22 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 84.375,
-            "is_pue": false,
+            "performance_summary": 100,
+            "performance_summary_yearly": 87.5,
+            "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": null,
-                "isReachTarget": true,
+                "online": 1.7130511182108632,
+                "isReachTarget": false,
                 "is_online": true
             },
             "ike": null,
             "tagihan_pln": 293215472,
             "pln_saving": 6201510,
             "pln_saving_percent": 2.1150009437428325,
+            "pln_saving_yoy": 6252730,
+            "pln_saving_yoy_percent": 2.1324693261752574,
             "replacement": null
         },
         {
@@ -3680,7 +3740,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.2219101123595495,
+                "online": 2.2130057803468195,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -3688,6 +3748,8 @@ export default {
             "tagihan_pln": 34378980,
             "pln_saving": 1872043,
             "pln_saving_percent": 5.445312804510198,
+            "pln_saving_yoy": -8112712,
+            "pln_saving_yoy_percent": -23.59788452129761,
             "replacement": null
         },
         {
@@ -3799,7 +3861,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.0804989604989617,
+                "online": 2.083136000000001,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -3807,6 +3869,8 @@ export default {
             "tagihan_pln": 39910317,
             "pln_saving": 656270,
             "pln_saving_percent": 1.6443617824433716,
+            "pln_saving_yoy": -2451898,
+            "pln_saving_yoy_percent": -6.1435192308795745,
             "replacement": null
         },
         {
@@ -3918,7 +3982,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.8740041928721167,
+                "online": 2.8579710144927555,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -3926,6 +3990,8 @@ export default {
             "tagihan_pln": 47936189,
             "pln_saving": 3601060,
             "pln_saving_percent": 7.512195014084244,
+            "pln_saving_yoy": 2305886,
+            "pln_saving_yoy_percent": 4.810323991337735,
             "replacement": null
         },
         {
@@ -4037,7 +4103,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.8048355899419741,
+                "online": 1.8056388415672904,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -4045,6 +4111,8 @@ export default {
             "tagihan_pln": 516439591,
             "pln_saving": 19736331,
             "pln_saving_percent": 3.8216146368220634,
+            "pln_saving_yoy": 17763109,
+            "pln_saving_yoy_percent": 3.4395327758672942,
             "replacement": null
         },
         {
@@ -4156,7 +4224,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.893863636363637,
+                "online": 2.906333333333337,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -4164,6 +4232,8 @@ export default {
             "tagihan_pln": 26045228,
             "pln_saving": 766269,
             "pln_saving_percent": 2.9420706165444206,
+            "pln_saving_yoy": -2163582,
+            "pln_saving_yoy_percent": -8.307018851975494,
             "replacement": null
         },
         {
@@ -4275,7 +4345,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.428682505399572,
+                "online": 2.4347003745318365,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -4283,6 +4353,8 @@ export default {
             "tagihan_pln": 34881865,
             "pln_saving": 1297846,
             "pln_saving_percent": 3.7206898197673777,
+            "pln_saving_yoy": -5930277,
+            "pln_saving_yoy_percent": -17.0010319115678,
             "replacement": null
         },
         {
@@ -4402,6 +4474,8 @@ export default {
             "tagihan_pln": 125294426,
             "pln_saving": 6971835,
             "pln_saving_percent": 5.564361658035769,
+            "pln_saving_yoy": -16315194,
+            "pln_saving_yoy_percent": -13.021484291727392,
             "replacement": null
         },
         {
@@ -4437,12 +4511,12 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -4457,12 +4531,12 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -4507,8 +4581,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 75,
-            "performance_summary_yearly": 84.375,
+            "performance_summary": 100,
+            "performance_summary_yearly": 82.29166666666667,
             "is_pue": false,
             "is_ike": true,
             "pue": {
@@ -4521,6 +4595,8 @@ export default {
             "tagihan_pln": 81078803,
             "pln_saving": 3378053,
             "pln_saving_percent": 4.1663824267361225,
+            "pln_saving_yoy": 3555503,
+            "pln_saving_yoy_percent": 4.385243575931924,
             "replacement": null
         },
         {
@@ -4556,12 +4632,12 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -4626,8 +4702,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 87.5,
-            "performance_summary_yearly": 90.625,
+            "performance_summary": 100,
+            "performance_summary_yearly": 87.5,
             "is_pue": false,
             "is_ike": true,
             "pue": {
@@ -4640,6 +4716,8 @@ export default {
             "tagihan_pln": 58084113,
             "pln_saving": 631723,
             "pln_saving_percent": 1.0876003219675576,
+            "pln_saving_yoy": -6322764,
+            "pln_saving_yoy_percent": -10.88553078188523,
             "replacement": null
         },
         {
@@ -4759,6 +4837,8 @@ export default {
             "tagihan_pln": 0,
             "pln_saving": null,
             "pln_saving_percent": null,
+            "pln_saving_yoy": null,
+            "pln_saving_yoy_percent": null,
             "replacement": null
         },
         {
@@ -4785,31 +4865,31 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -4864,8 +4944,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 70.83333333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 73.95833333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -4878,6 +4958,8 @@ export default {
             "tagihan_pln": 179511089,
             "pln_saving": 4881010,
             "pln_saving_percent": 2.7190576510847193,
+            "pln_saving_yoy": -791749,
+            "pln_saving_yoy_percent": -0.4410585465280086,
             "replacement": null
         },
         {
@@ -4997,6 +5079,8 @@ export default {
             "tagihan_pln": 50975658,
             "pln_saving": 1326833,
             "pln_saving_percent": 2.6028756705798677,
+            "pln_saving_yoy": -4237169,
+            "pln_saving_yoy_percent": -8.312141846212166,
             "replacement": null
         },
         {
@@ -5116,6 +5200,8 @@ export default {
             "tagihan_pln": 87717003,
             "pln_saving": 1060380,
             "pln_saving_percent": 1.2088648309153927,
+            "pln_saving_yoy": -1789050,
+            "pln_saving_yoy_percent": -2.0395703669903087,
             "replacement": null
         },
         {
@@ -5142,31 +5228,31 @@ export default {
             "performance": [
                 {
                     "count_all": 2,
-                    "count_approved": 0,
+                    "count_approved": 2,
                     "count_rejected": 0,
-                    "count_submitted": 2,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 2,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -5221,12 +5307,12 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 82.29166666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 85.41666666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 2.0039346654692,
+                "offline": 1.8523854961832,
                 "online": null,
                 "isReachTarget": true,
                 "is_online": false
@@ -5235,6 +5321,8 @@ export default {
             "tagihan_pln": 195320178,
             "pln_saving": 9468127,
             "pln_saving_percent": 4.84749046255733,
+            "pln_saving_yoy": 12888811,
+            "pln_saving_yoy_percent": 6.5988118237328255,
             "replacement": null
         },
         {
@@ -5261,31 +5349,31 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -5340,12 +5428,12 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 76.04166666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 79.16666666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 2.36862392296,
+                "offline": 1.8706360871769,
                 "online": null,
                 "isReachTarget": true,
                 "is_online": false
@@ -5354,6 +5442,8 @@ export default {
             "tagihan_pln": 49239542,
             "pln_saving": 2345393,
             "pln_saving_percent": 4.76323073841751,
+            "pln_saving_yoy": 2355834,
+            "pln_saving_yoy_percent": 4.784435241091398,
             "replacement": null
         },
         {
@@ -5380,31 +5470,31 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -5459,8 +5549,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 79.16666666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 82.29166666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -5473,6 +5563,8 @@ export default {
             "tagihan_pln": 49339985,
             "pln_saving": 1753441,
             "pln_saving_percent": 3.5537931355268957,
+            "pln_saving_yoy": 1560036,
+            "pln_saving_yoy_percent": 3.1618088250330842,
             "replacement": null
         },
         {
@@ -5498,22 +5590,22 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -5578,8 +5670,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 62.5,
+            "performance_summary": 87.5,
+            "performance_summary_yearly": 61.458333333333336,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -5592,6 +5684,8 @@ export default {
             "tagihan_pln": 62740417,
             "pln_saving": 2027942,
             "pln_saving_percent": 3.232273703249374,
+            "pln_saving_yoy": -3877695,
+            "pln_saving_yoy_percent": -6.180537499455893,
             "replacement": null
         },
         {
@@ -5617,12 +5711,12 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -5697,8 +5791,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 50,
-            "performance_summary_yearly": 60.416666666666664,
+            "performance_summary": 62.5,
+            "performance_summary_yearly": 58.333333333333336,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -5711,6 +5805,8 @@ export default {
             "tagihan_pln": 433272948,
             "pln_saving": 25439528,
             "pln_saving_percent": 5.871478502738186,
+            "pln_saving_yoy": -206191198,
+            "pln_saving_yoy_percent": -47.58921574766768,
             "replacement": null
         },
         {
@@ -5736,12 +5832,12 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -5816,8 +5912,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 62.5,
+            "performance_summary": 75,
+            "performance_summary_yearly": 60.416666666666664,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -5830,6 +5926,8 @@ export default {
             "tagihan_pln": 136734392,
             "pln_saving": 4279805,
             "pln_saving_percent": 3.1300135521135015,
+            "pln_saving_yoy": 46225351,
+            "pln_saving_yoy_percent": 33.80667462213896,
             "replacement": null
         },
         {
@@ -5855,12 +5953,12 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -5935,8 +6033,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
-            "performance_summary_yearly": 60.416666666666664,
+            "performance_summary": 50,
+            "performance_summary_yearly": 58.333333333333336,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -5949,6 +6047,8 @@ export default {
             "tagihan_pln": 75468081,
             "pln_saving": -742447,
             "pln_saving_percent": -0.9837894248298165,
+            "pln_saving_yoy": -2040670,
+            "pln_saving_yoy_percent": -2.7040173447632783,
             "replacement": null
         },
         {
@@ -5974,12 +6074,12 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -6011,6 +6111,127 @@ export default {
                     "count_confirmed": 0,
                     "percentage": 100,
                     "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                }
+            ],
+            "performance_summary": 75,
+            "performance_summary_yearly": 59.375,
+            "is_pue": true,
+            "is_ike": false,
+            "pue": {
+                "offline": 1.5961867295053,
+                "online": null,
+                "isReachTarget": false,
+                "is_online": false
+            },
+            "ike": null,
+            "tagihan_pln": 130097339,
+            "pln_saving": 3118278,
+            "pln_saving_percent": 2.3968806925405293,
+            "pln_saving_yoy": -21891584,
+            "pln_saving_yoy_percent": -16.827080529295067,
+            "replacement": null
+        },
+        {
+            "location": {
+                "id": "251",
+                "id_pel_pln": "541100360948",
+                "nama_pel_pln": "PERUM TELEKOMUNIKASI",
+                "tarif_pel_pln": "B3",
+                "daya_pel_pln": "1385000",
+                "lokasi_pel_pln": "JAKARTA PUSAT",
+                "alamat_pel_pln": "PERUM TELEKOMUNIKASI, JL. LETJEN S. PARMAN",
+                "gedung": "STO",
+                "divre_kode": "TLK-r2000000",
+                "divre_name": "DIVISI REGIONAL 2 JABOTABES",
+                "witel_kode": "DTB-cc200000",
+                "witel_name": "TELKOM JAKARTA BARAT",
+                "sto_kode": "",
+                "sto_name": "STO SLIPI",
+                "tipe": "MIX",
+                "rtu_kode": "",
+                "tipe_perhitungan": "pue",
+                "is_online": false
+            },
+            "performance": [
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 0,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 0,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 0,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
@@ -6055,126 +6276,7 @@ export default {
                 }
             ],
             "performance_summary": 62.5,
-            "performance_summary_yearly": 61.458333333333336,
-            "is_pue": true,
-            "is_ike": false,
-            "pue": {
-                "offline": 1.5961867295053,
-                "online": null,
-                "isReachTarget": false,
-                "is_online": false
-            },
-            "ike": null,
-            "tagihan_pln": 130097339,
-            "pln_saving": 3118278,
-            "pln_saving_percent": 2.3968806925405293,
-            "replacement": null
-        },
-        {
-            "location": {
-                "id": "251",
-                "id_pel_pln": "541100360948",
-                "nama_pel_pln": "PERUM TELEKOMUNIKASI",
-                "tarif_pel_pln": "B3",
-                "daya_pel_pln": "1385000",
-                "lokasi_pel_pln": "JAKARTA PUSAT",
-                "alamat_pel_pln": "PERUM TELEKOMUNIKASI, JL. LETJEN S. PARMAN",
-                "gedung": "STO",
-                "divre_kode": "TLK-r2000000",
-                "divre_name": "DIVISI REGIONAL 2 JABOTABES",
-                "witel_kode": "DTB-cc200000",
-                "witel_name": "TELKOM JAKARTA BARAT",
-                "sto_kode": "",
-                "sto_name": "STO SLIPI",
-                "tipe": "MIX",
-                "rtu_kode": "",
-                "tipe_perhitungan": "pue",
-                "is_online": false
-            },
-            "performance": [
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                }
-            ],
-            "performance_summary": 50,
-            "performance_summary_yearly": 61.458333333333336,
+            "performance_summary_yearly": 59.375,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -6187,6 +6289,8 @@ export default {
             "tagihan_pln": 250013153,
             "pln_saving": 13162527,
             "pln_saving_percent": 5.2647338118246925,
+            "pln_saving_yoy": -7159311,
+            "pln_saving_yoy_percent": -2.8635737416583043,
             "replacement": null
         },
         {
@@ -6306,6 +6410,8 @@ export default {
             "tagihan_pln": 122348313,
             "pln_saving": 2240070,
             "pln_saving_percent": 1.830895698578206,
+            "pln_saving_yoy": -11319135,
+            "pln_saving_yoy_percent": -9.251566059599039,
             "replacement": null
         },
         {
@@ -6331,22 +6437,22 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -6411,13 +6517,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 50,
-            "performance_summary_yearly": 53.125,
+            "performance_summary": 75,
+            "performance_summary_yearly": 51.041666666666664,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": 2.3282112730891,
-                "online": 2.0191682785299823,
+                "online": 2.033582089552237,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -6425,6 +6531,8 @@ export default {
             "tagihan_pln": 128389710,
             "pln_saving": 1060638,
             "pln_saving_percent": 0.8261082605451793,
+            "pln_saving_yoy": -37746926,
+            "pln_saving_yoy_percent": -29.40027358890366,
             "replacement": null
         },
         {
@@ -6450,6 +6558,36 @@ export default {
             },
             "performance": [
                 {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 0,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
                     "count_all": 0,
                     "count_approved": 0,
                     "count_rejected": 0,
@@ -6461,51 +6599,21 @@ export default {
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 1,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -6530,8 +6638,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 25,
-            "performance_summary_yearly": 52.083333333333336,
+            "performance_summary": 75,
+            "performance_summary_yearly": 50,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -6544,6 +6652,8 @@ export default {
             "tagihan_pln": 83528935,
             "pln_saving": 2146733,
             "pln_saving_percent": 2.5700471339662116,
+            "pln_saving_yoy": -25716247,
+            "pln_saving_yoy_percent": -30.787231993320642,
             "replacement": null
         },
         {
@@ -6569,32 +6679,32 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -6649,8 +6759,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 50,
-            "performance_summary_yearly": 55.208333333333336,
+            "performance_summary": 87.5,
+            "performance_summary_yearly": 54.166666666666664,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -6663,6 +6773,8 @@ export default {
             "tagihan_pln": 828793096,
             "pln_saving": 22230987,
             "pln_saving_percent": 2.6823325516698078,
+            "pln_saving_yoy": -45225635,
+            "pln_saving_yoy_percent": -5.4568064355594,
             "replacement": null
         },
         {
@@ -6782,6 +6894,8 @@ export default {
             "tagihan_pln": 86324779,
             "pln_saving": 10954276,
             "pln_saving_percent": 12.689607928217228,
+            "pln_saving_yoy": -4794087,
+            "pln_saving_yoy_percent": -5.553546797959367,
             "replacement": null
         },
         {
@@ -6901,6 +7015,8 @@ export default {
             "tagihan_pln": 0,
             "pln_saving": null,
             "pln_saving_percent": null,
+            "pln_saving_yoy": null,
+            "pln_saving_yoy_percent": null,
             "replacement": null
         },
         {
@@ -7007,7 +7123,7 @@ export default {
                 }
             ],
             "performance_summary": 62.5,
-            "performance_summary_yearly": 57.291666666666664,
+            "performance_summary_yearly": 54.166666666666664,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -7020,6 +7136,8 @@ export default {
             "tagihan_pln": 60500348,
             "pln_saving": 2244313,
             "pln_saving_percent": 3.7095869266735457,
+            "pln_saving_yoy": -1124277,
+            "pln_saving_yoy_percent": -1.8582984018538207,
             "replacement": null
         },
         {
@@ -7126,7 +7244,7 @@ export default {
                 }
             ],
             "performance_summary": 62.5,
-            "performance_summary_yearly": 57.291666666666664,
+            "performance_summary_yearly": 54.166666666666664,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -7139,6 +7257,8 @@ export default {
             "tagihan_pln": 75625056,
             "pln_saving": -513348,
             "pln_saving_percent": -0.6788067700736645,
+            "pln_saving_yoy": -483651,
+            "pln_saving_yoy_percent": -0.6395380388214191,
             "replacement": null
         },
         {
@@ -7165,31 +7285,31 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
                     "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 1,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_rejected": 1,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -7244,7 +7364,7 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
+            "performance_summary": 100,
             "performance_summary_yearly": 63.541666666666664,
             "is_pue": true,
             "is_ike": false,
@@ -7258,6 +7378,8 @@ export default {
             "tagihan_pln": 478056608,
             "pln_saving": 21806175,
             "pln_saving_percent": 4.561421102665733,
+            "pln_saving_yoy": -66032,
+            "pln_saving_yoy_percent": -0.013812590160870657,
             "replacement": null
         },
         {
@@ -7283,12 +7405,32 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -7298,8 +7440,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -7308,8 +7450,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -7318,28 +7460,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -7363,8 +7485,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 25,
-            "performance_summary_yearly": 68.75,
+            "performance_summary": 100,
+            "performance_summary_yearly": 75,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -7377,6 +7499,8 @@ export default {
             "tagihan_pln": 72399560,
             "pln_saving": 1046104,
             "pln_saving_percent": 1.4449038088076778,
+            "pln_saving_yoy": -12628801,
+            "pln_saving_yoy_percent": -17.443201312273168,
             "replacement": null
         },
         {
@@ -7402,42 +7526,22 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -7457,8 +7561,28 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -7482,13 +7606,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
-            "performance_summary_yearly": 67.70833333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 72.91666666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.922490636704124,
+                "online": 1.9228440366972546,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -7496,6 +7620,8 @@ export default {
             "tagihan_pln": 1965879873,
             "pln_saving": 54172674,
             "pln_saving_percent": 2.7556451817847165,
+            "pln_saving_yoy": 31309378,
+            "pln_saving_yoy_percent": 1.5926394298050786,
             "replacement": null
         },
         {
@@ -7521,12 +7647,12 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -7536,8 +7662,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -7546,8 +7672,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -7601,8 +7727,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 82.29166666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 85.41666666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -7615,6 +7741,8 @@ export default {
             "tagihan_pln": 75606343,
             "pln_saving": 3040170,
             "pln_saving_percent": 4.02105151415669,
+            "pln_saving_yoy": -14294910,
+            "pln_saving_yoy_percent": -18.907024771717897,
             "replacement": null
         },
         {
@@ -7636,7 +7764,7 @@ export default {
                 "tipe": "STO",
                 "rtu_kode": "",
                 "tipe_perhitungan": "pue",
-                "is_online": false
+                "is_online": true
             },
             "performance": [
                 {
@@ -7721,19 +7849,21 @@ export default {
                 }
             ],
             "performance_summary": 37.5,
-            "performance_summary_yearly": 79.16666666666667,
+            "performance_summary_yearly": 73.95833333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 2.4474207651246,
+                "offline": 2.2776725978648,
                 "online": null,
                 "isReachTarget": true,
-                "is_online": false
+                "is_online": true
             },
             "ike": null,
             "tagihan_pln": 142262866,
             "pln_saving": 2969790,
             "pln_saving_percent": 2.08753702459502,
+            "pln_saving_yoy": -15103494,
+            "pln_saving_yoy_percent": -10.616610240370104,
             "replacement": null
         },
         {
@@ -7760,41 +7890,41 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -7810,11 +7940,11 @@ export default {
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -7839,7 +7969,7 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
+            "performance_summary": 100,
             "performance_summary_yearly": 75,
             "is_pue": true,
             "is_ike": false,
@@ -7853,6 +7983,8 @@ export default {
             "tagihan_pln": 53852264,
             "pln_saving": 1717855,
             "pln_saving_percent": 3.1899401666752576,
+            "pln_saving_yoy": 444119,
+            "pln_saving_yoy_percent": 0.8246988464588971,
             "replacement": null
         },
         {
@@ -7959,7 +8091,7 @@ export default {
                 }
             ],
             "performance_summary": 37.5,
-            "performance_summary_yearly": 75,
+            "performance_summary_yearly": 69.79166666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -7972,6 +8104,8 @@ export default {
             "tagihan_pln": 77676710,
             "pln_saving": 3916257,
             "pln_saving_percent": 5.041739023189834,
+            "pln_saving_yoy": 2961683,
+            "pln_saving_yoy_percent": 3.812832701076037,
             "replacement": null
         },
         {
@@ -8091,6 +8225,8 @@ export default {
             "tagihan_pln": 101550248,
             "pln_saving": 5600172,
             "pln_saving_percent": 5.514680771631399,
+            "pln_saving_yoy": -7429775,
+            "pln_saving_yoy_percent": -7.31635337808333,
             "replacement": null
         },
         {
@@ -8210,6 +8346,8 @@ export default {
             "tagihan_pln": 354695253,
             "pln_saving": 13751533,
             "pln_saving_percent": 3.876999447748459,
+            "pln_saving_yoy": 14629874,
+            "pln_saving_yoy_percent": 4.124632026016993,
             "replacement": null
         },
         {
@@ -8329,6 +8467,8 @@ export default {
             "tagihan_pln": 53012663,
             "pln_saving": 225114,
             "pln_saving_percent": 0.42464193885147783,
+            "pln_saving_yoy": 2422035,
+            "pln_saving_yoy_percent": 4.568785763507107,
             "replacement": null
         },
         {
@@ -8448,6 +8588,8 @@ export default {
             "tagihan_pln": 209867728,
             "pln_saving": 12757909,
             "pln_saving_percent": 6.079023736322147,
+            "pln_saving_yoy": -34628611,
+            "pln_saving_yoy_percent": -16.500207692723485,
             "replacement": null
         },
         {
@@ -8494,8 +8636,8 @@ export default {
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
-                    "count_rejected": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 1,
                     "percentage": 100,
@@ -8558,7 +8700,7 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.2500787949896,
+                "offline": 1.242054828654275,
                 "online": null,
                 "isReachTarget": false,
                 "is_online": false
@@ -8567,6 +8709,8 @@ export default {
             "tagihan_pln": 134808608,
             "pln_saving": 5195908,
             "pln_saving_percent": 3.8542850320062647,
+            "pln_saving_yoy": 6457070,
+            "pln_saving_yoy_percent": 4.789805410645587,
             "replacement": null
         },
         {
@@ -8677,7 +8821,7 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 0.9491353063397767,
+                "offline": 0.9395452209333776,
                 "online": null,
                 "isReachTarget": false,
                 "is_online": false
@@ -8686,6 +8830,8 @@ export default {
             "tagihan_pln": 55041437,
             "pln_saving": 719443,
             "pln_saving_percent": 1.3070934176373339,
+            "pln_saving_yoy": -4920330,
+            "pln_saving_yoy_percent": -8.939319662021179,
             "replacement": null
         },
         {
@@ -8732,8 +8878,8 @@ export default {
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
-                    "count_rejected": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 1,
                     "percentage": 100,
@@ -8796,7 +8942,7 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.8229859815186664,
+                "offline": 1.860381800934825,
                 "online": null,
                 "isReachTarget": true,
                 "is_online": false
@@ -8805,6 +8951,8 @@ export default {
             "tagihan_pln": 66521749,
             "pln_saving": 1814688,
             "pln_saving_percent": 2.7279619482043382,
+            "pln_saving_yoy": 3609467,
+            "pln_saving_yoy_percent": 5.425995338757554,
             "replacement": null
         },
         {
@@ -8851,8 +8999,8 @@ export default {
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
-                    "count_rejected": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 1,
                     "percentage": 100,
@@ -8915,7 +9063,7 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.2518981328590033,
+                "offline": 1.1730159707950625,
                 "online": null,
                 "isReachTarget": false,
                 "is_online": false
@@ -8924,6 +9072,8 @@ export default {
             "tagihan_pln": 505444443,
             "pln_saving": 17131198,
             "pln_saving_percent": 3.389333533537335,
+            "pln_saving_yoy": -18505697,
+            "pln_saving_yoy_percent": -3.6612722241364124,
             "replacement": null
         },
         {
@@ -9043,6 +9193,8 @@ export default {
             "tagihan_pln": 51384191,
             "pln_saving": 2384698,
             "pln_saving_percent": 4.640917670573037,
+            "pln_saving_yoy": -3039061,
+            "pln_saving_yoy_percent": -5.914389116294543,
             "replacement": null
         },
         {
@@ -9162,6 +9314,8 @@ export default {
             "tagihan_pln": 29396368,
             "pln_saving": 657136,
             "pln_saving_percent": 2.2354326221525054,
+            "pln_saving_yoy": -1165006,
+            "pln_saving_yoy_percent": -3.963095032692474,
             "replacement": null
         },
         {
@@ -9281,6 +9435,8 @@ export default {
             "tagihan_pln": 21950913,
             "pln_saving": 278977,
             "pln_saving_percent": 1.2709129684036378,
+            "pln_saving_yoy": -4113044,
+            "pln_saving_yoy_percent": -18.737462081873314,
             "replacement": null
         },
         {
@@ -9400,6 +9556,8 @@ export default {
             "tagihan_pln": 21739652,
             "pln_saving": 712110,
             "pln_saving_percent": 3.2756274111471515,
+            "pln_saving_yoy": -1849238,
+            "pln_saving_yoy_percent": -8.506290717073115,
             "replacement": null
         },
         {
@@ -9519,6 +9677,8 @@ export default {
             "tagihan_pln": 143620664,
             "pln_saving": 5897844,
             "pln_saving_percent": 4.106542774374027,
+            "pln_saving_yoy": -2292695,
+            "pln_saving_yoy_percent": -1.5963545468638134,
             "replacement": null
         },
         {
@@ -9629,7 +9789,7 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.4117607562802998,
+                "offline": 1.4117607562803,
                 "online": null,
                 "isReachTarget": false,
                 "is_online": false
@@ -9638,6 +9798,8 @@ export default {
             "tagihan_pln": 240928094,
             "pln_saving": 5757632,
             "pln_saving_percent": 2.389771945815501,
+            "pln_saving_yoy": -8288692,
+            "pln_saving_yoy_percent": -3.4403177572143164,
             "replacement": null
         },
         {
@@ -9744,11 +9906,11 @@ export default {
                 }
             ],
             "performance_summary": 50,
-            "performance_summary_yearly": 75,
+            "performance_summary_yearly": 76.04166666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.3246568839861668,
+                "offline": 1.3256476403652,
                 "online": null,
                 "isReachTarget": false,
                 "is_online": false
@@ -9757,6 +9919,8 @@ export default {
             "tagihan_pln": 33870719,
             "pln_saving": 999356,
             "pln_saving_percent": 2.9505012869670706,
+            "pln_saving_yoy": -7281288,
+            "pln_saving_yoy_percent": -21.497293872031474,
             "replacement": null
         },
         {
@@ -9863,11 +10027,11 @@ export default {
                 }
             ],
             "performance_summary": 50,
-            "performance_summary_yearly": 71.875,
+            "performance_summary_yearly": 72.91666666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.4589883711793667,
+                "offline": 1.414209836442425,
                 "online": null,
                 "isReachTarget": false,
                 "is_online": false
@@ -9876,6 +10040,8 @@ export default {
             "tagihan_pln": 29866921,
             "pln_saving": 764535,
             "pln_saving_percent": 2.5598052105873252,
+            "pln_saving_yoy": -334940,
+            "pln_saving_yoy_percent": -1.1214413430832058,
             "replacement": null
         },
         {
@@ -9982,11 +10148,11 @@ export default {
                 }
             ],
             "performance_summary": 50,
-            "performance_summary_yearly": 75,
+            "performance_summary_yearly": 76.04166666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.5424311720147335,
+                "offline": 1.5882035581823748,
                 "online": null,
                 "isReachTarget": false,
                 "is_online": false
@@ -9995,6 +10161,8 @@ export default {
             "tagihan_pln": 55387163,
             "pln_saving": 2516959,
             "pln_saving_percent": 4.544300274054478,
+            "pln_saving_yoy": -19253,
+            "pln_saving_yoy_percent": -0.03476076216433039,
             "replacement": null
         },
         {
@@ -10114,6 +10282,8 @@ export default {
             "tagihan_pln": 16152911,
             "pln_saving": 3676,
             "pln_saving_percent": 0.022757507919160827,
+            "pln_saving_yoy": -4786181,
+            "pln_saving_yoy_percent": -29.630454844950236,
             "replacement": null
         },
         {
@@ -10224,7 +10394,7 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.3626991378201,
+                "offline": 1.42136991646835,
                 "online": null,
                 "isReachTarget": false,
                 "is_online": false
@@ -10233,6 +10403,8 @@ export default {
             "tagihan_pln": 34775851,
             "pln_saving": 1640301,
             "pln_saving_percent": 4.716781769050023,
+            "pln_saving_yoy": -2618557,
+            "pln_saving_yoy_percent": -7.529814295558144,
             "replacement": null
         },
         {
@@ -10343,7 +10515,7 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.342548149037,
+                "offline": 1.42915806318845,
                 "online": null,
                 "isReachTarget": false,
                 "is_online": false
@@ -10352,6 +10524,8 @@ export default {
             "tagihan_pln": 73775819,
             "pln_saving": 2211692,
             "pln_saving_percent": 2.9978548933492695,
+            "pln_saving_yoy": 2208962,
+            "pln_saving_yoy_percent": 2.9941544938999596,
             "replacement": null
         },
         {
@@ -10372,17 +10546,57 @@ export default {
                 "sto_name": "STO TASIKMALAYA",
                 "tipe": "MIX",
                 "rtu_kode": "",
-                "tipe_perhitungan": null,
+                "tipe_perhitungan": "pue",
                 "is_online": false
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -10392,8 +10606,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -10402,8 +10616,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -10412,65 +10626,27 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 0,
-            "performance_summary_yearly": 22.916666666666668,
-            "is_pue": false,
+            "performance_summary": 100,
+            "performance_summary_yearly": 31.25,
+            "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 1.5417488357138502,
                 "online": null,
-                "isReachTarget": true,
+                "isReachTarget": false,
                 "is_online": false
             },
             "ike": null,
             "tagihan_pln": 164529375,
             "pln_saving": -1031737,
             "pln_saving_percent": -0.627083765437023,
+            "pln_saving_yoy": 2741932,
+            "pln_saving_yoy_percent": 1.6665303688171187,
             "replacement": null
         },
         {
@@ -10491,17 +10667,27 @@ export default {
                 "sto_name": "STO. GARUT",
                 "tipe": "STO",
                 "rtu_kode": "",
-                "tipe_perhitungan": null,
+                "tipe_perhitungan": "pue",
                 "is_online": false
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -10511,7 +10697,17 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -10521,7 +10717,17 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -10531,8 +10737,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -10541,55 +10747,27 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 0,
-            "performance_summary_yearly": 39.583333333333336,
-            "is_pue": false,
+            "performance_summary": 100,
+            "performance_summary_yearly": 47.916666666666664,
+            "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 1.7083533669167001,
                 "online": null,
-                "isReachTarget": true,
+                "isReachTarget": false,
                 "is_online": false
             },
             "ike": null,
             "tagihan_pln": 35651407,
             "pln_saving": 190911,
             "pln_saving_percent": 0.5354935921603319,
+            "pln_saving_yoy": 1995666,
+            "pln_saving_yoy_percent": 5.597720168519577,
             "replacement": null
         },
         {
@@ -10610,7 +10788,7 @@ export default {
                 "sto_name": "WITEL & PLASA TASIKMALAYA",
                 "tipe": "MIX",
                 "rtu_kode": "",
-                "tipe_perhitungan": null,
+                "tipe_perhitungan": "pue",
                 "is_online": false
             },
             "performance": [
@@ -10620,8 +10798,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -10630,8 +10808,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -10640,8 +10818,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -10650,8 +10828,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -10660,8 +10838,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -10670,8 +10848,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -10680,8 +10858,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -10690,14 +10868,14 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 0,
-            "performance_summary_yearly": 27.083333333333332,
-            "is_pue": false,
+            "performance_summary": 100,
+            "performance_summary_yearly": 35.416666666666664,
+            "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
@@ -10709,6 +10887,8 @@ export default {
             "tagihan_pln": 14573790,
             "pln_saving": -1662907,
             "pln_saving_percent": -11.41025772980124,
+            "pln_saving_yoy": -4644826,
+            "pln_saving_yoy_percent": -31.87109187109187,
             "replacement": null
         },
         {
@@ -10735,11 +10915,11 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -10814,13 +10994,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 87.5,
-            "performance_summary_yearly": 98.95833333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 96.875,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.6824448529411715,
+                "online": 1.6968233618233675,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -10828,6 +11008,8 @@ export default {
             "tagihan_pln": 18379909,
             "pln_saving": -306595,
             "pln_saving_percent": -1.6680985743727024,
+            "pln_saving_yoy": -959570,
+            "pln_saving_yoy_percent": -5.22075490145245,
             "replacement": null
         },
         {
@@ -10854,11 +11036,11 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -10933,13 +11115,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 87.5,
-            "performance_summary_yearly": 98.95833333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 96.875,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.3994117647058866,
+                "online": 1.4030341880341903,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -10947,6 +11129,8 @@ export default {
             "tagihan_pln": 42632372,
             "pln_saving": 499913,
             "pln_saving_percent": 1.1726136185901175,
+            "pln_saving_yoy": -12190748,
+            "pln_saving_yoy_percent": -28.595049789863907,
             "replacement": null
         },
         {
@@ -11053,12 +11237,12 @@ export default {
                 }
             ],
             "performance_summary": 100,
-            "performance_summary_yearly": 100,
+            "performance_summary_yearly": 96.875,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.7083203124999995,
+                "online": 1.6700606060606054,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -11066,6 +11250,8 @@ export default {
             "tagihan_pln": 538278350,
             "pln_saving": 10615917,
             "pln_saving_percent": 1.9721983988395597,
+            "pln_saving_yoy": 79479542,
+            "pln_saving_yoy_percent": 14.76550970329756,
             "replacement": null
         },
         {
@@ -11086,37 +11272,37 @@ export default {
                 "sto_name": "STO CILACAP - CLC",
                 "tipe": "MIX",
                 "rtu_kode": "",
-                "tipe_perhitungan": "ike",
-                "is_online": null
+                "tipe_perhitungan": "pue",
+                "is_online": true
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -11171,20 +11357,22 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 83.33333333333333,
-            "is_pue": false,
-            "is_ike": true,
+            "performance_summary": 100,
+            "performance_summary_yearly": 86.45833333333333,
+            "is_pue": true,
+            "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": null,
-                "isReachTarget": true,
-                "is_online": null
+                "online": 1.5813649851631988,
+                "isReachTarget": false,
+                "is_online": true
             },
             "ike": null,
             "tagihan_pln": 23948621,
             "pln_saving": -656010,
             "pln_saving_percent": -2.739239140324614,
+            "pln_saving_yoy": -5548429,
+            "pln_saving_yoy_percent": -23.168052139620062,
             "replacement": null
         },
         {
@@ -11210,32 +11398,32 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -11290,13 +11478,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 90.625,
+            "performance_summary": 100,
+            "performance_summary_yearly": 93.75,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.7841730769230815,
+                "online": 1.7861424332344253,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -11304,6 +11492,8 @@ export default {
             "tagihan_pln": 20947315,
             "pln_saving": 143979,
             "pln_saving_percent": 0.6873386875597183,
+            "pln_saving_yoy": -1630171,
+            "pln_saving_yoy_percent": -7.782243213509703,
             "replacement": null
         },
         {
@@ -11329,32 +11519,32 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -11409,13 +11599,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 95.83333333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 98.95833333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.81247582205029,
+                "online": 1.8074068554396423,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -11423,6 +11613,8 @@ export default {
             "tagihan_pln": 97274714,
             "pln_saving": -4425267,
             "pln_saving_percent": -4.549246991360982,
+            "pln_saving_yoy": 1754611,
+            "pln_saving_yoy_percent": 1.8037688602199335,
             "replacement": null
         },
         {
@@ -11534,7 +11726,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.4595136186770457,
+                "online": 1.434392803598206,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -11542,6 +11734,8 @@ export default {
             "tagihan_pln": 82989443,
             "pln_saving": 2909919,
             "pln_saving_percent": 3.5063724912577134,
+            "pln_saving_yoy": 6845263,
+            "pln_saving_yoy_percent": 8.248353950272929,
             "replacement": null
         },
         {
@@ -11653,7 +11847,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.4615073529411755,
+                "online": 1.4662108262108249,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -11661,6 +11855,8 @@ export default {
             "tagihan_pln": 24048461,
             "pln_saving": 207863,
             "pln_saving_percent": 0.8643505295411626,
+            "pln_saving_yoy": -4450168,
+            "pln_saving_yoy_percent": -18.505001214007,
             "replacement": null
         },
         {
@@ -11772,7 +11968,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.7294852941176466,
+                "online": 1.7284330484330477,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -11780,6 +11976,8 @@ export default {
             "tagihan_pln": 35542252,
             "pln_saving": -503449,
             "pln_saving_percent": -1.4164803063126108,
+            "pln_saving_yoy": -213585,
+            "pln_saving_yoy_percent": -0.6009326589660103,
             "replacement": null
         },
         {
@@ -11891,7 +12089,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.6209191176470585,
+                "online": 1.60319088319088,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -11899,6 +12097,8 @@ export default {
             "tagihan_pln": 21891441,
             "pln_saving": -717510,
             "pln_saving_percent": -3.2775823208714314,
+            "pln_saving_yoy": -3381117,
+            "pln_saving_yoy_percent": -15.444926626803598,
             "replacement": null
         },
         {
@@ -12010,7 +12210,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.7098713235294123,
+                "online": 1.7221367521367534,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -12018,6 +12218,8 @@ export default {
             "tagihan_pln": 38087747,
             "pln_saving": 689729,
             "pln_saving_percent": 1.8108947216016742,
+            "pln_saving_yoy": -696342,
+            "pln_saving_yoy_percent": -1.8282572607930838,
             "replacement": null
         },
         {
@@ -12129,7 +12331,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.3915624999999885,
+                "online": 1.391210826210814,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -12137,6 +12339,8 @@ export default {
             "tagihan_pln": 30681195,
             "pln_saving": 820588,
             "pln_saving_percent": 2.6745633603906236,
+            "pln_saving_yoy": 1777705,
+            "pln_saving_yoy_percent": 5.794119166479663,
             "replacement": null
         },
         {
@@ -12212,13 +12416,13 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 2,
+                    "count_approved": 2,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 2,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
@@ -12248,7 +12452,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.694517374517376,
+                "online": 1.6870876671619666,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -12256,6 +12460,8 @@ export default {
             "tagihan_pln": 178626864,
             "pln_saving": 3468289,
             "pln_saving_percent": 1.9416390806704191,
+            "pln_saving_yoy": 5103082,
+            "pln_saving_yoy_percent": 2.85683904745705,
             "replacement": null
         },
         {
@@ -12367,7 +12573,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.966298449612403,
+                "online": 1.9584328358209007,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -12375,6 +12581,8 @@ export default {
             "tagihan_pln": 59171868,
             "pln_saving": -4967601,
             "pln_saving_percent": -8.395207330618664,
+            "pln_saving_yoy": -325152,
+            "pln_saving_yoy_percent": -0.5495043692046363,
             "replacement": null
         },
         {
@@ -12486,7 +12694,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.6936397058823542,
+                "online": 1.7051566951566963,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -12494,6 +12702,8 @@ export default {
             "tagihan_pln": 45456506,
             "pln_saving": -1599603,
             "pln_saving_percent": -3.5189748195780823,
+            "pln_saving_yoy": 2952605,
+            "pln_saving_yoy_percent": 6.495450838214446,
             "replacement": null
         },
         {
@@ -12519,33 +12729,33 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
@@ -12600,12 +12810,12 @@ export default {
                 }
             ],
             "performance_summary": 100,
-            "performance_summary_yearly": 100,
+            "performance_summary_yearly": 96.875,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.5408823529411746,
+                "online": 1.5424928774928783,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -12613,6 +12823,8 @@ export default {
             "tagihan_pln": 19367125,
             "pln_saving": -194006,
             "pln_saving_percent": -1.0017284444645242,
+            "pln_saving_yoy": 0,
+            "pln_saving_yoy_percent": 0,
             "replacement": null
         },
         {
@@ -12638,33 +12850,33 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
@@ -12719,12 +12931,12 @@ export default {
                 }
             ],
             "performance_summary": 100,
-            "performance_summary_yearly": 100,
+            "performance_summary_yearly": 96.875,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.6278860294117667,
+                "online": 1.6198575498575503,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -12732,6 +12944,8 @@ export default {
             "tagihan_pln": 131944964,
             "pln_saving": 3195072,
             "pln_saving_percent": 2.4215187174555597,
+            "pln_saving_yoy": -1923816,
+            "pln_saving_yoy_percent": -1.458044279734693,
             "replacement": null
         },
         {
@@ -12757,33 +12971,33 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
@@ -12838,12 +13052,12 @@ export default {
                 }
             ],
             "performance_summary": 100,
-            "performance_summary_yearly": 100,
+            "performance_summary_yearly": 96.875,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.5850000000000002,
+                "online": 1.6060398860398855,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -12851,6 +13065,8 @@ export default {
             "tagihan_pln": 27044845,
             "pln_saving": -1161515,
             "pln_saving_percent": -4.294774105749173,
+            "pln_saving_yoy": -5708685,
+            "pln_saving_yoy_percent": -21.108218590271086,
             "replacement": null
         },
         {
@@ -12970,6 +13186,8 @@ export default {
             "tagihan_pln": 259589726,
             "pln_saving": 6006281,
             "pln_saving_percent": 2.3137591354443665,
+            "pln_saving_yoy": -5690161,
+            "pln_saving_yoy_percent": -2.1919823591169396,
             "replacement": null
         },
         {
@@ -12995,43 +13213,43 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 2,
+                    "count_approved": 2,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 2,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 2,
+                    "count_approved": 2,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 2,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
@@ -13081,7 +13299,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.8400000000000087,
+                "online": 1.8379880774962694,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -13089,6 +13307,8 @@ export default {
             "tagihan_pln": 271913892,
             "pln_saving": 23988996,
             "pln_saving_percent": 8.822276722808999,
+            "pln_saving_yoy": 0,
+            "pln_saving_yoy_percent": 0,
             "replacement": null
         },
         {
@@ -13114,33 +13334,33 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
@@ -13200,7 +13420,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.3400000000000012,
+                "online": 1.340000000000008,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -13208,6 +13428,8 @@ export default {
             "tagihan_pln": 95225361,
             "pln_saving": -1801884,
             "pln_saving_percent": -1.8922312092888784,
+            "pln_saving_yoy": -30297849,
+            "pln_saving_yoy_percent": -31.816995684584487,
             "replacement": null
         },
         {
@@ -13233,33 +13455,33 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 2,
+                    "count_approved": 2,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 2,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
@@ -13319,7 +13541,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.3547683397683414,
+                "online": 1.3583582089552255,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -13327,6 +13549,8 @@ export default {
             "tagihan_pln": 47819535,
             "pln_saving": 340140,
             "pln_saving_percent": 0.7112992629476635,
+            "pln_saving_yoy": -16331453,
+            "pln_saving_yoy_percent": -34.15226225014526,
             "replacement": null
         },
         {
@@ -13352,11 +13576,11 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 1,
-                    "count_approved": 1,
+                    "count_all": 2,
+                    "count_approved": 2,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 1,
+                    "count_confirmed": 2,
                     "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
@@ -13433,7 +13657,7 @@ export default {
                 }
             ],
             "performance_summary": 100,
-            "performance_summary_yearly": 80.20833333333333,
+            "performance_summary_yearly": 71.875,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -13446,6 +13670,8 @@ export default {
             "tagihan_pln": 276847836,
             "pln_saving": 2846310,
             "pln_saving_percent": 1.0281135085339803,
+            "pln_saving_yoy": -934542,
+            "pln_saving_yoy_percent": -0.3375652175948379,
             "replacement": null
         },
         {
@@ -13464,125 +13690,6 @@ export default {
                 "witel_name": "TELKOM BALI SELATAN (DENPASAR)",
                 "sto_kode": "",
                 "sto_name": "SANUR - SAU",
-                "tipe": "STO",
-                "rtu_kode": "",
-                "tipe_perhitungan": "pue",
-                "is_online": false
-            },
-            "performance": [
-                {
-                    "count_all": 1,
-                    "count_approved": 1,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 1,
-                    "percentage": 100,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 3,
-                    "count_approved": 3,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 3,
-                    "percentage": 100,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 1,
-                    "count_approved": 1,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 1,
-                    "percentage": 100,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 1,
-                    "count_approved": 1,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 1,
-                    "percentage": 100,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 1,
-                    "count_approved": 1,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 1,
-                    "percentage": 100,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 1,
-                    "count_approved": 1,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 1,
-                    "percentage": 100,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                }
-            ],
-            "performance_summary": 75,
-            "performance_summary_yearly": 71.875,
-            "is_pue": true,
-            "is_ike": false,
-            "pue": {
-                "offline": 1.4341688067838,
-                "online": null,
-                "isReachTarget": false,
-                "is_online": false
-            },
-            "ike": null,
-            "tagihan_pln": 33080700,
-            "pln_saving": -483902,
-            "pln_saving_percent": -1.4627925043907777,
-            "replacement": null
-        },
-        {
-            "location": {
-                "id": "359",
-                "id_pel_pln": "551000872558",
-                "nama_pel_pln": "GEDUNG S T O UBUNG",
-                "tarif_pel_pln": "B3",
-                "daya_pel_pln": "345000",
-                "lokasi_pel_pln": "UBUNG - UBU",
-                "alamat_pel_pln": "STO UBUNG, JL COKROAMINOTO, AREA PRIMA",
-                "gedung": "STO",
-                "divre_kode": "TLK-r5000000",
-                "divre_name": "DIVISI REGIONAL 5 JATIM",
-                "witel_kode": "DTT-ia200000",
-                "witel_name": "TELKOM BALI SELATAN (DENPASAR)",
-                "sto_kode": "",
-                "sto_name": "UBUNG - UBU",
                 "tipe": "STO",
                 "rtu_kode": "",
                 "tipe_perhitungan": "pue",
@@ -13630,36 +13737,6 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 1,
-                    "count_approved": 1,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 1,
-                    "percentage": 100,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 1,
-                    "count_approved": 1,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 1,
-                    "percentage": 100,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 1,
-                    "count_approved": 1,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 1,
-                    "percentage": 100,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
                     "count_all": 0,
                     "count_approved": 0,
                     "count_rejected": 0,
@@ -13668,10 +13745,161 @@ export default {
                     "percentage": 0,
                     "has_schedule": true,
                     "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
                 }
             ],
             "performance_summary": 87.5,
-            "performance_summary_yearly": 75,
+            "performance_summary_yearly": 64.58333333333333,
+            "is_pue": true,
+            "is_ike": false,
+            "pue": {
+                "offline": 1.4341688067838,
+                "online": null,
+                "isReachTarget": false,
+                "is_online": false
+            },
+            "ike": null,
+            "tagihan_pln": 33080700,
+            "pln_saving": -483902,
+            "pln_saving_percent": -1.4627925043907777,
+            "pln_saving_yoy": -1383445,
+            "pln_saving_yoy_percent": -4.182030609993138,
+            "replacement": null
+        },
+        {
+            "location": {
+                "id": "359",
+                "id_pel_pln": "551000872558",
+                "nama_pel_pln": "GEDUNG S T O UBUNG",
+                "tarif_pel_pln": "B3",
+                "daya_pel_pln": "345000",
+                "lokasi_pel_pln": "UBUNG - UBU",
+                "alamat_pel_pln": "STO UBUNG, JL COKROAMINOTO, AREA PRIMA",
+                "gedung": "STO",
+                "divre_kode": "TLK-r5000000",
+                "divre_name": "DIVISI REGIONAL 5 JATIM",
+                "witel_kode": "DTT-ia200000",
+                "witel_name": "TELKOM BALI SELATAN (DENPASAR)",
+                "sto_kode": "",
+                "sto_name": "UBUNG - UBU",
+                "tipe": "STO",
+                "rtu_kode": "",
+                "tipe_perhitungan": "pue",
+                "is_online": false
+            },
+            "performance": [
+                {
+                    "count_all": 3,
+                    "count_approved": 3,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 3,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 3,
+                    "count_approved": 3,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 3,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                }
+            ],
+            "performance_summary": 100,
+            "performance_summary_yearly": 67.70833333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -13684,6 +13912,8 @@ export default {
             "tagihan_pln": 43295246,
             "pln_saving": 1511720,
             "pln_saving_percent": 3.4916535639963797,
+            "pln_saving_yoy": -3860870,
+            "pln_saving_yoy_percent": -8.917537967101515,
             "replacement": null
         },
         {
@@ -13710,31 +13940,31 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -13749,32 +13979,12 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -13784,13 +13994,33 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
-            "performance_summary_yearly": 94.79166666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -13803,6 +14033,8 @@ export default {
             "tagihan_pln": 82775594,
             "pln_saving": 821536,
             "pln_saving_percent": 0.9924857802892965,
+            "pln_saving_yoy": 1974655,
+            "pln_saving_yoy_percent": 2.3855521954937586,
             "replacement": null
         },
         {
@@ -13829,51 +14061,31 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -13903,13 +14115,33 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
-            "performance_summary_yearly": 94.79166666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -13922,6 +14154,8 @@ export default {
             "tagihan_pln": 153676761,
             "pln_saving": 5109029,
             "pln_saving_percent": 3.32452933465978,
+            "pln_saving_yoy": 17288542,
+            "pln_saving_yoy_percent": 11.24993908480411,
             "replacement": null
         },
         {
@@ -13948,31 +14182,31 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -14007,28 +14241,28 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
-            "performance_summary_yearly": 94.79166666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -14041,6 +14275,8 @@ export default {
             "tagihan_pln": 26839933,
             "pln_saving": 416256,
             "pln_saving_percent": 1.5508831560794134,
+            "pln_saving_yoy": -1614816,
+            "pln_saving_yoy_percent": -6.016468073895713,
             "replacement": null
         },
         {
@@ -14067,31 +14303,31 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -14146,8 +14382,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 96.875,
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -14160,6 +14396,8 @@ export default {
             "tagihan_pln": 33981098,
             "pln_saving": -2565835,
             "pln_saving_percent": -7.550771314099386,
+            "pln_saving_yoy": -1385460,
+            "pln_saving_yoy_percent": -4.077149007957306,
             "replacement": null
         },
         {
@@ -14186,31 +14424,31 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -14265,8 +14503,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 96.875,
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -14279,6 +14517,8 @@ export default {
             "tagihan_pln": 24179686,
             "pln_saving": -295587,
             "pln_saving_percent": -1.2224600435257926,
+            "pln_saving_yoy": 2555384,
+            "pln_saving_yoy_percent": 10.568309282428233,
             "replacement": null
         },
         {
@@ -14305,31 +14545,31 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -14384,8 +14624,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 96.875,
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -14398,6 +14638,8 @@ export default {
             "tagihan_pln": 38158026,
             "pln_saving": 603884,
             "pln_saving_percent": 1.5825871076244877,
+            "pln_saving_yoy": -1147381,
+            "pln_saving_yoy_percent": -3.0069191734394227,
             "replacement": null
         },
         {
@@ -14517,6 +14759,8 @@ export default {
             "tagihan_pln": 35354730,
             "pln_saving": -289229,
             "pln_saving_percent": -0.8180772417156065,
+            "pln_saving_yoy": -1455680,
+            "pln_saving_yoy_percent": -4.117355725810945,
             "replacement": null
         },
         {
@@ -14636,6 +14880,8 @@ export default {
             "tagihan_pln": 57561174,
             "pln_saving": 2777870,
             "pln_saving_percent": 4.8259439600728085,
+            "pln_saving_yoy": 3892848,
+            "pln_saving_yoy_percent": 6.762975334728232,
             "replacement": null
         },
         {
@@ -14755,6 +15001,8 @@ export default {
             "tagihan_pln": 24493331,
             "pln_saving": 1165007,
             "pln_saving_percent": 4.756425330633878,
+            "pln_saving_yoy": 1387995,
+            "pln_saving_yoy_percent": 5.666828248064749,
             "replacement": null
         },
         {
@@ -14781,31 +15029,31 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -14860,8 +15108,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 96.875,
+            "performance_summary": 100,
+            "performance_summary_yearly": 94.79166666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -14874,6 +15122,8 @@ export default {
             "tagihan_pln": 32697973,
             "pln_saving": -71780,
             "pln_saving_percent": -0.21952431118589522,
+            "pln_saving_yoy": -4994117,
+            "pln_saving_yoy_percent": -15.27347582065714,
             "replacement": null
         },
         {
@@ -14895,46 +15145,46 @@ export default {
                 "tipe": "STO",
                 "rtu_kode": "",
                 "tipe_perhitungan": "pue",
-                "is_online": false
+                "is_online": true
             },
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -14949,12 +15199,12 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -14979,7 +15229,7 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
+            "performance_summary": 100,
             "performance_summary_yearly": 94.79166666666667,
             "is_pue": true,
             "is_ike": false,
@@ -14987,12 +15237,135 @@ export default {
                 "offline": 1.5751274282368,
                 "online": null,
                 "isReachTarget": false,
-                "is_online": false
+                "is_online": true
             },
             "ike": null,
             "tagihan_pln": 297423801,
             "pln_saving": 3158153,
             "pln_saving_percent": 1.0618360028288387,
+            "pln_saving_yoy": 1013539,
+            "pln_saving_yoy_percent": 0.3407726606250991,
+            "replacement": null
+        },
+        {
+            "location": {
+                "id": "339",
+                "id_pel_pln": "513130062851",
+                "nama_pel_pln": "KTR TELEPON",
+                "tarif_pel_pln": "B3",
+                "daya_pel_pln": "690000",
+                "lokasi_pel_pln": "MALANG KOTA - MLG",
+                "alamat_pel_pln": "JL. BASUKI RAHMAT 7-9, MALANG",
+                "gedung": "STO",
+                "divre_kode": "TLK-r5000000",
+                "divre_name": "DIVISI REGIONAL 5 JATIM",
+                "witel_kode": "DTT-gc200000",
+                "witel_name": "TELKOM JATIM SELATAN (MALANG)",
+                "sto_kode": "",
+                "sto_name": "MALANG KOTA - MLG",
+                "tipe": "STO",
+                "rtu_kode": "",
+                "tipe_perhitungan": "pue",
+                "is_online": true
+            },
+            "performance": [
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                }
+            ],
+            "performance_summary": 100,
+            "performance_summary_yearly": 94.79166666666667,
+            "is_pue": true,
+            "is_ike": false,
+            "pue": {
+                "offline": 1.5751274282368,
+                "online": null,
+                "isReachTarget": false,
+                "is_online": true
+            },
+            "ike": null,
+            "tagihan_pln": 297423801,
+            "pln_saving": 3158153,
+            "pln_saving_percent": 1.0618360028288387,
+            "pln_saving_yoy": 1013539,
+            "pln_saving_yoy_percent": 0.3407726606250991,
             "replacement": null
         },
         {
@@ -15018,32 +15391,32 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -15098,8 +15471,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 96.875,
+            "performance_summary": 100,
+            "performance_summary_yearly": 94.79166666666667,
             "is_pue": false,
             "is_ike": true,
             "pue": {
@@ -15112,6 +15485,8 @@ export default {
             "tagihan_pln": 105930520,
             "pln_saving": -1174574,
             "pln_saving_percent": -1.1088154764084988,
+            "pln_saving_yoy": -11380321,
+            "pln_saving_yoy_percent": -10.743193746240461,
             "replacement": null
         },
         {
@@ -15223,7 +15598,7 @@ export default {
             "is_ike": false,
             "pue": {
                 "offline": 1.2861702809529,
-                "online": 1.919961389961393,
+                "online": 1.9238632986627084,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -15231,6 +15606,8 @@ export default {
             "tagihan_pln": 21657717,
             "pln_saving": 1062938,
             "pln_saving_percent": 4.90789495494839,
+            "pln_saving_yoy": -3352585,
+            "pln_saving_yoy_percent": -15.479863366946756,
             "replacement": null
         },
         {
@@ -15350,6 +15727,8 @@ export default {
             "tagihan_pln": 131239542,
             "pln_saving": 415727,
             "pln_saving_percent": 0.31676962115579466,
+            "pln_saving_yoy": 1020421,
+            "pln_saving_yoy_percent": 0.7775255722852187,
             "replacement": null
         },
         {
@@ -15469,6 +15848,8 @@ export default {
             "tagihan_pln": 34118356,
             "pln_saving": 761212,
             "pln_saving_percent": 2.2310922601311742,
+            "pln_saving_yoy": -193879,
+            "pln_saving_yoy_percent": -0.5682542265518303,
             "replacement": null
         },
         {
@@ -15588,6 +15969,8 @@ export default {
             "tagihan_pln": 53361784,
             "pln_saving": 308869,
             "pln_saving_percent": 0.57882060314925,
+            "pln_saving_yoy": -5533552,
+            "pln_saving_yoy_percent": -10.369878188480355,
             "replacement": null
         },
         {
@@ -15707,6 +16090,8 @@ export default {
             "tagihan_pln": 39453952,
             "pln_saving": -1851043,
             "pln_saving_percent": -4.691654209950881,
+            "pln_saving_yoy": -14527747,
+            "pln_saving_yoy_percent": -36.822032429096076,
             "replacement": null
         },
         {
@@ -15826,6 +16211,8 @@ export default {
             "tagihan_pln": 203738303,
             "pln_saving": -11337617,
             "pln_saving_percent": -5.5647940682022865,
+            "pln_saving_yoy": -11710318,
+            "pln_saving_yoy_percent": -5.747725306222856,
             "replacement": null
         },
         {
@@ -15945,6 +16332,8 @@ export default {
             "tagihan_pln": 60544091,
             "pln_saving": 369775,
             "pln_saving_percent": 0.6107532442761424,
+            "pln_saving_yoy": -9322641,
+            "pln_saving_yoy_percent": -15.39810218638843,
             "replacement": null
         },
         {
@@ -16064,6 +16453,8 @@ export default {
             "tagihan_pln": 459734645,
             "pln_saving": 7048927,
             "pln_saving_percent": 1.5332599090938643,
+            "pln_saving_yoy": 10951173,
+            "pln_saving_yoy_percent": 2.3820638968812107,
             "replacement": null
         },
         {
@@ -16183,6 +16574,8 @@ export default {
             "tagihan_pln": 27964045,
             "pln_saving": 327411,
             "pln_saving_percent": 1.1708284692003605,
+            "pln_saving_yoy": 386118,
+            "pln_saving_yoy_percent": 1.3807659085085866,
             "replacement": null
         },
         {
@@ -16238,43 +16631,43 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
@@ -16302,6 +16695,8 @@ export default {
             "tagihan_pln": 63360673,
             "pln_saving": -1136256,
             "pln_saving_percent": -1.7933142850297692,
+            "pln_saving_yoy": -9380871,
+            "pln_saving_yoy_percent": -14.805510351823441,
             "replacement": null
         },
         {
@@ -16347,12 +16742,12 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -16367,33 +16762,33 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
@@ -16407,8 +16802,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 87.5,
-            "performance_summary_yearly": 98.95833333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -16421,6 +16816,8 @@ export default {
             "tagihan_pln": 750007662,
             "pln_saving": 5009373,
             "pln_saving_percent": 0.6679095766357651,
+            "pln_saving_yoy": -54453652,
+            "pln_saving_yoy_percent": -7.260412760956568,
             "replacement": null
         },
         {
@@ -16446,12 +16843,32 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -16471,48 +16888,28 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
+                    "count_confirmed": 1,
                     "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
@@ -16526,8 +16923,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 75,
-            "performance_summary_yearly": 97.91666666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -16540,6 +16937,8 @@ export default {
             "tagihan_pln": 107744585,
             "pln_saving": 4013130,
             "pln_saving_percent": 3.724669782708802,
+            "pln_saving_yoy": -13714246,
+            "pln_saving_yoy_percent": -12.728478187558103,
             "replacement": null
         },
         {
@@ -16605,6 +17004,36 @@ export default {
                     "id_schedule": null
                 },
                 {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
                     "count_all": 0,
                     "count_approved": 0,
                     "count_rejected": 0,
@@ -16612,6 +17041,218 @@ export default {
                     "count_confirmed": 0,
                     "percentage": 100,
                     "has_schedule": false,
+                    "id_schedule": null
+                }
+            ],
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
+            "is_pue": true,
+            "is_ike": false,
+            "pue": {
+                "offline": 3.8151433774218,
+                "online": null,
+                "isReachTarget": true,
+                "is_online": false
+            },
+            "ike": null,
+            "tagihan_pln": 320269003,
+            "pln_saving": 5401324,
+            "pln_saving_percent": 1.6864960234693707,
+            "pln_saving_yoy": 94635323,
+            "pln_saving_yoy_percent": 29.54869878556433,
+            "replacement": null
+        },
+        {
+            "location": {
+                "id": "357",
+                "id_pel_pln": "511402322271",
+                "nama_pel_pln": "GD CENTRAL TELKOM D",
+                "tarif_pel_pln": "B3",
+                "daya_pel_pln": "865000",
+                "lokasi_pel_pln": "TANDES - TNS",
+                "alamat_pel_pln": "JL SK MANUNGGAL JY RY",
+                "gedung": "STO",
+                "divre_kode": "TLK-r5000000",
+                "divre_name": "DIVISI REGIONAL 5 JATIM",
+                "witel_kode": "DTT-ge111111",
+                "witel_name": "TELKOM JATIM SURABAYA UTARA",
+                "sto_kode": "",
+                "sto_name": "TANDES - TNS",
+                "tipe": "STO",
+                "rtu_kode": "",
+                "tipe_perhitungan": "pue",
+                "is_online": false
+            },
+            "performance": [
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                }
+            ],
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
+            "is_pue": true,
+            "is_ike": false,
+            "pue": {
+                "offline": 1.7892325609404,
+                "online": null,
+                "isReachTarget": false,
+                "is_online": false
+            },
+            "ike": null,
+            "tagihan_pln": 51032348,
+            "pln_saving": 123364,
+            "pln_saving_percent": 0.2417368685446337,
+            "pln_saving_yoy": -2793956,
+            "pln_saving_yoy_percent": -5.474872525951579,
+            "replacement": null
+        },
+        {
+            "location": {
+                "id": "323",
+                "id_pel_pln": "514020030200",
+                "nama_pel_pln": "PERUM TELEKOMUNIKASI",
+                "tarif_pel_pln": "B2",
+                "daya_pel_pln": "164000",
+                "lokasi_pel_pln": "BLITAR - BLR",
+                "alamat_pel_pln": "A. YANI NO. 10, BLITAR",
+                "gedung": "DATEL",
+                "divre_kode": "TLK-r5000000",
+                "divre_name": "DIVISI REGIONAL 5 JATIM",
+                "witel_kode": "DTT-ga200000",
+                "witel_name": "TELKOM JATIM TENGAH (KEDIRI)",
+                "sto_kode": "",
+                "sto_name": "BLITAR - BLR",
+                "tipe": "MIX",
+                "rtu_kode": "",
+                "tipe_perhitungan": "pue",
+                "is_online": false
+            },
+            "performance": [
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
                     "id_schedule": null
                 },
                 {
@@ -16646,257 +17287,21 @@ export default {
                 }
             ],
             "performance_summary": 100,
-            "performance_summary_yearly": 100,
+            "performance_summary_yearly": 95.83333333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 3.8151433774218,
-                "online": null,
-                "isReachTarget": true,
-                "is_online": false
-            },
-            "ike": null,
-            "tagihan_pln": 320269003,
-            "pln_saving": 5401324,
-            "pln_saving_percent": 1.6864960234693707,
-            "replacement": null
-        },
-        {
-            "location": {
-                "id": "357",
-                "id_pel_pln": "511402322271",
-                "nama_pel_pln": "GD CENTRAL TELKOM D",
-                "tarif_pel_pln": "B3",
-                "daya_pel_pln": "865000",
-                "lokasi_pel_pln": "TANDES - TNS",
-                "alamat_pel_pln": "JL SK MANUNGGAL JY RY",
-                "gedung": "STO",
-                "divre_kode": "TLK-r5000000",
-                "divre_name": "DIVISI REGIONAL 5 JATIM",
-                "witel_kode": "DTT-ge111111",
-                "witel_name": "TELKOM JATIM SURABAYA UTARA",
-                "sto_kode": "",
-                "sto_name": "TANDES - TNS",
-                "tipe": "STO",
-                "rtu_kode": "",
-                "tipe_perhitungan": "pue",
-                "is_online": false
-            },
-            "performance": [
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 1,
-                    "count_approved": 1,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 1,
-                    "percentage": 100,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                }
-            ],
-            "performance_summary": 75,
-            "performance_summary_yearly": 97.91666666666667,
-            "is_pue": true,
-            "is_ike": false,
-            "pue": {
-                "offline": 1.7892325609404,
+                "offline": 1.7767555966014,
                 "online": null,
                 "isReachTarget": false,
-                "is_online": false
-            },
-            "ike": null,
-            "tagihan_pln": 51032348,
-            "pln_saving": 123364,
-            "pln_saving_percent": 0.2417368685446337,
-            "replacement": null
-        },
-        {
-            "location": {
-                "id": "323",
-                "id_pel_pln": "514020030200",
-                "nama_pel_pln": "PERUM TELEKOMUNIKASI",
-                "tarif_pel_pln": "B2",
-                "daya_pel_pln": "164000",
-                "lokasi_pel_pln": "BLITAR - BLR",
-                "alamat_pel_pln": "A. YANI NO. 10, BLITAR",
-                "gedung": "DATEL",
-                "divre_kode": "TLK-r5000000",
-                "divre_name": "DIVISI REGIONAL 5 JATIM",
-                "witel_kode": "DTT-ga200000",
-                "witel_name": "TELKOM JATIM TENGAH (KEDIRI)",
-                "sto_kode": "",
-                "sto_name": "BLITAR - BLR",
-                "tipe": "MIX",
-                "rtu_kode": "",
-                "tipe_perhitungan": "pue",
-                "is_online": false
-            },
-            "performance": [
-                {
-                    "count_all": 1,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 1,
-                    "count_approved": 1,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 1,
-                    "percentage": 100,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 1,
-                    "count_approved": 1,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 1,
-                    "percentage": 100,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 1,
-                    "count_approved": 1,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 1,
-                    "percentage": 100,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 100,
-                    "has_schedule": false,
-                    "id_schedule": null
-                }
-            ],
-            "performance_summary": 87.5,
-            "performance_summary_yearly": 97.91666666666667,
-            "is_pue": true,
-            "is_ike": false,
-            "pue": {
-                "offline": 2.2888780725237,
-                "online": null,
-                "isReachTarget": true,
                 "is_online": false
             },
             "ike": null,
             "tagihan_pln": 45129714,
             "pln_saving": -449736,
             "pln_saving_percent": -0.9965407713419145,
+            "pln_saving_yoy": -1636845,
+            "pln_saving_yoy_percent": -3.6269784470604,
             "replacement": null
         },
         {
@@ -17003,12 +17408,12 @@ export default {
                 }
             ],
             "performance_summary": 100,
-            "performance_summary_yearly": 100,
+            "performance_summary_yearly": 96.875,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": 1.7798741701245,
-                "online": 2.939014373716645,
+                "online": 2.9386120401338003,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -17016,6 +17421,8 @@ export default {
             "tagihan_pln": 140448535,
             "pln_saving": 390166,
             "pln_saving_percent": 0.2777999784761016,
+            "pln_saving_yoy": 2198679,
+            "pln_saving_yoy_percent": 1.5654695152213585,
             "replacement": null
         },
         {
@@ -17122,7 +17529,7 @@ export default {
                 }
             ],
             "performance_summary": 100,
-            "performance_summary_yearly": 100,
+            "performance_summary_yearly": 96.875,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -17135,6 +17542,8 @@ export default {
             "tagihan_pln": 26844580,
             "pln_saving": -2208657,
             "pln_saving_percent": -8.22757145017728,
+            "pln_saving_yoy": -9265440,
+            "pln_saving_yoy_percent": -34.51512372329908,
             "replacement": null
         },
         {
@@ -17160,87 +17569,87 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 0,
+            "performance_summary": 100,
             "performance_summary_yearly": 91.66666666666667,
             "is_pue": true,
             "is_ike": false,
@@ -17254,6 +17663,8 @@ export default {
             "tagihan_pln": 35457707,
             "pln_saving": 407891,
             "pln_saving_percent": 1.1503592152758213,
+            "pln_saving_yoy": 941111,
+            "pln_saving_yoy_percent": 2.6541789631235884,
             "replacement": null
         },
         {
@@ -17279,87 +17690,87 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 0,
+            "performance_summary": 100,
             "performance_summary_yearly": 91.66666666666667,
             "is_pue": true,
             "is_ike": false,
@@ -17373,6 +17784,8 @@ export default {
             "tagihan_pln": 30664613,
             "pln_saving": -1149323,
             "pln_saving_percent": -3.748043387992537,
+            "pln_saving_yoy": -2957981,
+            "pln_saving_yoy_percent": -9.646236200665568,
             "replacement": null
         },
         {
@@ -17398,87 +17811,87 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 0,
+            "performance_summary": 100,
             "performance_summary_yearly": 91.66666666666667,
             "is_pue": true,
             "is_ike": false,
@@ -17492,6 +17905,8 @@ export default {
             "tagihan_pln": 80180304,
             "pln_saving": 2145100,
             "pln_saving_percent": 2.6753453067476523,
+            "pln_saving_yoy": -9619081,
+            "pln_saving_yoy_percent": -11.996812833236453,
             "replacement": null
         },
         {
@@ -17611,6 +18026,8 @@ export default {
             "tagihan_pln": 54651313,
             "pln_saving": -1141675,
             "pln_saving_percent": -2.089016598741187,
+            "pln_saving_yoy": 137001,
+            "pln_saving_yoy_percent": 0.2506819918489424,
             "replacement": null
         },
         {
@@ -17730,6 +18147,8 @@ export default {
             "tagihan_pln": 91987588,
             "pln_saving": 1674679,
             "pln_saving_percent": 1.8205488766593163,
+            "pln_saving_yoy": 14298579,
+            "pln_saving_yoy_percent": 15.544030788153723,
             "replacement": null
         },
         {
@@ -17755,42 +18174,42 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -17825,18 +18244,18 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
-            "performance_summary_yearly": 94.79166666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
             "is_pue": false,
             "is_ike": true,
             "pue": {
@@ -17849,6 +18268,8 @@ export default {
             "tagihan_pln": 46846728,
             "pln_saving": 159509,
             "pln_saving_percent": 0.34049122918467223,
+            "pln_saving_yoy": -12733466,
+            "pln_saving_yoy_percent": -27.181121379491007,
             "replacement": null
         },
         {
@@ -17955,7 +18376,7 @@ export default {
                 }
             ],
             "performance_summary": 50,
-            "performance_summary_yearly": 95.83333333333333,
+            "performance_summary_yearly": 87.5,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -17968,6 +18389,8 @@ export default {
             "tagihan_pln": 85141482,
             "pln_saving": 1549172,
             "pln_saving_percent": 1.8195267026242274,
+            "pln_saving_yoy": 11163774,
+            "pln_saving_yoy_percent": 13.112026873105167,
             "replacement": null
         },
         {
@@ -17989,7 +18412,7 @@ export default {
                 "tipe": "STO",
                 "rtu_kode": "",
                 "tipe_perhitungan": "pue",
-                "is_online": false
+                "is_online": true
             },
             "performance": [
                 {
@@ -18074,19 +18497,21 @@ export default {
                 }
             ],
             "performance_summary": 50,
-            "performance_summary_yearly": 95.83333333333333,
+            "performance_summary_yearly": 92.70833333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": 1.7567275802969,
                 "online": null,
                 "isReachTarget": false,
-                "is_online": false
+                "is_online": true
             },
             "ike": null,
             "tagihan_pln": 188874460,
             "pln_saving": 2373979,
             "pln_saving_percent": 1.2569084247812012,
+            "pln_saving_yoy": 8743033,
+            "pln_saving_yoy_percent": 4.6290181319380075,
             "replacement": null
         },
         {
@@ -18193,7 +18618,7 @@ export default {
                 }
             ],
             "performance_summary": 50,
-            "performance_summary_yearly": 95.83333333333333,
+            "performance_summary_yearly": 91.66666666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -18206,6 +18631,8 @@ export default {
             "tagihan_pln": 35843862,
             "pln_saving": -415828,
             "pln_saving_percent": -1.1601093654472836,
+            "pln_saving_yoy": 3092,
+            "pln_saving_yoy_percent": 0.008626302600986468,
             "replacement": null
         },
         {
@@ -18232,41 +18659,41 @@ export default {
             "performance": [
                 {
                     "count_all": 3,
-                    "count_approved": 0,
+                    "count_approved": 3,
                     "count_rejected": 0,
-                    "count_submitted": 3,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 3,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 3,
-                    "count_approved": 0,
+                    "count_approved": 3,
                     "count_rejected": 0,
-                    "count_submitted": 3,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 3,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 2,
+                    "count_approved": 2,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 2,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -18311,8 +18738,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 50,
-            "performance_summary_yearly": 95.83333333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -18325,6 +18752,8 @@ export default {
             "tagihan_pln": 52884864,
             "pln_saving": 1671807,
             "pln_saving_percent": 3.1612201933619417,
+            "pln_saving_yoy": 5730547,
+            "pln_saving_yoy_percent": 10.8358924776662,
             "replacement": null
         },
         {
@@ -18351,41 +18780,41 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -18430,8 +18859,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 50,
-            "performance_summary_yearly": 95.83333333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -18444,6 +18873,8 @@ export default {
             "tagihan_pln": 170294524,
             "pln_saving": 56968,
             "pln_saving_percent": 0.03345263174757164,
+            "pln_saving_yoy": 3677358,
+            "pln_saving_yoy_percent": 2.1594105985463163,
             "replacement": null
         },
         {
@@ -18470,41 +18901,41 @@ export default {
             "performance": [
                 {
                     "count_all": 3,
-                    "count_approved": 0,
+                    "count_approved": 3,
                     "count_rejected": 0,
-                    "count_submitted": 3,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 3,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 3,
-                    "count_approved": 0,
+                    "count_approved": 3,
                     "count_rejected": 0,
-                    "count_submitted": 3,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 3,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 2,
+                    "count_approved": 2,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 2,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -18549,8 +18980,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 50,
-            "performance_summary_yearly": 95.83333333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -18563,6 +18994,8 @@ export default {
             "tagihan_pln": 78648489,
             "pln_saving": 3915716,
             "pln_saving_percent": 4.978755535913729,
+            "pln_saving_yoy": 2959036,
+            "pln_saving_yoy_percent": 3.7623558158885926,
             "replacement": null
         },
         {
@@ -18588,22 +19021,22 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -18623,16 +19056,6 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
                     "percentage": 100,
                     "has_schedule": false,
                     "id_schedule": null
@@ -18653,8 +19076,18 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -18668,13 +19101,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 50,
-            "performance_summary_yearly": 80.20833333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 84.375,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": 1.7267484439209333,
-                "online": 2.4256985294117657,
+                "online": 2.2403703703703717,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -18682,6 +19115,8 @@ export default {
             "tagihan_pln": 184113805,
             "pln_saving": 4800510,
             "pln_saving_percent": 2.6073601596577727,
+            "pln_saving_yoy": 15173763,
+            "pln_saving_yoy_percent": 8.241512905564035,
             "replacement": null
         },
         {
@@ -18707,42 +19142,32 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -18772,8 +19197,18 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -18787,12 +19222,12 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
-            "performance_summary_yearly": 79.16666666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 84.375,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.8415831201010333,
+                "offline": 1.801644065210375,
                 "online": null,
                 "isReachTarget": true,
                 "is_online": false
@@ -18801,6 +19236,8 @@ export default {
             "tagihan_pln": 34615361,
             "pln_saving": 890917,
             "pln_saving_percent": 2.573761978099838,
+            "pln_saving_yoy": -4270476,
+            "pln_saving_yoy_percent": -12.336939083200663,
             "replacement": null
         },
         {
@@ -18826,12 +19263,22 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -18841,8 +19288,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -18851,18 +19298,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -18891,8 +19328,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -18906,13 +19343,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
-            "performance_summary_yearly": 79.16666666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 84.375,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.7834996919657333,
-                "online": 1.6426470588235345,
+                "offline": 1.7837106156362,
+                "online": 1.7326210826210826,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -18920,6 +19357,8 @@ export default {
             "tagihan_pln": 187924585,
             "pln_saving": 4540259,
             "pln_saving_percent": 2.416000546176542,
+            "pln_saving_yoy": 15424484,
+            "pln_saving_yoy_percent": 8.207805274653127,
             "replacement": null
         },
         {
@@ -18946,41 +19385,41 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -19006,11 +19445,11 @@ export default {
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -19025,13 +19464,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
-            "performance_summary_yearly": 84.375,
+            "performance_summary": 100,
+            "performance_summary_yearly": 89.58333333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": 1.8868489250648,
-                "online": 2.4754880294659287,
+                "online": 2.3276747503566333,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -19039,6 +19478,8 @@ export default {
             "tagihan_pln": 58883423,
             "pln_saving": 2878674,
             "pln_saving_percent": 4.888768100319168,
+            "pln_saving_yoy": 580684,
+            "pln_saving_yoy_percent": 0.9861587020849654,
             "replacement": null
         },
         {
@@ -19065,41 +19506,41 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -19125,11 +19566,11 @@ export default {
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -19144,8 +19585,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
-            "performance_summary_yearly": 84.375,
+            "performance_summary": 100,
+            "performance_summary_yearly": 89.58333333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -19158,6 +19599,8 @@ export default {
             "tagihan_pln": 86328947,
             "pln_saving": 3497763,
             "pln_saving_percent": 4.051668787295645,
+            "pln_saving_yoy": -4387699,
+            "pln_saving_yoy_percent": -5.082535062080625,
             "replacement": null
         },
         {
@@ -19184,41 +19627,41 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -19244,11 +19687,11 @@ export default {
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -19263,8 +19706,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
-            "performance_summary_yearly": 84.375,
+            "performance_summary": 100,
+            "performance_summary_yearly": 89.58333333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -19277,6 +19720,8 @@ export default {
             "tagihan_pln": 223180561,
             "pln_saving": 8461680,
             "pln_saving_percent": 3.7914054710168057,
+            "pln_saving_yoy": 19643708,
+            "pln_saving_yoy_percent": 8.801711005646231,
             "replacement": null
         },
         {
@@ -19303,41 +19748,41 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -19363,11 +19808,11 @@ export default {
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -19382,8 +19827,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
-            "performance_summary_yearly": 84.375,
+            "performance_summary": 100,
+            "performance_summary_yearly": 89.58333333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -19396,6 +19841,8 @@ export default {
             "tagihan_pln": 279796585,
             "pln_saving": 1054058,
             "pln_saving_percent": 0.3767229682235042,
+            "pln_saving_yoy": -10482967,
+            "pln_saving_yoy_percent": -3.74663865179055,
             "replacement": null
         },
         {
@@ -19506,7 +19953,7 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.5388024643476501,
+                "offline": 1.5443600129615334,
                 "online": null,
                 "isReachTarget": false,
                 "is_online": true
@@ -19515,6 +19962,8 @@ export default {
             "tagihan_pln": 53097813,
             "pln_saving": 1080636,
             "pln_saving_percent": 2.035179867012602,
+            "pln_saving_yoy": -7596232,
+            "pln_saving_yoy_percent": -14.306110875037358,
             "replacement": null
         },
         {
@@ -19621,12 +20070,12 @@ export default {
                 }
             ],
             "performance_summary": 100,
-            "performance_summary_yearly": 89.58333333333333,
+            "performance_summary_yearly": 94.79166666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.6749527148226,
-                "online": 1.3463043478260868,
+                "offline": 1.6712865387449334,
+                "online": 1.4105133079847902,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -19634,6 +20083,8 @@ export default {
             "tagihan_pln": 21838839,
             "pln_saving": -87405,
             "pln_saving_percent": -0.40022731977647713,
+            "pln_saving_yoy": 1633666,
+            "pln_saving_yoy_percent": 7.480553338938943,
             "replacement": null
         },
         {
@@ -19744,8 +20195,8 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.5527916873407501,
-                "online": 1.7016697588126135,
+                "offline": 1.5454788269466,
+                "online": 1.6784791965566686,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -19753,6 +20204,8 @@ export default {
             "tagihan_pln": 75479034,
             "pln_saving": 3749864,
             "pln_saving_percent": 4.968086899469328,
+            "pln_saving_yoy": 3837846,
+            "pln_saving_yoy_percent": 5.084651719310558,
             "replacement": null
         },
         {
@@ -19778,42 +20231,42 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -19838,12 +20291,12 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -19858,13 +20311,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
-            "performance_summary_yearly": 83.33333333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 88.54166666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": 1.9347275908926,
-                "online": 2.440000000000033,
+                "online": 2.345427350427376,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -19872,6 +20325,8 @@ export default {
             "tagihan_pln": 40810351,
             "pln_saving": 1325368,
             "pln_saving_percent": 3.247627054224552,
+            "pln_saving_yoy": 1640024,
+            "pln_saving_yoy_percent": 4.018647131949441,
             "replacement": null
         },
         {
@@ -19897,42 +20352,42 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -19957,12 +20412,12 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -19977,13 +20432,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
-            "performance_summary_yearly": 83.33333333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 88.54166666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.2229251535474666,
-                "online": 2.3288786764705884,
+                "offline": 1.401411069537575,
+                "online": 2.2067948717948576,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -19991,6 +20446,8 @@ export default {
             "tagihan_pln": 41647844,
             "pln_saving": 2148559,
             "pln_saving_percent": 5.1588720895132045,
+            "pln_saving_yoy": 907417,
+            "pln_saving_yoy_percent": 2.1787850530750164,
             "replacement": null
         },
         {
@@ -20016,42 +20473,42 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -20076,12 +20533,12 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -20096,13 +20553,13 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
-            "performance_summary_yearly": 83.33333333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 88.54166666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": 1.805588217969475,
-                "online": 2.190670391061453,
+                "online": 2.005173410404623,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -20110,6 +20567,8 @@ export default {
             "tagihan_pln": 60959437,
             "pln_saving": 732608,
             "pln_saving_percent": 1.2017958761659822,
+            "pln_saving_yoy": -2297940,
+            "pln_saving_yoy_percent": -3.769621428754337,
             "replacement": null
         },
         {
@@ -20220,15 +20679,17 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.7539576205968999,
-                "online": 1.8053492647058835,
-                "isReachTarget": true,
+                "offline": 1.7761381709836666,
+                "online": 1.7886467236467183,
+                "isReachTarget": false,
                 "is_online": true
             },
             "ike": null,
             "tagihan_pln": 154903441,
             "pln_saving": 8258066,
             "pln_saving_percent": 5.331105588545318,
+            "pln_saving_yoy": 20043586,
+            "pln_saving_yoy_percent": 12.939406555855657,
             "replacement": null
         },
         {
@@ -20339,8 +20800,8 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.57352061596885,
-                "online": 2.048161764705882,
+                "offline": 1.5573710672649668,
+                "online": 1.9845726495726494,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -20348,6 +20809,8 @@ export default {
             "tagihan_pln": 265082645,
             "pln_saving": 4521722,
             "pln_saving_percent": 1.7057782111688224,
+            "pln_saving_yoy": -3093564,
+            "pln_saving_yoy_percent": -1.1670186858140035,
             "replacement": null
         },
         {
@@ -20373,42 +20836,42 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -20453,8 +20916,8 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 50,
-            "performance_summary_yearly": 80.20833333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 84.375,
             "is_pue": true,
             "is_ike": false,
             "pue": {
@@ -20467,6 +20930,8 @@ export default {
             "tagihan_pln": 147881578,
             "pln_saving": 5844906,
             "pln_saving_percent": 3.952423337002801,
+            "pln_saving_yoy": -3497829,
+            "pln_saving_yoy_percent": -2.3652905570158302,
             "replacement": null
         },
         {
@@ -20577,8 +21042,8 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.9131001899288667,
-                "online": 1.3493749999999982,
+                "offline": 1.917121333516875,
+                "online": 1.3741310541310527,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -20586,6 +21051,8 @@ export default {
             "tagihan_pln": 123160928,
             "pln_saving": 4286264,
             "pln_saving_percent": 3.480214114658181,
+            "pln_saving_yoy": -15112443,
+            "pln_saving_yoy_percent": -12.270484840776776,
             "replacement": null
         },
         {
@@ -20696,8 +21163,8 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.7578355800526666,
-                "online": 1.6314154411764727,
+                "offline": 1.783770735179875,
+                "online": 1.6519800569800593,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -20705,6 +21172,8 @@ export default {
             "tagihan_pln": 83500224,
             "pln_saving": 3294349,
             "pln_saving_percent": 3.9453175598666657,
+            "pln_saving_yoy": 8826250,
+            "pln_saving_yoy_percent": 10.570330925100272,
             "replacement": null
         },
         {
@@ -20815,7 +21284,7 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 3.520378155086767,
+                "offline": 3.392678156956975,
                 "online": null,
                 "isReachTarget": true,
                 "is_online": true
@@ -20824,6 +21293,8 @@ export default {
             "tagihan_pln": 59495003,
             "pln_saving": -1911164,
             "pln_saving_percent": -3.2123101161958085,
+            "pln_saving_yoy": -22307641,
+            "pln_saving_yoy_percent": -37.4949825618128,
             "replacement": null
         },
         {
@@ -20934,7 +21405,7 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": 1.6018538269434333,
+                "offline": 1.642668798994925,
                 "online": null,
                 "isReachTarget": false,
                 "is_online": false
@@ -20943,6 +21414,8 @@ export default {
             "tagihan_pln": 68704272,
             "pln_saving": 3402963,
             "pln_saving_percent": 4.95305881415933,
+            "pln_saving_yoy": 5454725,
+            "pln_saving_yoy_percent": 7.9394262412095715,
             "replacement": null
         },
         {
@@ -21053,15 +21526,17 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 1.7750174260962,
                 "online": null,
-                "isReachTarget": true,
+                "isReachTarget": false,
                 "is_online": false
             },
             "ike": null,
             "tagihan_pln": 63980616,
             "pln_saving": -790494,
             "pln_saving_percent": -1.2355210834481494,
+            "pln_saving_yoy": -9030331,
+            "pln_saving_yoy_percent": -14.114167015834923,
             "replacement": null
         },
         {
@@ -21168,19 +21643,21 @@ export default {
                 }
             ],
             "performance_summary": 100,
-            "performance_summary_yearly": 92.70833333333333,
+            "performance_summary_yearly": 100,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 1.4483086133033,
                 "online": null,
-                "isReachTarget": true,
+                "isReachTarget": false,
                 "is_online": false
             },
             "ike": null,
             "tagihan_pln": 28704053,
             "pln_saving": 386168,
             "pln_saving_percent": 1.3453431123472355,
+            "pln_saving_yoy": 1252265,
+            "pln_saving_yoy_percent": 4.362676587867226,
             "replacement": null
         },
         {
@@ -21201,8 +21678,8 @@ export default {
                 "sto_name": "STO Marisa",
                 "tipe": "STO",
                 "rtu_kode": "",
-                "tipe_perhitungan": "ike",
-                "is_online": null
+                "tipe_perhitungan": "pue",
+                "is_online": false
             },
             "performance": [
                 {
@@ -21287,19 +21764,21 @@ export default {
                 }
             ],
             "performance_summary": 100,
-            "performance_summary_yearly": 92.70833333333333,
-            "is_pue": false,
-            "is_ike": true,
+            "performance_summary_yearly": 100,
+            "is_pue": true,
+            "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 1.5359734116391,
                 "online": null,
-                "isReachTarget": true,
-                "is_online": null
+                "isReachTarget": false,
+                "is_online": false
             },
             "ike": null,
             "tagihan_pln": 20947315,
             "pln_saving": 209771,
             "pln_saving_percent": 1.0014219006111285,
+            "pln_saving_yoy": 648381,
+            "pln_saving_yoy_percent": 3.0952940746821254,
             "replacement": null
         },
         {
@@ -21320,8 +21799,8 @@ export default {
                 "sto_name": "Ktr Witel Maluku",
                 "tipe": "OFFICE",
                 "rtu_kode": "",
-                "tipe_perhitungan": "pue",
-                "is_online": false
+                "tipe_perhitungan": "ike",
+                "is_online": null
             },
             "performance": [
                 {
@@ -21355,12 +21834,12 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -21405,20 +21884,22 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 87.5,
-            "performance_summary_yearly": 98.95833333333333,
-            "is_pue": true,
-            "is_ike": false,
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
+            "is_pue": false,
+            "is_ike": true,
             "pue": {
                 "offline": null,
                 "online": null,
                 "isReachTarget": true,
-                "is_online": false
+                "is_online": null
             },
             "ike": null,
             "tagihan_pln": 37407938,
             "pln_saving": 5252207,
             "pln_saving_percent": 14.040354215728224,
+            "pln_saving_yoy": 10809534,
+            "pln_saving_yoy_percent": 28.896364188798646,
             "replacement": null
         },
         {
@@ -21474,12 +21955,12 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -21524,12 +22005,12 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 87.5,
-            "performance_summary_yearly": 97.91666666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 98.95833333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 2.9695567164179,
                 "online": null,
                 "isReachTarget": true,
                 "is_online": false
@@ -21538,6 +22019,8 @@ export default {
             "tagihan_pln": 21242901,
             "pln_saving": 58800,
             "pln_saving_percent": 0.27679835254139723,
+            "pln_saving_yoy": -252677,
+            "pln_saving_yoy_percent": -1.1894656007670514,
             "replacement": null
         },
         {
@@ -21593,12 +22076,12 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -21643,12 +22126,12 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 87.5,
-            "performance_summary_yearly": 98.95833333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 2.9102157852827,
                 "online": null,
                 "isReachTarget": true,
                 "is_online": false
@@ -21657,6 +22140,8 @@ export default {
             "tagihan_pln": 95637212,
             "pln_saving": -4282384,
             "pln_saving_percent": -4.477738225995128,
+            "pln_saving_yoy": -17003376,
+            "pln_saving_yoy_percent": -17.77903772435357,
             "replacement": null
         },
         {
@@ -21712,12 +22197,12 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -21762,12 +22247,12 @@ export default {
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 87.5,
-            "performance_summary_yearly": 98.95833333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 100,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 2.4251857244039,
                 "online": null,
                 "isReachTarget": true,
                 "is_online": false
@@ -21776,6 +22261,8 @@ export default {
             "tagihan_pln": 49993636,
             "pln_saving": -1378622,
             "pln_saving_percent": -2.757594986689906,
+            "pln_saving_yoy": null,
+            "pln_saving_yoy_percent": null,
             "replacement": null
         },
         {
@@ -21801,31 +22288,31 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 17,
-                    "count_approved": 17,
+                    "count_all": 23,
+                    "count_approved": 23,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 17,
+                    "count_confirmed": 23,
                     "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 12,
-                    "count_approved": 12,
+                    "count_all": 15,
+                    "count_approved": 15,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 12,
+                    "count_confirmed": 15,
                     "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 10,
-                    "count_approved": 10,
+                    "count_all": 13,
+                    "count_approved": 13,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 10,
+                    "count_confirmed": 13,
                     "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
@@ -21882,19 +22369,21 @@ export default {
                 }
             ],
             "performance_summary": 100,
-            "performance_summary_yearly": 95.83333333333333,
+            "performance_summary_yearly": 92.70833333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 1.4849763935183,
                 "online": null,
-                "isReachTarget": true,
+                "isReachTarget": false,
                 "is_online": false
             },
             "ike": null,
             "tagihan_pln": 108059980,
             "pln_saving": 5620556,
             "pln_saving_percent": 5.2013298540310675,
+            "pln_saving_yoy": -15725848,
+            "pln_saving_yoy_percent": -14.55288812750104,
             "replacement": null
         },
         {
@@ -21920,31 +22409,31 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 8,
-                    "count_approved": 8,
+                    "count_all": 15,
+                    "count_approved": 15,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 8,
+                    "count_confirmed": 15,
                     "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 8,
-                    "count_approved": 8,
+                    "count_all": 15,
+                    "count_approved": 15,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 8,
+                    "count_confirmed": 15,
                     "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 6,
-                    "count_approved": 6,
+                    "count_all": 13,
+                    "count_approved": 13,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 6,
+                    "count_confirmed": 13,
                     "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
@@ -22005,7 +22494,7 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 2.9341671662242,
                 "online": null,
                 "isReachTarget": true,
                 "is_online": false
@@ -22014,6 +22503,8 @@ export default {
             "tagihan_pln": null,
             "pln_saving": null,
             "pln_saving_percent": null,
+            "pln_saving_yoy": null,
+            "pln_saving_yoy_percent": null,
             "replacement": null
         },
         {
@@ -22034,36 +22525,36 @@ export default {
                 "sto_name": "STO Timika",
                 "tipe": "MIX",
                 "rtu_kode": "",
-                "tipe_perhitungan": "ike",
-                "is_online": null
+                "tipe_perhitungan": "pue",
+                "is_online": false
             },
             "performance": [
                 {
-                    "count_all": 150,
-                    "count_approved": 150,
+                    "count_all": 218,
+                    "count_approved": 218,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 150,
+                    "count_confirmed": 218,
                     "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 40,
-                    "count_approved": 40,
+                    "count_all": 57,
+                    "count_approved": 57,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 40,
+                    "count_confirmed": 57,
                     "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 41,
-                    "count_approved": 41,
+                    "count_all": 58,
+                    "count_approved": 58,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 41,
+                    "count_confirmed": 58,
                     "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
@@ -22121,18 +22612,20 @@ export default {
             ],
             "performance_summary": 100,
             "performance_summary_yearly": 95.83333333333333,
-            "is_pue": false,
-            "is_ike": true,
+            "is_pue": true,
+            "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 2.8383962788723,
                 "online": null,
                 "isReachTarget": true,
-                "is_online": null
+                "is_online": false
             },
             "ike": null,
             "tagihan_pln": 70371499,
             "pln_saving": 1773066,
             "pln_saving_percent": 2.519579695183131,
+            "pln_saving_yoy": 10032431,
+            "pln_saving_yoy_percent": 14.256383823797755,
             "replacement": null
         },
         {
@@ -22243,7 +22736,7 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 3.2668983238485,
                 "online": null,
                 "isReachTarget": true,
                 "is_online": false
@@ -22252,6 +22745,8 @@ export default {
             "tagihan_pln": 146147579,
             "pln_saving": -1088190,
             "pln_saving_percent": -0.744582980741679,
+            "pln_saving_yoy": 2935981,
+            "pln_saving_yoy_percent": 2.008915248606342,
             "replacement": null
         },
         {
@@ -22272,8 +22767,8 @@ export default {
                 "sto_name": "STO Fakfak",
                 "tipe": "MIX",
                 "rtu_kode": "",
-                "tipe_perhitungan": "ike",
-                "is_online": null
+                "tipe_perhitungan": "pue",
+                "is_online": false
             },
             "performance": [
                 {
@@ -22359,18 +22854,20 @@ export default {
             ],
             "performance_summary": 100,
             "performance_summary_yearly": 98.95833333333333,
-            "is_pue": false,
-            "is_ike": true,
+            "is_pue": true,
+            "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 3.1651668067227,
                 "online": null,
                 "isReachTarget": true,
-                "is_online": null
+                "is_online": false
             },
             "ike": null,
             "tagihan_pln": 60040897,
             "pln_saving": 2774691,
             "pln_saving_percent": 4.621335021027417,
+            "pln_saving_yoy": 10876279,
+            "pln_saving_yoy_percent": 18.114784327755796,
             "replacement": null
         },
         {
@@ -22481,7 +22978,7 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 2.1779670028569,
                 "online": null,
                 "isReachTarget": true,
                 "is_online": false
@@ -22490,6 +22987,8 @@ export default {
             "tagihan_pln": 115895883,
             "pln_saving": 3934555,
             "pln_saving_percent": 3.394904890624976,
+            "pln_saving_yoy": 6145076,
+            "pln_saving_yoy_percent": 5.302238389261851,
             "replacement": null
         },
         {
@@ -22516,92 +23015,92 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 0,
+            "performance_summary": 100,
             "performance_summary_yearly": 91.66666666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 1.159832713754645,
+                "online": 1.1581465517241352,
                 "isReachTarget": false,
                 "is_online": true
             },
@@ -22609,6 +23108,8 @@ export default {
             "tagihan_pln": 133136536,
             "pln_saving": 3080966,
             "pln_saving_percent": 2.3141401245410202,
+            "pln_saving_yoy": 575335,
+            "pln_saving_yoy_percent": 0.43213907863728707,
             "replacement": null
         },
         {
@@ -22629,105 +23130,107 @@ export default {
                 "sto_name": "Ktr TREG-7",
                 "tipe": "OFFICE",
                 "rtu_kode": "",
-                "tipe_perhitungan": "pue",
-                "is_online": false
+                "tipe_perhitungan": "ike",
+                "is_online": null
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 0,
+            "performance_summary": 100,
             "performance_summary_yearly": 91.66666666666667,
-            "is_pue": true,
-            "is_ike": false,
+            "is_pue": false,
+            "is_ike": true,
             "pue": {
                 "offline": null,
                 "online": null,
                 "isReachTarget": true,
-                "is_online": false
+                "is_online": null
             },
             "ike": null,
             "tagihan_pln": 126398983,
             "pln_saving": 1988179,
             "pln_saving_percent": 1.5729390797392728,
+            "pln_saving_yoy": -8220468,
+            "pln_saving_yoy_percent": -6.503587137247774,
             "replacement": null
         },
         {
@@ -22774,72 +23277,72 @@ export default {
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 25,
-            "performance_summary_yearly": 93.75,
+            "performance_summary": 100,
+            "performance_summary_yearly": 91.66666666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
                 "offline": null,
-                "online": 2.3202268431001882,
+                "online": 2.3254002911208156,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -22847,6 +23350,8 @@ export default {
             "tagihan_pln": 344186318,
             "pln_saving": 5089172,
             "pln_saving_percent": 1.478609617480495,
+            "pln_saving_yoy": 3910527,
+            "pln_saving_yoy_percent": 1.1361657321892733,
             "replacement": null
         },
         {
@@ -22873,92 +23378,92 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 0,
+            "performance_summary": 100,
             "performance_summary_yearly": 91.66666666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
-                "online": 1.806331471135934,
+                "offline": 1.7720864404411,
+                "online": 1.8096402877697793,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -22966,6 +23471,8 @@ export default {
             "tagihan_pln": 279266531,
             "pln_saving": 8846864,
             "pln_saving_percent": 3.167892682421009,
+            "pln_saving_yoy": 0,
+            "pln_saving_yoy_percent": 0,
             "replacement": null
         },
         {
@@ -22992,92 +23499,92 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 0,
+            "performance_summary": 100,
             "performance_summary_yearly": 91.66666666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
-                "online": 2.674812623274161,
+                "offline": 1.695304369511,
+                "online": 2.681379310344828,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -23085,6 +23592,8 @@ export default {
             "tagihan_pln": 56101344,
             "pln_saving": 3146556,
             "pln_saving_percent": 5.608699855746772,
+            "pln_saving_yoy": -11793231,
+            "pln_saving_yoy_percent": -21.02129852717967,
             "replacement": null
         },
         {
@@ -23110,22 +23619,62 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -23135,68 +23684,28 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 0,
-            "performance_summary_yearly": 71.875,
+            "performance_summary": 100,
+            "performance_summary_yearly": 80.20833333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
-                "online": 2.1803125000000008,
+                "offline": 1.7605961254929,
+                "online": 2.176961483594865,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -23204,6 +23713,8 @@ export default {
             "tagihan_pln": 28740604,
             "pln_saving": 861330,
             "pln_saving_percent": 2.9969098770506006,
+            "pln_saving_yoy": -627723,
+            "pln_saving_yoy_percent": -2.1840981490855236,
             "replacement": null
         },
         {
@@ -23230,71 +23741,41 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -23304,18 +23785,48 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 0,
+                    "count_approved": 0,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 0,
-            "performance_summary_yearly": 75,
+            "performance_summary": 100,
+            "performance_summary_yearly": 83.33333333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
-                "online": 1.9731801470588237,
+                "offline": 1.5972520829141,
+                "online": 1.9599572039942943,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -23323,6 +23834,8 @@ export default {
             "tagihan_pln": 35310233,
             "pln_saving": -521248,
             "pln_saving_percent": -1.4761953000989825,
+            "pln_saving_yoy": -465627,
+            "pln_saving_yoy_percent": -1.3186743910752445,
             "replacement": null
         },
         {
@@ -23349,31 +23862,41 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
+                    "has_schedule": true,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -23383,8 +23906,8 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
+                    "percentage": 100,
+                    "has_schedule": false,
                     "id_schedule": null
                 },
                 {
@@ -23393,48 +23916,38 @@ export default {
                     "count_rejected": 0,
                     "count_submitted": 0,
                     "count_confirmed": 0,
-                    "percentage": 0,
+                    "percentage": 100,
+                    "has_schedule": false,
+                    "id_schedule": null
+                },
+                {
+                    "count_all": 1,
+                    "count_approved": 1,
+                    "count_rejected": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
-                    "has_schedule": true,
-                    "id_schedule": null
-                },
-                {
-                    "count_all": 0,
-                    "count_approved": 0,
-                    "count_rejected": 0,
-                    "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 0,
-            "performance_summary_yearly": 76.04166666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 84.375,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
-                "online": 1.951397058823528,
+                "offline": 1.7100316789863,
+                "online": 1.9510541310541283,
                 "isReachTarget": true,
                 "is_online": true
             },
@@ -23442,6 +23955,8 @@ export default {
             "tagihan_pln": 48034717,
             "pln_saving": 913772,
             "pln_saving_percent": 1.9023157771492647,
+            "pln_saving_yoy": 1980105,
+            "pln_saving_yoy_percent": 4.122237256024637,
             "replacement": null
         },
         {
@@ -23463,7 +23978,7 @@ export default {
                 "tipe": "MIX",
                 "rtu_kode": "",
                 "tipe_perhitungan": "pue",
-                "is_online": false
+                "is_online": true
             },
             "performance": [
                 {
@@ -23552,15 +24067,17 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
-                "online": null,
-                "isReachTarget": true,
-                "is_online": false
+                "offline": 1.7621377037343,
+                "online": 1.7946608946608977,
+                "isReachTarget": false,
+                "is_online": true
             },
             "ike": null,
             "tagihan_pln": 44390751,
             "pln_saving": 3769511,
             "pln_saving_percent": 8.491658543916051,
+            "pln_saving_yoy": -2108828,
+            "pln_saving_yoy_percent": -4.750602214411737,
             "replacement": null
         },
         {
@@ -23582,7 +24099,7 @@ export default {
                 "tipe": "STO",
                 "rtu_kode": "",
                 "tipe_perhitungan": "pue",
-                "is_online": false
+                "is_online": true
             },
             "performance": [
                 {
@@ -23671,15 +24188,17 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
-                "online": null,
+                "offline": 1.7864328755787,
+                "online": 2.0609329446064115,
                 "isReachTarget": true,
-                "is_online": false
+                "is_online": true
             },
             "ike": null,
             "tagihan_pln": 100202401,
             "pln_saving": 3529547,
             "pln_saving_percent": 3.5224175915704854,
+            "pln_saving_yoy": 7494525,
+            "pln_saving_yoy_percent": 7.479386646633348,
             "replacement": null
         },
         {
@@ -23701,7 +24220,7 @@ export default {
                 "tipe": "STO",
                 "rtu_kode": "",
                 "tipe_perhitungan": "pue",
-                "is_online": false
+                "is_online": true
             },
             "performance": [
                 {
@@ -23790,15 +24309,17 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
-                "online": null,
+                "offline": 1.7720408118313,
+                "online": 1.845560407569139,
                 "isReachTarget": true,
-                "is_online": false
+                "is_online": true
             },
             "ike": null,
             "tagihan_pln": 63363851,
             "pln_saving": 1980106,
             "pln_saving_percent": 3.1249773628815585,
+            "pln_saving_yoy": 10161153,
+            "pln_saving_yoy_percent": 16.036198620566797,
             "replacement": null
         },
         {
@@ -23909,7 +24430,7 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 2.2927930706162,
                 "online": null,
                 "isReachTarget": true,
                 "is_online": false
@@ -23918,6 +24439,8 @@ export default {
             "tagihan_pln": 28405290,
             "pln_saving": 1668628,
             "pln_saving_percent": 5.874356501905103,
+            "pln_saving_yoy": -3068687,
+            "pln_saving_yoy_percent": -10.803223624895223,
             "replacement": null
         },
         {
@@ -24028,7 +24551,7 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 2.304728418877,
                 "online": null,
                 "isReachTarget": true,
                 "is_online": false
@@ -24037,6 +24560,8 @@ export default {
             "tagihan_pln": 87458847,
             "pln_saving": 3945909,
             "pln_saving_percent": 4.511732243623107,
+            "pln_saving_yoy": 0,
+            "pln_saving_yoy_percent": 0,
             "replacement": null
         },
         {
@@ -24147,7 +24672,7 @@ export default {
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 2.2542315886643,
                 "online": null,
                 "isReachTarget": true,
                 "is_online": false
@@ -24156,6 +24681,8 @@ export default {
             "tagihan_pln": 5031777,
             "pln_saving": 361207,
             "pln_saving_percent": 7.178517648933965,
+            "pln_saving_yoy": -510124,
+            "pln_saving_yoy_percent": -10.138048645637515,
             "replacement": null
         },
         {
@@ -24182,61 +24709,61 @@ export default {
             "performance": [
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
                     "count_all": 3,
-                    "count_approved": 0,
+                    "count_approved": 3,
                     "count_rejected": 0,
-                    "count_submitted": 3,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 3,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -24252,21 +24779,21 @@ export default {
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 12.5,
-            "performance_summary_yearly": 92.70833333333333,
+            "performance_summary": 100,
+            "performance_summary_yearly": 91.66666666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 2.7098115615102,
                 "online": null,
                 "isReachTarget": true,
                 "is_online": false
@@ -24275,6 +24802,8 @@ export default {
             "tagihan_pln": 199525258,
             "pln_saving": 3846473,
             "pln_saving_percent": 1.9278125679707176,
+            "pln_saving_yoy": 15358547,
+            "pln_saving_yoy_percent": 7.697545240111905,
             "replacement": null
         },
         {
@@ -24300,42 +24829,42 @@ export default {
             },
             "performance": [
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -24370,30 +24899,32 @@ export default {
                     "id_schedule": null
                 },
                 {
-                    "count_all": 0,
-                    "count_approved": 0,
+                    "count_all": 1,
+                    "count_approved": 1,
                     "count_rejected": 0,
                     "count_submitted": 0,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 37.5,
-            "performance_summary_yearly": 94.79166666666667,
+            "performance_summary": 100,
+            "performance_summary_yearly": 92.70833333333333,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 1.7670838025235,
                 "online": null,
-                "isReachTarget": true,
+                "isReachTarget": false,
                 "is_online": false
             },
             "ike": null,
             "tagihan_pln": 218219845,
             "pln_saving": 7045791,
             "pln_saving_percent": 3.228758136089777,
+            "pln_saving_yoy": 26296384,
+            "pln_saving_yoy_percent": 12.05040907255708,
             "replacement": null
         },
         {
@@ -24420,11 +24951,11 @@ export default {
             "performance": [
                 {
                     "count_all": 2,
-                    "count_approved": 0,
+                    "count_approved": 2,
                     "count_rejected": 0,
-                    "count_submitted": 2,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 2,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -24450,11 +24981,11 @@ export default {
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 },
@@ -24490,21 +25021,21 @@ export default {
                 },
                 {
                     "count_all": 1,
-                    "count_approved": 0,
+                    "count_approved": 1,
                     "count_rejected": 0,
-                    "count_submitted": 1,
-                    "count_confirmed": 0,
-                    "percentage": 0,
+                    "count_submitted": 0,
+                    "count_confirmed": 1,
+                    "percentage": 100,
                     "has_schedule": true,
                     "id_schedule": null
                 }
             ],
-            "performance_summary": 62.5,
-            "performance_summary_yearly": 96.875,
+            "performance_summary": 100,
+            "performance_summary_yearly": 94.79166666666667,
             "is_pue": true,
             "is_ike": false,
             "pue": {
-                "offline": null,
+                "offline": 2.8131570988519,
                 "online": null,
                 "isReachTarget": true,
                 "is_online": false
@@ -24513,29 +25044,32 @@ export default {
             "tagihan_pln": 83946782,
             "pln_saving": 2493409,
             "pln_saving_percent": 2.970225827119853,
+            "pln_saving_yoy": -12732429,
+            "pln_saving_yoy_percent": -15.167262754634239,
             "replacement": null
         }
     ],
     "gepee_summary_nasional": {
         "performance": [
-            48.095238095238095,
-            48.95881895881896,
-            48.24656824656825,
-            51.83201058201058,
-            27.77777777777778,
-            37.77777777777778,
-            55.47619047619048,
-            50
+            85.97883597883597,
+            84.51178451178451,
+            81.07263107263108,
+            85.95238095238096,
+            78.57142857142858,
+            83.09523809523809,
+            87.79761904761905,
+            73.33333333333333
         ],
-        "performance_summary": 71.72247065104209,
-        "performance_summary_yearly": 84.97063424890806,
-        "tagihan_pln": 24773017144,
-        "pln_saving": 2856252.384995031,
-        "pln_saving_percent": 1.7929082776638379,
-        "pue_online": 1.9367958121293911,
-        "pue_offline": 1.9064566838028514,
+        "performance_summary": 91.47512540369682,
+        "performance_summary_yearly": 85.90986009140772,
+        "tagihan_pln": 25070440945,
+        "pln_saving": 2863177.8978155437,
+        "pln_saving_percent": 1.8927920734311428,
+        "pln_saving_yoy": -599342.0938581257,
+        "pln_saving_yoy_percent": -3.7446064086478392,
+        "pue_online": 1.9142130265636823,
+        "pue_offline": 1.9558496391239988,
         "ike": null,
-        "test": null,
         "isPueReachTarget": true
     },
     "category": [
@@ -24596,6 +25130,6 @@ export default {
             "updated_at": "2023-02-17 00:52:05"
         }
     ],
-    "timestamp": "2023-08-23 15:01:30",
+    "timestamp": "2023-09-05 15:43:14",
     "success": true
 };
