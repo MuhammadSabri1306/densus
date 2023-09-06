@@ -349,7 +349,7 @@ const selectedYear = computed(() => viewStore.filters.year);
                         <th class="tw-whitespace-nowrap">Rp. Tagihan PLN<br><small>(Bulan {{ selectedMonth }})</small></th>
                         <th class="tw-whitespace-nowrap">Jumlah Saving<br><small>(Dibanding bulan sebelumnya)</small></th>
                         <th class="tw-whitespace-nowrap">% Saving<br><small>(Dibanding bulan sebelumnya)</small></th>
-                        <th class="tw-whitespace-nowrap">% Saving YoY<br><small>(Dibanding bulan yang sama di tahun sebelumnya)</small></th>
+                        <th class="tw-whitespace-nowrap">% Saving YoY<br><small>(Dibanding bulan last year)</small></th>
                         <th v-for="category in categoryList" @click="$emit('showCategory')"
                             class="tw-cursor-pointer btn-primary category-tooltip">
                             <p class="text-center mb-0">{{ category.alias }}</p>
