@@ -3,7 +3,7 @@ vite-project/dist
 
 upload/*
 !upload/**/
-crons/node-crons
+# crons/node-crons
 
 # Logs
 logs
