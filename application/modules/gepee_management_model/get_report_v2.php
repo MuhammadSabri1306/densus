@@ -352,8 +352,12 @@ foreach($locationData as $location) {
                 $row['pue']['online'] = $pueOnline['sum'] / $pueOnline['count'];
             }
         }
-        
-        if(!is_null($row['pue']['online'])) {
+
+        if(!is_null($row['pue']['online']) && !is_null($row['pue']['offline'])) {
+
+            $row['pue']['isReachTarget'] = min($row['pue']['online'], $row['pue']['offline']) > $pueLowLimit;
+            
+        }elseif(!is_null($row['pue']['online'])) {
 
             $row['pue']['isReachTarget'] = $row['pue']['online'] > $pueLowLimit;
             
@@ -788,7 +792,7 @@ $nasional = [
 
 $nasionalPueOnline = $nasional['pue_online'] !== null ? $nasional['pue_online'] : 0;
 $nasionalPueOffline = $nasional['pue_offline'] !== null ? $nasional['pue_offline'] : 0;
-$nasional['isPueReachTarget'] = max($nasionalPueOnline, $nasionalPueOffline) > $pueLowLimit;
+$nasional['isPueReachTarget'] = min($nasionalPueOnline, $nasionalPueOffline) > $pueLowLimit;
 
 $this->result = [
     'gepee' => $data,

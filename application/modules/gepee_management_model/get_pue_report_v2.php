@@ -125,11 +125,11 @@ foreach($witelPue as $witelCode => $locItem) {
 
         
         $witelPue[$witelCode][$locId]['value'] = null;
-        if($witelPue[$witelCode][$locId]['online'] && $witelPue[$witelCode][$locId]['offline']) {
+        if(!is_null($witelPue[$witelCode][$locId]['online']) && !is_null($witelPue[$witelCode][$locId]['offline'])) {
             $witelPue[$witelCode][$locId]['value'] = min($witelPue[$witelCode][$locId]['online'], $witelPue[$witelCode][$locId]['offline']);
-        } elseif($witelPue[$witelCode][$locId]['online']) {
+        } elseif(!is_null($witelPue[$witelCode][$locId]['online'])) {
             $witelPue[$witelCode][$locId]['value'] = $witelPue[$witelCode][$locId]['online'];
-        } elseif($witelPue[$witelCode][$locId]['offline']) {
+        } elseif(!is_null($witelPue[$witelCode][$locId]['offline'])) {
             $witelPue[$witelCode][$locId]['value'] = $witelPue[$witelCode][$locId]['offline'];
         }
 

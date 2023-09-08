@@ -173,9 +173,11 @@ const getGroupAvg = (data, groupKey) => {
     currItem.ike = sum.ike === null ? null : (sum.ike / rowCountIke);
 
     let pueValue = null;
-    if(currItem.pue.online !== null)
+    if(currItem.pue.online !== null && currItem.pue.offline !== null)
+        pueValue = Math.min(currItem.pue.online, currItem.pue.offline);
+    else if(currItem.pue.online !== null)
         pueValue = currItem.pue.online;
-    if(currItem.pue.offline !== null)
+    else if(currItem.pue.offline !== null)
         pueValue = currItem.pue.offline;
     
     if(pueValue == null)
