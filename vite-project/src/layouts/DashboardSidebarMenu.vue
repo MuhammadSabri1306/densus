@@ -71,7 +71,10 @@ initExpanded();
                     </li>
                     <li class="sidebar-main-title">
                         <div>
-                            <h6>Saving Energy</h6>
+                            <h6 class="ms-2">
+                                <span class="!tw-text-5xl !tw-font-medium">G</span>
+                                <span class="!tw-font-bold">ePEE</span>
+                            </h6>
                         </div>
                     </li>
                     <li v-for="(item, index) in menuItems" :class="{ 'dropdown': item.child, 'expand': expandedIndexes.indexOf(index) >= 0 }" class="py-1">

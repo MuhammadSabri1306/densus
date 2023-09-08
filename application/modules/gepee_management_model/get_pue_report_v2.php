@@ -122,12 +122,15 @@ foreach($witelPue as $witelCode => $locItem) {
         
         unset($witelPue[$witelCode][$locId]['onlineSum']);
         unset($witelPue[$witelCode][$locId]['onlineCount']);
-    
+
+        
         $witelPue[$witelCode][$locId]['value'] = null;
-        if(!is_null($witelPue[$witelCode][$locId]['offline'])) {
-            $witelPue[$witelCode][$locId]['value'] = $witelPue[$witelCode][$locId]['offline'];
+        if($witelPue[$witelCode][$locId]['online'] && $witelPue[$witelCode][$locId]['offline']) {
+            $witelPue[$witelCode][$locId]['value'] = min($witelPue[$witelCode][$locId]['online'], $witelPue[$witelCode][$locId]['offline']);
         } elseif($witelPue[$witelCode][$locId]['online']) {
             $witelPue[$witelCode][$locId]['value'] = $witelPue[$witelCode][$locId]['online'];
+        } elseif($witelPue[$witelCode][$locId]['offline']) {
+            $witelPue[$witelCode][$locId]['value'] = $witelPue[$witelCode][$locId]['offline'];
         }
 
     }

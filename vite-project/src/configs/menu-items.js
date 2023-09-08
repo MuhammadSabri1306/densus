@@ -60,6 +60,14 @@ export const menuPue = {
     roles: ["admin", "viewer", "teknisi"]
 };
 
+export const menuKwH = {
+    key: "kwh",
+    title: "Monitoring KwH",
+    icon: "battery-charging",
+    to: "#",
+    roles: ["admin", "viewer", "teknisi"]
+};
+
 export const menuUser = {
     key: "user",
     to: "/user",
@@ -102,6 +110,7 @@ export default (() => {
     const menu = [
         menuLanding,
         menuPue,
+        menuKwH,
         menuMonitoring,
         // menuMonitoringEnergy,
         menuRtu,
