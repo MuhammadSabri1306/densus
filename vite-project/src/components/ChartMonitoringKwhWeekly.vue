@@ -1,8 +1,9 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, reactive, computed } from "vue";
 import { useKwhStore } from "@/stores/kwh";
 import { useUserStore } from "@stores/user";
-import { toNumberText, toRoman } from "@helpers/number-format";
+import { toNumberText } from "@helpers/number-format";
+import { generateUniqueStyle } from "@/helpers/apexchart";
 import VueApexCharts from "vue3-apexcharts";
 
 const kwhStore = useKwhStore();
@@ -23,6 +24,11 @@ const titleMonthYear = computed(() => {
 const weekColumn = ref([]);
 
 const series = ref([]);
+const seriesStyle = reactive({
+    colors: [],
+    dashes: []
+});
+
 const chartOptions = computed(() => {
     const titleText = titleMonthYear.value;
 
@@ -30,13 +36,9 @@ const chartOptions = computed(() => {
         chart: {
             animations: { enabled: true }
         },
-        // xaxis: {
-        //     type: "datetime",
-        //     labels: {
-        //         datetimeUTC: false,
-        //         format: "dd"
-        //     }
-        // },
+        stroke: {
+            dashArray: seriesStyle.dashes
+        },
         xaxis: {
             categories: weekColumn.value,
             labels: {
@@ -45,24 +47,13 @@ const chartOptions = computed(() => {
         },
         yaxis: {
             labels: {
-                formatter: value => value === null ? null : `${ toNumberText(value) } KwH`
+                formatter: value => value === null ? "-" : `${ toNumberText(value) } KwH`
             }
         },
         title: { text: titleText, align: "left" },
-        curve: "smooth",
-        dataLabels: { enabled: false }
+        curve: "smooth"
     };
 });
-
-const buildTimestamp = day => {
-    const year = kwhStore.filters.year;
-    const month = kwhStore.filters.month;
-    const date = new Date(`${ year }-${ month }-${ day }`);
-    const dateInWIB = date.toLocaleString('en-US', { timeZone: 'Asia/Jakarta' });
-
-    const utcDate = new Date(dateInWIB);
-    return utcDate.getTime();
-};
 
 const buildSeriesData = data => {
     const groupType = level.value == "witel" ? "sto"
@@ -105,7 +96,18 @@ const buildSeriesData = data => {
                 });
             return { name, data: seriesDataItem };
         });
-    return result;
+    
+    const resultFiltered = result.filter(({ data }) => {
+        for(let i=0; i<data.length; i++) {
+            if(data[i]) {
+                i = data.length;
+                return true;
+            }
+        }
+        return false;
+    });
+
+    return resultFiltered.length > 0 ? resultFiltered : result;
 };
 
 const setSrcData = data => {
@@ -116,6 +118,9 @@ const setSrcData = data => {
 
     weekColumn.value = data.week_column;
     series.value = buildSeriesData(data.kwh_data);
+    const { colors, dashes } = generateUniqueStyle(series.value.length, "all");
+    seriesStyle.colors = colors;
+    seriesStyle.dashes = dashes;
 };
 
 defineExpose({ setSrcData });

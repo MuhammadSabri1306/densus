@@ -1,8 +1,9 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, reactive, computed } from "vue";
 import { useKwhStore } from "@/stores/kwh";
 import { useUserStore } from "@stores/user";
 import { toNumberText } from "@helpers/number-format";
+import { generateUniqueStyle } from "@/helpers/apexchart";
 import VueApexCharts from "vue3-apexcharts";
 
 const kwhStore = useKwhStore();
@@ -21,6 +22,11 @@ const titleYear = computed(() => {
 
 const series = ref([]);
 const monthCategory = ref([]);
+const seriesStyle = reactive({
+    colors: [],
+    dashes: []
+});
+
 const chartOptions = computed(() => {
     const titleText = titleYear.value;
 
@@ -28,25 +34,24 @@ const chartOptions = computed(() => {
         chart: {
             animations: { enabled: true }
         },
+        stroke: {
+            dashArray: seriesStyle.dashes
+        },
         xaxis: {
-            categories: monthCategory.value,
-            // labels: {
-            //     style: { cssClass: "tw-uppercase" }
-            // }
+            categories: monthCategory.value
         },
         yaxis: {
             labels: {
                 formatter: value => {
                     if(value === null)
-                        return null;
+                        return "-";
                     const val = value / 1000000;
                     return `${ toNumberText(val) } juta KwH`;
                 }
             }
         },
         title: { text: titleText, align: "left" },
-        curve: "smooth",
-        dataLabels: { enabled: false }
+        curve: "smooth"
     };
 });
 
@@ -91,7 +96,18 @@ const buildSeriesData = data => {
                 });
             return { name, data: seriesDataItem };
         });
-    return result;
+
+    const resultFiltered = result.filter(({ data }) => {
+        for(let i=0; i<data.length; i++) {
+            if(data[i]) {
+                i = data.length;
+                return true;
+            }
+        }
+        return false;
+    });
+
+    return resultFiltered.length > 0 ? resultFiltered : result;
 };
 
 const setSrcData = data => {
@@ -101,10 +117,13 @@ const setSrcData = data => {
     }
 
     monthCategory.value = data.month_column.map(monthNumber => {
-        console.log(kwhStore.monthList[monthNumber]?.name);
         return kwhStore.monthList[monthNumber]?.name;
     });
+
     series.value = buildSeriesData(data.kwh_data);
+    const { colors, dashes } = generateUniqueStyle(series.value.length, "all");
+    seriesStyle.colors = colors;
+    seriesStyle.dashes = dashes;
 };
 
 defineExpose({ setSrcData });
