@@ -3,8 +3,8 @@
 class Datetime_range
 {
     public $format;
-    private $startDate;
-    private $endDate;
+    public $startDate;
+    public $endDate;
 
     public function __construct()
     {
@@ -36,6 +36,17 @@ class Datetime_range
 
         $this->endDate = new DateTime("$year-$month-01");
         $this->endDate->modify('last day of this month');
+        $this->endDate->setTime(23, 59, 59);
+
+        return $this->get_result();
+    }
+
+    public function get_by_daterange_month($startDate, $endDate, $month, $year)
+    {
+        $this->startDate = new DateTime("$year-$month-$startDate");
+        $this->startDate->setTime(0, 0, 0);
+
+        $this->endDate = new DateTime("$year-$month-$endDate");
         $this->endDate->setTime(23, 59, 59);
 
         return $this->get_result();

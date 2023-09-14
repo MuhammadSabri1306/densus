@@ -17,7 +17,13 @@ const props = defineProps({
     useYear: { type: Boolean, default: false },
     requireYear: { type: Boolean, default: false },
     autoApply: { type: Function, default: () => false },
-    initData: { type: Object, default: {} }
+    initData: { type: Object, default: {} },
+    rowClass: { default: "row justify-content-end align-items-end" },
+    divreColClass: { default: "col-12 col-md-4 col-xl-6" },
+    witelColClass: { default: "col-md-4 col-xl-3" },
+    monthColClass: { default: "col-md-4 col-xl-3" },
+    quarterColClass: { default: "col-md-4 col-xl-3" },
+    yearColClass: { default: "col-md-4 col-xl-3" },
 });
 
 const viewStore = useViewStore();
@@ -181,6 +187,8 @@ const setupFilter = () => {
 onMounted(() => {
     setupFilter();
 });
+
+const customFilterApply = () => emit("apply", getFiltersValue());
 </script>
 <template>
     <div class="row">
@@ -191,8 +199,9 @@ onMounted(() => {
                 </div>
                 <div class="card-body">
                     <form @submit.prevent="$emit('apply', getFiltersValue())">
-                        <div class="row justify-content-end align-items-end">
-                            <div class="col-12 col-md-4 col-xl-6">
+                        <div :class="rowClass">
+                            <slot name="filter1" :applyFilter="customFilterApply"></slot>
+                            <div :class="divreColClass">
                                 <div class="mb-2">
                                     <label for="inputDivre" :class="{ 'required': requireDivre }">Regional</label>
                                     <ListboxFilter ref="listboxDivre" inputId="inputDivre" inputPlaceholder="Pilih Divre"
@@ -200,7 +209,8 @@ onMounted(() => {
                                         resetTitle="Pilih Semua" @change="onDivreChange" />
                                 </div>
                             </div>
-                            <div class="col-md-4 col-xl-3">
+                            <slot name="filter2" :applyFilter="customFilterApply"></slot>
+                            <div :class="witelColClass">
                                 <div class="mb-2">
                                     <label for="inputWitel" :class="{ 'required': requireWitel }">Witel</label>
                                     <ListboxFilter ref="listboxWitel" inputId="inputWitel" inputPlaceholder="Pilih Witel"
@@ -208,16 +218,26 @@ onMounted(() => {
                                         resetTitle="Pilih Semua" @change="onWitelChange" />
                                 </div>
                             </div>
-                            <div v-if="useMonth" class="col-md-4 col-xl-3">
+                            <slot name="filter3" :applyFilter="customFilterApply"></slot>
+                            <div v-if="useYear" :class="yearColClass">
+                                <div class="mb-2">
+                                    <label for="inputYear" :class="{ 'required': requireYear }">Tahun</label>
+                                    <div class="d-grid">
+                                        <Calendar v-model="tempFilters.date" view="year" dateFormat="yy" :showButtonBar="!requireYear" placeholder="Pilih Tahun"
+                                            :class="{ 'p-invalid': isDateInvalid }" inputId="inputYear" inputClass="form-control text-center" panelClass="tw-min-w-[14rem]" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-if="useMonth" :class="monthColClass">
                                 <div class="mb-2">
                                     <label for="inputMonth" :class="{ 'required': requireMonth }">Bulan</label>
                                     <div class="d-grid">
-                                        <Calendar v-model="tempFilters.date" view="month" dateFormat="M yy" :showButtonBar="!requireMonth" placeholder="Pilih Bulan"
+                                        <Calendar v-model="tempFilters.date" view="month" :dateFormat="useYear ? 'M' : 'M yy'" :showButtonBar="!requireMonth" placeholder="Pilih Bulan"
                                             :class="{ 'p-invalid': isDateInvalid }" inputId="inputMonth" inputClass="form-control" panelClass="filter-month" />
                                     </div>
                                 </div>
                             </div>
-                            <div v-else-if="useQuarter" class="col-md-4 col-xl-3">
+                            <div v-if="useQuarter" :class="quarterColClass">
                                 <div class="mb-2">
                                     <label for="inputQuarter" :class="{ 'required': requireQuarter }">Kuartal</label>
                                     <div class="tw-grid tw-grid-cols-2">
@@ -229,18 +249,11 @@ onMounted(() => {
                                     </div>
                                 </div>
                             </div>
-                            <div v-else-if="useYear" class="col-md-4 col-xl-3">
-                                <div class="mb-2">
-                                    <label for="inputYear" :class="{ 'required': requireYear }">Tahun</label>
-                                    <div class="d-grid">
-                                        <Calendar v-model="tempFilters.date" view="year" dateFormat="yy" :showButtonBar="!requireYear" placeholder="Pilih Tahun"
-                                            :class="{ 'p-invalid': isDateInvalid }" inputId="inputYear" inputClass="form-control text-center" panelClass="tw-min-w-[14rem]" />
-                                    </div>
-                                </div>
-                            </div>
+                            <slot name="filter4" :applyFilter="customFilterApply"></slot>
                         </div>
-                        <div class="mt-3 d-flex justify-content-end">
-                            <button type="submit" :disabled="disableSubmit" class="btn btn-primary btn-lg">Cari</button>
+                        <div class="mt-3 d-flex align-items-end">
+                            <slot name="action" :applyFilter="customFilterApply"></slot>
+                            <button type="submit" :disabled="disableSubmit" class="ms-auto btn btn-primary btn-lg">Cari</button>
                         </div>
                     </form>
                 </div>

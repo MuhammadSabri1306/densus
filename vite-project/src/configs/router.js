@@ -29,6 +29,8 @@ import PueOfflineDetail from "@views/PueOfflineDetail.vue";
 import Ike from "@views/Ike.vue";
 import IkeDetail from "@views/IkeDetail.vue";
 
+import MonitoringKwHVue from "@/views/MonitoringKwH.vue";
+
 import Rtu from "@views/Rtu.vue";
 import RtuAdd from "@views/RtuAdd.vue";
 import RtuEdit from "@views/RtuEdit.vue";
@@ -124,6 +126,10 @@ const routes = [
     {
         path: "/ike/:locationId", component: IkeDetail,
         meta: { menuKey: ["pue", "ike"], requiresAuth: true }
+    },
+    {
+        path: "/monitoring-kwh", component: MonitoringKwHVue,
+        meta: { menuKey: ["kwh"], requiresAuth: true }
     },
     {
         path: "/rtu", component: Rtu,

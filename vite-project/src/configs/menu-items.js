@@ -64,7 +64,7 @@ export const menuKwH = {
     key: "kwh",
     title: "Monitoring KwH",
     icon: "battery-charging",
-    to: "#",
+    to: "/monitoring-kwh",
     roles: ["admin", "viewer", "teknisi"]
 };
 

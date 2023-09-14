@@ -132,6 +132,12 @@ $route['api/rtu/(:any)']['delete'] = 'rtu/del/$1';
 $route['api/rtu']['get'] = 'rtu';
 $route['api/rtu']['post'] = 'rtu/add';
 
+/* ENDPOINT MONITORING KWH */
+$route['api/monitoring-kwh/daily']['get'] = 'monitoring_kwh/daily';
+$route['api/monitoring-kwh/weekly']['get'] = 'monitoring_kwh/weekly';
+$route['api/monitoring-kwh/monthly']['get'] = 'monitoring_kwh/monthly';
+$route['api/monitoring-kwh/mom']['get'] = 'monitoring_kwh/mom';
+
 /* ENDPOINT MONITORING PLN YG LAMA */
 $route['api/pln']['get'] = 'pln_billing';
 $route['api/pln']['post'] = 'pln_billing';

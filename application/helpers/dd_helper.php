@@ -18,13 +18,14 @@ function dd(...$items) {
             z-index: 9999;
         }
 
-        #ddContainer *:not(font) {
-            color: #000;
-        }
+        #ddContainer *:not(font) { color: #000; }
 
         #ddContainer pre {
-            background-color: transparent;
+            background-color: #f6f8fa;
+            padding: 10px;
         }
+
+        #ddContainer strong { color: #e91e63; }
 
         .loader-wrapper,
         .page-main-header {
@@ -35,7 +36,9 @@ function dd(...$items) {
         <p>dd() from <?="{$calledFrom}"?></p><?php
 
     foreach($items as $item) {
+        echo '<pre>';
         var_dump($item);
+        echo '</pre>';
     }
 
     ?></div><?php
