@@ -67,6 +67,7 @@ $momData = [
 if(!is_null($kwhValue) && !is_null($prevKwhValue)) {
     $momData['kwh'] = $prevKwhValue - $kwhValue;
     $momData['performance'] = $momData['kwh'] / $kwhValue * 100;
+    $momData['cost'] = $momData['kwh'] * 13000;
 }
 
 /*
