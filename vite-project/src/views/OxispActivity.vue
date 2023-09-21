@@ -94,7 +94,7 @@ const getOxispUrl = idLocation => {
             </div>
         </div>
         <div class="container-fluid dashboard-default-sec">
-            <FilterGepeeV2 useYear useMonth @apply="onFilterApply" :autoApply="filterAutoApply" />
+            <FilterGepeeV2 useYear requireYear useMonth @apply="onFilterApply" :autoApply="filterAutoApply" />
         </div>
         <div v-if="!isAdmin" class="container-fluid py-4">
             <div class="d-flex justify-content-end">

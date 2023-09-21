@@ -19,11 +19,37 @@ const props = defineProps({
     autoApply: { type: Function, default: () => false },
     initData: { type: Object, default: {} },
     rowClass: { default: "row justify-content-end align-items-end" },
-    divreColClass: { default: "col-12 col-md-4 col-xl-6" },
-    witelColClass: { default: "col-md-4 col-xl-3" },
-    monthColClass: { default: "col-md-4 col-xl-3" },
-    quarterColClass: { default: "col-md-4 col-xl-3" },
-    yearColClass: { default: "col-md-4 col-xl-3" },
+    divreColClass: { default: "" },
+    witelColClass: { default: "" },
+    yearColClass: { default: "" },
+    monthColClass: { default: "" },
+    quarterColClass: { default: "" }
+});
+
+const colLayout = computed(() => {
+    let divre = "col-12 col-md-4 col-xl-6";
+    let witel = "col-md-4 col-xl-3";
+    let year = "col-md-4 col-xl-3";
+    let month = "col-md-4 col-xl-3";
+    let quarter = "col-md-4 col-xl-3";
+    
+    if(props.useYear && props.useMonth) {
+        divre = "col-12 col-md-4 col-xl-5";
+        year = "col-4 col-md-2";
+        month = "col-4 col-md-2";
+    }
+
+    if(props.divreColClass)
+        divre = props.divreColClass;
+    if(props.witelColClass)
+        witel = props.witelColClass;
+    if(props.yearColClass)
+        year = props.yearColClass;
+    if(props.monthColClass)
+        month = props.monthColClass;
+    if(props.quarterColClass)
+        quarter = props.quarterColClass;
+    return { divre, witel, year, month, quarter };
 });
 
 const viewStore = useViewStore();
@@ -34,6 +60,45 @@ const tempFilters = reactive({
     quarter: null
 });
 
+const isYearEmpty = ref(true);
+const filterYear = computed({
+    get() {
+        if(isYearEmpty.value || !(tempFilters.date instanceof Date))
+            return null;
+        return tempFilters.date;
+    },
+    set(newVal) {
+        if(newVal) {
+            tempFilters.date = newVal;
+            isYearEmpty.value = false;
+        } else
+            isYearEmpty.value = true;
+    }
+});
+
+const isMonthEmpty = ref(true);
+const filterMonth = computed({
+    get() {
+        if(isMonthEmpty.value || !(tempFilters.date instanceof Date))
+            return null;
+        return tempFilters.date;
+    },
+    set(newVal) {
+        if(newVal) {
+            tempFilters.date = newVal;
+            isMonthEmpty.value = false;
+        } else
+            isMonthEmpty.value = true;
+    }
+});
+
+const customCalendarYearTitle = computed(() => {
+    const date = isYearEmpty.value ? null : tempFilters.date;
+    if(!(date instanceof Date))
+        return "Pilih Tahun";
+    return date.getFullYear();
+})
+
 const getFiltersValue = () => {
     const filtersValue = {
         divre: tempFilters.divre,
@@ -41,9 +106,9 @@ const getFiltersValue = () => {
     };
 
     if(props.useMonth || props.useQuarter || props.useYear)
-        filtersValue.year = tempFilters.date ? tempFilters.date.getFullYear() : null;
+        filtersValue.year = filterYear.value?.getFullYear() || null;
     if(props.useMonth)
-        filtersValue.month = tempFilters.date ? tempFilters.date.getMonth() + 1 : null;
+        filtersValue.month = filterMonth.value ? filterMonth.value.getMonth() + 1 : null;
     if(props.useQuarter)
         filtersValue.quarter = tempFilters.quarter;
 
@@ -91,18 +156,18 @@ const onDivreChange = val => {
 const onWitelChange = val => tempFilters.witel = val;
 const onQuarterChange = val => tempFilters.quarter = val;
 
-const yearConfig = getYearConfig();
-const isDateInvalid = computed(() => {
-    const isYearInvalid = props.requireYear && !tempFilters.date;
-    const isMonthInvalid = props.requireMonth && !tempFilters.date;
-    const isQuarterInvalid = (props.requireQuarter && !tempFilters.date) || (props.requireQuarter && !tempFilters.quarter);
-    if(isYearInvalid || isMonthInvalid || isQuarterInvalid)
-        return true;
-    if(!tempFilters.date || (props.useQuarter && !tempFilters.quarter))
-        return false;
-    const year = tempFilters.date.getFullYear();
-    return year < yearConfig.startYear || year > yearConfig.endYear;
-});
+// const yearConfig = getYearConfig();
+// const isDateInvalid = computed(() => {
+//     const isYearInvalid = props.requireYear && !tempFilters.date;
+//     const isMonthInvalid = props.requireMonth && !tempFilters.date;
+//     const isQuarterInvalid = (props.requireQuarter && !tempFilters.date) || (props.requireQuarter && !tempFilters.quarter);
+//     if(isYearInvalid || isMonthInvalid || isQuarterInvalid)
+//         return true;
+//     if(!tempFilters.date || (props.useQuarter && !tempFilters.quarter))
+//         return false;
+//     const year = tempFilters.date.getFullYear();
+//     return year < yearConfig.startYear || year > yearConfig.endYear;
+// });
 
 const runAutoApply = () => {
     if(typeof props.autoApply == "function" && props.autoApply(getFiltersValue())) {
@@ -119,15 +184,28 @@ const quarterList = [
 
 const setupFilter = () => {
     if(props.useMonth || props.useQuarter || props.useYear) {
-        if(!tempFilters.date)
-            tempFilters.date = new Date();
+        let filterDate = tempFilters.date;
+        if(!filterDate)
+            filterDate = new Date();
 
-        if(viewStore.filters.year)
-            tempFilters.date.setFullYear(viewStore.filters.year);
-        if(props.useMonth && viewStore.filters.month)
-            tempFilters.date.setMonth(viewStore.filters.month - 1);
+        if(viewStore.filters.year) {
+            filterDate.setFullYear(viewStore.filters.year);
+            isYearEmpty.value = false;
+        } else if(props.requireYear) {
+            isYearEmpty.value = false;
+        }
+
+        if(props.useMonth && viewStore.filters.month) {
+            filterDate.setMonth(viewStore.filters.month - 1);
+            isMonthEmpty.value = false;
+        } else if(props.requireMonth) {
+            isMonthEmpty.value = false;
+        }
+
         if(props.useQuarter && viewStore.filters.quarter)
             tempFilters.quarter = viewStore.filters.quarter;
+
+        tempFilters.date = filterDate;
     }
 
     if(props.useQuarter) {
@@ -201,7 +279,7 @@ const customFilterApply = () => emit("apply", getFiltersValue());
                     <form @submit.prevent="$emit('apply', getFiltersValue())">
                         <div :class="rowClass">
                             <slot name="filter1" :applyFilter="customFilterApply"></slot>
-                            <div :class="divreColClass">
+                            <div :class="colLayout.divre">
                                 <div class="mb-2">
                                     <label for="inputDivre" :class="{ 'required': requireDivre }">Regional</label>
                                     <ListboxFilter ref="listboxDivre" inputId="inputDivre" inputPlaceholder="Pilih Divre"
@@ -210,7 +288,7 @@ const customFilterApply = () => emit("apply", getFiltersValue());
                                 </div>
                             </div>
                             <slot name="filter2" :applyFilter="customFilterApply"></slot>
-                            <div :class="witelColClass">
+                            <div :class="colLayout.witel">
                                 <div class="mb-2">
                                     <label for="inputWitel" :class="{ 'required': requireWitel }">Witel</label>
                                     <ListboxFilter ref="listboxWitel" inputId="inputWitel" inputPlaceholder="Pilih Witel"
@@ -219,30 +297,40 @@ const customFilterApply = () => emit("apply", getFiltersValue());
                                 </div>
                             </div>
                             <slot name="filter3" :applyFilter="customFilterApply"></slot>
-                            <div v-if="useYear" :class="yearColClass">
+                            <div v-if="useYear" :class="colLayout.year">
                                 <div class="mb-2">
                                     <label for="inputYear" :class="{ 'required': requireYear }">Tahun</label>
                                     <div class="d-grid">
-                                        <Calendar v-model="tempFilters.date" view="year" dateFormat="yy" :showButtonBar="!requireYear" placeholder="Pilih Tahun"
-                                            :class="{ 'p-invalid': isDateInvalid }" inputId="inputYear" inputClass="form-control text-center" panelClass="tw-min-w-[14rem]" />
+                                        <Calendar v-model="filterYear" view="year" dateFormat="yy" :showButtonBar="!requireYear"
+                                            placeholder="Pilih Tahun" :class="{ 'p-invalid': requireYear && !filterYear }"
+                                            inputId="inputYear" inputClass="form-control text-center" panelClass="tw-min-w-[14rem]" />
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="useMonth" :class="monthColClass">
+                            <div v-if="useMonth" :class="colLayout.month">
                                 <div class="mb-2">
                                     <label for="inputMonth" :class="{ 'required': requireMonth }">Bulan</label>
                                     <div class="d-grid">
-                                        <Calendar v-model="tempFilters.date" view="month" :dateFormat="useYear ? 'M' : 'M yy'" :showButtonBar="!requireMonth" placeholder="Pilih Bulan"
-                                            :class="{ 'p-invalid': isDateInvalid }" inputId="inputMonth" inputClass="form-control" panelClass="filter-month" />
+                                        <Calendar v-if="!useYear" v-model="filterMonth" view="month" dateFormat="M yy" :showButtonBar="!requireMonth"
+                                            placeholder="Pilih Bulan" :class="{ 'p-invalid': requireMonth && !filterMonth }" inputId="inputMonth"
+                                            inputClass="form-control" panelClass="filter-month tw-min-w-[14rem]" />
+                                        <Calendar v-else v-model="filterMonth" view="month" dateFormat="M" :showButtonBar="!requireMonth"
+                                            placeholder="Pilih Bulan" :class="{ 'p-invalid': requireMonth && !filterMonth }" inputId="inputMonth"
+                                            inputClass="form-control" panelClass="filter-month hide-year tw-min-w-[14rem]">
+                                            <template #header>
+                                                <p class="p-datepicker-year p-link tw-cursor-default mx-auto custom-year-title">{{ customCalendarYearTitle }}</p>
+                                            </template>
+                                        </Calendar>
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="useQuarter" :class="quarterColClass">
+                            <div v-if="useQuarter" :class="colLayout.quarter">
                                 <div class="mb-2">
                                     <label for="inputQuarter" :class="{ 'required': requireQuarter }">Kuartal</label>
                                     <div class="tw-grid tw-grid-cols-2">
-                                        <Calendar v-model="tempFilters.date" view="year" dateFormat="yy" :showButtonBar="!requireQuarter" placeholder="Pilih Tahun"
-                                            :class="{ 'p-invalid': isDateInvalid }" inputId="inputYear" inputClass="form-control tw-rounded-r-none text-center" panelClass="tw-min-w-[14rem]" />
+                                        <Calendar v-model="filterYear" view="year" dateFormat="yy" :showButtonBar="!requireQuarter" placeholder="Pilih Tahun"
+                                            :class="{ 'p-invalid': (requireYear && !filterYear) || (requireQuarter && !tempFilters.quarter) }"
+                                            inputId="inputYear" inputClass="form-control tw-rounded-r-none text-center" panelClass="tw-min-w-[14rem]" />
                                         <ListboxFilter ref="listboxQuarter" inputId="inputQuarter" inputPlaceholder="Pilih Kuartal" class="listbox-quarter"
                                             valueKey="number" labelKey="title" :useSearchField="false" :useResetItem="!requireQuarter" resetTitle="Pilih Semua"
                                             @change="onQuarterChange" />
@@ -269,6 +357,13 @@ const customFilterApply = () => emit("apply", getFiltersValue());
 
 .listbox-quarter :deep(.listbox-wrapper) {
     @apply tw-min-w-[8rem] tw-right-0;
+}
+
+</style>
+<style>
+
+.filter-month.hide-year .p-datepicker-header > :not(.custom-year-title) {
+    @apply tw-hidden;
 }
 
 </style>

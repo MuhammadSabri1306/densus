@@ -67,7 +67,7 @@ const showDataTable = computed(() => {
             </div>
         </div>
         <div v-if="showDataTable" class="container-fluid dashboard-default-sec">
-            <FilterGepeeV2 useMonth @apply="applyFilter" :autoApply="filterAutoApply" />
+            <FilterGepeeV2 useYear requireYear useMonth @apply="applyFilter" :autoApply="filterAutoApply" />
             <div class="pb-5">
                 <DataTableActivityExecution ref="datatableExecution" />
             </div>

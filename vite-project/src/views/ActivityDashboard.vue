@@ -93,7 +93,7 @@ const showCard = ref(false);
             </div>
         </div>
         <div class="container-fluid dashboard-default-sec">
-            <FilterGepeeV2 useMonth @apply="onFilterApply" :autoApply="filterAutoApply" />
+            <FilterGepeeV2 useYear requireYear useMonth @apply="onFilterApply" :autoApply="filterAutoApply" />
         </div>
         <div class="container-fluid dashboard-default-sec pb-5">
             <DataTableActivityDashboardV2 ref="datatable" />
