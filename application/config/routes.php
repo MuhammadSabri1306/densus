@@ -250,6 +250,8 @@ $route['api/oxisp/reject/(:num)']['put'] = 'oxisp_activity/reject/$1';
 $route['api/oxisp/(:num)/(:num)']['post'] = 'oxisp_activity/index/$1/$2';
 $route['api/oxisp/(:num)']['put'] = 'oxisp_activity/index/$1';
 $route['api/oxisp/(:num)']['delete'] = 'oxisp_activity/index/$1';
+$route['api/oxisp-check']['get'] = 'oxisp_check';
+$route['api/oxisp-check/category']['get'] = 'oxisp_check/category';
 
 $route['api/user/(:any)']['get'] = 'user/index/$1';
 $route['api/user/(:any)']['put'] = 'user/index/$1';

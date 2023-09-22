@@ -86,9 +86,9 @@ const getOxispUrl = idLocation => {
                     <div class="col-sm-6">
                         <h3>
                             <VueFeather type="cloud-lightning" size="1.2em" class="font-primary middle" />
-                            <span class="middle ms-3">Input OXISP Activity</span>
+                            <span class="middle ms-3">Input OX ISP Activity</span>
                         </h3>
-                        <DashboardBreadcrumb :items="['OXISP', 'Input Activity']" class="ms-4" />
+                        <DashboardBreadcrumb :items="['OX ISP', 'Input Activity']" class="ms-4" />
                     </div>
                 </div>
             </div>

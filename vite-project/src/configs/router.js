@@ -49,6 +49,7 @@ import PueTarget from "@views/PueTarget.vue";
 import PueTargetDetail from "@views/PueTargetDetail.vue";
 
 import OxispActivity from "@views/OxispActivity.vue";
+import OxispChecklist from "@views/OxispChecklist.vue";
 
 const routes = [
     {
@@ -210,6 +211,10 @@ const routes = [
     {
         path: "/oxisp/activity", component: OxispActivity,
         meta: { menuKey: ["oxisp", "activity"], requiresAuth: true }
+    },
+    {
+        path: "/oxisp/checklist", component: OxispChecklist,
+        meta: { menuKey: ["oxisp", "checklist"], requiresAuth: true }
     },
     {
         path: "/login", name: "login", component: Login,

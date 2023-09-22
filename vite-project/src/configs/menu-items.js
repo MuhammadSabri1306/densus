@@ -97,11 +97,12 @@ export const menuGepeePerformance = {
 
 export const menuOxisp = {
     key: "oxisp",
-    title: "OXISP",
+    title: "OX ISP",
     icon: "cloud-lightning",
     child: [
         { key: "dashboard", to: "#", title: "Dashboard" },
-        { key: "activity", to: "/oxisp/activity", title: "Input Activity" }
+        { key: "activity", to: "/oxisp/activity", title: "Input Activity" },
+        { key: "checklist", to: "/oxisp/checklist", title: "OX ISP Checklist" },
     ],
     roles: ["admin", "viewer", "teknisi"]
 };

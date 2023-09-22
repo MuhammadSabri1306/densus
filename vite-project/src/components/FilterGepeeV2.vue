@@ -147,9 +147,10 @@ const listboxQuarter = ref(null);
 
 const onDivreChange = val => {
     tempFilters.divre = val;
-    if(val === null)
+    if(val === null) {
         listboxWitel.value.reset();
-    else
+        tempFilters.witel = null;
+    } else
         listboxWitel.value.fetch(() => viewStore.getWitelByDivre(val, "gepee"));
 };
 
@@ -184,14 +185,13 @@ const quarterList = [
 
 const setupFilter = () => {
     if(props.useMonth || props.useQuarter || props.useYear) {
+
         let filterDate = tempFilters.date;
         if(!filterDate)
             filterDate = new Date();
 
         if(viewStore.filters.year) {
             filterDate.setFullYear(viewStore.filters.year);
-            isYearEmpty.value = false;
-        } else if(props.requireYear) {
             isYearEmpty.value = false;
         }
 
@@ -206,6 +206,16 @@ const setupFilter = () => {
             tempFilters.quarter = viewStore.filters.quarter;
 
         tempFilters.date = filterDate;
+
+    }
+    
+    if(props.requireYear || props.requireMonth) {
+        
+        if(props.requireYear)
+            isYearEmpty.value = false;
+        if(props.requireMonth)
+            isMonthEmpty.value = false;
+    
     }
 
     if(props.useQuarter) {
