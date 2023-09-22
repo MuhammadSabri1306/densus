@@ -10,20 +10,7 @@ export default {
         8,
         9
     ],
-    "target_months": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12
-    ],
+    "target_months": 9,
     "categories": [
         {
             "id": "1",
@@ -56,6 +43,38 @@ export default {
             "description": "Disiplin dalam menjaga Ruangan tetap 4R."
         }
     ],
+    "rooms": [
+        {
+            "id": "1",
+            "name": "R. Perangkat",
+            "description": null
+        },
+        {
+            "id": "2",
+            "name": "R. Genset",
+            "description": null
+        },
+        {
+            "id": "3",
+            "name": "R. FTM",
+            "description": null
+        },
+        {
+            "id": "4",
+            "name": "R. Baterai",
+            "description": null
+        },
+        {
+            "id": "5",
+            "name": "R. Rectifier",
+            "description": null
+        },
+        {
+            "id": "6",
+            "name": "T. BBM",
+            "description": null
+        }
+    ],
     "check_data": [
         {
             "id": "390",
@@ -79,722 +98,542 @@ export default {
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 1,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 3,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 4,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 5,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 6,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "2",
                         "code": "r2",
                         "title": "Rapi",
                         "description": "Instalasi rapi."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "3",
                         "code": "r3",
                         "title": "Resik",
                         "description": "Ruangan bersih indah."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "4",
                         "code": "r4",
                         "title": "Rawat",
                         "description": "Terjadwal dalam pemeliharaan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "5",
                         "code": "r5",
                         "title": "Rajin",
                         "description": "Disiplin dalam menjaga Ruangan tetap 4R."
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 }
             ]
         },
@@ -820,722 +659,542 @@ export default {
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 1,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 3,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 4,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 5,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 6,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "2",
                         "code": "r2",
                         "title": "Rapi",
                         "description": "Instalasi rapi."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "3",
                         "code": "r3",
                         "title": "Resik",
                         "description": "Ruangan bersih indah."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "4",
                         "code": "r4",
                         "title": "Rawat",
                         "description": "Terjadwal dalam pemeliharaan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "5",
                         "code": "r5",
                         "title": "Rajin",
                         "description": "Disiplin dalam menjaga Ruangan tetap 4R."
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 }
             ]
         },
@@ -1559,724 +1218,561 @@ export default {
             "tipe_perhitungan": "pue",
             "check_list": [
                 {
-                    "is_exists": false,
+                    "is_exists": true,
                     "is_enable": true,
-                    "month": 1,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": {
+                        "id": "1",
+                        "id_location": "383",
+                        "id_room": "1",
+                        "check_category_code": "r1",
+                        "is_ok": "1",
+                        "is_room_exists": "1",
+                        "note": "Test",
+                        "evidence": "PlayConsoleIcon_1695372545.png",
+                        "status": "submitted",
+                        "reject_description": null,
+                        "user_id": "8",
+                        "user_username": "test123",
+                        "user_name": "Arafandy Idris",
+                        "created_at": "2023-09-22 15:50:27",
+                        "updated_at": "2023-09-22 15:50:27",
+                        "evidence_url": "https:\/\/densus.telkom.co.id\/upload\/oxisp_check_evidence\/PlayConsoleIcon_1695372545.png"
+                    },
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 3,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 4,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 5,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 6,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "2",
                         "code": "r2",
                         "title": "Rapi",
                         "description": "Instalasi rapi."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "3",
                         "code": "r3",
                         "title": "Resik",
                         "description": "Ruangan bersih indah."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "4",
                         "code": "r4",
                         "title": "Rawat",
                         "description": "Terjadwal dalam pemeliharaan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "5",
                         "code": "r5",
                         "title": "Rajin",
                         "description": "Disiplin dalam menjaga Ruangan tetap 4R."
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 }
             ]
         },
@@ -2302,722 +1798,542 @@ export default {
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 1,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 3,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 4,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 5,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 6,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "2",
                         "code": "r2",
                         "title": "Rapi",
                         "description": "Instalasi rapi."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "3",
                         "code": "r3",
                         "title": "Resik",
                         "description": "Ruangan bersih indah."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "4",
                         "code": "r4",
                         "title": "Rawat",
                         "description": "Terjadwal dalam pemeliharaan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "5",
                         "code": "r5",
                         "title": "Rajin",
                         "description": "Disiplin dalam menjaga Ruangan tetap 4R."
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 }
             ]
         },
@@ -3043,722 +2359,542 @@ export default {
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 1,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "1",
+                        "name": "R. Perangkat",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 3,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "2",
+                        "name": "R. Genset",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 4,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "3",
+                        "name": "R. FTM",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 5,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "4",
+                        "name": "R. Baterai",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 6,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "2",
+                        "code": "r2",
+                        "title": "Rapi",
+                        "description": "Instalasi rapi."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "3",
+                        "code": "r3",
+                        "title": "Resik",
+                        "description": "Ruangan bersih indah."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "4",
+                        "code": "r4",
+                        "title": "Rawat",
+                        "description": "Terjadwal dalam pemeliharaan."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "5",
+                        "name": "R. Rectifier",
+                        "description": null
+                    },
+                    "category": {
+                        "id": "5",
+                        "code": "r5",
+                        "title": "Rajin",
+                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
+                    },
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
+                },
+                {
+                    "is_exists": false,
+                    "is_enable": true,
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
+                    },
                     "category": {
                         "id": "1",
                         "code": "r1",
                         "title": "Ringkas",
                         "description": "Hanya ada barang-barang yang diperlukan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "1",
-                        "code": "r1",
-                        "title": "Ringkas",
-                        "description": "Hanya ada barang-barang yang diperlukan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "2",
                         "code": "r2",
                         "title": "Rapi",
                         "description": "Instalasi rapi."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "2",
-                        "code": "r2",
-                        "title": "Rapi",
-                        "description": "Instalasi rapi."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "3",
                         "code": "r3",
                         "title": "Resik",
                         "description": "Ruangan bersih indah."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "3",
-                        "code": "r3",
-                        "title": "Resik",
-                        "description": "Ruangan bersih indah."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "4",
                         "code": "r4",
                         "title": "Rawat",
                         "description": "Terjadwal dalam pemeliharaan."
                     },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 },
                 {
                     "is_exists": false,
                     "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
+                    "room": {
+                        "id": "6",
+                        "name": "T. BBM",
+                        "description": null
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "4",
-                        "code": "r4",
-                        "title": "Rawat",
-                        "description": "Terjadwal dalam pemeliharaan."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 1,
                     "category": {
                         "id": "5",
                         "code": "r5",
                         "title": "Rajin",
                         "description": "Disiplin dalam menjaga Ruangan tetap 4R."
                     },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 2,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 3,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 4,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 5,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 6,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 7,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 8,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": true,
-                    "month": 9,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 10,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 11,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
-                },
-                {
-                    "is_exists": false,
-                    "is_enable": false,
-                    "month": 12,
-                    "category": {
-                        "id": "5",
-                        "code": "r5",
-                        "title": "Rajin",
-                        "description": "Disiplin dalam menjaga Ruangan tetap 4R."
-                    },
-                    "check_value": null
+                    "check_value": null,
+                    "year": 2023,
+                    "month": 9
                 }
             ]
         }

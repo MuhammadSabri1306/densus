@@ -123,7 +123,82 @@ export const useOxispCheckStore = defineStore("oxisp-check", {
                     callback({ success: false, status: err.response?.status, data: {} });
                     
             }
-        }
+        },
+
+        async create(body, callback = null) {
+            try {
+                const response = await http.post("/oxisp-check", body, this.fetchHeader);
+                if(!response.data.success) {
+                    console.warn(response.data);
+                    callback && callback({ success: false, status: response.status });
+                    return;
+                }
+                callback && callback({ success: true, status: response.status });
+            } catch(err) {
+                handlingFetchErr(err);
+                callback && callback({ success: false, status: err.response?.status });
+            }
+        },
+
+        async update(id, body, callback = null) {
+            try {
+                const response = await http.put("/oxisp-check/" + id, body, this.fetchHeader);
+                if(!response.data.check_value) {
+                    console.warn(response.data);
+                    callback && callback({ success: false, status: response.status, data: {} });
+                    return;
+                }
+                callback && callback({ success: true, status: response.status, data: response.data });
+            } catch(err) {
+                handlingFetchErr(err);
+                callback && callback({ success: false, status: err.response?.status, data: {} });
+            }
+        },
+
+        async delete(id, callback = null) {
+            try {
+                const response = await http.delete("/oxisp-check/" + id, this.fetchHeader);
+                if(!response.data.success) {
+                    console.warn(response.data);
+                    callback && callback({ success: false, status: response.status });
+                    return;
+                }
+                callback && callback({ success: true, status: response.status });
+            } catch(err) {
+                handlingFetchErr(err);
+                callback && callback({ success: false, status: err.response?.status });
+            }
+        },
+
+        async approve(id, callback = null) {
+            try {
+                const response = await http.put("/oxisp-check/approve/" + id, null, this.fetchHeader);
+                if(!response.data.check_value) {
+                    console.warn(response.data);
+                    callback && callback({ success: false, status: response.status, data: {} });
+                    return;
+                }
+                callback && callback({ success: true, status: response.status, data: response.data });
+            } catch(err) {
+                handlingFetchErr(err);
+                callback && callback({ success: false, status: err.response?.status, data: {} });
+            }
+        },
+
+        async reject(id, body, callback = null) {
+            try {
+                const response = await http.put("/oxisp-check/reject/" + id, body, this.fetchHeader);
+                if(!response.data.check_value) {
+                    console.warn(response.data);
+                    callback && callback({ success: false, status: response.status, data: {} });
+                    return;
+                }
+                callback && callback({ success: true, status: response.status, data: response.data });
+            } catch(err) {
+                handlingFetchErr(err);
+                callback && callback({ success: false, status: err.response?.status, data: response.data });
+            }
+        },
 
     }
 });

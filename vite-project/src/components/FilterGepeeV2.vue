@@ -107,8 +107,10 @@ const getFiltersValue = () => {
 
     if(props.useMonth || props.useQuarter || props.useYear)
         filtersValue.year = filterYear.value?.getFullYear() || null;
-    if(props.useMonth)
+    if(props.useMonth) {
         filtersValue.month = filterMonth.value ? filterMonth.value.getMonth() + 1 : null;
+        filtersValue.year = filterMonth.value ? filterMonth.value.getFullYear() : null;
+    }
     if(props.useQuarter)
         filtersValue.quarter = tempFilters.quarter;
 

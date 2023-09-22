@@ -6,7 +6,7 @@ import { useViewStore } from "@stores/view";
 import { useCollapseRow } from "@helpers/collapse-row";
 import Skeleton from "primevue/skeleton";
 
-defineEmits(["showCategory"]);
+const emit = defineEmits(["showCategory", "selectCheck"]);
 
 const { collapsedDivre, collapsedWitel, toggleRowCollapse } = useCollapseRow();
 const userStore = useUserStore();
@@ -19,17 +19,15 @@ const level = computed(() => {
 });
 
 const tableData = ref([]);
-const monthList = ref([]);
+const roomList = ref([]);
 const categoryList = computed(() => oxispCheckStore.categories);
-const columnCount = computed(() => monthList.value.length * oxispCheckStore.categories.length);
+const columnCount = computed(() => roomList.value.length * oxispCheckStore.categories.length);
 
 const viewStore = useViewStore();
 const selectedYear = computed(() => viewStore.filters.year);
-const monthColName = computed(() => {
-    return monthList.value.map(number => {
-        const month = viewStore.monthList[number - 1];
-        return month ? month.name : null;
-    });
+const selectedMonth = computed(() => {
+    const monthNumber = viewStore.filters.month || (new Date()).getMonth() + 1;
+    return viewStore.monthList[monthNumber - 1];
 });
 
 const hasCollapseInit = ref(false);
@@ -88,6 +86,7 @@ const groupData = data => {
         
         type = "sto";
         title = item.sto_name;
+
         result.push({ type, title, ...item });
         return result;
         
@@ -110,8 +109,8 @@ const fetch = () => {
             hasInit.value = true;
         } else
             hasInit.value = success;
-        if(data.target_months)
-            monthList.value = data.target_months;
+        if(data.rooms)
+            roomList.value = data.rooms;
 
         isLoading.value = false;
     });
@@ -133,19 +132,34 @@ const getRowClass = item => {
     return { "row-collapsed": collapsed };
 };
 
-const getTdClass = item => {
-    if(!item.is_exists)
-        return;
-    if(item.status == "rejected")
-        return "activity-bg-danger";
-    if(item.status == "submitted")
-        return "activity-bg-warning";
-    return "activity-bg-success";
+const isAdmin = computed(() => userStore.role == "admin");
+const isCheckClickable = item => {
+    if(!item.is_enable)
+        return false;
+    if(isAdmin.value && !item.is_exists)
+        return false;
+    return true;
 };
 
-const getCheckLabel = itemMonth => {
-    const month = viewStore.monthList[itemMonth - 1];
-    return `Checklist Bulan ${ month?.name } Tahun ${ selectedYear.value }`;
+const getTdClass = item => {
+    if(!isCheckClickable(item))
+        return "bg-cell-mute";
+    if(!item.is_exists)
+        return;
+    if(item.check_value.status == "rejected")
+        return "bg-cell-danger";
+    if(item.check_value.status == "submitted")
+        return "bg-cell-warning";
+    return "bg-cell-success";
+};
+
+const getCheckLabel = item => {
+    return `Checklist ${ item?.category.code } ${ item?.room.name }`;
+};
+
+const onCheckClick = (rowData, check) => {
+    const { check_list, ...loc } = rowData;
+    emit("selectCheck", { loc, check });
 };
 </script>
 <template>
@@ -168,13 +182,15 @@ const getCheckLabel = itemMonth => {
                 <thead>
                     <tr>
                         <th rowspan="3" class="bg-success sticky-column">Lingkup Kerja</th>
-                        <th :colspan="columnCount" class="bg-success">Checklist <small>Per Bulan</small></th>
+                        <th :colspan="columnCount" class="bg-success">
+                            OX ISP Checklist <small>Bulan {{ selectedMonth.name }} Tahun {{ selectedYear }}</small>
+                        </th>
                     </tr>
                     <tr>
-                        <th v-for="monthName in monthColName" :colspan="categoryList.length" class="bg-success">{{ monthName }}</th>
+                        <th v-for="room in roomList" :colspan="categoryList.length" class="bg-success">{{ room.name }}</th>
                     </tr>
                     <tr>
-                        <template v-for="n in monthList">
+                        <template v-for="n in roomList">
                             <th v-for="category in categoryList" @click="$emit('showCategory')"
                                 class="tw-cursor-pointer btn-primary category-tooltip tw-uppercase">
                                 <p class="text-center mb-0">{{ category.code }}</p>
@@ -207,8 +223,8 @@ const getCheckLabel = itemMonth => {
                         </td>
                         <template v-if="row.type == 'sto'">
                             <td v-for="item in row.check_list" :class="getTdClass(item)" class="text-center middle">
-                                <input type="checkbox" :checked="item.is_exists" @click.prevent=""
-                                    :disabled="!item.is_enable" :aria-label="getCheckLabel(item.month)"
+                                <input type="checkbox" :checked="item.is_exists" @click.prevent="onCheckClick(row, item)"
+                                    :disabled="!isCheckClickable(item)" :aria-label="getCheckLabel(item)"
                                     class="form-check-input form-check-input-lg" />
                             </td>
                         </template>
@@ -221,19 +237,23 @@ const getCheckLabel = itemMonth => {
 </template>
 <style scoped>
 
-td.activity-bg-success {
+tbody td:first-child small {
+    @apply tw-whitespace-nowrap;
+}
+
+td.bg-cell-success {
     background-color: #2cb198!important;
 }
 
-td.activity-bg-warning {
+td.bg-cell-warning {
     background-color: #ffe55c!important;
 }
 
-td.activity-bg-danger {
+td.bg-cell-danger {
     background-color: #ff658d!important;
 }
 
-.bg-cell-mute {
+td.bg-cell-mute {
     @apply !tw-bg-zinc-100/50;
 }
 

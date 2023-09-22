@@ -3,13 +3,61 @@ class Oxisp_check_model extends CI_Model
 {
     protected $tableName = 'oxisp_check';
     protected $tableCategoryName = 'oxisp_check_category';
+    protected $tableRoomName = 'oxisp_check_room';
     protected $tableLocationName = 'master_lokasi_gepee';
     
     public $currUser;
+    public $enabledDateTime;
+    public $enabledTime;
+
+    protected $fillable_fields = [
+        'id_location' => ['int', 'required'],
+        'id_room' => ['int', 'required'],
+        'check_category_code' => ['string', 'required'],
+        'is_ok' => ['bool', 'required'],
+        'is_room_exists' => ['bool', 'required'],
+        'note' => ['string', 'required'],
+        'evidence' => ['string', 'required'],
+        'reject_description' => ['string', 'required'],
+        'year' => ['int', 'required'],
+        'month' => ['int', 'required'],
+    ];
 
     public function __construct()
     {
             $this->load->database('densus');
+            $this->enabledDateTime = EnvPattern::getOxispCheckTime(true);
+            $this->enabledTime = EnvPattern::getOxispCheckTime(false);
+    }
+
+    public function get_insertable_fields()
+    {
+        $keys = array_diff(array_keys($this->fillable_fields), ['reject_description']);
+        $fields = [];
+        foreach($keys as $key) {
+            $fields[$key] = $this->fillable_fields[$key];
+        }
+        return $fields;
+    }
+
+    public function get_updatable_fields()
+    {
+        $keys = ['is_ok', 'is_room_exists', 'note', 'evidence'];
+        $fields = [];
+        foreach($keys as $key) {
+            $fields[$key] = $this->fillable_fields[$key];
+        }
+        return $fields;
+    }
+
+    public function get_rejectable_fields()
+    {
+        $keys = ['reject_description'];
+        $fields = [];
+        foreach($keys as $key) {
+            $fields[$key] = $this->fillable_fields[$key];
+        }
+        return $fields;
     }
 
     protected function get_loc_filter($filter, $prefix = null, $filterKeys = [])
@@ -68,10 +116,18 @@ class Oxisp_check_model extends CI_Model
             ->from($this->tableCategoryName);
         return $this->db->get()->result_array();
     }
+    
+    public function get_rooms()
+    {
+        $this->db
+            ->select('*')
+            ->from($this->tableRoomName);
+        return $this->db->get()->result_array();
+    }
 
     public function get_enable_months()
     {
-        $time = EnvPattern::getOxispCheckTime(true);
+        $time = $this->enabledDateTime;
         $startDate = new DateTime($time->start);
         $endDate = new DateTime($time->end);
         $months = [];
@@ -80,6 +136,20 @@ class Oxisp_check_model extends CI_Model
             $startDate->modify('+1 month');
         }
         return $months;
+    }
+
+    public function is_month_enabled($month, $year)
+    {
+        $enabledTime = $this->enabledTime;
+        $time = ( new DateTime("$year-$month-01") )->getTimestamp();
+        return $time >= $enabledTime->start && $time <= $enabledTime->end;
+    }
+
+    public function is_datetime_enabled($datetimeStr)
+    {
+        $enabledTime = $this->enabledTime;
+        $time = ( new DateTime($datetimeStr) )->getTimestamp();
+        return $time >= $enabledTime->start && $time <= $enabledTime->end;
     }
 
     public function get_list_months($startDate, $endDate)
@@ -94,10 +164,56 @@ class Oxisp_check_model extends CI_Model
         return $monthList;
     }
 
-    public function get($filter = null)
+    public function get_list($filter = [])
+    {
+        $this->load->helper('array');
+        $this->use_module('get_list', [ 'filter' => $filter ]);
+        return $this->result;
+    }
+
+    public function get($filter = [])
     {
         $this->load->helper('array');
         $this->use_module('get', [ 'filter' => $filter ]);
         return $this->result;
+    }
+
+    public function save($body, $id = null)
+    {
+        if(is_null($id)) {
+            
+            $success = $this->db->insert($this->tableName, $body);
+
+        } else {
+            
+            $this->db->where('id', $id);
+            $success = $this->db->update($this->tableName, $body);
+
+        }
+        return $success;
+    }
+
+    public function delete($id)
+    {
+        $this->db
+            ->select()
+            ->from($this->tableName)
+            ->where('id', $id);
+        $check = $this->db->get()->row_array();
+
+        $isFileDeleted = false;
+        if(isset($check['evidence'])) {
+            $filePath = FCPATH . UPLOAD_OXISP_CHECK_EVIDENCE_PATH . '/' . $check['evidence'];
+            $isFileDeleted = unlink($filePath);
+        } else {
+            $isFileDeleted = true;
+        }
+
+        if($isFileDeleted) {
+            $this->db->where('id', $id);
+            return $this->db->delete($this->tableName);
+        }
+
+        return false;
     }
 }

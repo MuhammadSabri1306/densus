@@ -1,10 +1,13 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useViewStore } from "@stores/view";
+import { useUserStore } from "@stores/user";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
 import DatatableOxispChecklist from "@components/DatatableOxispChecklist.vue";
 import DialogOxispChecklistCategory from "@components/DialogOxispChecklistCategory.vue";
+import DialogOxispChecklistDetail from "@/components/DialogOxispChecklistDetail.vue";
+import DialogOxispChecklistDetailAdmin from "@/components/DialogOxispChecklistDetailAdmin.vue";
 
 const viewStore = useViewStore();
 
@@ -17,7 +20,21 @@ const onFilterApply = filterValue => {
     fetchData();
 };
 
-const showDialogCategory = ref(false);
+const isDialogCategoryShow = ref(false);
+const isDialogDetailShow = ref(false);
+
+const userStore = useUserStore();
+const isAdmin = computed(() => userStore.role == "admin");
+
+const selectedCheck = ref({});
+const showDialogDetail = checkItem => {
+    selectedCheck.value = checkItem;
+    isDialogDetailShow.value = true;
+};
+const onDialogDetailHide = () => {
+    isDialogDetailShow.value = false;
+    selectedCheck.value = {};
+};
 </script>
 <template>
     <div class="container-fluid">
@@ -34,16 +51,21 @@ const showDialogCategory = ref(false);
         </div>
     </div>
     <div class="container-fluid dashboard-default-sec">
-        <FilterGepeeV2 useYear requireYear useMonth @apply="onFilterApply" :autoApply="filterAutoApply" />
+        <FilterGepeeV2 useMonth requireMonth @apply="onFilterApply" :autoApply="filterAutoApply" />
     </div>
     <div class="container-fluid py-4 d-flex justify-content-end">
-        <button type="button" @click="showDialogCategory = true" class="btn btn-outline-info bg-white btn-icon px-3">
+        <button type="button" @click="isDialogCategoryShow = true" class="btn btn-outline-info bg-white btn-icon px-3">
             <VueFeather type="info" size="1em" />
             <span class="ms-2">Keterangan Kategori</span>
         </button>
     </div>
     <div class="container-fluid dashboard-default-sec pb-5">
-        <DatatableOxispChecklist ref="datatable" @showCategory="showDialogCategory = true" />
+        <DatatableOxispChecklist ref="datatable" @showCategory="isDialogCategoryShow = true"
+            @selectCheck="showDialogDetail" />
     </div>
-    <DialogOxispChecklistCategory v-if="showDialogCategory" @close="showDialogCategory = false" />
+    <DialogOxispChecklistCategory v-if="isDialogCategoryShow" @close="isDialogCategoryShow = false" />
+    <DialogOxispChecklistDetail v-if="!isAdmin && isDialogDetailShow" :location="selectedCheck.loc"
+        :checkData="selectedCheck.check" @close="onDialogDetailHide" @update="fetchData" />
+    <DialogOxispChecklistDetailAdmin v-else-if="isAdmin && isDialogDetailShow" :location="selectedCheck.loc"
+        :checkData="selectedCheck.check" @close="onDialogDetailHide" @update="fetchData" />
 </template>

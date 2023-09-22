@@ -1,3 +1,4 @@
+import { isRef, watch, onBeforeUnmount } from "vue";
 import { defineStore } from "pinia";
 import { useUserStore } from "@stores/user";
 import http from "@helpers/http-common";
@@ -31,7 +32,8 @@ export const useViewStore = defineStore("view", {
             year: null,
             month: null,
             quarter: null
-        }
+        },
+        showLoading: false
     }),
     getters: {
         
@@ -183,5 +185,21 @@ export const useViewStore = defineStore("view", {
                 
             }
         },
+
+        setLoadingShow(show) {
+            this.showLoading = show;
+        }
+
     }
 });
+
+export const watchLoading = loadingState => {
+    if(!isRef(loadingState)) {
+        console.warn("watchLoading should retrieve loadingState as a ref.");
+        return;
+    }
+
+    const viewStore = useViewStore();
+    watch(loadingState, isLoading => viewStore.setLoadingShow(isLoading));
+    onBeforeUnmount(() => viewStore.setLoadingShow(false));
+};

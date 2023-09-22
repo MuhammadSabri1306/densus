@@ -307,4 +307,51 @@ class Attachment extends RestController
 
         $this->response($data, $status);
     }
+
+    public function store_oxisp_check_evidence_post()
+    {
+        $status = $this->auth_jwt->auth('viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+
+        if($status === 200) {
+            $currUser = $this->auth_jwt->get_payload();
+            $this->allowedTypes = 'jpg|jpeg|png|pdf';
+            $this->targetPath = UPLOAD_OXISP_CHECK_EVIDENCE_PATH;
+            $this->maxSize = 4096;
+
+            $result = $this->upload_files();
+            $status = $result['status'];
+            $data = $result['data'];
+        }
+
+        $this->response($data, $status);
+    }
+
+    public function del_oxisp_check_evidence_delete($filename)
+    {
+        $status = $this->auth_jwt->auth('viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+
+        if($status === 200) {
+            $currUser = $this->auth_jwt->get_payload();
+            $this->targetPath = UPLOAD_OXISP_CHECK_EVIDENCE_PATH;
+            $isSuccess = $this->delete_uploaded($filename);
+            if($isSuccess) {
+                $data = [ 'success' => true ];
+            } else {
+                $status = REST_ERR_BAD_REQ_STATUS;
+                $data = [ 'success' => false, 'message' => 'Gagal menghapus file:' . $filename ];
+            }
+        }
+
+        $this->response($data, $status);
+    }
 }

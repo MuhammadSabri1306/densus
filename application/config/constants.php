@@ -97,6 +97,7 @@ defined('UPLOAD_ACTIVITY_EVIDENCE_PATH') OR define('UPLOAD_ACTIVITY_EVIDENCE_PAT
 defined('UPLOAD_GEPEE_EVIDENCE_PATH') OR define('UPLOAD_GEPEE_EVIDENCE_PATH', 'upload/gepee_evidence/');
 defined('UPLOAD_PUE_EVIDENCE_PATH') OR define('UPLOAD_PUE_EVIDENCE_PATH', 'upload/pue_evidence/');
 defined('UPLOAD_OXISP_EVIDENCE_PATH') OR define('UPLOAD_OXISP_EVIDENCE_PATH', 'upload/oxisp_evidence/');
+defined('UPLOAD_OXISP_CHECK_EVIDENCE_PATH') OR define('UPLOAD_OXISP_CHECK_EVIDENCE_PATH', 'upload/oxisp_check_evidence/');
 
 $err_response = [
     'default' => [ 'code' => 400, 'success' => false, 'message' => 'Terjadi masalah saat menghubungi server.' ],

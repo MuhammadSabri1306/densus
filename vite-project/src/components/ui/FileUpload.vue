@@ -12,6 +12,7 @@ import { DocumentIcon } from "@heroicons/vue/24/solid";
 const emit = defineEmits(["uploaded", "removed"]);
 const props = defineProps({
     isRequired: Boolean,
+    isDisabled: Boolean,
     url: { type: String, required: true },
     name: { type: String, default: "file" },
     maxSize: { type: Number, default: 4096 }, // on MB,
@@ -130,7 +131,7 @@ const clearFiles = async () => {
     }
 };
 
-const disableUpload = computed(() => uploadedFiles.value.length >= props.fileLimit);
+const disableUpload = computed(() => props.isDisabled && uploadedFiles.value.length >= props.fileLimit);
 const disableClear = computed(() => uploadedFiles.value.length < 1);
 </script>
 <template>

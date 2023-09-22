@@ -252,6 +252,11 @@ $route['api/oxisp/(:num)']['put'] = 'oxisp_activity/index/$1';
 $route['api/oxisp/(:num)']['delete'] = 'oxisp_activity/index/$1';
 $route['api/oxisp-check']['get'] = 'oxisp_check';
 $route['api/oxisp-check/category']['get'] = 'oxisp_check/category';
+$route['api/oxisp-check']['post'] = 'oxisp_check';
+$route['api/oxisp-check/(:num)']['put'] = 'oxisp_check/index/$1';
+$route['api/oxisp-check/(:num)']['delete'] = 'oxisp_check/index/$1';
+$route['api/oxisp-check/approve/(:num)']['put'] = 'oxisp_check/approve/$1';
+$route['api/oxisp-check/reject/(:num)']['put'] = 'oxisp_check/reject/$1';
 
 $route['api/user/(:any)']['get'] = 'user/index/$1';
 $route['api/user/(:any)']['put'] = 'user/index/$1';
@@ -282,6 +287,8 @@ $route['api/attachment/pue/offline']['post'] = 'attachment/store_pue_evidence';
 $route['api/attachment/pue/offline/(:any)']['delete'] = 'attachment/del_pue_evidence/$1';
 $route['api/attachment/oxisp']['post'] = 'attachment/store_oxisp_evidence';
 $route['api/attachment/oxisp/(:any)']['delete'] = 'attachment/del_oxisp_evidence/$1';
+$route['api/attachment/oxisp-check']['post'] = 'attachment/store_oxisp_check_evidence';
+$route['api/attachment/oxisp-check/(:any)']['delete'] = 'attachment/del_oxisp_check_evidence/$1';
 
 $route['test/get_pue_chart_data'] = 'test/get_pue_chart_data';
 $route['test/cron_store_pue_counter'] = 'test/cron_store_pue_counter';

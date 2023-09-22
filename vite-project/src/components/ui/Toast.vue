@@ -52,7 +52,7 @@ watch(() => viewStore.toast, () => {
 <style scoped>
 	
 .tw-toast {
-	@apply tw-max-w-[100vw] tw-max-h-screen tw-w-[468px] tw-p-4 md:tw-p-8 tw-fixed tw-z-[8888] tw-bottom-0 tw-right-0;
+	@apply tw-max-w-[100vw] tw-max-h-screen tw-w-[468px] tw-p-4 md:tw-p-8 tw-fixed tw-z-[9999] tw-bottom-0 tw-right-0;
 }
 
 .toast-body {
