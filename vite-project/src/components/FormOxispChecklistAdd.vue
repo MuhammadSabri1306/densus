@@ -30,7 +30,7 @@ const onSave = async () => {
     
     const body = {
         is_room_exists: data.is_room_exists,
-        id_location: props.currCheck?.location.id,
+        id_location: props.currCheck?.location.id_sto,
         id_room: props.currCheck?.room.id,
         check_category_code: props.currCheck?.category.code,
         is_ok: data.is_ok,

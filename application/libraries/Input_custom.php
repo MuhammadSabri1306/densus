@@ -50,13 +50,18 @@ class Input_custom
         }
     }
 
-    public function get_body($method, $resetBody = false)
+    public function get_body($method, $resetBody = true)
     {
         if($resetBody) $this->body = [];
         
         foreach($this->fields as $key => $attr) {
-            
-            $val = $this->get_input($method, $key);
+
+            if(!$resetBody && isset($this->body[$key])) {
+                $val = $this->body[$key];
+            } else {
+                $val = $this->get_input($method, $key);
+            }
+
             switch($attr['type']) {
                 case 'string': $val = $this->to_string($val); break;
                 case 'bool': $val = $this->to_bool($val); break;
@@ -69,7 +74,7 @@ class Input_custom
             if($attr['required'] && $is_empty) {
                 return [
                     'valid' => false,
-                    'msg' => "Field '$key' tidak dapat dikosongkan.",
+                    'msg' => $this->getErrMessage($key, 'required'),
                     'body' => []
                 ];
             }
@@ -89,6 +94,14 @@ class Input_custom
             'msg' => null,
             'body' => $body
         ];
+    }
+
+    public function getErrMessage($key, $type = 'required')
+    {
+        if($type == 'required') {
+            return "Field '$key' tidak dapat dikosongkan.";
+        }
+        return '';
     }
 
     private function to_string($val)

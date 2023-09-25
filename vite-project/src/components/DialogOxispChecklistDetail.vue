@@ -45,6 +45,13 @@ const roomTitle = computed(() => {
     return "OX ISP Checklist";
 });
 
+const stoTitle = computed(() => {
+    const loc = currLoc.value;
+    if(!loc?.sto_kode || !loc?.sto_name)
+        return null;
+    return loc.sto_kode + " / " + loc.sto_name;
+});
+
 const categoryTitle = computed(() => {
     const checkData = currCheck.value;
     if(checkData.category?.title && checkData.category?.code)
@@ -136,7 +143,7 @@ const onCheckUpdate = newCheckValue => {
                     </div>
                     <div class="col">
                         <h6 class="m-b-5 font-success f-w-700">{{ roomTitle }}</h6>
-                        <p class="mb-0 f-w-600">{{ currLoc.sto_name }}</p>
+                        <p class="mb-0 f-w-600">{{ stoTitle }}</p>
                         <p v-if="categoryTitle" class="mb-0">{{ categoryTitle }}</p>
                         <p class="mb-0">{{ monthTitle }}</p>
                     </div>
@@ -157,7 +164,7 @@ const onCheckUpdate = newCheckValue => {
                     </div>
                     <div class="col-auto mb-3">
                         <h6 class="m-b-5 font-success f-w-700">{{ roomTitle }}</h6>
-                        <p class="mb-0 f-w-600">{{ currLoc.sto_name }}</p>
+                        <p class="mb-0 f-w-600">{{ stoTitle }}</p>
                         <p v-if="categoryTitle" class="mb-0">{{ categoryTitle }}</p>
                         <p class="mb-0">{{ monthTitle }}</p>
                     </div>
@@ -233,7 +240,7 @@ const onCheckUpdate = newCheckValue => {
                     </div>
                     <div class="col">
                         <h6 class="m-b-5 font-success f-w-700">{{ roomTitle }}</h6>
-                        <p class="mb-0 f-w-600">{{ currLoc.sto_name }}</p>
+                        <p class="mb-0 f-w-600">{{ stoTitle }}</p>
                         <p v-if="categoryTitle" class="mb-0">{{ categoryTitle }}</p>
                         <p class="mb-0">{{ monthTitle }}</p>
                     </div>

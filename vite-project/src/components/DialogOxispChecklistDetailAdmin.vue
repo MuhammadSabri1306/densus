@@ -41,6 +41,13 @@ const categoryTitle = computed(() => {
     return null;
 });
 
+const stoTitle = computed(() => {
+    const loc = currLoc.value;
+    if(!loc?.sto_kode || !loc?.sto_name)
+        return null;
+    return loc.sto_kode + " / " + loc.sto_name;
+});
+
 const isEvidenceImg = computed(() => {
     const evd = currCheck.value?.check_value.evidence;
     if(!evd)
@@ -138,7 +145,7 @@ const onReject = async () => {
                     </div>
                     <div class="col-auto mb-3">
                         <h6 class="m-b-5 font-success f-w-700">{{ roomTitle }}</h6>
-                        <p class="mb-0 f-w-600">{{ currLoc.sto_name }}</p>
+                        <p class="mb-0 f-w-600">{{ stoTitle }}</p>
                         <p v-if="categoryTitle" class="mb-0">{{ categoryTitle }}</p>
                         <p class="mb-0">{{ monthTitle }}</p>
                     </div>
@@ -216,7 +223,7 @@ const onReject = async () => {
                     </div>
                     <div class="col-auto mb-3">
                         <h6 class="m-b-5 font-success f-w-700">{{ roomTitle }}</h6>
-                        <p class="mb-0 f-w-600">{{ currLoc.sto_name }}</p>
+                        <p class="mb-0 f-w-600">{{ stoTitle }}</p>
                         <p v-if="categoryTitle" class="mb-0">{{ categoryTitle }}</p>
                         <p class="mb-0">{{ monthTitle }}</p>
                     </div>

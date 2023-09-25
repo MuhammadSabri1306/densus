@@ -4,7 +4,7 @@ class Oxisp_check_model extends CI_Model
     protected $tableName = 'oxisp_check';
     protected $tableCategoryName = 'oxisp_check_category';
     protected $tableRoomName = 'oxisp_check_room';
-    protected $tableLocationName = 'master_lokasi_gepee';
+    protected $tableLocationName = 'master_sto_densus';
     
     public $currUser;
     public $enabledDateTime;

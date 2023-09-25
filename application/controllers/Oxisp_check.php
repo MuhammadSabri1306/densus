@@ -96,15 +96,17 @@ class Oxisp_check extends RestController
 
             $this->input_custom->set_fields($fields);
             $input = $this->input_custom->get_body('post');
-
-            if($input['valid'] && isset($input['body']['is_room_exists'])) {
-                if($input['body']['is_room_exists']) {
-                    $fields = $this->oxisp_check_model->get_insertable_fields();
-                    $this->input_custom->set_fields($fields);
-                    $input = $this->input_custom->get_body('post');
-                }
+            if(!$input['valid']) {
+                $data = [ 'success' => false, 'message' => $input['msg'] ];
+                $status = REST_ERR_BAD_REQ_STATUS;
             }
+        }
 
+        if($status === 200 && $input['body']['is_room_exists']) {
+            $fields = $this->oxisp_check_model->get_insertable_fields();
+            $this->input_custom->set_fields($fields);
+            
+            $input = $this->input_custom->get_body('post', false);
             if(!$input['valid']) {
                 $data = [ 'success' => false, 'message' => $input['msg'] ];
                 $status = REST_ERR_BAD_REQ_STATUS;
@@ -168,21 +170,24 @@ class Oxisp_check extends RestController
 
             $currUser = $this->auth_jwt->get_payload();
             $fields = $this->oxisp_check_model->get_updatable_fields();
+
             $fields['is_ok'] = array_diff($fields['is_ok'], ['required', 'nullable']);
             $fields['note'] = array_diff($fields['note'], ['required', 'nullable']);
             $fields['evidence'] = array_diff($fields['evidence'], ['required', 'nullable']);
 
             $this->input_custom->set_fields($fields);
             $input = $this->input_custom->get_body('put');
-
-            if($input['valid'] && isset($input['body']['is_room_exists'])) {
-                if($input['body']['is_room_exists']) {
-                    $fields = $this->oxisp_check_model->get_updatable_fields();
-                    $this->input_custom->set_fields($fields);
-                    $input = $this->input_custom->get_body('post');
-                }
+            if(!$input['valid']) {
+                $data = [ 'success' => false, 'message' => $input['msg'] ];
+                $status = REST_ERR_BAD_REQ_STATUS;
             }
+        }
 
+        if($status === 200 && $input['body']['is_room_exists']) {
+            $fields = $this->oxisp_check_model->get_updatable_fields();
+            $this->input_custom->set_fields($fields);
+
+            $input = $this->input_custom->get_body('put', false);
             if(!$input['valid']) {
                 $data = [ 'success' => false, 'message' => $input['msg'] ];
                 $status = REST_ERR_BAD_REQ_STATUS;
@@ -200,7 +205,7 @@ class Oxisp_check extends RestController
             if(!$body['is_room_exists']) {
                 $body['is_ok'] = true;
             }
-            
+
             $this->oxisp_check_model->currUser = $currUser;
             $success = $this->oxisp_check_model->save($body, $id);
             if($success) {

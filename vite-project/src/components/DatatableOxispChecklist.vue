@@ -85,7 +85,7 @@ const groupData = data => {
         }
         
         type = "sto";
-        title = item.sto_name;
+        title = item.sto_kode + " / " + item.sto_name;
 
         result.push({ type, title, ...item });
         return result;

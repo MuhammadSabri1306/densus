@@ -23,7 +23,7 @@ $selectFields = [
 $this->db
     ->select(implode(', ', $selectFields))
     ->from("$this->tableName AS check")
-    ->join("$this->tableLocationName AS loc", 'loc.id=check.id_location')
+    ->join("$this->tableLocationName AS loc", 'loc.id_sto=check.id_location')
     ->where($filterLocGepee)
     ->where($filterDateCheck)
     ->order_by('loc.divre_kode')
@@ -42,7 +42,7 @@ foreach($locationData as $loc) {
         foreach($categoryList as $category) {
 
             $checkIndex = findArrayIndex($checkList, function($checkItem) use ($loc, $category, $room) {
-                $isLocMatch = $loc['id'] == $checkItem['id_location'];
+                $isLocMatch = $loc['id_sto'] == $checkItem['id_location'];
                 $isCategoryMatch = $category['code'] == $checkItem['check_category_code'];
                 $isRoomMatch = $room['id'] == $checkItem['id_room'];
                 return $isLocMatch && $isCategoryMatch && $isRoomMatch;
