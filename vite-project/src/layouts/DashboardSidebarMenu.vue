@@ -7,51 +7,95 @@ const userStore = useUserStore();
 const userRole = computed(() => userStore.role);
 
 const viewStore = useViewStore();
+
+const groupMenuList = menuList => {
+    return {
+        gepee: menuList.filter(item => item.category == "gepee"),
+        oxisp: menuList.filter(item => item.category == "oxisp"),
+        management: menuList.filter(item => item.category == "management"),
+    }
+};
+
 const menuItems = computed(() => {
     const userLevel = userStore.level;
     const userLocId = userStore.locationId;
+    const userRolee = userStore.role;
+    const menuList = viewStore.menuItems
+        .filter(item => {
 
-    if(!userLevel || userLevel == "nasional" || !userLocId)
-        return viewStore.menuItems;
+            if(item.roles.indexOf(userRolee) < 0)
+                return false;
 
-    return viewStore.menuItems.map(item => {
-        const isGepeeEvidence = item.key == "gepee_evidence";
-        const isPue = item.key == "pue";
-        
-        if(isPue) {
-            const pueOnlineIndex = item.child.findIndex(childItem => childItem.key == "online");
-            if(pueOnlineIndex >= 0) {
+            if(Array.isArray(item.child)) {
+                item.child = item.child.filter(childItem => {
+                    if(!Array.isArray(childItem.roles))
+                        return true;
+                    return childItem.roles.indexOf(userRolee) >= 0
+                });
+            }
+
+            return true;
+
+        })
+        .map(item => {
+
+            if(!userLevel || userLevel == "nasional" || !userLocId)
+                return item;
+
+            const isGepeeEvidence = item.key == "gepee_evidence";
+            const isPue = item.key == "pue";
+            
+            if(isPue) {
+                const pueOnlineIndex = item.child.findIndex(childItem => childItem.key == "online");
+                if(pueOnlineIndex >= 0) {
+                    const newItem = JSON.parse(JSON.stringify(item));
+                    newItem.child[pueOnlineIndex].to = `${ item.child[pueOnlineIndex].to }/${ userLevel }/${ userLocId }`;
+                    return newItem;
+                }
+            }
+
+            if(isGepeeEvidence) {
                 const newItem = JSON.parse(JSON.stringify(item));
-                newItem.child[pueOnlineIndex].to = `${ item.child[pueOnlineIndex].to }/${ userLevel }/${ userLocId }`;
+                newItem.to = `${ item.to }/${ userLevel }/${ userLocId }`;
                 return newItem;
             }
-        }
 
-        if(isGepeeEvidence) {
-            const newItem = JSON.parse(JSON.stringify(item));
-            newItem.to = `${ item.to }/${ userLevel }/${ userLocId }`;
-            return newItem;
-        }
+            return item;
 
-        return item;
-    });
+        });
+
+    return groupMenuList(menuList);
 });
 
 const menuActKeys = computed(() => viewStore.menuActKeys);
 
-const expandedIndexes = ref([]);
-const initExpanded = () => {
-    for(let index=0; index<menuItems.value.length; index++) {
-        if(menuItems.value[index] && menuActKeys.value.length > 0) {
-            if(menuItems.value[index].key == menuActKeys.value[0])
-                expandedIndexes.value = [index];
-        }
-    }
+const getRealIndex = (categoryName, index) => {
+    if(categoryName != "gepee")
+        index += menuItems.value.gepee.length;
+    if(categoryName != "oxisp")
+        index += menuItems.value.oxisp.length;
+    return index;
 };
 
-const toggleExpand = currIndex => {
+const expandedIndexes = ref([]);
+const initExpanded = () => {
+    Object.entries(menuItems.value).forEach(([ categoryName, menuItem ]) => {
+        let realIndex = -1;
+        for(let index=0; index<menuItem.length; index++) {
+            realIndex = getRealIndex(categoryName, index);
+            if(menuItem[index] && menuActKeys.value.length > 0) {
+                if(menuItem[index].key == menuActKeys.value[0])
+                    expandedIndexes.value = [realIndex];
+            }
+        }
+    });
+};
+
+const toggleExpand = (categoryName, currIndex) => {
+    currIndex = getRealIndex(categoryName, currIndex);
     let expanded = expandedIndexes.value;
     const index = expanded.indexOf(currIndex);
+
     if(index < 0)
         expandedIndexes.value = [...expandedIndexes.value, currIndex];
     else
@@ -59,6 +103,25 @@ const toggleExpand = currIndex => {
 };
 
 initExpanded();
+
+const dropdownClass = (categoryName, itemChild, index) => {
+    index = getRealIndex(categoryName, index);
+    return {
+        'dropdown': itemChild,
+        'expand': expandedIndexes.value.indexOf(index) >= 0
+    };
+};
+
+const dropdownItemClass = (itemKey, itemIsDev) => {
+    return {
+        'active': itemKey == menuActKeys.value[0],
+        'on-development-menu': itemIsDev
+    };
+};
+
+const dropdownItemChildClass = itemKey => {
+    return { 'active': itemKey === menuActKeys.value[1] };
+};
 </script>
 <template>
     <nav>
@@ -69,29 +132,84 @@ initExpanded();
                     <li class="back-btn">
                         <div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
                     </li>
-                    <li class="sidebar-main-title">
+                    <li v-if="menuItems.gepee.length > 0" class="sidebar-main-title">
                         <div>
-                            <h6 class="ms-2">
-                                <span class="!tw-text-5xl !tw-font-medium">G</span>
-                                <span class="!tw-font-bold">ePEE</span>
-                            </h6>
+                            <h6 class="ms-2">Menu GePEE</h6>
                         </div>
                     </li>
-                    <li v-for="(item, index) in menuItems" :class="{ 'dropdown': item.child, 'expand': expandedIndexes.indexOf(index) >= 0 }" class="py-1">
-                        <RouterLink v-if="!item.child && item.roles.indexOf(userRole) >= 0" :to="item.to" :class="{ 'active': item.key == menuActKeys[0], 'on-development-menu': item.isDev }" class="nav-link">
+                    <li v-for="(item, index) in menuItems.gepee" :class="dropdownClass('gepee', item.child, index)" class="py-1">
+                        <RouterLink v-if="!item.child" :to="item.to" :class="dropdownItemClass(item.key, item.isDev)"
+                            class="nav-link">
                             <vue-feather :type="item.icon" size="1.2rem" class="me-2" />
                             <span>{{ item.title }}</span>
                         </RouterLink>
-                        <a v-if="item.child && item.roles.indexOf(userRole) >= 0" @click="toggleExpand(index)" :class="{ 'active': item.key === menuActKeys[0], 'on-development-menu': item.isDev }" class="nav-link menu-title" role="button">
+                        <a v-else @click="toggleExpand('gepee',index)" :class="dropdownItemClass(item.key, item.isDev)"
+                            class="nav-link menu-title" role="button">
                             <vue-feather :type="item.icon" size="1.2rem" class="me-2" />
                             <span>{{ item.title }}</span>
                             <div class="according-menu">
                                 <vue-feather type="chevron-right" />
                             </div>
                         </a>
-                        <ul v-if="item.child && item.roles.indexOf(userRole) >= 0" class="nav-submenu menu-content">
+                        <ul v-if="item.child" class="nav-submenu menu-content">
                             <li v-for="childItem in item.child">
-                                <RouterLink v-if="(childItem.roles && childItem.roles.indexOf(userRole) >= 0) || (!childItem.roles && item.roles.indexOf(userRole) >= 0)" :to="childItem.to" :class="{ 'active': childItem.key === menuActKeys[1] }">{{ childItem.title }}</RouterLink>
+                                <RouterLink :to="childItem.to" :class="dropdownItemChildClass(childItem.key)">
+                                    {{ childItem.title }}
+                                </RouterLink>
+                            </li>
+                        </ul>
+                    </li>
+                    <li v-if="menuItems.oxisp.length > 0" class="sidebar-main-title">
+                        <div>
+                            <h6 class="ms-2">Menu OX ISP</h6>
+                        </div>
+                    </li>
+                    <li v-for="(item, index) in menuItems.oxisp" :class="dropdownClass('oxisp', item.child, index)" class="py-1">
+                        <RouterLink v-if="!item.child" :to="item.to" :class="dropdownItemClass(item.key, item.isDev)"
+                            class="nav-link">
+                            <vue-feather :type="item.icon" size="1.2rem" class="me-2" />
+                            <span>{{ item.title }}</span>
+                        </RouterLink>
+                        <a v-else @click="toggleExpand('oxisp', index)" :class="dropdownItemClass(item.key, item.isDev)"
+                            class="nav-link menu-title" role="button">
+                            <vue-feather :type="item.icon" size="1.2rem" class="me-2" />
+                            <span>{{ item.title }}</span>
+                            <div class="according-menu">
+                                <vue-feather type="chevron-right" />
+                            </div>
+                        </a>
+                        <ul v-if="item.child" class="nav-submenu menu-content">
+                            <li v-for="childItem in item.child">
+                                <RouterLink :to="childItem.to" :class="dropdownItemChildClass(childItem.key)">
+                                    {{ childItem.title }}
+                                </RouterLink>
+                            </li>
+                        </ul>
+                    </li>
+                    <li v-if="menuItems.management.length > 0" class="sidebar-main-title">
+                        <div>
+                            <h6 class="ms-2">Menu Management</h6>
+                        </div>
+                    </li>
+                    <li v-for="(item, index) in menuItems.management" :class="dropdownClass('management', item.child, index)" class="py-1">
+                        <RouterLink v-if="!item.child" :to="item.to" :class="dropdownItemClass(item.key, item.isDev)"
+                            class="nav-link">
+                            <vue-feather :type="item.icon" size="1.2rem" class="me-2" />
+                            <span>{{ item.title }}</span>
+                        </RouterLink>
+                        <a v-else @click="toggleExpand('management', index)" :class="dropdownItemClass(item.key, item.isDev)"
+                            class="nav-link menu-title" role="button">
+                            <vue-feather :type="item.icon" size="1.2rem" class="me-2" />
+                            <span>{{ item.title }}</span>
+                            <div class="according-menu">
+                                <vue-feather type="chevron-right" />
+                            </div>
+                        </a>
+                        <ul v-if="item.child" class="nav-submenu menu-content">
+                            <li v-for="childItem in item.child">
+                                <RouterLink :to="childItem.to" :class="dropdownItemChildClass(childItem.key)">
+                                    {{ childItem.title }}
+                                </RouterLink>
                             </li>
                         </ul>
                     </li>

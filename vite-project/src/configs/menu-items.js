@@ -4,7 +4,8 @@ export const menuLanding = {
     to: "/",
     title: "Dashboard",
     icon: "home",
-    roles: ["admin", "viewer", "teknisi"]
+    roles: ["admin", "viewer", "teknisi"],
+    category: "gepee"
 };
 
 export const menuMonitoring = {
@@ -12,7 +13,8 @@ export const menuMonitoring = {
     to: "/monitoring",
     title: "Monitoring RTU",
     icon: "airplay",
-    roles: ["admin", "viewer", "teknisi"]
+    roles: ["admin", "viewer", "teknisi"],
+    category: "gepee"
 };
 
 export const menuMonitoringEnergy = {
@@ -21,7 +23,8 @@ export const menuMonitoringEnergy = {
     title: "Monitoring Energy",
     icon: "airplay",
     roles: ["admin", "viewer", "teknisi"],
-    isDev: true
+    isDev: true,
+    category: "gepee"
 };
 
 export const menuRtu = {
@@ -33,7 +36,8 @@ export const menuRtu = {
         { key: "add", to: "/rtu/add", title: "Registrasi RTU Baru" },
         // { key: "backup", to: "/", title: "Buat Backup" }
     ],
-    roles: ["admin", "viewer", "teknisi"]
+    roles: ["admin", "viewer", "teknisi"],
+    category: "management"
 };
 
 export const menuGepee = {
@@ -45,7 +49,8 @@ export const menuGepee = {
         { key: "schedule", to: "/gepee/schedule", title: "Penjadwalan", roles: ["admin"] },
         { key: "exec", to: "/gepee/exec", title: "Pelaksanaan" }
     ],
-    roles: ["admin", "viewer", "teknisi"]
+    roles: ["admin", "viewer", "teknisi"],
+    category: "gepee"
 };
 
 export const menuPue = {
@@ -57,7 +62,8 @@ export const menuPue = {
         { key: "offline", to: "/pue/offline", title: "PUE Offline" },
         { key: "ike", to: "/ike", title: "IKE" }
     ],
-    roles: ["admin", "viewer", "teknisi"]
+    roles: ["admin", "viewer", "teknisi"],
+    category: "gepee"
 };
 
 export const menuKwH = {
@@ -65,7 +71,8 @@ export const menuKwH = {
     title: "Monitoring KwH",
     icon: "battery-charging",
     to: "/monitoring-kwh",
-    roles: ["admin", "viewer", "teknisi"]
+    roles: ["admin", "viewer", "teknisi"],
+    category: "gepee"
 };
 
 export const menuUser = {
@@ -73,7 +80,8 @@ export const menuUser = {
     to: "/user",
     title: "Manajemen User",
     icon: "users",
-    roles: ["admin"]
+    roles: ["admin"],
+    category: "management"
 };
 
 export const menuGepeeEvidence = {
@@ -81,7 +89,8 @@ export const menuGepeeEvidence = {
     to: "/gepee-evidence",
     title: "Gepee Evidence",
     icon: "award",
-    roles: ["admin", "viewer", "teknisi"]
+    roles: ["admin", "viewer", "teknisi"],
+    category: "gepee"
 };
 
 export const menuGepeePerformance = {
@@ -92,7 +101,8 @@ export const menuGepeePerformance = {
         { key: "report", to: "/gepee-performance/management-report", title: "Management Report" },
         { key: "pue_target", to: "/gepee-performance/pue-target", title: "Target Pencapaian PUE" }
     ],
-    roles: ["admin", "viewer", "teknisi"]
+    roles: ["admin", "viewer", "teknisi"],
+    category: "gepee"
 };
 
 export const menuOxisp = {
@@ -104,7 +114,8 @@ export const menuOxisp = {
         { key: "activity", to: "/oxisp/activity", title: "Input Activity" },
         { key: "checklist", to: "/oxisp/checklist", title: "OX ISP Checklist" },
     ],
-    roles: ["admin", "viewer", "teknisi"]
+    roles: ["admin", "viewer", "teknisi"],
+    category: "oxisp"
 };
 
 export default (() => {

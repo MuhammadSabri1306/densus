@@ -17,7 +17,7 @@
     <meta name="msapplication-config" content="/assets/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <title>DENSUS Dashboard</title>
-    <script type="module" crossorigin src="/assets/index-c0d6eb4c.js"></script>
+    <script type="module" crossorigin src="/assets/index-f495ec03.js"></script>
     <link rel="stylesheet" href="/assets/index-29f61c8b.css">
   </head>
   <body>

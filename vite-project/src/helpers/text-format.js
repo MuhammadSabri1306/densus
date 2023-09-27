@@ -4,5 +4,5 @@ export const limitWords = (text, maxWords = 10) => {
     const textArr = text.split(" ");
     if(textArr.length <= maxWords)
         return text;
-    return textArr.slice(0, 2).join(" ") + "...";
+    return textArr.slice(0, maxWords).join(" ") + "...";
 };
