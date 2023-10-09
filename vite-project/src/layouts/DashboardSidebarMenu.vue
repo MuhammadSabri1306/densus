@@ -70,10 +70,14 @@ const menuItems = computed(() => {
 const menuActKeys = computed(() => viewStore.menuActKeys);
 
 const getRealIndex = (categoryName, index) => {
-    if(categoryName != "gepee")
-        index += menuItems.value.gepee.length;
-    if(categoryName != "oxisp")
-        index += menuItems.value.oxisp.length;
+    const categoryList = ["gepee", "oxisp", "management"];
+    const categoryIndex = categoryList.indexOf(categoryName);
+    if(categoryIndex <= 0)
+        return index;
+
+    for(let i=0; i<categoryIndex; i++) {
+        index += menuItems.value[categoryList[i]].length;
+    }
     return index;
 };
 

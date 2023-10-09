@@ -279,7 +279,7 @@ const isPueReachTarget = item => item.pue.isReachTarget;
 const formatItemNumber = (itemNumb, nullText = "-", pattern = "[value]") => {
     if(itemNumb === null)
         return nullText;
-    const value = toNumberText(itemNumb, 2, true);
+    const value = toNumberText(itemNumb);
     return pattern.replaceAll("[value]", value);
 };
 

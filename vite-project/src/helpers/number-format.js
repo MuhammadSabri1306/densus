@@ -27,7 +27,32 @@ export const toFixedNumber = (numb, numbBehindComma = 2, normalizeZero = false) 
 	return isNegative ? "-" + formattedNumber : formattedNumber;
 };
 
-export const toNumberText = (numb, decimalLimit = 2, normalizeZero = false) => {
+// export const toNumberText = (numb, decimalLimit = 2, normalizeZero = false) => {
+// 	let numberStr = numb.toString();
+
+// 	const isNegative = numberStr.startsWith("-");
+// 	if(isNegative)
+// 		numberStr = numberStr.substring(1);
+
+// 	const numbList = numberStr.split(".");
+// 	if(numbList.length > 1) {
+// 		const notNullIndex = numbList[1].match(/[1-9]/) + 1;
+// 		if(notNullIndex > decimalLimit)
+// 			decimalLimit = notNullIndex;
+// 	}
+
+  
+// 	if (numberStr.includes('.')) {
+// 	  numberStr = numberStr.replace('.', ',');
+// 	}
+
+// 	if(isNegative)
+// 		numberStr = `-${ numberStr }`;
+  
+// 	return numberStr;
+// };
+
+export const toNumberText = (numb, decimalLimit = 2) => {
 	let numberStr = numb.toString();
 	const isNegative = numberStr.startsWith("-");
 	if(isNegative)
@@ -36,6 +61,9 @@ export const toNumberText = (numb, decimalLimit = 2, normalizeZero = false) => {
 	const hasDecimal = numberStr.includes(".");
 	if(hasDecimal) {
 		const decimalPart = numberStr.split(".")[1];
+		const notNullIndex = decimalPart.search(/[1-9]/) + 1;
+		if(notNullIndex > decimalLimit)
+			decimalLimit = notNullIndex;
 		if(decimalPart.length > decimalLimit)
 			numberStr = parseFloat(numberStr).toFixed(decimalLimit);
 	}
@@ -51,14 +79,11 @@ export const toNumberText = (numb, decimalLimit = 2, normalizeZero = false) => {
 	}
   
 	result = split[1] !== undefined ? result + "," + split[1] : result;
-
-	if(normalizeZero && result.search(/^[1-9]/) < 0)
-		return "0";
 	if(isNegative)
 		result = "-" + result;
   
 	return result;
-  };
+};
 
 export const toZeroLeading = (numb, maxDigit) => {
 	numb = Number(numb).toString();
