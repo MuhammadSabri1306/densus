@@ -3,7 +3,8 @@ vite-project/dist
 
 upload/*
 !upload/**/
-# crons/node-crons
+application/config/env_pattern.php
+application/config/routes.php
 
 # Logs
 logs
