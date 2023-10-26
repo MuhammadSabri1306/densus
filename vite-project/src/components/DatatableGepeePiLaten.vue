@@ -2,11 +2,8 @@
 import { ref, computed } from "vue";
 import { usePiLatenStore } from "@/stores/pi-laten";
 import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
 import { useCollapseRow } from "@helpers/collapse-row";
-import { getPueBgClass } from "@helpers/pue-color";
-import { getPercentageTextClass } from "@helpers/percentage-color";
-import { toNumberText, toFixedNumber } from "@helpers/number-format";
+import { toNumberText } from "@helpers/number-format";
 import Skeleton from "primevue/skeleton";
 
 const { collapsedDivre, collapsedWitel, toggleRowCollapse } = useCollapseRow();
@@ -192,6 +189,30 @@ const formatIdr = numb => {
     const text = "Rp " + toNumberText(numb, 2);
     return isNegative ? "-" + text : text;
 };
+
+const isCerOk = (cerValue, year) => {
+    const target = (year == yearTarget.value.cmp1) ? 90
+        : (year == yearTarget.value.cmp2) ? 95
+        : null;
+
+    if(!target)
+        return;
+    if(cerValue < target)
+        return "tc-pue-efficient";
+    return "tc-pue-inefficient";
+};
+
+const isCefOk = (cefValue, year) => {
+    const target = (year == yearTarget.value.cmp1) ? 10
+        : (year == yearTarget.value.cmp2) ? 5
+        : null;
+
+    if(!target)
+        return;
+    if(-cefValue > target)
+        return "tc-pue-efficient";
+    return "tc-pue-inefficient";
+};
 </script>
 <template>
     <div v-if="hasInit">
@@ -259,12 +280,18 @@ const formatIdr = numb => {
 
                         <template v-for="cer in item.cer">
                             <td v-if="cer.value === null" class="text-center f-w-700">-</td>
-                            <td v-else class="text-end tw-whitespace-nowrap">{{ toNumberText(cer.value, 2) }}%</td>
+                            <td v-else class="text-end f-w-700 tw-whitespace-nowrap"
+                                :class="isCerOk(cer.value, cer.cmp_year)">
+                                {{ toNumberText(cer.value, 2) }}%
+                            </td>
                         </template>
 
                         <template v-for="cef in item.cef">
                             <td v-if="cef.value === null" class="text-center f-w-700">-</td>
-                            <td v-else class="text-end tw-whitespace-nowrap">{{ toNumberText(cef.value, 2) }}%</td>
+                            <td v-else class="text-end f-w-700 tw-whitespace-nowrap"
+                                :class="isCefOk(cef.value, cef.cmp_year)">
+                                {{ toNumberText(cef.value, 2) }}%
+                            </td>
                         </template>
                         
                     </tr>
