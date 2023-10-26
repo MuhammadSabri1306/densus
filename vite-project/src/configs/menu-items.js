@@ -99,7 +99,8 @@ export const menuGepeePerformance = {
     icon: "activity",
     child: [
         { key: "report", to: "/gepee-performance/management-report", title: "Management Report" },
-        { key: "pue_target", to: "/gepee-performance/pue-target", title: "Target Pencapaian PUE" }
+        { key: "pue_target", to: "/gepee-performance/pue-target", title: "Target Pencapaian PUE" },
+        { key: "pi_laten", to: "/gepee-performance/pi-laten", title: "PI Laten GEPEE" }
     ],
     roles: ["admin", "viewer", "teknisi"],
     category: "gepee"

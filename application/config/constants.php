@@ -93,11 +93,11 @@ defined('REST_ERR_EXP_DATA') OR define('REST_ERR_EXP_DATA', [ 'success' => false
 defined('REST_ERR_EXP_CODE') OR define('REST_ERR_EXP_CODE', 417);
 defined('REST_ERR_BAD_REQ') OR define('REST_ERR_BAD_REQ', 400);
 
-defined('UPLOAD_ACTIVITY_EVIDENCE_PATH') OR define('UPLOAD_ACTIVITY_EVIDENCE_PATH', 'upload/activity_evidence/');
-defined('UPLOAD_GEPEE_EVIDENCE_PATH') OR define('UPLOAD_GEPEE_EVIDENCE_PATH', 'upload/gepee_evidence/');
-defined('UPLOAD_PUE_EVIDENCE_PATH') OR define('UPLOAD_PUE_EVIDENCE_PATH', 'upload/pue_evidence/');
-defined('UPLOAD_OXISP_EVIDENCE_PATH') OR define('UPLOAD_OXISP_EVIDENCE_PATH', 'upload/oxisp_evidence/');
-defined('UPLOAD_OXISP_CHECK_EVIDENCE_PATH') OR define('UPLOAD_OXISP_CHECK_EVIDENCE_PATH', 'upload/oxisp_check_evidence/');
+defined('UPLOAD_ACTIVITY_EVIDENCE_PATH') OR define('UPLOAD_ACTIVITY_EVIDENCE_PATH', EnvPattern::$uploadPath['activity_evidence']);
+defined('UPLOAD_GEPEE_EVIDENCE_PATH') OR define('UPLOAD_GEPEE_EVIDENCE_PATH', EnvPattern::$uploadPath['gepee_evidence']);
+defined('UPLOAD_PUE_EVIDENCE_PATH') OR define('UPLOAD_PUE_EVIDENCE_PATH', EnvPattern::$uploadPath['pue_evidence']);
+defined('UPLOAD_OXISP_EVIDENCE_PATH') OR define('UPLOAD_OXISP_EVIDENCE_PATH', EnvPattern::$uploadPath['oxisp_evidence']);
+defined('UPLOAD_OXISP_CHECK_EVIDENCE_PATH') OR define('UPLOAD_OXISP_CHECK_EVIDENCE_PATH', EnvPattern::$uploadPath['oxisp_check_evidence']);
 
 $err_response = [
     'default' => [ 'code' => 400, 'success' => false, 'message' => 'Terjadi masalah saat menghubungi server.' ],

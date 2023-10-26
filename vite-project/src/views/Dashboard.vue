@@ -116,9 +116,6 @@ const testOnClick = () => testApi();
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-end">
-            <button type="button" @click="testOnClick" class="btn btn-light btn-sm">Test@</button>
-        </div>
     </div>
 </template>
 <style scoped>
