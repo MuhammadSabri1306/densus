@@ -213,6 +213,19 @@ const isCefOk = (cefValue, year) => {
         return "tc-pue-efficient";
     return "tc-pue-inefficient";
 };
+
+const targetText = (type, compYearNumber) => {
+    const years = yearTarget.value;
+    if(type == "cer" && compYearNumber === 1)
+        return "< 90";
+    if(type == "cer" && compYearNumber === 2)
+        return "< 95";
+    if(type == "cef" && compYearNumber === 1)
+        return "> (-10)";
+    if(type == "cef" && compYearNumber === 2)
+        return "> (-5)";
+    return null;
+};
 </script>
 <template>
     <div v-if="hasInit">
@@ -239,8 +252,18 @@ const isCefOk = (cefValue, year) => {
                     <tr>
                         <th v-for="year in yearTitle">{{ year }}</th>
                         <th v-for="year in yearDiffTitle">{{ year }}</th>
-                        <th v-for="year in yearDiffTitle">{{ year }}</th>
-                        <th v-for="year in yearDiffTitle">{{ year }}</th>
+                        <th v-for="(year, index) in yearDiffTitle" class="tw-leading-none">
+                            {{ year }}
+                            <template v-if="targetText('cer', index+1)">
+                                <br><small>Target {{ targetText('cer', index+1) }}</small>
+                            </template>
+                        </th>
+                        <th v-for="(year, index) in yearDiffTitle" class="tw-leading-none">
+                            {{ year }}
+                            <template v-if="targetText('cef', index+1)">
+                                <br><small>Target {{ targetText('cef', index+1) }}</small>
+                            </template>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
