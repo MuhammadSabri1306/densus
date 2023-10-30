@@ -190,6 +190,12 @@ const formatIdr = numb => {
     return isNegative ? "-" + text : text;
 };
 
+const isSavingOk = (cerValue) => {
+    if(cerValue <= 0)
+        return "tc-pue-efficient";
+    return "tc-pue-inefficient";
+};
+
 const isCerOk = (cerValue, year) => {
     const target = (year == yearTarget.value.cmp1) ? 90
         : (year == yearTarget.value.cmp2) ? 95
@@ -239,87 +245,115 @@ const targetText = (type, compYearNumber) => {
         <div v-else-if="tableData.length < 1" class="px-4 py-3 border">
             <h4 class="text-center">Belum ada data.</h4>
         </div>
-        <div v-else class="table-responsive table-freeze bg-white pb-3">
-            <table class="table table-bordered table-head-primary table-collapsable table-pi-laten">
-                <thead>
-                    <tr>
-                        <th class="bg-success sticky-column" rowspan="2">Lingkup Kerja</th>
-                        <th class="bg-success" colspan="3">Tahun</th>
-                        <th class="bg-success" colspan="2">Saving</th>
-                        <th class="bg-success" colspan="2">CER<br><small>(Cost Energy Ratio)</small></th>
-                        <th class="bg-success" colspan="2">CEF<br><small>(Cost Energy Efficiency)</small></th>
-                    </tr>
-                    <tr>
-                        <th v-for="year in yearTitle">{{ year }}</th>
-                        <th v-for="year in yearDiffTitle">{{ year }}</th>
-                        <th v-for="(year, index) in yearDiffTitle" class="tw-leading-none">
-                            {{ year }}
-                            <template v-if="targetText('cer', index+1)">
-                                <br><small>Target {{ targetText('cer', index+1) }}</small>
-                            </template>
-                        </th>
-                        <th v-for="(year, index) in yearDiffTitle" class="tw-leading-none">
-                            {{ year }}
-                            <template v-if="targetText('cef', index+1)">
-                                <br><small>Target {{ targetText('cef', index+1) }}</small>
-                            </template>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in tableData" :class="getRowClass(item)">
-                        <td class="sticky-column">
+        <div v-else>
+            <div class="table-responsive table-freeze bg-white pb-3 mb-4">
 
-                            <div v-if="item.type == 'divre'" class="d-flex align-items-center px-3">
-                                <button type="button" @click="toggleRowCollapse('divre', item.location.divre_kode)" :class="{ 'child-collapsed': collapsedDivre.indexOf(item.location.divre_kode) >= 0 }" class="btn btn-circle btn-light p-0 btn-collapse-row">
-                                    <VueFeather type="chevron-right" size="1rem" />
-                                </button>
-                                <small class="ms-2 tw-whitespace-nowrap fw-semibold">{{ item.title }}</small>
-                            </div>
-                            
-                            <div v-else-if="item.type == 'witel'" class="d-flex align-items-center px-3">
-                                <button type="button" @click="toggleRowCollapse('witel', item.location.witel_kode)" :class="{ 'child-collapsed': collapsedWitel.indexOf(item.location.witel_kode) >= 0, 'ms-4': level == 'nasional' }" class="btn btn-circle btn-light p-0 btn-collapse-row">
-                                    <VueFeather type="chevron-right" size="1rem" />
-                                </button>
-                                <small class="ms-2 tw-whitespace-nowrap fw-semibold">{{ item.title }}</small>
-                            </div>
-
-                            <p v-else class="d-block px-4 py-1 tw-whitespace-nowrap mb-0">
-                                <small :class="{ 'ps-5': level != 'witel', 'ms-5': level == 'nasional' }"
-                                    class="fw-semibold">{{ item.title }}</small>
-                            </p>
-                            
-                        </td>
-
-                        <template v-for="year in yearTitle">
-                            <td v-if="item.bills[year] === null" class="text-center f-w-700">-</td>
-                            <td v-else class="text-end tw-whitespace-nowrap">{{ formatIdr(item.bills[year]) }}</td>
-                        </template>
-
-                        <template v-for="saving in item.saving">
-                            <td v-if="saving.value === null" class="text-center f-w-700">-</td>
-                            <td v-else class="text-end tw-whitespace-nowrap">{{ formatIdr(saving.value) }}</td>
-                        </template>
-
-                        <template v-for="cer in item.cer">
-                            <td v-if="cer.value === null" class="text-center f-w-700">-</td>
-                            <td v-else class="text-end f-w-700 tw-whitespace-nowrap"
-                                :class="isCerOk(cer.value, cer.cmp_year)">
-                                {{ toNumberText(cer.value, 2) }}%
+                <table class="table table-bordered table-head-primary table-collapsable table-pi-laten">
+                    <thead>
+                        <tr>
+                            <th class="bg-success sticky-column" rowspan="2">Lingkup Kerja</th>
+                            <th class="bg-success" colspan="3">Tahun</th>
+                            <th class="bg-success" colspan="2">Saving</th>
+                            <th class="bg-success" colspan="2">CER<br><small>(Cost Energy Ratio)</small></th>
+                            <th class="bg-success" colspan="2">CEF<br><small>(Cost Energy Efficiency)</small></th>
+                        </tr>
+                        <tr>
+                            <th v-for="year in yearTitle">{{ year }}</th>
+                            <th v-for="year in yearDiffTitle">{{ year }}</th>
+                            <th v-for="(year, index) in yearDiffTitle" class="tw-leading-none">
+                                {{ year }}
+                                <template v-if="targetText('cer', index+1)">
+                                    <br><small>Target {{ targetText('cer', index+1) }}</small>
+                                </template>
+                            </th>
+                            <th v-for="(year, index) in yearDiffTitle" class="tw-leading-none">
+                                {{ year }}
+                                <template v-if="targetText('cef', index+1)">
+                                    <br><small>Target {{ targetText('cef', index+1) }}</small>
+                                </template>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in tableData" :class="getRowClass(item)">
+                            <td class="sticky-column">
+    
+                                <div v-if="item.type == 'divre'" class="d-flex align-items-center px-3">
+                                    <button type="button" @click="toggleRowCollapse('divre', item.location.divre_kode)" :class="{ 'child-collapsed': collapsedDivre.indexOf(item.location.divre_kode) >= 0 }" class="btn btn-circle btn-light p-0 btn-collapse-row">
+                                        <VueFeather type="chevron-right" size="1rem" />
+                                    </button>
+                                    <small class="ms-2 tw-whitespace-nowrap fw-semibold">{{ item.title }}</small>
+                                </div>
+                                
+                                <div v-else-if="item.type == 'witel'" class="d-flex align-items-center px-3">
+                                    <button type="button" @click="toggleRowCollapse('witel', item.location.witel_kode)" :class="{ 'child-collapsed': collapsedWitel.indexOf(item.location.witel_kode) >= 0, 'ms-4': level == 'nasional' }" class="btn btn-circle btn-light p-0 btn-collapse-row">
+                                        <VueFeather type="chevron-right" size="1rem" />
+                                    </button>
+                                    <small class="ms-2 tw-whitespace-nowrap fw-semibold">{{ item.title }}</small>
+                                </div>
+    
+                                <p v-else class="d-block px-4 py-1 tw-whitespace-nowrap mb-0">
+                                    <small :class="{ 'ps-5': level != 'witel', 'ms-5': level == 'nasional' }"
+                                        class="fw-semibold">{{ item.title }}</small>
+                                </p>
+                                
                             </td>
-                        </template>
-
-                        <template v-for="cef in item.cef">
-                            <td v-if="cef.value === null" class="text-center f-w-700">-</td>
-                            <td v-else class="text-end f-w-700 tw-whitespace-nowrap"
-                                :class="isCefOk(cef.value, cef.cmp_year)">
-                                {{ toNumberText(cef.value, 2) }}%
-                            </td>
-                        </template>
-                        
-                    </tr>
-                </tbody>
-            </table>
+    
+                            <template v-for="year in yearTitle">
+                                <td v-if="item.bills[year] === null" class="text-center f-w-700">-</td>
+                                <td v-else class="text-end tw-whitespace-nowrap">{{ formatIdr(item.bills[year]) }}</td>
+                            </template>
+    
+                            <template v-for="saving in item.saving">
+                                <td v-if="saving.value === null" class="text-center f-w-700">-</td>
+                                <td v-else class="text-end tw-whitespace-nowrap f-w-700"
+                                    :class="isSavingOk(saving.value)">{{ formatIdr(saving.value) }}</td>
+                            </template>
+    
+                            <template v-for="cer in item.cer">
+                                <td v-if="cer.value === null" class="text-center f-w-700">-</td>
+                                <td v-else class="text-end f-w-700 tw-whitespace-nowrap"
+                                    :class="isCerOk(cer.value, cer.cmp_year)">
+                                    {{ toNumberText(cer.value, 2) }}%
+                                </td>
+                            </template>
+    
+                            <template v-for="cef in item.cef">
+                                <td v-if="cef.value === null" class="text-center f-w-700">-</td>
+                                <td v-else class="text-end f-w-700 tw-whitespace-nowrap"
+                                    :class="isCefOk(cef.value, cef.cmp_year)">
+                                    {{ toNumberText(cef.value, 2) }}%
+                                </td>
+                            </template>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header pb-0">
+                            <h4 class="mb-0">Keterangan</h4>
+                        </div>
+                        <div class="card-body">
+                            <ol class="tw-pl-8 tw-list-decimal">
+                                <li>
+                                    Cost Energy Ratio (CER) : Nilai perbandingan antara jumlah cost energy YoY.
+                                    Semakin besar ratio semakin besar cost operasional.
+                                    Usulan Setting target <strong>&lt; 90%</strong> (Ref {{ yearTarget.cmp1 }}) atau <strong>&lt; 95%</strong> (Ref {{ yearTarget.cmp2 }}).
+                                </li>
+                                <li>
+                                    Cost Energy Efficiency (CEF) : Nilai perbandingan antara jumlah efisiensi terhadap cost.
+                                    Semakin besar ratio semakin besar cost operational. Usulan setting target <strong>-10%</strong>
+                                    (Ref {{ yearTarget.cmp1 }}) atau <strong>-5%</strong> (Ref {{ yearTarget.cmp2 }}).
+                                </li>
+                                <li>Implementasi mulai September 2023.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
