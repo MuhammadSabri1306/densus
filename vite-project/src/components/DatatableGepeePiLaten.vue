@@ -38,6 +38,8 @@ const level = computed(() => {
     return filters.witel ? "witel" : filters.divre ? "divre" : userLevel;
 });
 
+const locMode = computed(() => piLatenStore.locationMode);
+
 const roundLikePHP = (num, dec) => {
   const numSign = num >= 0 ? 1 : -1;
   return parseFloat((Math.round((num * Math.pow(10, dec)) + (numSign * 0.0001)) / Math.pow(10, dec)).toFixed(dec));
@@ -125,7 +127,7 @@ const groupData = data => {
         }
         
         type = "sto";
-        title = item.location.sto_name;
+        title = locMode.value == "gepee" ? item.location.sto_name : item.location.name;
         result.push({ type, title, ...item });
         return result;
         

@@ -2,7 +2,9 @@
 class Pi_laten_model extends CI_Model
 {
     protected $tablePlnName = 't_pln_transaksi'; // db amc
+    protected $tableIndoorName = 't_pln_indoor'; // db amc
     protected $tableLocationName = 'master_lokasi_gepee'; // db densus
+    protected $tableWitelName = 'master_amc_witel'; // db densus
     public $currUser;
 
     public function __construct()
@@ -64,9 +66,16 @@ class Pi_laten_model extends CI_Model
     //     return $appliedFilter;
     // }
 
-    public function get_all($filter)
+    public function get_gepee($filter)
     {
-        $this->use_module('get_all', [ 'filter' => $filter ]);
+        $this->use_module('get_gepee', [ 'filter' => $filter ]);
+        return $this->result;
+    }
+
+    public function get_amc($filter)
+    {
+        $this->load->helper('array');
+        $this->use_module('get_amc', [ 'filter' => $filter ]);
         return $this->result;
     }
 }

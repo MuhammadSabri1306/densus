@@ -12,7 +12,8 @@ export const usePiLatenStore = defineStore("pi-laten", {
     state: () => {
         const viewStore = useViewStore();
         return {
-            monthList: viewStore.monthList
+            monthList: viewStore.monthList,
+            locationMode: "gepee"
         };
     },
     getters: {
@@ -60,11 +61,16 @@ export const usePiLatenStore = defineStore("pi-laten", {
             return urlParams.length > 0 ? `?${ urlParams }` : "";
         },
 
+        changeLocationMode(mode) {
+            this.locationMode = mode;
+        },
+
         async getPi(callback) {
             const urlParams = this.buildUrlParams("divre", "witel", "year", "month");
+            const url = this.locationMode == "gepee" ? "/pi-laten/gepee" : "/pi-laten/amc";
             try {
 
-                const response = await http.get("/pi-laten" + urlParams, this.fetchHeader);
+                const response = await http.get(url + urlParams, this.fetchHeader);
                 if(!response.data.list) {
                     console.warn(response.data);
                     callback({ success: false, status: response.status, data: {} });
