@@ -918,7 +918,6 @@ class Excel_export extends CI_Controller
 
         $this->load->model('gepee_evidence_model');
         $data = $this->gepee_evidence_model->get_excel_data($filter);
-        // dd_json($data);
         $gepeeEvd = $data['location_list'];
         $categoryList = $data['category'];
         
@@ -1043,5 +1042,99 @@ class Excel_export extends CI_Controller
 
         // }
         $this->excel->createDownload('GEPEE Evidence '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
+    }
+
+    public function pi_laten_gepee()
+    {
+        $divre = $this->input->get('divre');
+        $witel = $this->input->get('witel');
+        $year = (int) ($this->input->get('year') ?? date('Y'));
+        $month = (int) ($this->input->get('month') ?? date('n'));
+
+        $filter = compact('divre', 'witel', 'year', 'month');
+        $this->load->model('pi_laten_model');
+        $piLaten = $this->pi_laten_model->get_gepee($filter);
+
+        $monthList = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+            'Oktober', 'November', 'Desember'];
+        $monthName = $monthList[$piLaten['month'] - 1];
+
+        $this->excel
+            ->selectCell([2, 2], [2, 3])
+            ->mergeCell()
+            ->setAlignment('left')
+            ->setValue('Target : '.$monthName, 2, 2);
+        
+        $this->excel->useColSizeAuto = true;
+        $startRow = 5; $currRow = $startRow;
+        $startCol = 2; $currCol = $startCol;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('Regional', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('Witel', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('STO', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 2)])
+            ->mergeCell()
+            ->setValue('Tahun', $currRow, $currCol);
+        $this->excel->setValue($piLaten['years']['comparison_1'], ($currRow + 1), $currCol);
+        $currCol++;
+        $this->excel->setValue($piLaten['years']['comparison_2'], ($currRow + 1), $currCol);
+        $currCol++;
+        $this->excel->setValue($piLaten['years']['source'], ($currRow + 1), $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 1)])
+            ->mergeCell()
+            ->setValue('Saving', $currRow, $currCol);
+        $this->excel->setValue($piLaten['years']['source'].'-'.$piLaten['years']['comparison_1'], ($currRow + 1), $currCol);
+        $currCol++;
+        $this->excel->setValue($piLaten['years']['source'].'-'.$piLaten['years']['comparison_2'], ($currRow + 1), $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 1)])
+            ->mergeCell()
+            ->setValue('Cost Energy Ratio', $currRow, $currCol);
+        $this->excel->setValue($piLaten['years']['source'].'-'.$piLaten['years']['comparison_1'], ($currRow + 1), $currCol);
+        $currCol++;
+        $this->excel->setValue($piLaten['years']['source'].'-'.$piLaten['years']['comparison_2'], ($currRow + 1), $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 1)])
+            ->mergeCell()
+            ->setValue('Cost Energy Efficiency', $currRow, $currCol);
+        $this->excel->setValue($piLaten['years']['source'].'-'.$piLaten['years']['comparison_1'], ($currRow + 1), $currCol);
+        $currCol++;
+        $this->excel->setValue($piLaten['years']['source'].'-'.$piLaten['years']['comparison_2'], ($currRow + 1), $currCol);
+        $currCol++;
+
+        $currRow++;
+        $this->excel
+            ->selectCell([$startRow, $startCol], [$currRow, $currCol])
+            ->setFill($this->colorScheme['primary']['argb'])
+            ->setColor($this->colorScheme['white']['argb'])
+            ->setBorderColor($this->colorScheme['white']['argb'])
+            ->setBold(true)
+            ->setAlignment('center');
+        $currRow++;
+        
+        $this->excel->createDownload('PI Laten (Gepee) '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
     }
 }

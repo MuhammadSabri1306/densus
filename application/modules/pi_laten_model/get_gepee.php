@@ -31,7 +31,6 @@ $dbAmc->select("id_pelanggan, tahun, $monthKey")
     ->where_in('tahun', $filterYearPln)
     ->order_by('id_pelanggan');
 $plnData = $dbAmc->get()->result_array();
-// dd_json($plnData);
 
 
 $piResult = [];

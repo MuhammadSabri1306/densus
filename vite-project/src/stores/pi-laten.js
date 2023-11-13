@@ -6,7 +6,7 @@ import { useViewStore } from "@stores/view";
 import { createUrlParams } from "@/helpers/url";
 
 import { allowSampleData } from "@/configs/base";
-import sampleGepeePiLaten from "@helpers/sample-data/pi-laten-gepee.json";
+import getSampleData from "@helpers/sample-data";
 
 export const usePiLatenStore = defineStore("pi-laten", {
     state: () => {
@@ -82,9 +82,35 @@ export const usePiLatenStore = defineStore("pi-laten", {
             } catch(err) {
 
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: sampleGepeePiLaten });
-                else
+                if(allowSampleData) {
+                    const sampleData = await getSampleData("pi-laten-gepee", {});
+                    callback({ success: true, status: err.response?.status, data: sampleData });
+                } else
+                    callback({ success: false, status: err.response?.status, data: {} });
+                    
+            }
+        },
+
+        async getPiV2(callback) {
+            const urlParams = this.buildUrlParams("divre", "witel", "year", "month");
+            try {
+
+                const response = await http.get("/pi-laten/gepee/v2" + urlParams, this.fetchHeader);
+                if(!response.data.witel_list) {
+                    console.warn(response.data);
+                    callback({ success: false, status: response.status, data: {} });
+                    return;
+                }
+
+                callback({ success: true, status: response.status, data: response.data });
+
+            } catch(err) {
+
+                handlingFetchErr(err);
+                if(allowSampleData) {
+                    const sampleData = await getSampleData("pi-laten-gepee-v2", {});
+                    callback({ success: true, status: err.response?.status, data: sampleData });
+                } else
                     callback({ success: false, status: err.response?.status, data: {} });
                     
             }

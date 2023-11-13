@@ -47,7 +47,7 @@ import GepeeEvidenceWitel from "@views/GepeeEvidenceWitel.vue";
 import GepeeReport from "@views/GepeeReport.vue";
 import PueTarget from "@views/PueTarget.vue";
 import PueTargetDetail from "@views/PueTargetDetail.vue";
-import GepeePiLaten from "@views/GepeePiLaten.vue";
+import GepeePiLatenV2 from "@views/GepeePiLatenV2.vue";
 
 import OxispActivity from "@views/OxispActivity.vue";
 import OxispChecklist from "@views/OxispChecklist.vue";
@@ -202,7 +202,7 @@ const routes = [
         meta: { menuKey: ["gepee_performance", "pue_target", "target"], requiresAuth: true }
     },
     {
-        path: "/gepee-performance/pi-laten", component: GepeePiLaten,
+        path: "/gepee-performance/pi-laten", component: GepeePiLatenV2,
         meta: { menuKey: ["gepee_performance", "pi_laten"], requiresAuth: true }
     },
     {

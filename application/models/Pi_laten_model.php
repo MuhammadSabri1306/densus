@@ -43,11 +43,20 @@ class Pi_laten_model extends CI_Model
         return $appliedFilter;
     }
 
-    protected function get_amc_month_key($month)
+    protected function get_amc_month_key($startMonth, $endMonth = null)
     {
         $monthKeys = ['januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus',
             'september', 'oktober', 'november', 'desember'];
-        $monthIndex = (int) $month - 1;
+
+        if(is_int($endMonth) && $startMonth <= $endMonth) {
+            $months = [];
+            for($i = $startMonth - 1; $i < $endMonth; $i++) {
+                array_push($months, $monthKeys[$i]);
+            }
+            return $months;
+        }
+
+        $monthIndex = (int) $startMonth - 1;
         return $monthKeys[$monthIndex];
     }
 
@@ -69,6 +78,18 @@ class Pi_laten_model extends CI_Model
     public function get_gepee($filter)
     {
         $this->use_module('get_gepee', [ 'filter' => $filter ]);
+        return $this->result;
+    }
+
+    public function get_gepee_v2($filter)
+    {
+        $this->load->helper('array');
+        
+        $savingTarget = 1 / 100;
+        $this->use_module('get_gepee_v2', [
+            'filter' => $filter,
+            'savingTarget' => $savingTarget
+        ]);
         return $this->result;
     }
 
