@@ -1053,79 +1053,62 @@ class Excel_export extends CI_Controller
 
         $filter = compact('divre', 'witel', 'year', 'month');
         $this->load->model('pi_laten_model');
-        $piLaten = $this->pi_laten_model->get_gepee($filter);
+        $piLaten = $this->pi_laten_model->get_gepee_v2($filter);
+
+        $yearSrc = $piLaten['years']['source'];
+        $yearCmp = $piLaten['years']['comparison'];
 
         $monthList = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
             'Oktober', 'November', 'Desember'];
-        $monthName = $monthList[$piLaten['month'] - 1];
+        $targetMonthName = $monthList[$piLaten['filter_month'] - 1];
+        $startMonthCol = substr($monthList[0], 0, 3);
+        $endMonthCol = substr($targetMonthName, 0, 3);
 
         $this->excel
             ->selectCell([2, 2], [2, 3])
             ->mergeCell()
             ->setAlignment('left')
-            ->setValue('Target : '.$monthName, 2, 2);
+            ->setValue("Target : $targetMonthName Tahun $yearSrc", 2, 2);
         
         $this->excel->useColSizeAuto = true;
         $startRow = 5; $currRow = $startRow;
         $startCol = 2; $currCol = $startCol;
 
-        $this->excel
-            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
-            ->mergeCell()
-            ->setValue('Regional', $currRow, $currCol);
+        $this->excel->setValue('Regional', $currRow, $currCol);
+        
         $currCol++;
+        $this->excel->setValue('Witel', $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue('STO', $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue('ID Pelanggan PLN', $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue("Full Tahun $yearCmp", $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue("$startMonthCol - $endMonthCol $yearCmp", $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue("$startMonthCol - $endMonthCol $yearSrc", $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue("Presentasi Kontribusi Tagihan $yearCmp", $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue('Target Saving', $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue("Saving $startMonthCol - $endMonthCol Tahun $yearSrc - $yearCmp", $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue('Selisih Target & Saving', $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue("CER $endMonthCol (Real)", $currRow, $currCol);
 
-        $this->excel
-            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
-            ->mergeCell()
-            ->setValue('Witel', $currRow, $currCol);
-        $currCol++;
-
-        $this->excel
-            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
-            ->mergeCell()
-            ->setValue('STO', $currRow, $currCol);
-        $currCol++;
-
-        $this->excel
-            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 2)])
-            ->mergeCell()
-            ->setValue('Tahun', $currRow, $currCol);
-        $this->excel->setValue($piLaten['years']['comparison_1'], ($currRow + 1), $currCol);
-        $currCol++;
-        $this->excel->setValue($piLaten['years']['comparison_2'], ($currRow + 1), $currCol);
-        $currCol++;
-        $this->excel->setValue($piLaten['years']['source'], ($currRow + 1), $currCol);
-        $currCol++;
-
-        $this->excel
-            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 1)])
-            ->mergeCell()
-            ->setValue('Saving', $currRow, $currCol);
-        $this->excel->setValue($piLaten['years']['source'].'-'.$piLaten['years']['comparison_1'], ($currRow + 1), $currCol);
-        $currCol++;
-        $this->excel->setValue($piLaten['years']['source'].'-'.$piLaten['years']['comparison_2'], ($currRow + 1), $currCol);
-        $currCol++;
-
-        $this->excel
-            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 1)])
-            ->mergeCell()
-            ->setValue('Cost Energy Ratio', $currRow, $currCol);
-        $this->excel->setValue($piLaten['years']['source'].'-'.$piLaten['years']['comparison_1'], ($currRow + 1), $currCol);
-        $currCol++;
-        $this->excel->setValue($piLaten['years']['source'].'-'.$piLaten['years']['comparison_2'], ($currRow + 1), $currCol);
-        $currCol++;
-
-        $this->excel
-            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 1)])
-            ->mergeCell()
-            ->setValue('Cost Energy Efficiency', $currRow, $currCol);
-        $this->excel->setValue($piLaten['years']['source'].'-'.$piLaten['years']['comparison_1'], ($currRow + 1), $currCol);
-        $currCol++;
-        $this->excel->setValue($piLaten['years']['source'].'-'.$piLaten['years']['comparison_2'], ($currRow + 1), $currCol);
-        $currCol++;
-
-        $currRow++;
         $this->excel
             ->selectCell([$startRow, $startCol], [$currRow, $currCol])
             ->setFill($this->colorScheme['primary']['argb'])
@@ -1133,8 +1116,395 @@ class Excel_export extends CI_Controller
             ->setBorderColor($this->colorScheme['white']['argb'])
             ->setBold(true)
             ->setAlignment('center');
-        $currRow++;
+            
+        foreach($piLaten['sto_list'] as $item) {
+            
+            $currRow++;
+            $currCol = $startCol;
+            $this->excel->setValue($item['location']['divre_name'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['location']['witel_name'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['location']['sto_name'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['location']['id_pel_pln'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['bill']['cmp_full'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['bill']['cmp'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['bill']['src'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['bill_fraction'] / 100, $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['saving']['target'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['saving']['value'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['saving']['achievement'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['cer']['src_real'] / 100, $currRow, $currCol);
+
+        }
+
+        $this->excel
+            ->selectCell([$startRow + 1, 5], [$currRow, 5])
+            ->getCellStyle()
+            ->getNumberFormat()
+            ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER);
+
+        $this->excel
+            ->selectCell([$startRow + 1, 6], [$currRow, 8])
+            ->getCellStyle()
+            ->getNumberFormat()
+            ->setFormatCode(\Excel::CUSTOM_NUMBER_FORMAT_CURRENCY_IDR);
+
+        $this->excel
+            ->selectCell([$startRow + 1, 9], [$currRow, 9])
+            ->getCellStyle()
+            ->getNumberFormat()
+            ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_PERCENTAGE_00);
+
+        $this->excel
+            ->selectCell([$startRow + 1, 10], [$currRow, 12])
+            ->getCellStyle()
+            ->getNumberFormat()
+            ->setFormatCode(\Excel::CUSTOM_NUMBER_FORMAT_CURRENCY_IDR);
+
+        $this->excel
+            ->selectCell([$startRow + 1, 13], [$currRow, 13])
+            ->getCellStyle()
+            ->getNumberFormat()
+            ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_PERCENTAGE_00);
+
+
+        $condStyleGreen = new PhpOffice\PhpSpreadsheet\Style\Style(false, true);
+        $condStyleGreen->getFont()
+            ->getColor()
+            ->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_DARKGREEN);
+        $condStyleGreen->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()
+            ->setARGB('ffc6efce');
+        $condStyleGreen->getFill()
+            ->getEndColor()
+            ->setARGB('ffc6efce');
+
+        $condStyleRed = new PhpOffice\PhpSpreadsheet\Style\Style(false, true);
+        $condStyleRed->getFont()
+            ->getColor()
+            ->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_DARKRED);
+        $condStyleRed->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()
+            ->setARGB('ffffc7ce');
+        $condStyleRed->getFill()
+            ->getEndColor()
+            ->setARGB('ffffc7ce');
+
+        $condStyleSavingVal = $this->excel
+            ->selectCell([$startRow + 1, 11], [$currRow, 11])
+            ->getCellStyle()
+            ->getConditionalStyles();
+
+        $condSavingVal1 = new \PhpOffice\PhpSpreadsheet\Style\Conditional();
+        $condSavingVal1->setConditionType(\PhpOffice\PhpSpreadsheet\Style\Conditional::CONDITION_CELLIS);
+        $condSavingVal1->setOperatorType(\PhpOffice\PhpSpreadsheet\Style\Conditional::OPERATOR_LESSTHAN);
+        $condSavingVal1->addCondition(0);
+        $condSavingVal1->setStyle($condStyleGreen);
+        $condSavingVal1->setStopIfTrue(false);
+        array_push($condStyleSavingVal, $condSavingVal1);
+
+        $condSavingVal0 = new \PhpOffice\PhpSpreadsheet\Style\Conditional();
+        $condSavingVal0->setConditionType(\PhpOffice\PhpSpreadsheet\Style\Conditional::CONDITION_CELLIS);
+        $condSavingVal0->setOperatorType(\PhpOffice\PhpSpreadsheet\Style\Conditional::OPERATOR_GREATERTHANOREQUAL);
+        $condSavingVal0->addCondition(0);
+        $condSavingVal0->setStyle($condStyleRed);
+        $condSavingVal0->setStopIfTrue(true);
+        array_push($condStyleSavingVal, $condSavingVal0);
+
+        $this->excel
+            ->selectCell([$startRow + 1, 11], [$currRow, 11])
+            ->getCellStyle()
+            ->setConditionalStyles($condStyleSavingVal);
+
+
+        $condStyleSavingDiff = $this->excel
+            ->selectCell([$startRow + 1, 12], [$currRow, 12])
+            ->getCellStyle()
+            ->getConditionalStyles();
+
+        $condSavingDiff0 = new \PhpOffice\PhpSpreadsheet\Style\Conditional();
+        $condSavingDiff0->setConditionType(\PhpOffice\PhpSpreadsheet\Style\Conditional::CONDITION_CELLIS);
+        $condSavingDiff0->setOperatorType(\PhpOffice\PhpSpreadsheet\Style\Conditional::OPERATOR_LESSTHANOREQUAL);
+        $condSavingDiff0->addCondition(0);
+        $condSavingDiff0->setStyle($condStyleGreen);
+        $condSavingDiff0->setStopIfTrue(false);
+        array_push($condStyleSavingDiff, $condSavingDiff0);
+
+        $condSavingDiff1 = new \PhpOffice\PhpSpreadsheet\Style\Conditional();
+        $condSavingDiff1->setConditionType(\PhpOffice\PhpSpreadsheet\Style\Conditional::CONDITION_CELLIS);
+        $condSavingDiff1->setOperatorType(\PhpOffice\PhpSpreadsheet\Style\Conditional::OPERATOR_GREATERTHAN);
+        $condSavingDiff1->addCondition(0);
+        $condSavingDiff1->setStyle($condStyleRed);
+        $condSavingDiff1->setStopIfTrue(true);
+        array_push($condStyleSavingDiff, $condSavingDiff1);
+
+        $this->excel
+            ->selectCell([$startRow + 1, 12], [$currRow, 12])
+            ->getCellStyle()
+            ->setConditionalStyles($condStyleSavingDiff);
+
+
+        $this->excel->createDownload('PI Laten (GePEE Location) '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
+    }
+
+    public function pi_laten_amc()
+    {
+        $divre = $this->input->get('divre');
+        $witel = $this->input->get('witel');
+        $year = (int) ($this->input->get('year') ?? date('Y'));
+        $month = (int) ($this->input->get('month') ?? date('n'));
+
+        $filter = compact('divre', 'witel', 'year', 'month');
+        $this->load->model('pi_laten_model');
+        $piLaten = $this->pi_laten_model->get_amc_v2($filter);
+
+        $yearSrc = $piLaten['years']['source'];
+        $yearCmp = $piLaten['years']['comparison'];
+
+        $monthList = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+            'Oktober', 'November', 'Desember'];
+        $targetMonthName = $monthList[$piLaten['filter_month'] - 1];
+        $startMonthCol = substr($monthList[0], 0, 3);
+        $endMonthCol = substr($targetMonthName, 0, 3);
+
+        $this->excel
+            ->selectCell([2, 2], [2, 3])
+            ->mergeCell()
+            ->setAlignment('left')
+            ->setValue("Target : $targetMonthName Tahun $yearSrc", 2, 2);
         
-        $this->excel->createDownload('PI Laten (Gepee) '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
+        $this->excel->useColSizeAuto = true;
+        $startRow = 5; $currRow = $startRow;
+        $startCol = 2; $currCol = $startCol;
+
+        $this->excel->setValue('Regional', $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue('Witel', $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue('Nama Pelanggan PLN', $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue('Alamat', $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue('Lokasi', $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue('ID Pelanggan PLN', $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue("Full Tahun $yearCmp", $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue("$startMonthCol - $endMonthCol $yearCmp", $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue("$startMonthCol - $endMonthCol $yearSrc", $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue("Presentasi Kontribusi Tagihan $yearCmp", $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue('Target Saving', $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue("Saving $startMonthCol - $endMonthCol Tahun $yearSrc - $yearCmp", $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue('Selisih Target & Saving', $currRow, $currCol);
+        
+        $currCol++;
+        $this->excel->setValue("CER $endMonthCol (Real)", $currRow, $currCol);
+
+        $this->excel
+            ->selectCell([$startRow, $startCol], [$currRow, $currCol])
+            ->setFill($this->colorScheme['primary']['argb'])
+            ->setColor($this->colorScheme['white']['argb'])
+            ->setBorderColor($this->colorScheme['white']['argb'])
+            ->setBold(true)
+            ->setAlignment('center');
+            
+        foreach($piLaten['sto_list'] as $item) {
+            
+            $currRow++;
+            $currCol = $startCol;
+            $this->excel->setValue($item['location']['divre_name'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['location']['witel_name'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['location']['nama_pelanggan'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['location']['alamat'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['location']['lokasi'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['location']['id_pelanggan'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['bill']['cmp_full'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['bill']['cmp'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['bill']['src'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['bill_fraction'] / 100, $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['saving']['target'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['saving']['value'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['saving']['achievement'], $currRow, $currCol);
+
+            $currCol++;
+            $this->excel->setValue($item['cer']['src_real'] / 100, $currRow, $currCol);
+
+        }
+        
+        $this->excel
+            ->selectCell([$startRow + 1, 7], [$currRow, 7])
+            ->getCellStyle()
+            ->getNumberFormat()
+            ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER);
+
+        $this->excel
+            ->selectCell([$startRow + 1, 8], [$currRow, 10])
+            ->getCellStyle()
+            ->getNumberFormat()
+            ->setFormatCode(\Excel::CUSTOM_NUMBER_FORMAT_CURRENCY_IDR);
+
+        $this->excel
+            ->selectCell([$startRow + 1, 11], [$currRow, 11])
+            ->getCellStyle()
+            ->getNumberFormat()
+            ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_PERCENTAGE_00);
+
+        $this->excel
+            ->selectCell([$startRow + 1, 12], [$currRow, 14])
+            ->getCellStyle()
+            ->getNumberFormat()
+            ->setFormatCode(\Excel::CUSTOM_NUMBER_FORMAT_CURRENCY_IDR);
+
+        $this->excel
+            ->selectCell([$startRow + 1, 15], [$currRow, 15])
+            ->getCellStyle()
+            ->getNumberFormat()
+            ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_PERCENTAGE_00);
+
+
+        $condStyleGreen = new PhpOffice\PhpSpreadsheet\Style\Style(false, true);
+        $condStyleGreen->getFont()
+            ->getColor()
+            ->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_DARKGREEN);
+        $condStyleGreen->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()
+            ->setARGB('ffc6efce');
+        $condStyleGreen->getFill()
+            ->getEndColor()
+            ->setARGB('ffc6efce');
+
+        $condStyleRed = new PhpOffice\PhpSpreadsheet\Style\Style(false, true);
+        $condStyleRed->getFont()
+            ->getColor()
+            ->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_DARKRED);
+        $condStyleRed->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()
+            ->setARGB('ffffc7ce');
+        $condStyleRed->getFill()
+            ->getEndColor()
+            ->setARGB('ffffc7ce');
+
+        $condStyleSavingVal = $this->excel
+            ->selectCell([$startRow + 1, 13], [$currRow, 13])
+            ->getCellStyle()
+            ->getConditionalStyles();
+
+        $condSavingVal1 = new \PhpOffice\PhpSpreadsheet\Style\Conditional();
+        $condSavingVal1->setConditionType(\PhpOffice\PhpSpreadsheet\Style\Conditional::CONDITION_CELLIS);
+        $condSavingVal1->setOperatorType(\PhpOffice\PhpSpreadsheet\Style\Conditional::OPERATOR_LESSTHAN);
+        $condSavingVal1->addCondition(0);
+        $condSavingVal1->setStyle($condStyleGreen);
+        $condSavingVal1->setStopIfTrue(false);
+        array_push($condStyleSavingVal, $condSavingVal1);
+
+        $condSavingVal0 = new \PhpOffice\PhpSpreadsheet\Style\Conditional();
+        $condSavingVal0->setConditionType(\PhpOffice\PhpSpreadsheet\Style\Conditional::CONDITION_CELLIS);
+        $condSavingVal0->setOperatorType(\PhpOffice\PhpSpreadsheet\Style\Conditional::OPERATOR_GREATERTHANOREQUAL);
+        $condSavingVal0->addCondition(0);
+        $condSavingVal0->setStyle($condStyleRed);
+        $condSavingVal0->setStopIfTrue(true);
+        array_push($condStyleSavingVal, $condSavingVal0);
+
+        $this->excel
+            ->selectCell([$startRow + 1, 13], [$currRow, 13])
+            ->getCellStyle()
+            ->setConditionalStyles($condStyleSavingVal);
+
+
+        $condStyleSavingDiff = $this->excel
+            ->selectCell([$startRow + 1, 14], [$currRow, 14])
+            ->getCellStyle()
+            ->getConditionalStyles();
+
+        $condSavingDiff0 = new \PhpOffice\PhpSpreadsheet\Style\Conditional();
+        $condSavingDiff0->setConditionType(\PhpOffice\PhpSpreadsheet\Style\Conditional::CONDITION_CELLIS);
+        $condSavingDiff0->setOperatorType(\PhpOffice\PhpSpreadsheet\Style\Conditional::OPERATOR_LESSTHANOREQUAL);
+        $condSavingDiff0->addCondition(0);
+        $condSavingDiff0->setStyle($condStyleGreen);
+        $condSavingDiff0->setStopIfTrue(false);
+        array_push($condStyleSavingDiff, $condSavingDiff0);
+
+        $condSavingDiff1 = new \PhpOffice\PhpSpreadsheet\Style\Conditional();
+        $condSavingDiff1->setConditionType(\PhpOffice\PhpSpreadsheet\Style\Conditional::CONDITION_CELLIS);
+        $condSavingDiff1->setOperatorType(\PhpOffice\PhpSpreadsheet\Style\Conditional::OPERATOR_GREATERTHAN);
+        $condSavingDiff1->addCondition(0);
+        $condSavingDiff1->setStyle($condStyleRed);
+        $condSavingDiff1->setStopIfTrue(true);
+        array_push($condStyleSavingDiff, $condSavingDiff1);
+
+        $this->excel
+            ->selectCell([$startRow + 1, 14], [$currRow, 14])
+            ->getCellStyle()
+            ->setConditionalStyles($condStyleSavingDiff);
+
+
+        $this->excel->createDownload('PI Laten (ALL Location) '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
     }
 }

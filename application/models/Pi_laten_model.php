@@ -43,7 +43,7 @@ class Pi_laten_model extends CI_Model
         return $appliedFilter;
     }
 
-    protected function get_amc_month_key($startMonth, $endMonth = null)
+    public function get_amc_month_key($startMonth, $endMonth = null)
     {
         $monthKeys = ['januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli', 'agustus',
             'september', 'oktober', 'november', 'desember'];

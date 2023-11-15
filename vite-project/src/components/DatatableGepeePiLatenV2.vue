@@ -397,30 +397,6 @@ const getSavingAchvClass = achvValue => {
                     </tbody>
                 </table>
             </div>
-            <!-- <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header pb-0">
-                            <h4 class="mb-0">Keterangan</h4>
-                        </div>
-                        <div class="card-body">
-                            <ol class="tw-pl-8 tw-list-decimal">
-                                <li>
-                                    Cost Energy Ratio (CER) : Nilai perbandingan antara jumlah cost energy YoY.
-                                    Semakin besar ratio semakin besar cost operasional.
-                                    Usulan Setting target <strong>&lt; 90%</strong> (Ref {{ yearTarget.cmp1 }}) atau <strong>&lt; 95%</strong> (Ref {{ yearTarget.cmp2 }}).
-                                </li>
-                                <li>
-                                    Cost Energy Efficiency (CEF) : Nilai perbandingan antara jumlah efisiensi terhadap cost.
-                                    Semakin besar ratio semakin besar cost operational. Usulan setting target <strong>-10%</strong>
-                                    (Ref {{ yearTarget.cmp1 }}) atau <strong>-5%</strong> (Ref {{ yearTarget.cmp2 }}).
-                                </li>
-                                <li>Implementasi mulai September 2023.</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
 </template>

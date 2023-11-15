@@ -21,6 +21,10 @@ class Excel
     public $endRowNumber;
     public $endColNumber;
 
+    // public const CUSTOM_NUMBER_FORMAT_CURRENCY_IDR = '_-Rp* #.##0_-;-Rp* #.##0_-;_-Rp* "-"_-;_-@_-';
+    // public const CUSTOM_NUMBER_FORMAT_CURRENCY_IDR = 'Rp* #,##0_-';
+    public const CUSTOM_NUMBER_FORMAT_CURRENCY_IDR = 'Rp* #,##0_-;Rp* -#,##0_-';
+
     public function __construct()
     {
         $this->spreadsheet = new Spreadsheet();
@@ -190,6 +194,12 @@ class Excel
         }
 
         return $this;
+    }
+
+    public function getCellStyle()
+    {
+        $cellKey = $this->getSelectedCell();
+        return $this->spreadsheet->getActiveSheet()->getStyle($cellKey);
     }
 
     public function setAlignment($value)

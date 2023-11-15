@@ -5,6 +5,7 @@ import { usePiLatenStore } from "@stores/pi-laten";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
 import DatatableGepeePiLatenV2 from "@components/DatatableGepeePiLatenV2.vue";
+import DialogExportLinkVue from "@components/ui/DialogExportLink.vue";
 
 const viewStore = useViewStore();
 if(!viewStore.filters.month) {
@@ -81,5 +82,11 @@ const showDialogExport = ref(false);
             </div>
             <DatatableGepeePiLatenV2 ref="datatable" />
         </div>
+        <DialogExportLinkVue v-if="showDialogExport && locMode == 'gepee'" baseUrl="/export/excel/pi-laten/gepee"
+            title="Export PI Laten (Mode Lokasi GePEE)" useDivre useWitel useYear useMonth requireMonth
+            @close="showDialogExport = false" />
+        <DialogExportLinkVue v-if="showDialogExport && locMode == 'amc'" baseUrl="/export/excel/pi-laten/amc"
+            title="Export PI Laten (Mode Semua Lokasi)" useDivre useWitel useYear useMonth requireMonth
+            @close="showDialogExport = false" />
     </div>
 </template>

@@ -326,7 +326,7 @@ foreach($stoList as $index => $sto) {
     $stoBillCmpFull = $sto['bill']['cmp_full'];
     $stoBillFraction = $stoList[$index]['bill_fraction'];
     if($witelBillCmpFull && $stoBillCmpFull) {
-        $stoBillFraction = customRound($stoBillCmpFull / $witelBillCmpFull, 2);
+        $stoBillFraction = customRound($stoBillCmpFull / $witelBillCmpFull * 100, 2);
     }
 
     $witelSavingTarget = $witel && isset($witel['saving']['target']) ? $witel['saving']['target'] : null;
