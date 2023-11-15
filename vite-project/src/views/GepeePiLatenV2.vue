@@ -1,6 +1,7 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useViewStore } from "@stores/view";
+import { usePiLatenStore } from "@stores/pi-laten";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
 import DatatableGepeePiLatenV2 from "@components/DatatableGepeePiLatenV2.vue";
@@ -14,6 +15,14 @@ if(!viewStore.filters.month) {
     });
 }
 
+// gepee || amc
+const piLatenStore = usePiLatenStore();
+const locMode = computed(() => piLatenStore.locationMode);
+const changeLocMode = mode => {
+    piLatenStore.changeLocationMode(mode);
+    fetchData();
+};
+
 const datatable = ref(null);
 const fetchData = () => datatable.value.fetch();
 
@@ -22,6 +31,8 @@ const onFilterApply = filterValue => {
     viewStore.setFilter(filterValue);
     fetchData();
 };
+
+const showDialogExport = ref(false);
 </script>
 <template>
     <div>
@@ -39,9 +50,35 @@ const onFilterApply = filterValue => {
             </div>
         </div>
         <div class="container-fluid dashboard-default-sec">
-            <FilterGepeeV2 useMonth requireMonth @apply="onFilterApply" :autoApply="filterAutoApply" />
+            <FilterGepeeV2 useMonth requireMonth @apply="onFilterApply" :autoApply="filterAutoApply">
+                <template #action>
+                    <div class="px-md-4">
+                        <div class="d-flex">
+                            <label id="labelLocationMode" class="text-center mx-auto">Mode Lokasi</label>
+                        </div>
+                        <div class="btn-group tw-grid tw-grid-cols-2" role="group" aria-labelledby="labelLocationMode">
+                            <button type="button" @click="changeLocMode('gepee')"
+                                :class="(locMode == 'gepee') ? 'btn-primary' : 'btn-light'"
+                                class="btn">GePEE</button>
+                            <button type="button" @click="changeLocMode('amc')"
+                                :class="(locMode == 'amc') ? 'btn-primary' : 'btn-light'"
+                                class="btn">Semua</button>
+                        </div>
+                    </div>
+                </template>
+            </FilterGepeeV2>
         </div>
         <div class="container-fluid dashboard-default-sec pb-5">
+            <div class="py-4">
+                <div class="row g-4 justify-content-end align-items-center">
+                    <div class="col-auto">
+                        <button type="button" @click="showDialogExport = true" class="btn btn-outline-info bg-white btn-icon px-3">
+                            <VueFeather type="download" size="1em" />
+                            <span class="ms-2">Export</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
             <DatatableGepeePiLatenV2 ref="datatable" />
         </div>
     </div>

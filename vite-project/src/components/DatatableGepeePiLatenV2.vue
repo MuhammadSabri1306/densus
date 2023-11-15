@@ -5,7 +5,6 @@ import { useUserStore } from "@stores/user";
 import { useCollapseRow } from "@helpers/collapse-row";
 import { toNumberText } from "@helpers/number-format";
 import Skeleton from "primevue/skeleton";
-import bill from "../helpers/sample-data/pln/bill";
 
 const { collapsedDivre, collapsedWitel, toggleRowCollapse } = useCollapseRow();
 const userStore = useUserStore();
@@ -14,22 +13,10 @@ const piLatenStore = usePiLatenStore();
 const targetMonth = ref(piLatenStore.filters.month);
 const divreList = ref([]);
 const witelList = ref([]);
+const tableData = ref([]);
+const nasionalData = ref(null);
 
-const getNasionalBillPercent = divreCode => {
-
-    const divre = divreList.value.find(item => item.divre_kode == divreCode);
-    const billDivre = divre && (divre?.bill_total?.cmp_full || 0) ? divre.bill_total.cmp_full : null;
-    if(!billDivre)
-        return billDivre;
-
-    const billTotal = divreList.value.reduce((sum, item) => {
-        if(item?.bill_total?.cmp_full)
-            sum += item.bill_total.cmp_full;
-        return sum;
-    }, 0);
-
-    return billDivre / billTotal * 100;
-};
+const locMode = computed(() => piLatenStore.locationMode);
 
 const filterYear = piLatenStore.filters.year;
 const yearTarget = ref({
@@ -64,71 +51,60 @@ const level = computed(() => {
 });
 
 const roundLikePHP = (num, dec) => {
-  const numSign = num >= 0 ? 1 : -1;
-  return parseFloat((Math.round((num * Math.pow(10, dec)) + (numSign * 0.0001)) / Math.pow(10, dec)).toFixed(dec));
+    const numSign = num >= 0 ? 1 : -1;
+    return parseFloat((Math.round((num * Math.pow(10, dec)) + (numSign * 0.0001)) / Math.pow(10, dec)).toFixed(dec));
 }
 
-const getGroupAvg = (data, groupKey) => {
+const getGroupDivre = divreCode => {
+    const matchedDivre = divreList.value.find(item => item.location.divre_kode == divreCode);
+    if(!matchedDivre)
+        return null;
+
+    const currDivre = JSON.parse(JSON.stringify(matchedDivre));
+    currDivre.is_filter_applied = true;
+
+    const avg = { srcReal: [] };
+    const sum = {
+        savingTarget: null,
+        savingValue: null
+    };
     
-    const currItem = JSON.parse(JSON.stringify(data[0]));
-    
-    const bills = {};
-    for(let key in currItem.bill_total) {
-        bills[key] = null;
-    }
-
-    const saving = {};
-    for(let key in currItem.saving) {
-        saving[key] = null;
-    }
-
-    const cer = {};
-    for(let key in currItem.cer) {
-        cer[key] = [];
-    }
-
-    data.forEach(item => {
-        if(item[groupKey] != currItem[groupKey])
+    witelList.value.forEach(witel => {
+        if(witel.location.divre_kode != divreCode)
             return;
 
-        for(let key in item.bill_total) {
-            if(item.bill_total[key] !== null && item.bill_total[key] !== undefined) {
-                if(bills[key] === null)
-                    bills[key] = 0;
-                bills[key] += item.bill_total[key];
-            }
+        if(witel.saving.target) {
+            if(sum.savingTarget === null)
+                sum.savingTarget = 0;
+            sum.savingTarget += witel.saving.target;
         }
 
-        for(let key in item.saving) {
-            if(item.saving[key] !== null && item.saving[key] !== undefined) {
-                if(saving[key] === null)
-                    saving[key] = 0;
-                saving[key] += item.saving[key];
-            }
+        if(witel.saving.value) {
+            if(sum.savingValue === null)
+                sum.savingValue = 0;
+            sum.savingValue += witel.saving.value;
         }
 
-        for(let key in item.cer) {
-            if(item.cer[key] !== null && item.cer[key] !== undefined) {
-                cer[key].push(item.cer[key]);
-            }
-        }
-
+        if(witel.cer.src_real)
+            avg.srcReal.push(witel.cer.src_real);
     });
 
-    currItem.bill_total = bills;
-    currItem.treg_bill_percent = null;
+    currDivre.saving = {
+        target: sum.savingTarget,
+        value: sum.savingValue,
+        achievement: roundLikePHP(sum.savingTarget + sum.savingValue, 2)
+    };
 
-    for(let key in currItem.saving) {
-        currItem.saving[key] = saving[key];
+    if(currDivre.saving.achievement <= 0)
+        currDivre.saving.achievement = null;
+
+    currDivre.cer = { src_real: null };
+    if(avg.srcReal.length > 0) {
+        currDivre.cer.src_real = avg.srcReal.reduce((sum, item) => sum + item, 0) / avg.srcReal.length;
     }
 
-    for(let key in currItem.cer) {
-        currItem.cer[key] = null;
-        if(cer[key].length > 0)
-            currItem.cer[key] = cer[key].reduce((sum, item) => sum += item, 0) / cer[key].length;
-    }
+    return currDivre;
 
-    return currItem;
 };
 
 const hasCollapseInit = ref(false);
@@ -139,21 +115,36 @@ const groupData = data => {
         let type = null;
         let title = null;
 
-        if(groupKeys.divre !== item.divre_kode && level.value == "nasional") {
+        if(groupKeys.divre !== item.location.divre_kode && level.value == "nasional") {
             type = "divre";
-            title = item.divre_name;
-            const divreData = getGroupAvg(data.slice(index), "divre_kode");
+            title = item.location.divre_name;
+            // const divreData = getGroupAvg(data.slice(index), "divre_kode");
+            const divreData = getGroupDivre(item.location.divre_kode);
             
             result.push({ type, title, ...divreData });
-            groupKeys.divre = item.divre_kode;
+            groupKeys.divre = item.location.divre_kode;
             
-            const hasDivreCollapsed = collapsedDivre.value.indexOf(item.divre_kode) >= 0;
+            const hasDivreCollapsed = collapsedDivre.value.indexOf(item.location.divre_kode) >= 0;
             if(!hasCollapseInit.value && !hasDivreCollapsed)
-                toggleRowCollapse("divre", item.divre_kode);
+                toggleRowCollapse("divre", item.location.divre_kode);
         }
         
-        type = "witel";
-        title = "WILAYAH " + item.witel_name;
+        if(groupKeys.witel !== item.location.witel_kode && level.value != "witel") {
+            type = "witel";
+            title = "WILAYAH " + item.location.witel_name;
+            // const witelData = getGroupAvg(data.slice(index), "witel_kode");
+            const witelData = witelList.value.find(witelItem => witelItem.location.witel_kode == item.location.witel_kode);
+
+            result.push({ type, title, ...witelData });
+            groupKeys.witel = item.location.witel_kode;
+
+            const hasWitelCollapsed = collapsedWitel.value.indexOf(item.location.witel_kode) >= 0;
+            if(!hasCollapseInit.value && !hasWitelCollapsed)
+                toggleRowCollapse("witel", item.location.witel_kode);
+        }
+        
+        type = "sto";
+        title = locMode.value == "gepee" ? item.location.sto_name : item.location.name;
         result.push({ type, title, ...item });
         return result;
         
@@ -184,15 +175,17 @@ const fetch = () => {
             yearTarget.value = years;
         }
 
+        nasionalData.value = data.nasional_data ? data.nasional_data : [];
         divreList.value = data.treg_list ? data.treg_list : [];
+        witelList.value = data.witel_list ? data.witel_list : [];
 
-        if(data.witel_list) {
+        if(data.sto_list) {
             hasCollapseInit.value = false;
             collapsedDivre.value = [];
             collapsedWitel.value = [];
-            witelList.value = groupData(data.witel_list);
+            tableData.value = groupData(data.sto_list);
         } else
-            witelList.value = [];
+            tableData.value = [];
 
         isLoading.value = false;
     });
@@ -204,11 +197,11 @@ defineExpose({ fetch });
 const getRowClass = item => {
     let collapsed = false;
     if(item.type == "sto") {
-        const isWitelCollapsed = collapsedWitel.value.indexOf(item.witel_kode) >= 0;
-        const isDivreCollapsed = collapsedDivre.value.indexOf(item.divre_kode) >= 0;
+        const isWitelCollapsed = collapsedWitel.value.indexOf(item.location.witel_kode) >= 0;
+        const isDivreCollapsed = collapsedDivre.value.indexOf(item.location.divre_kode) >= 0;
         collapsed = isWitelCollapsed || isDivreCollapsed;
     } else if(item.type == "witel") {
-        collapsed = collapsedDivre.value.indexOf(item.divre_kode) >= 0;
+        collapsed = collapsedDivre.value.indexOf(item.location.divre_kode) >= 0;
     }
     
     return { "row-collapsed": collapsed };
@@ -238,8 +231,8 @@ const getSavingValueClass = savingValue => {
     if(savingValue === null || savingValue === undefined)
         return null;
     if(savingValue >= 0)
-        return "tc-pue-efficient";
-    return "tc-pue-inefficient";
+        return "tc-pue-inefficient";
+    return "tc-pue-efficient";
 };
 
 const getSavingAchvClass = achvValue => {
@@ -259,7 +252,7 @@ const getSavingAchvClass = achvValue => {
                 </div>
             </div>
         </div>
-        <div v-else-if="witelList.length < 1" class="px-4 py-3 border">
+        <div v-else-if="tableData.length < 1" class="px-4 py-3 border">
             <h4 class="text-center">Belum ada data.</h4>
         </div>
         <div v-else>
@@ -295,41 +288,93 @@ const getSavingAchvClass = achvValue => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in witelList" :class="getRowClass(item)">
+                        <tr v-if="nasionalData">
+                        
+                            <td class="sticky-column !tw-bg-[#24695c] text-white">
+                                <b class="px-3">SUMMARY NASIONAL</b>
+                            </td>
+
+                            <td v-if="nasionalData?.bill.cmp_full !== undefined">
+                                {{ formatIdr(nasionalData.bill.cmp_full) }}
+                            </td>
+                            <td v-else class="bg-cell-mute"></td>
+
+                            <td v-if="nasionalData?.bill?.cmp !== undefined">
+                                {{ formatIdr(nasionalData.bill.cmp) }}
+                            </td>
+                            <td v-else class="bg-cell-mute"></td>
+
+                            <td v-if="nasionalData?.bill?.src !== undefined">
+                                {{ formatIdr(nasionalData.bill.src) }}
+                            </td>
+                            <td v-else class="bg-cell-mute"></td>
+
+                            <td v-if="nasionalData.bill_fraction !== undefined">
+                                {{ formatPercent(nasionalData.bill_fraction) }}
+                            </td>
+                            <td v-else class="bg-cell-mute"></td>
+
+                            <td v-if="nasionalData?.saving?.target !== undefined">
+                                {{ formatIdr(nasionalData.saving.target) }}
+                            </td>
+                            <td v-else class="bg-cell-mute"></td>
+
+                            <td v-if="nasionalData?.saving?.value !== undefined" class="f-w-700"
+                                :class="getSavingValueClass(nasionalData.saving.value)">
+                                {{ formatIdr(nasionalData.saving.value) }}
+                            </td>
+                            <td v-else class="bg-cell-mute"></td>
+
+                            <td v-if="nasionalData?.saving?.achievement !== undefined" class="f-w-700"
+                                :class="getSavingAchvClass(nasionalData.saving.achievement)">
+                                {{ formatIdr(nasionalData.saving.achievement, "-") }}
+                            </td>
+                            <td v-else class="bg-cell-mute"></td>
+
+                            <td v-if="nasionalData?.cer?.src_real !== undefined">
+                                {{ formatPercent(nasionalData?.cer?.src_real) }}
+                            </td>
+                            <td v-else class="bg-cell-mute"></td>
+                        
+                        </tr>
+                        <tr v-for="item in tableData" :class="getRowClass(item)">
                             <td class="sticky-column">
     
                                 <div v-if="item.type == 'divre'" class="d-flex align-items-center px-3">
-                                    <button type="button" @click="toggleRowCollapse('divre', item.divre_kode)"
-                                        :class="{ 'child-collapsed': collapsedDivre.indexOf(item.divre_kode) >= 0 }"
-                                        class="btn btn-circle btn-light p-0 btn-collapse-row">
+                                    <button type="button" @click="toggleRowCollapse('divre', item.location.divre_kode)" :class="{ 'child-collapsed': collapsedDivre.indexOf(item.location.divre_kode) >= 0 }" class="btn btn-circle btn-light p-0 btn-collapse-row">
+                                        <VueFeather type="chevron-right" size="1rem" />
+                                    </button>
+                                    <small class="ms-2 tw-whitespace-nowrap fw-semibold">{{ item.title }}</small>
+                                </div>
+                                
+                                <div v-else-if="item.type == 'witel'" class="d-flex align-items-center px-3">
+                                    <button type="button" @click="toggleRowCollapse('witel', item.location.witel_kode)" :class="{ 'child-collapsed': collapsedWitel.indexOf(item.location.witel_kode) >= 0, 'ms-4': level == 'nasional' }" class="btn btn-circle btn-light p-0 btn-collapse-row">
                                         <VueFeather type="chevron-right" size="1rem" />
                                     </button>
                                     <small class="ms-2 tw-whitespace-nowrap fw-semibold">{{ item.title }}</small>
                                 </div>
     
                                 <p v-else class="d-block px-4 py-1 tw-whitespace-nowrap mb-0">
-                                    <small class="fw-semibold" :class="{ 'ms-5': level == 'nasional' }">{{ item.title }}</small>
+                                    <small :class="{ 'ps-5': level != 'witel', 'ms-5': level == 'nasional' }"
+                                        class="fw-semibold">{{ item.title }}</small>
                                 </p>
                                 
                             </td>
 
                             <td>
-                                {{ formatIdr(item.bill_total.cmp_full, "-") }}
+                                {{ formatIdr(item.bill.cmp_full, "-") }}
                             </td>
 
                             <td>
-                                {{ formatIdr(item.bill_total.cmp, "-") }}
+                                {{ formatIdr(item.bill.cmp, "-") }}
                             </td>
 
                             <td>
-                                {{ formatIdr(item.bill_total.src, "-") }}
+                                {{ formatIdr(item.bill.src, "-") }}
                             </td>
 
-                            <td v-if="item.type != 'divre'">
-                                {{ formatPercent(item.treg_bill_percent, "-") }}
-                            </td>
-                            <td v-else>
-                                {{ formatPercent(getNasionalBillPercent(item.divre_kode), "-") }}
+                            <td>
+                                {{ formatPercent(item.bill_fraction, "-") }}
                             </td>
 
                             <td>
@@ -345,7 +390,7 @@ const getSavingAchvClass = achvValue => {
                             </td>
 
                             <td>
-                                {{ formatPercent(item.cer.src_real, "-") }}
+                                {{ formatPercent(item?.cer?.src_real, "-") }}
                             </td>
                             
                         </tr>

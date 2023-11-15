@@ -99,4 +99,16 @@ class Pi_laten_model extends CI_Model
         $this->use_module('get_amc', [ 'filter' => $filter ]);
         return $this->result;
     }
+
+    public function get_amc_v2($filter)
+    {
+        $this->load->helper('array');
+        
+        $savingTarget = 1 / 100;
+        $this->use_module('get_amc_v2', [
+            'filter' => $filter,
+            'savingTarget' => $savingTarget
+        ]);
+        return $this->result;
+    }
 }

@@ -21,29 +21,37 @@ function customRound($numb, $precision = 0) {
  */
 $locTargetQuery = '1';
 if(isset($filter['witel'])) {
-    $locTargetQuery = 'IF(witel_kode="'.$filter['witel'].'",1,0)';
+    $locTargetQuery = 'IF(gepee.witel_kode="'.$filter['witel'].'",1,0)';
 } elseif(isset($filter['divre'])) {
-    $locTargetQuery = 'IF(divre_kode="'.$filter['divre'].'",1,0)';
+    $locTargetQuery = 'IF(gepee.divre_kode="'.$filter['divre'].'",1,0)';
 }
 
+$selectFields = [
+    'gepee.divre_kode', 'gepee.divre_name', 'gepee.witel_kode', 'gepee.witel_name', "$locTargetQuery AS in_target",
+    'amc.kode_regional AS amc_kode_regional', 'amc.kode_witel AS amc_kode_witel'
+];
+
 $this->db
-    ->select("*, $locTargetQuery AS in_target")
+    ->select(implode(', ', $selectFields))
     ->from("$this->tableLocationName AS gepee")
+    ->join("$this->tableWitelName AS amc", 'amc.gepee_witel_kode=gepee.witel_kode')
+    ->group_by('witel_kode')
     ->order_by('divre_kode')
-    ->order_by('witel_name')
-    ->order_by('sto_name');
-$locationData = $this->db->get()->result_array();
+    ->order_by('witel_name');
+$witelData = $this->db->get()->result_array();
 
 /*
  * get PLN Bill Data
  */
-$locTargetQuery = '1';
 $dbAmc = $this->load->database('amc', true);
-$dbAmc->select('*')
-    ->from($this->tablePlnName)
+$dbAmc->select('bill.*, loc.nama_pelanggan, loc.alamat, loc.lokasi, loc.kode_witel')
+    ->from("$this->tablePlnName AS bill")
+    ->join("$this->tableIndoorName AS loc", 'loc.id_pelanggan=bill.id_pelanggan')
     ->where_in('tahun', $filterYearPln)
-    ->order_by('id_pelanggan')
-    ->order_by('tahun');
+    ->order_by('tahun')
+    ->order_by('nama_pelanggan')
+    ->order_by('alamat')
+    ->order_by('lokasi');
 $plnData = $dbAmc->get()->result_array();
 
 $targetMonth = $filter['month'];
@@ -66,15 +74,28 @@ $rowTemplate = [
 ];
 
 $stoList = [];
-foreach($locationData as $loc) {
+foreach($witelData as $witel) {
+    foreach($plnData as $pln) {
+        if($pln['kode_witel'] == $witel['amc_kode_witel']) {
 
-    $row = $rowTemplate;
-    $row['location'] = $loc;
-    $row['location']['in_target'] = (bool) $loc['in_target'];
-
-    for($i=0; $i<count($plnData); $i++) {
-        $pln = $plnData[$i];
-        if($pln['id_pelanggan'] == $loc['id_pel_pln']) {
+            $stoIndex = findArrayIndex($stoList, fn($item) => $item['location']['id_pelanggan'] == $pln['id_pelanggan']);
+            if($stoIndex >= 0) {
+                $row = $stoList[$stoIndex];
+            } else {
+                $row = $rowTemplate;
+                $row['location']['id_pelanggan'] = $pln['id_pelanggan'];
+                $row['location']['nama_pelanggan'] = $pln['nama_pelanggan'];
+                $row['location']['alamat'] = $pln['alamat'];
+                $row['location']['lokasi'] = $pln['lokasi'];
+                $row['location']['name'] = $pln['nama_pelanggan'].' '.$pln['alamat'].' '.$pln['lokasi'];
+                $row['location']['in_target'] = (bool) $witel['in_target'];
+                $row['location']['witel_kode'] = $witel['witel_kode'];
+                $row['location']['witel_name'] = $witel['witel_name'];
+                $row['location']['witel_amc_kode'] = $witel['amc_kode_witel'];
+                $row['location']['divre_kode'] = $witel['divre_kode'];
+                $row['location']['divre_name'] = $witel['divre_name'];
+                $row['location']['divre_amc_kode'] = $witel['amc_kode_regional'];
+            }
 
             if($pln['tahun'] == $srcYear) {
                 foreach($monthRange as $monthField) {
@@ -105,22 +126,24 @@ foreach($locationData as $loc) {
                     }
                 }
             }
-    
+
+            if($stoIndex >= 0) {
+                $stoList[$stoIndex] = $row;
+            } else {
+                array_push($stoList, $row);
+            }
+
         }
     }
-
-    array_push($stoList, $row);
-
 }
 
+$divreList = [];
+$witelList = [];
 $nasional = [
     'is_filter_applied' => false,
     'bill' => $rowTemplate['bill']
 ];
 
-$divreList = [];
-$witelList = [];
-$nasionalTotalBillCmpFull = null;
 foreach($stoList as $sto) {
 
     if($sto['location']['in_target']) {
@@ -227,33 +250,6 @@ $stoList = array_map(function($item) {
     return $item;
 }, $stoList);
 $stoList = array_values($stoList);
-
-// $nasional['bill'] = array_reduce($divreList, function($sum, $divre) {
-
-//     if($divre['bill']['src']) {
-//         if(is_null($sum['src'])) {
-//             $sum['src'] = 0;
-//         }
-//         $sum['src'] += $divre['bill']['src'];
-//     }
-
-//     if($divre['bill']['cmp']) {
-//         if(is_null($sum['cmp'])) {
-//             $sum['cmp'] = 0;
-//         }
-//         $sum['cmp'] += $divre['bill']['cmp'];
-//     }
-
-//     if($divre['bill']['cmp_full']) {
-//         if(is_null($sum['cmp_full'])) {
-//             $sum['cmp_full'] = 0;
-//         }
-//         $sum['cmp_full'] += $divre['bill']['cmp_full'];
-//     }
-
-//     return $sum;
-
-// }, $nasional['bill']);
 
 foreach($divreList as $index => $divre) {
 

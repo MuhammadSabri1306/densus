@@ -93,10 +93,11 @@ export const usePiLatenStore = defineStore("pi-laten", {
 
         async getPiV2(callback) {
             const urlParams = this.buildUrlParams("divre", "witel", "year", "month");
+            const url = this.locationMode == "gepee" ? "/pi-laten/gepee/v2" : "/pi-laten/amc/v2";
             try {
 
-                const response = await http.get("/pi-laten/gepee/v2" + urlParams, this.fetchHeader);
-                if(!response.data.witel_list) {
+                const response = await http.get(url + urlParams, this.fetchHeader);
+                if(!response.data.sto_list) {
                     console.warn(response.data);
                     callback({ success: false, status: response.status, data: {} });
                     return;
