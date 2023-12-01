@@ -52,6 +52,8 @@ import GepeePiLatenV2 from "@views/GepeePiLatenV2.vue";
 import OxispActivity from "@views/OxispActivity.vue";
 import OxispChecklist from "@views/OxispChecklist.vue";
 
+import TestAsyncComponent from "@views/TestAsyncComponent.vue";
+
 const routes = [
     {
         path: "/", component: Dashboard,
@@ -223,6 +225,10 @@ const routes = [
     },
     {
         path: "/login", name: "login", component: Login,
+        meta: { requiresAuth: false }
+    },
+    {
+        path: "/test", name: "test", component: TestAsyncComponent,
         meta: { requiresAuth: false }
     },
     {

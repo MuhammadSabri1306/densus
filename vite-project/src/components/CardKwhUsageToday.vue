@@ -1,21 +1,25 @@
 <script setup>
-import { useMonitoringStore } from "@stores/monitoring";
+import { ref, computed } from "vue";
 import { toIdrCurrency } from "@helpers/number-format";
 
-const props = defineProps({
-    rtuCode: { required: true }
-});
+const isResolve = ref(false);
+const kwh = ref(null);
+const kwhValue = computed(() => !kwh.value ? kwh.value : toIdrCurrency(kwh.value));
 
-const monitoringStore = useMonitoringStore();
-const dataKwh = await monitoringStore.getKwhToday(props.rtuCode);
+defineExpose({
+    resolve: dataKwh => {
+        kwh.value = dataKwh;
+        isResolve.value = true;
+    }
+});
 </script>
 <template>
-    <div class="card income-card card-primary">                                 
+    <div v-if="isResolve" class="card income-card card-primary">                                 
         <div class="card-body text-center">                                  
             <div class="round-box">
                 <VueFeather type="zap" style="enable-background:new 0 0 448.057 448.057;color:#24695c;" xml:space="preserve" />
             </div>
-            <h5>{{ toIdrCurrency(dataKwh) }} KwH</h5>
+            <h5>{{ kwhValue }} KwH</h5>
             <p>KwH Usage Hari ini</p>
             <a class="btn-arrow arrow-primary" href="#"><i class="toprightarrow-primary me-2"><VueFeather type="arrow-up-right" strokeWidth="4" style="width:0.8rem" class="ms-1 mt-1" /></i>5.54% </a>
             <div class="parrten">
@@ -24,5 +28,8 @@ const dataKwh = await monitoringStore.getKwhToday(props.rtuCode);
                 </svg>
             </div>
         </div>
+    </div>
+    <div v-show="!isResolve">
+        <slot name="loading"></slot>
     </div>
 </template>

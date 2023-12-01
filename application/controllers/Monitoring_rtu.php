@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 use chriskacerguis\RestServer\RestController;
 
-class Monitoring extends RestController
+class Monitoring_rtu extends RestController
 {
     private $bbmprice = 28440;
     private $biayalwbp = 1091;

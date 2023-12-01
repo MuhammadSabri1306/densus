@@ -1,16 +1,20 @@
 <script setup>
-import { useMonitoringStore } from "@stores/monitoring";
+import { ref, computed } from "vue";
 import { toIdrCurrency } from "@helpers/number-format";
 
-const props = defineProps({
-    rtuCode: { required: true }
-});
+const isResolve = ref(false);
+const bbmCost = ref(null);
+const bbmCostValue = computed(() => !bbmCost.value ? bbmCost.value : toIdrCurrency(bbmCost.value));
 
-const monitoringStore = useMonitoringStore();
-const dataBbmCost = await monitoringStore.getBbmCost(props.rtuCode);
+defineExpose({
+    resolve: cost => {
+        bbmCost.value = cost;
+        isResolve.value = true;
+    }
+});
 </script>
 <template>
-    <div class="card o-hidden border-0">
+    <div v-if="isResolve" class="card o-hidden border-0">
         <div class="bg-secondary b-r-4 card-body">
             <div class="media static-top-widget">
                 <div class="align-self-center text-center">
@@ -18,10 +22,13 @@ const dataBbmCost = await monitoringStore.getBbmCost(props.rtuCode);
                 </div>
                 <div class="media-body">
                     <span class="m-0">Est Biaya Solar Genset</span>
-                    <h4 class="tw-whitespace-nowrap">Rp {{ toIdrCurrency(dataBbmCost) }}</h4>
+                    <h4 class="tw-whitespace-nowrap">Rp {{ bbmCostValue }}</h4>
                     <VueFeather type="zap-off" class="icon-bg" />
                 </div>
             </div>
         </div>
+    </div>
+    <div v-show="!isResolve">
+        <slot name="loading"></slot>
     </div>
 </template>

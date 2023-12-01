@@ -1,26 +1,39 @@
 <script setup>
-import { useMonitoringStore } from "@stores/monitoring";
+import { ref, computed } from "vue";
 import VueApexCharts from "vue3-apexcharts";
 import { toIdrCurrency } from "@helpers/number-format";
 import { dtColors } from "@/configs/datatable";
 
-const props = defineProps({
-    rtuCode: { required: true }
+const isResolve = ref(false);
+const plnData = ref({});
+const gensetData = ref({});
+
+const totalEstimation = computed(() => {
+    const pln = plnData.value;
+    const genset = plnData.value;
+    const total = (pln["Total_pln"] || 0) + (genset["Total_genset"] || 0);
+    return toIdrCurrency(total);
 });
 
-const monitoringStore = useMonitoringStore();
-const tableData = await monitoringStore.getTableData(props.rtuCode);
-const degTableData = await monitoringStore.getDegTableData(props.rtuCode);
-
-const totalPln = tableData.chart["Total_pln"] || 0;
-const totalGenset = degTableData.chart["Total_genset"] || 0;
-const dataEstimation = totalGenset + totalPln;
-
 const monthKeys = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const series = [
-    { name: "Tagihan PLN", data: monthKeys.map(item => tableData.chart[item]) },
-    { name: "BBM Genset", data: monthKeys.map(item => degTableData.chart[item]) }
-];
+const series = computed(() => {
+    const pln = plnData.value;
+    const genset = plnData.value;
+    return [
+        { name: "Tagihan PLN", data: monthKeys.map(month => pln[month] ? pln[month] : 0) },
+        { name: "BBM Genset", data: monthKeys.map(month => genset[month] ? genset[month] : 0) }
+    ]
+});
+
+defineExpose({
+    resolve: (plnSrcData, degSrcData) => {
+        if(plnSrcData && plnSrcData.chart)
+            plnData.value = plnSrcData.chart;
+        if(degSrcData && degSrcData.chart)
+            gensetData.value = degSrcData.chart;
+        isResolve.value = true;
+    }
+});
 
 const chartOptions = {
     plotOptions: {
@@ -65,7 +78,7 @@ const chartOptions = {
 };
 </script>
 <template>
-    <div class="card trasaction-sec">
+    <div v-if="isResolve" class="card trasaction-sec">
         <div class="card-header">
             <div class="header-top d-sm-flex align-items-center">
                 <h5>Energy Cost Estimation Chart</h5>
@@ -89,7 +102,7 @@ const chartOptions = {
             </div>
         </div>
         <div class="transaction-totalbal">
-            <h2> Rp {{ toIdrCurrency(dataEstimation) }} <span class="ms-3">
+            <h2> Rp {{ totalEstimation }} <span class="ms-3">
                 <a class="btn-arrow arrow-secondary" href="#">
                     <i class="toprightarrow-secondary fa fa-arrow-up me-2"></i>98.54%
                 </a></span>
@@ -101,5 +114,8 @@ const chartOptions = {
                 <VueApexCharts height="350px" type="bar" :options="chartOptions" :series="series" />
             </div>
         </div>
+    </div>
+    <div v-show="!isResolve">
+        <slot name="loading"></slot>
     </div>
 </template>

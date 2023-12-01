@@ -1,30 +1,32 @@
 <script setup>
-import { useMonitoringStore } from "@stores/monitoring";
+import { ref, computed } from "vue";
 import { toIdrCurrency } from "@helpers/number-format";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 
-const props = defineProps({
-    rtuCode: { required: true }
-});
+const isResolve = ref(false);
+const tableData = ref([]);
 
-const monitoringStore = useMonitoringStore();
-const data = await monitoringStore.getDegTableData(props.rtuCode);
-const degtabledata = data.table.map((item, index) => {
-    const no = index + 1;
-    return { no, ...item };
+defineExpose({
+    resolve: degData => {
+        if(degData && Array.isArray(degData.table))
+            tableData.value = degData.table;
+        isResolve.value = true;
+    }
 });
-
 </script>
 <template>
-    <div class="card">
+    <div v-if="isResolve" class="card">
         <div class="card-header">
             <h5>Konsumsi Bahan Bakar Genset</h5><span>Berikut Historis Penggunaan Genset dan Estimasi Bahan Bakarnya di lokasi STO STO BALAI KOTA dengan harga Solar Industri beserta pajak per liternya adalah Rp.28.440</span>
         </div>
         <div class="card-body">
-            <DataTable :value="degtabledata" showGridlines :paginator="true" :rows="10"
-            dataKey="id" responsiveLayout="scroll" class="table-sm">
-                <Column field="no" header="No" :sortable="true"></Column>
+            <p v-if="tableData.length < 1" class="text-center text-muted">Tidak ada data.</p>
+            <DataTable v-else :value="tableData" showGridlines :paginator="true" :rows="10"
+                dataKey="id" responsiveLayout="scroll" class="table-sm">
+                <Column header="No" :sortable="true">
+                    <template #body="{ index }">{{ index + 1 }}</template>
+                </Column>
                 <Column field="periode" header="Periode">
                     <template #body="slotProps">
                         <b>{{ slotProps.data.periode }}</b>
@@ -58,5 +60,8 @@ const degtabledata = data.table.map((item, index) => {
                 </Column>
             </DataTable>
         </div>
+    </div>
+    <div v-show="!isResolve">
+        <slot name="loading"></slot>
     </div>
 </template>

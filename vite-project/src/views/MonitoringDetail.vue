@@ -1,9 +1,10 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, reactive, computed, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useMonitoringStore } from "@stores/monitoring";
 import Skeleton from "primevue/skeleton";
 
+import HeadingMonitoringDetail from "@components/HeadingMonitoringDetail.vue";
 import CardCurrKwh from "@components/CardCurrKwh.vue";
 import CardTotalKwh from "@components/CardTotalKwh.vue";
 import CardListrikCost from "@components/CardListrikCost.vue";
@@ -21,199 +22,363 @@ const route = useRoute();
 const rtuCode = computed(() => route.params.rtuCode);
 
 const monitoringStore = useMonitoringStore();
-const currRtu = ref({});
-const isCurrInfoLoaded = ref(false);
 
-monitoringStore.getRtuDetail(rtuCode.value)
-    .then(data => {
-        currRtu.value = {
-            name: data.NAMA_RTU,
-            location: data.LOKASI,
-            datelName: data.DATEL,
-            witelName: data.WITEL,
-            divreName: data.DIVRE
+const currRtu = ref(null);
+const kwhReal = ref(null);
+const kwhTotal = ref(null);
+const kwhToday = ref(null);
+const bbmCost = ref(null);
+const dailyChart = ref(null);
+const saving = ref(null);
+const plnData = ref(null);
+const degData = ref(null);
+
+const loadingState = reactive({
+    currRtu: false,
+    kwhReal: false,
+    kwhTotal: false,
+    kwhToday: false,
+    bbmCost: false,
+    dailyChart: false,
+    saving: false,
+    plnData: false,
+    degData: false,
+});
+
+const dataResolver = {
+    currRtu: async () => {
+        currRtu.value = await monitoringStore.getRtuDetail(rtuCode.value);
+        loadingState.currRtu = true;
+    },
+    kwhReal: async () => {
+        kwhReal.value = await monitoringStore.getKwhReal(rtuCode.value);
+        loadingState.kwhReal = true;
+    },
+    kwhTotal: async () => {
+        kwhTotal.value = await monitoringStore.getKwhTotal(rtuCode.value);
+        loadingState.kwhTotal = true;
+    },
+    kwhToday: async () => {
+        kwhToday.value = await monitoringStore.getKwhToday(rtuCode.value);
+        loadingState.kwhToday = true;
+    },
+    bbmCost: async () => {
+        bbmCost.value = await monitoringStore.getBbmCost(rtuCode.value);
+        loadingState.bbmCost = true;
+    },
+    dailyChart: async () => {
+        dailyChart.value = await monitoringStore.getChartDataDaily(rtuCode.value);
+        loadingState.dailyChart = true;
+    },
+    saving: async () => {
+        saving.value = await monitoringStore.getSavingPercent(rtuCode.value);
+        loadingState.saving = true;
+    },
+    plnData: async () => {
+        plnData.value = await monitoringStore.getTableData(rtuCode.value);
+        loadingState.plnData = true;
+    },
+    degData: async () => {
+        degData.value = await monitoringStore.getDegTableData(rtuCode.value);
+        loadingState.degData = true;
+    },
+};
+
+/* HeadingMonitoringDetail */
+const headingElm = ref(null);
+const headingDataLoader = () => {
+    if(loadingState.currRtu)
+        headingElm.value.resolve(currRtu.value);
+};
+
+/* CardCurrKwh */
+const cardAElm = ref(null);
+const cardADataLoader = () => {
+    if(loadingState.kwhReal)
+        cardAElm.value.resolve(kwhReal.value);
+};
+
+/* CardTotalKwh */
+const cardBElm = ref(null);
+const cardBDataLoader = () => {
+    if(loadingState.kwhTotal)
+        cardBElm.value.resolve(kwhTotal.value);
+};
+
+/* CardListrikCost */
+const cardCElm = ref(null);
+const cardCDataLoader = () => {
+    if(loadingState.plnData)
+        cardCElm.value.resolve(plnData.value);
+
+};
+
+/* CardSolarCost */
+const cardDElm = ref(null);
+const cardDDataLoader = () => {
+    if(loadingState.bbmCost)
+        cardDElm.value.resolve(bbmCost.value);
+};
+
+/* ChartKwhDaily */
+const chartAElm = ref(null);
+const chartADataLoader = () => {
+    if(loadingState.dailyChart)
+        chartAElm.value.resolve(dailyChart.value);
+};
+
+/* CardKwhUsageToday */
+const cardEElm = ref(null);
+const cardEDataLoader = () => {
+    if(loadingState.kwhToday)
+        cardEElm.value.resolve(kwhToday.value);
+};
+
+/* CardTotalEnergyCost */
+const cardFElm = ref(null);
+const cardFDataLoader = () => {
+    if(loadingState.bbmCost && loadingState.plnData)
+        cardFElm.value.resolve(bbmCost.value, plnData.value);
+};
+
+/* ChartSavingEnergyResult */
+const chartBElm = ref(null);
+const chartBDataLoader = () => {
+    if(loadingState.saving)
+        chartBElm.value.resolve(saving.value);
+};
+
+/* ChartEnergyCostEstimation */
+const chartCElm = ref(null);
+const chartCDataLoader = () => {
+    if(loadingState.plnData && loadingState.degData)
+        chartCElm.value.resolve(plnData.value, degData.value);
+};
+
+/* CardMonitoringAlert */
+const cardGElm = ref(null);
+const cardGDataLoader = () => {
+    if(loadingState.saving && loadingState.currRtu)
+        cardGElm.value.resolve(saving.value, currRtu.value.location);
+};
+
+/* DatatableDashboard1 */
+const tableAElm = ref(null);
+const tableADataLoader = () => {
+    if(loadingState.plnData)
+        tableAElm.value.resolve(plnData.value);
+};
+
+/* DatatableDashboard2 */
+const tableBElm = ref(null);
+const tableBDataLoader = () => {
+    if(loadingState.degData)
+        tableBElm.value.resolve(degData.value);
+};
+
+const watcherSrc = () => {
+    return {
+        currRtu: loadingState.currRtu,
+        kwhReal: loadingState.kwhReal,
+        kwhTotal: loadingState.kwhTotal,
+        kwhToday: loadingState.kwhToday,
+        bbmCost: loadingState.bbmCost,
+        dailyChart: loadingState.dailyChart,
+        plnData: loadingState.plnData,
+        degData: loadingState.degData,
+    };
+};
+
+watch(watcherSrc, () => {
+    headingDataLoader();
+    cardADataLoader();
+    cardBDataLoader();
+    cardCDataLoader();
+    cardDDataLoader();
+    chartADataLoader();
+    cardEDataLoader();
+    cardFDataLoader();
+    chartBDataLoader();
+    chartCDataLoader();
+    cardGDataLoader();
+    tableADataLoader();
+    tableBDataLoader();
+});
+
+const executeLoaderBatch = (...loaderList) => {
+    const timeMultiplier = 1000;
+    return new Promise((resolve) => {
+
+        const listStatus = loaderList.map(() => false);
+        const statusChecker = () => {
+            for(let i=0; i< listStatus.length; i++) {
+                if(!listStatus[i])
+                    return;
+            }
+            resolve();
         };
-        isCurrInfoLoaded.value = true;
+
+        loaderList.forEach((loader, index) => {
+
+            if(index === 0) {
+                loader.then(statusChecker);
+            } else {
+                setTimeout(() => loader.then(statusChecker), (index * timeMultiplier));
+            }
+
+        });
     });
+};
+
+const isLoadingInitialized = ref(false);
+onMounted(async () => {
+
+    if(isLoadingInitialized.value)
+        return;
+    isLoadingInitialized.value = true;
+    await dataResolver.currRtu();
+    await dataResolver.kwhToday();
+    await dataResolver.kwhTotal();
+    await dataResolver.plnData();
+    await dataResolver.kwhReal();
+    await dataResolver.saving();
+    await dataResolver.dailyChart();
+    await dataResolver.bbmCost();
+    await dataResolver.degData();
+    // await executeLoaderBatch(dataResolver.currRtu, dataResolver.kwhToday, dataResolver.kwhTotal);
+    // await executeLoaderBatch(dataResolver.plnData, dataResolver.kwhReal);
+    // await executeLoaderBatch(dataResolver.dailyChart, dataResolver.bbmCost);
+    // await executeLoaderBatch(dataResolver.saving, dataResolver.degData);
+    
+});
+// dataResolver
+// currRtu v
+// kwhReal v
+// kwhTotal v
+// kwhToday v
+// bbmCost v
+// dailyChart v
+// saving v
+// plnData v
+// degData v
 </script>
 <template>
     <div>
         <div class="container-fluid">
             <div class="page-header">
                 <div class="row">
-                    <div class="colsm-12">
-                        <h3 v-if="isCurrInfoLoaded">
-                            <VueFeather type="airplay" size="1.2em" class="font-primary middle" />
-                            <span class="middle ms-3">{{ currRtu.location }}</span>
-                        </h3>
-                        <Skeleton v-else height="1.5rem" width="12rem" class="mb-2" />
-                        <div v-if="isCurrInfoLoaded" class="d-inline-flex align-items-center ms-4">
-                            <span>{{ currRtu.divreName }}</span>
-                            <VueFeather type="chevrons-right" size="1.2rem" class="mx-2" />
-                            <span>{{ currRtu.witelName }}</span>
-                        </div>
-                        <Skeleton v-else height="1rem" width="20rem" />
-                    </div>
+                    <HeadingMonitoringDetail ref="headingElm" class="colsm-12" />
                 </div>
             </div>
         </div>
         <div class="container-fluid dashboard-default-sec">
             <div class="row">
                 <div class="col-md-8">
-                    <div v-if="isCurrInfoLoaded">
-                        <Suspense>
-                            <CardMonitoringAlert :rtuCode="rtuCode" :rtuLocation="currRtu.location" />
-                            <template #fallback>
-                                <Skeleton width="100%" height="20rem" class="mb-4" />
-                            </template>
-                        </Suspense>
-                    </div>
-                    <Suspense>
-                        <ChartKwhDaily :rtuCode="rtuCode" />
-                        <template #fallback>
-                            <div class="card income-card">
-                                <div class="card">
-                                    <div class="card-header pb-0">
-                                        <h5>KwH Usage Chart</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <Skeleton width="100%" height="380px" class="mb-4" />
-                                    </div>
-                                </div>
-                            </div>
+
+                    <CardMonitoringAlert ref="cardGElm">
+                        <template #loading>
+                            <Skeleton width="100%" height="20rem" class="mb-4" />
                         </template>
-                    </Suspense>
+                    </CardMonitoringAlert>
+
+                    <ChartKwhDaily ref="chartAElm">
+                        <template #loading>
+                            <Skeleton width="100%" height="380px" class="mb-4" />
+                        </template>
+                    </ChartKwhDaily>
+
                 </div>
                 <div class="col-md-4">
-                    <Suspense>
-                        <CardCurrKwh :rtuCode="rtuCode" />
-                        <template #fallback>
+
+                    <CardCurrKwh ref="cardAElm">
+                        <template #loading>
                             <Skeleton width="100%" height="5rem" class="mb-4" />
                         </template>
-                    </Suspense>
-                    <Suspense>
-                        <CardTotalKwh :rtuCode="rtuCode" />
-                        <template #fallback>
+                    </CardCurrKwh>
+
+                    <CardTotalKwh ref="cardBElm">
+                        <template #loading>
                             <Skeleton width="100%" height="5rem" class="mb-4" />
                         </template>
-                    </Suspense>
-                    <Suspense>
-                        <CardListrikCost :rtuCode="rtuCode" />
-                        <template #fallback>
+                    </CardTotalKwh>
+
+                    <CardListrikCost ref="cardCElm">
+                        <template #loading>
                             <Skeleton width="100%" height="5rem" class="mb-4" />
                         </template>
-                    </Suspense>
-                    <Suspense>
-                        <CardSolarCost :rtuCode="rtuCode" />
-                        <template #fallback>
+                    </CardListrikCost>
+
+                    <CardSolarCost ref="cardDElm">
+                        <template #loading>
                             <Skeleton width="100%" height="5rem" class="mb-4" />
                         </template>
-                    </Suspense>
+                    </CardSolarCost>
+
                     <div class="row">
+
                         <div class="col-md">
-                            <Suspense>
-                                <CardKwhUsageToday :rtuCode="rtuCode" />
-                                <template #fallback>
+                            <CardKwhUsageToday ref="cardEElm">
+                                <template #loading>
                                     <Skeleton width="100%" height="10rem" class="mb-4" />
                                 </template>
-                            </Suspense>
+                            </CardKwhUsageToday>
                         </div>
+
                         <div class="col-md">
-                            <Suspense>
-                                <CardTotalEnergyCost :rtuCode="rtuCode" />
-                                <template #fallback>
+                            <CardTotalEnergyCost ref="cardFElm">
+                                <template #loading>
                                     <Skeleton width="100%" height="10rem" class="mb-4" />
                                 </template>
-                            </Suspense>
+                            </CardTotalEnergyCost>
                         </div>
+
                     </div>
                 </div>
+
                 <div class="col-md-6">
-                    <Suspense>
-                        <ChartSavingEnergyResult :rtuCode="rtuCode" />
-                        <template #fallback>
+                    <ChartSavingEnergyResult ref="chartBElm">
+                        <template #loading>
                             <Skeleton width="100%" height="30rem" />
                         </template>
-                    </Suspense>
+                    </ChartSavingEnergyResult>
                 </div>
+
                 <div class="col-md-6">
-                    <Suspense>
-                        <ChartEnergyCostEstimation :rtuCode="rtuCode" />
-                        <template #fallback>
+                    <ChartEnergyCostEstimation ref="chartCElm">
+                        <template #loading>
                             <Skeleton width="100%" height="30rem" class="mb-4" />
                         </template>
-                    </Suspense>
+                    </ChartEnergyCostEstimation>
                 </div>
+
                 <div class="col-12">
-                    <Suspense>
-                        <DatatableDashboard1 :rtuCode="rtuCode" />
-                        <template #fallback>
+                    <DatatableDashboard1 ref="tableAElm">
+                        <template #loading>
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="row mb-2">
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                    </div>
-                                    <div class="row mb-2">
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                    </div>
-                                    <div class="row mb-2">
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
+                                    <div v-for="m in 4" :class="{ 'mb-2': m < 4 }" class="row">
+                                        <div v-for="n in 4" class="col"><Skeleton /></div>
                                     </div>
                                 </div>
                             </div>
                         </template>
-                    </Suspense>
+                    </DatatableDashboard1>
                 </div>
+
                 <div class="col-12">
-                    <Suspense>
-                        <DatatableDashboard2 :rtuCode="rtuCode" />
-                        <template #fallback>
+                    <DatatableDashboard2 ref="tableBElm">
+                        <template #loading>
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="row mb-2">
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                    </div>
-                                    <div class="row mb-2">
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                    </div>
-                                    <div class="row mb-2">
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
-                                        <div class="col"><Skeleton /></div>
+                                    <div v-for="m in 4" :class="{ 'mb-2': m < 4 }" class="row">
+                                        <div v-for="n in 4" class="col"><Skeleton /></div>
                                     </div>
                                 </div>
                             </div>
                         </template>
-                    </Suspense>
+                    </DatatableDashboard2>
                 </div>
+
             </div>
         </div>
     </div>

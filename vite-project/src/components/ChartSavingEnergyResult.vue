@@ -1,60 +1,80 @@
 <script setup>
-import { useMonitoringStore } from "@stores/monitoring";
+import { ref, computed } from "vue";
 import VueApexCharts from "vue3-apexcharts";
 import { baseUrl } from "@/configs/base";
 
-const props = defineProps({
-    rtuCode: { required: true }
+const isResolve = ref(false);
+const saving = ref({});
+
+const savingYearly = computed(() => {
+    const savingData = saving.value;
+    return {
+        value: savingData.savingyearly || 0,
+        percent: savingData.savingyearly_percent || 0
+    };
 });
 
-const monitoringStore = useMonitoringStore();
-const dataSavingPercent = await monitoringStore.getSavingPercent(props.rtuCode);
+const savingMonthly = computed(() => {
+    const savingData = saving.value;
+    return {
+        value: savingData.savingmonthly || 0,
+        percent: savingData.savingmonthly_percent || 0
+    };
+});
 
-const savingMonthly = dataSavingPercent.savingmonthly || 0;
-const savingMonthlyPercent = dataSavingPercent.savingmonthly_percent || 0;
+const savingDaily = computed(() => {
+    const savingData = saving.value;
+    return {
+        value: savingData.savingdaily || 0,
+        percent: savingData.savingdaily_percent || 0
+    };
+});
 
-const savingYearly = dataSavingPercent.savingyearly || 0;
-const savingYearlyPercent = dataSavingPercent.savingyearly_percent || 0;
+const series = computed(() => [savingMonthly.value.percent]);
+const chartOptions = computed(() => {
+    const savingMonthlyPercent = savingMonthly.value.percent;
+    const hollowImg = (savingMonthlyPercent > 10) ? baseUrl + "assets/img/success.png" : baseUrl + "assets/img/alert.png";
+    const labelColor = savingMonthlyPercent > 10 ? "#24695c" : "#D9534F";
 
-const savingDaily = dataSavingPercent.savingdaily || 0;
-const savingDailyPercent = dataSavingPercent.savingdaily_percent || 0;
-
-const series = [savingMonthlyPercent];
-
-const chartOptions = {
-    plotOptions: {
-        radialBar: {
-            hollow: {
-                margin: 15,
-                size: '70%',
-                image: (savingMonthlyPercent > 10) ? baseUrl + "assets/img/success.png" : baseUrl + "assets/img/alert.png",
-                imageWidth: 64,
-                imageHeight: 64,
-                imageClipped: false
-            },
-            dataLabels: {
-                name: {
-                    show: false,
-                    color: '#fff'
+    return {
+        plotOptions: {
+            radialBar: {
+                hollow: {
+                    margin: 15,
+                    size: "70%",
+                    image: hollowImg,
+                    imageWidth: 64,
+                    imageHeight: 64,
+                    imageClipped: false
                 },
-                value: {
-                    show: true,
-                    color: savingMonthlyPercent > 10 ? "#24695c" : "#D9534F",
-                    offsetY: 70,
-                    fontSize: '22px',
-                    fontWeight: 'bold',
-                    fontFamily: 'Helvetica, Arial, sans-serif',
+                dataLabels: {
+                    name: { show: false, color: "#fff" },
+                    value: {
+                        show: true,
+                        color: labelColor,
+                        offsetY: 70,
+                        fontSize: "22px",
+                        fontWeight: "bold",
+                        fontFamily: "Helvetica, Arial, sans-serif",
+                    }
                 }
             }
-        }
-    },
-    fill: { colors: "#24695c" },
-    stroke: { lineCap: "round" },
-    labels: ["Volatility"]
-};
+        },
+        fill: { colors: "#24695c" },
+        stroke: { lineCap: "round" },
+        labels: ["Volatility"]
+    };
+});
+
+defineExpose({
+    resolve: dataSaving => {
+        saving.value = dataSaving;
+        isResolve.value = true;
+    }
+});
 </script>
 <template>
-    <div class="card o-hidden">
+    <div v-if="isResolve" class="card o-hidden">
         <div class="card-header pb-0">
             <h5>Energy Saving Result</h5>
         </div>
@@ -69,27 +89,30 @@ const chartOptions = {
                 <div class="row text-center">
                     <div class="col-4 b-r-light">
                         <div>
-                            <span class="font-primary">{{ savingYearlyPercent }}%<i class="icon-angle-up f-12 ms-1"></i></span>
+                            <span class="font-primary">{{ savingYearly.percent }}%<i class="icon-angle-up f-12 ms-1"></i></span>
                             <span class="text-muted block-bottom">Year</span>
-                            <h5 class="num m-0"><span class="counter color-bottom">{{ savingYearly }}</span>Kwh</h5>
+                            <h5 class="num m-0"><span class="counter color-bottom">{{ savingYearly.value }}</span>Kwh</h5>
                         </div>
                     </div>
                     <div class="col-4 b-r-light">
                         <div>
-                            <span class="font-primary">{{ savingMonthlyPercent }}%<i class="icon-angle-up f-12 ms-1"></i></span>
+                            <span class="font-primary">{{ savingMonthly.percent }}%<i class="icon-angle-up f-12 ms-1"></i></span>
                             <span class="text-muted block-bottom">Month</span>
-                            <h4 class="num m-0"><span class="counter color-bottom">{{ savingMonthly }}</span>Kwh</h4>
+                            <h4 class="num m-0"><span class="counter color-bottom">{{ savingMonthly.value }}</span>Kwh</h4>
                         </div>
                     </div>
                     <div class="col-4">
                         <div>
-                            <span class="font-primary">{{ savingDailyPercent }}%<i class="icon-angle-up f-12 ms-1"></i></span>
+                            <span class="font-primary">{{ savingDaily.percent }}%<i class="icon-angle-up f-12 ms-1"></i></span>
                             <span class="text-muted block-bottom">Today</span>
-                            <h4 class="num m-0"><span class="counter color-bottom">{{ savingDaily }}</span>Kwh</h4>
+                            <h4 class="num m-0"><span class="counter color-bottom">{{ savingDaily.value }}</span>Kwh</h4>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div v-show="!isResolve">
+        <slot name="loading"></slot>
     </div>
 </template>

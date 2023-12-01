@@ -8,7 +8,6 @@ import sampleRtuDetail from "@helpers/sample-data/monitoring/rtu-detail";
 import samplePueDetail from "@helpers/sample-data/monitoring/pue-detail";
 
 export const useMonitoringStore = defineStore("monitoring", {
-    state: () => null,
     getters: {
         fetchHeader: () => {
             const userStore = useUserStore();
