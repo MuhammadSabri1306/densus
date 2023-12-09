@@ -32,12 +32,16 @@ class Rtu_chart_model extends CI_Model {
 
 		public function get_kwhtotal($rtu)
 		{
-			$sql="SELECT rtu_kode,ROUND(SUM(kwh_value)) as kwh_value
+			$sql="SELECT ROUND(SUM(kwh_value)) as kwh_value
 			FROM kwh_counter 
 			WHERE rtu_kode='$rtu' AND YEAR(timestamp)=YEAR(CURRENT_DATE) AND MONTH(timestamp)=MONTH(CURRENT_DATE)
-			GROUP BY rtu_kode,MONTH(timestamp) ORDER BY kwh_counter.timestamp ASC";    
+			GROUP BY MONTH(timestamp) ORDER BY kwh_counter.timestamp ASC";    
 			$query = $this->db->query($sql);
-			return $query->row_array();
+			$data = $query->row_array();
+			return [
+				'rtu_kode' => $rtu,
+				'kwh_value' => $data ? $data['kwh_value'] : 0
+			];
 		}
 		public function get_savingpercent($rtu)
 		{
