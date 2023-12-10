@@ -439,13 +439,12 @@ class Pue_offline extends RestController
 
     public function detail_get($idLocation)
     {
-        // $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
-        // switch($status) {
-        //     case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
-        //     case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
-        //     default: $data = REST_ERR_DEFAULT_DATA; break;
-        // }
-        $status = 200;
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
 
         if($status === 200) {
             $year = (int) ( $this->input->get('year') ?? date('Y') );
@@ -459,9 +458,9 @@ class Pue_offline extends RestController
                 'datetime' => $this->datetime_range->get_by_month($month, $year),
             ];
 
-            // $currUser = $this->auth_jwt->get_payload();
+            $currUser = $this->auth_jwt->get_payload();
             $this->load->model('pue_offline_model');
-            // $this->pue_offline_model->currUser = $currUser;
+            $this->pue_offline_model->currUser = $currUser;
 
             $data = [
                 ...$this->pue_offline_model->get_detail($filter),
