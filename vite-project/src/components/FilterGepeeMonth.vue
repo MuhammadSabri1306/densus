@@ -82,7 +82,7 @@ const onSubmit = () => {
 <template>
     <form @submit.prevent="onSubmit">
         <label for="inputMonth" :class="getLabelClass()">Bulan</label>
-        <Calendar v-model="dateVal" view="month" dateFormat="M yy" showButtonBar placeholder="Pilih Bulan"
+        <Calendar v-model="dateVal" view="month" dateFormat="M yy" :showButtonBar="!required" placeholder="Pilih Bulan"
             :class="reactiveFieldClass" inputId="inputMonth" inputClass="form-control" panelClass="filter-month" />
         <button type="submit" :disabled="isDateInvalid" :class="btnClass">Terapkan</button>
     </form>

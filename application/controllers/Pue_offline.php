@@ -276,6 +276,7 @@ class Pue_offline extends RestController
             $body = $input['body'];
             $body['created_at'] = $timestamp;
             $body['updated_at'] = $timestamp;
+            $body['week_number'] = date('W', strtotime($timestamp));
             
             $getIntStr = fn($str) => (int) preg_replace('/(^(0+)|[^0-9])/', '', $str);
             $getDecStr = fn($str) => (double) str_replace(',', '.', preg_replace('/[^0-9.,]/', '', $str));
@@ -399,6 +400,73 @@ class Pue_offline extends RestController
                 $data = REST_ERR_BAD_REQ_STATUS;
                 $status = REST_ERR_BAD_REQ_STATUS;
             }
+        }
+
+        $this->response($data, $status);
+    }
+
+    public function location_data_v2_get()
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+
+        if($status === 200) {
+            $divre = $this->input->get('divre');
+            $witel = $this->input->get('witel');
+            $year = (int) ( $this->input->get('year') ?? date('Y') );
+            $month = (int) ( $this->input->get('month') ?? date('n') );
+
+            $this->load->library('datetime_range');
+            $datetime = $this->datetime_range->get_by_month($month, $year);
+
+            $filter = compact('divre', 'witel', 'datetime', 'month', 'year');
+            $currUser = $this->auth_jwt->get_payload();
+            $this->load->model('pue_offline_model');
+
+            $this->pue_offline_model->currUser = $currUser;
+            $data = [
+                ...$this->pue_offline_model->get_location_data_v2($filter),
+                'success' => true
+            ];
+        }
+
+        $this->response($data, $status);
+    }
+
+    public function detail_get($idLocation)
+    {
+        // $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        // switch($status) {
+        //     case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+        //     case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+        //     default: $data = REST_ERR_DEFAULT_DATA; break;
+        // }
+        $status = 200;
+
+        if($status === 200) {
+            $year = (int) ( $this->input->get('year') ?? date('Y') );
+            $month = (int) ( $this->input->get('month') ?? date('n') );
+            $this->load->library('datetime_range');
+
+            $filter = [
+                'year' => $year,
+                'month' => $month,
+                'idLocation' => $idLocation,
+                'datetime' => $this->datetime_range->get_by_month($month, $year),
+            ];
+
+            // $currUser = $this->auth_jwt->get_payload();
+            $this->load->model('pue_offline_model');
+            // $this->pue_offline_model->currUser = $currUser;
+
+            $data = [
+                ...$this->pue_offline_model->get_detail($filter),
+                'success' => true
+            ];
         }
 
         $this->response($data, $status);

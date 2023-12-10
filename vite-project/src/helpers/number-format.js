@@ -16,73 +16,55 @@ export const toIdrCurrency = numb => {
 	return result;
 };
 
-export const toFixedNumber = (numb, numbBehindComma = 2, normalizeZero = false) => {
+export const toFixedNumber = (numb, maxDecimal = 2, normalizeZero = false) => {
 	numb = Number(numb);
 	const isNegative = numb < 0;
 	if(isNegative)
 		numb = Math.abs(numb);
-	const formattedNumber = (numb.toString().length > numbBehindComma + 1) ? numb.toFixed(numbBehindComma) : numb.toString();
-	if(normalizeZero && formattedNumber.search(/^[1-9]/) < 0)
-		return 0;
-	return isNegative ? "-" + formattedNumber : formattedNumber;
+
+	const numbStrArr = numb.toString().split(".");
+	const afterDecimalNumb = numbStrArr.length > 1 ? numbStrArr[1] : "";
+
+	if(afterDecimalNumb.length <= maxDecimal)
+		return isNegative ? -numb : numb;
+
+	const minDecimalIndex = afterDecimalNumb.match(/[1-9]/)?.index ?? -1;
+	const minDecimal = minDecimalIndex + 1;
+
+	const decimalCount = Math.max(minDecimal, maxDecimal);
+	numb = Math.round(numb * Math.pow(10, decimalCount)) / Math.pow(10, decimalCount);
+	return isNegative ? -numb : numb;
 };
 
-// export const toNumberText = (numb, decimalLimit = 2, normalizeZero = false) => {
-// 	let numberStr = numb.toString();
-
-// 	const isNegative = numberStr.startsWith("-");
-// 	if(isNegative)
-// 		numberStr = numberStr.substring(1);
-
-// 	const numbList = numberStr.split(".");
-// 	if(numbList.length > 1) {
-// 		const notNullIndex = numbList[1].match(/[1-9]/) + 1;
-// 		if(notNullIndex > decimalLimit)
-// 			decimalLimit = notNullIndex;
-// 	}
-
-  
-// 	if (numberStr.includes('.')) {
-// 	  numberStr = numberStr.replace('.', ',');
-// 	}
-
-// 	if(isNegative)
-// 		numberStr = `-${ numberStr }`;
-  
-// 	return numberStr;
-// };
-
 export const toNumberText = (numb, decimalLimit = 2) => {
-	let numberStr = numb.toString();
-	const isNegative = numberStr.startsWith("-");
+	const isNegative = numb < 0;
 	if(isNegative)
-		numberStr = numberStr.substring(1);
-  
-	const hasDecimal = numberStr.includes(".");
-	if(hasDecimal) {
-		const decimalPart = numberStr.split(".")[1];
-		const notNullIndex = decimalPart.search(/[1-9]/) + 1;
-		if(notNullIndex > decimalLimit)
-			decimalLimit = notNullIndex;
-		if(decimalPart.length > decimalLimit)
-			numberStr = parseFloat(numberStr).toFixed(decimalLimit);
+		numb = Math.abs(numb);
+
+	const numbStrArr = numb.toString().split(".");
+	const numbBeforeDecimal = numbStrArr[0];
+	let numbAfterDecimal = numbStrArr.length > 1 ? numbStrArr[1] : "";
+
+	if(numbAfterDecimal.length > decimalLimit) {
+		numb = toFixedNumber(numb, decimalLimit);
+		numbAfterDecimal = numb.toString().split(".")[1];
 	}
-  
-	const split = numberStr.split(".");
-	const left = split[0].length % 3;
-	let result = split[0].substr(0, left);
-	const digit = split[0].substr(left).match(/\d{3}/g);
-  
-	if(digit) {
-	  const separator = left ? "." : "";
-	  result += separator + digit.join(".");
+
+	let numbStr = "";
+	let charCount = 0;
+	for(let i=(numbBeforeDecimal.length - 1); i>=0; i--) {
+		numbStr = `${ numbBeforeDecimal[i] }${ numbStr }`;
+		charCount++;
+		if(charCount == 3) {
+			numbStr = `.${ numbStr }`;
+			charCount = 0;
+		}
 	}
-  
-	result = split[1] !== undefined ? result + "," + split[1] : result;
-	if(isNegative)
-		result = "-" + result;
-  
-	return result;
+
+	if(numbAfterDecimal.length > 0)
+		numbStr += `,${ numbAfterDecimal }`;
+
+	return isNegative ? `-${ numbStr }` : numbStr;
 };
 
 export const toZeroLeading = (numb, maxDigit) => {

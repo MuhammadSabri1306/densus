@@ -290,6 +290,23 @@ export const usePueV2Store = defineStore("pueV2", {
             }
         },
 
+        async getOfflineLocationDataV2(callback) {
+            const urlParams = this.offlineUrlParams;
+            try {
+                const response = await http.get("/pue/offline/v2" + urlParams, this.fetchHeader);
+                if(!response.data.location_data) {
+                    console.warn(response.data);
+                    callback({ success: false, status: response.status, data: {} });
+                    return;
+                }
+
+                callback({ success: true, status: response.status, data: response.data });
+            } catch(err) {
+                handlingFetchErr(err);
+                callback({ success: false, status: err.response?.status, data: {} });
+            }
+        },
+
         async createOfflineLocation(body, callback = null) {
             try {
                 const response = await http.post("/pue/offline/location", body, this.fetchHeader);
@@ -339,6 +356,29 @@ export const usePueV2Store = defineStore("pueV2", {
             const filters = this.filters;
             const urlParams = this.buildUrlParams({ year: filters.year, month: filters.month });
             const url = "/pue/offline/" + idLocation + urlParams;
+
+            try {
+                const response = await http.get(url, this.fetchHeader);
+                if(!response.data.pue) {
+                    console.warn(response.data);
+                    callback({ success: false, status: response.status, data: {} });
+                    return;
+                }
+
+                callback({ success: true, status: response.status, data: response.data });
+            } catch(err) {
+                handlingFetchErr(err);
+                if(allowSampleData)
+                    callback({ success: true, status: err.response?.status, data: samplePueOfflineByLocation });
+                else
+                    callback({ success: false, status: err.response?.status, data: {} });
+            }
+        },
+        
+        async getOfflinePueDetail(idLocation, callback) {
+            const filters = this.filters;
+            const urlParams = this.buildUrlParams({ year: filters.year, month: filters.month });
+            const url = "/pue/offline/v2/" + idLocation + urlParams;
 
             try {
                 const response = await http.get(url, this.fetchHeader);

@@ -3,7 +3,7 @@ import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { usePueV2Store } from "@stores/pue-v2";
 import { useViewStore } from "@stores/view";
-import { toNumberText } from "@helpers/number-format";
+import { toNumberText, toRoman } from "@helpers/number-format";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
@@ -20,19 +20,22 @@ const route = useRoute();
 
 const locationData = ref({});
 const pueData = ref([]);
+
 const dataTable = computed(() => {
     return pueData.value.map((item, index) => {
         const no = index + 1;
         const dayaEsensial = Number(item.daya_sdp_a) + Number(item.daya_sdp_b) + Number(item.daya_sdp_c);
         const ictEquip = Number(item.daya_eq_a) + Number(item.daya_eq_b) + Number(item.daya_eq_c);
-        const dateText = new Intl
+
+        let periodeText = new Intl
             .DateTimeFormat('id', {
-                dateStyle: 'long',
-                timeStyle: 'short'
+                dateStyle: 'long'
             })
             .format(new Date(item.created_at));
+        if(item.week_number)
+            periodeText = `Minggu ${ toRoman(item.week_number) } - ${ periodeText }`;
 
-        return { no, dayaEsensial, ictEquip, dateText, ...item };
+        return { no, dayaEsensial, ictEquip, periodeText, ...item };
     });
 });
 
@@ -45,11 +48,9 @@ const fetchData = () => {
     const idLocation = route.params.locationId;
     isLoading.value = true;
 
-    pueStore.getOfflinePue(idLocation, ({ data }) => {
-        if(data.pue)
-            pueData.value = data.pue;
-        if(data.location)
-            locationData.value = data.location;
+    pueStore.getOfflinePueDetail(idLocation, ({ data }) => {
+        pueData.value = data.pue ?? [];
+        locationData.value = data.location ?? {};
         isLoading.value = false;
     });
 };
@@ -89,6 +90,13 @@ const onFilterApply = filterValue => {
     viewStore.setFilter(filterValue);
     fetchData();
 };
+
+const formatNumberText = (pueItem, valueKey, strTemplate = "[val]", emptyText = "-") => {
+    if(pueItem[valueKey] === null || pueItem[valueKey] === undefined)
+        return emptyText;
+    const valueText = toNumberText(pueItem[valueKey]);
+    return strTemplate.replaceAll("[val]", valueText);
+};
 </script>
 <template>
     <div>
@@ -124,13 +132,14 @@ const onFilterApply = filterValue => {
                         </tr>
                         <tr>
                             <td>Lokasi</td>
-                            <td>: {{ locationData?.lokasi }}</td>
+                            <td>: {{ locationData?.sto_name }}</td>
                         </tr>
                     </table>
                 </div>
                 <div v-if="!isLoading" class="row align-items-center g-4 mt-2">
                     <div class="col-md-auto">
-                        <FilterGepeeMonth @apply="onFilterApply" class="d-flex align-items-center" labelClass="text-muted me-2" fieldClass="me-4" />
+                        <FilterGepeeMonth required @apply="onFilterApply" class="d-flex align-items-center"
+                            labelClass="text-muted me-2" fieldClass="me-4" />
                     </div>
                     <div class="col-auto ms-auto">
                         <button type="button" @click="isDialogAddShow = true" class="btn btn-outline-info btn-icon">
@@ -157,28 +166,34 @@ const onFilterApply = filterValue => {
                 stateKey="dt-state-pue-offline" class="table-sm">
                 <Column field="no" header="No" :sortable="true" />
                 <Column field="created_at" header="Periode" :sortable="true">
-                    <template #body="slotProps">
-                        {{ slotProps.data.dateText }}
+                    <template #body="{ data }">
+                        {{ data.periodeText }}
                     </template>
                 </Column>
-                <Column field="pue_value" header="Nilai PUE" :sortable="true">
-                    <template #body="slotProps">
-                        {{ toNumberText(slotProps.data.pue_value) }}
+                <Column field="pue_value" header="Nilai PUE" :sortable="true" bodyClass="text-center f-w-700">
+                    <template #body="{ data }">
+                        {{ formatNumberText(data, "pue_value") }}
                     </template>
                 </Column>
-                <Column field="dayaEsensial" header="Total Daya Essential Facility" :sortable="true">
-                    <template #body="slotProps">
-                        {{ toNumberText(slotProps.data.dayaEsensial) + " Watt" }}
+                <Column field="dayaEsensial" header="Total Daya Essential Facility" :sortable="true"
+                    bodyClass="text-center">
+                    <template #body="{ data }">
+                        {{ formatNumberText(data, "dayaEsensial", "[val] Watt") }}
                     </template>
                 </Column>
-                <Column field="power_factor_sdp" header="Power Factor Air Conditioner Essential (Cos Phi)" :sortable="true">
-                    <template #body="slotProps">
-                        {{ slotProps.data.power_factor_sdp ? toNumberText(slotProps.data.power_factor_sdp) : "-" }}
+                <Column field="power_factor_sdp" :sortable="true" bodyClass="text-center"
+                    headerClass="tw-whitespace-nowrap">
+                    <template #header>
+                        <span class="p-column-title">Power Factor Air<br>Conditioner Essential<br>(Cos Phi)</span>
+                    </template>
+                    <template #body="{ data }">
+                        {{ formatNumberText(data, "power_factor_sdp") }}
                     </template>
                 </Column>
-                <Column field="ictEquip" header="Total Daya ICT Equipment" :sortable="true">
-                    <template #body="slotProps">
-                        {{ toNumberText(slotProps.data.ictEquip) + " Watt" }}
+                <Column field="ictEquip" header="Total Daya ICT Equipment" :sortable="true"
+                    bodyClass="text-center">
+                    <template #body="{ data }">
+                        {{ formatNumberText(data, "ictEquip", "[val] Watt") }}
                     </template>
                 </Column>
                 <Column header="Action">

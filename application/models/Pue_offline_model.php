@@ -2,12 +2,12 @@
 
 class Pue_offline_model extends CI_Model
 {
-    private $tableName = 'pue_offline';
-    private $tableLocationName = 'master_lokasi_gepee';
+    protected $tableName = 'pue_offline';
+    protected $tableLocationName = 'master_lokasi_gepee';
 
     public $currUser;
 
-    private $fillable_fields = [
+    protected $fillable_fields = [
         'location_foreign' => [
             'id_location' => ['int', 'required']
         ],
@@ -23,7 +23,7 @@ class Pue_offline_model extends CI_Model
         ]
     ];
 
-    private $default_cos_phi = 1;
+    protected $default_cos_phi = 1;
 
     public function __construct()
     {
@@ -42,7 +42,7 @@ class Pue_offline_model extends CI_Model
         return $this->fillable_fields['main'];
     }
 
-    private function get_filter($filter, $prefix = null)
+    protected function get_filter($filter, $prefix = null)
     {
         if(!is_array($filter) || !isset($filter['id'])) {
             return [];
@@ -52,7 +52,7 @@ class Pue_offline_model extends CI_Model
         return [ $field => $filter['id'] ];
     }
     
-    private function get_loc_filter($filter, $prefix = null)
+    protected function get_loc_filter($filter, $prefix = null)
     {
         $filterKeys = [
             'witel' => 'witel_kode',
@@ -84,7 +84,7 @@ class Pue_offline_model extends CI_Model
         return $appliedFilter;
     }
 
-    private function get_datetime_filter($filter, $prefix = null)
+    protected function get_datetime_filter($filter, $prefix = null)
     {
         if(!is_array($filter) || !isset($filter['datetime'])) {
             return [];
@@ -99,7 +99,7 @@ class Pue_offline_model extends CI_Model
         return $appliedFilter;
     }
 
-    private function get_datetime_filter_query($filter, $prefix = null)
+    protected function get_datetime_filter_query($filter, $prefix = null)
     {
         if(!is_array($filter) || !isset($filter['datetime'])) {
             return null;
@@ -112,49 +112,47 @@ class Pue_offline_model extends CI_Model
         return "$field BETWEEN '$startDate' AND '$endDate'";
     }
 
-    // public function get_location_data($filter = [])
-    // {
-    //     $locFilter = $this->get_loc_filter($filter);
-    //     $dateFilterQuery = $this->get_datetime_filter_query($filter);
+    // Return Array $weekList => item keys: key, number, number_of_month
+    public function get_week_list_of_month($month, $year)
+    {
+        $dayOfMonth = new DateTime("$year-$month-01");
+        $lastDayOfMonth = new DateTime("$year-$month-".$dayOfMonth->format('t'));
+        
+        $weekNumberList = [];
+        while($dayOfMonth <= $lastDayOfMonth) {
+            $weekNumber = $dayOfMonth->format('W');
+            if(!in_array($weekNumber, $weekNumberList)) {
+                array_push($weekNumberList, $weekNumber);
+            }
+            $dayOfMonth->modify('+1 day');
+        }
 
-    //     $locationList = $this->db
-    //         ->select()
-    //         ->from($this->tableLocationName)
-    //         ->where($locFilter)
-    //         ->order_by('divre_kode')
-    //         ->order_by('witel_kode')
-    //         ->get()
-    //         ->result_array();
+        $weekList = array_map(function($weekNumber, $index) {
+            $weekNumberOfMonth = $index + 1;
+            return [
+                'key' => "w$weekNumberOfMonth",
+                'number' => $weekNumber,
+                'number_of_month' => $weekNumberOfMonth
+            ];
+        }, $weekNumberList, array_keys($weekNumberList));
+        return $weekList;
+    }
 
-    //     $result = [];
-    //     foreach($locationList as $locItem) {
-            
-    //         $temp = [ 'location' => $locItem ];
-    //         $itemFilterQuery = 'id_location='.$locItem['id_location'];
-    //         if($dateFilterQuery) {
-    //             $itemFilterQuery .= ' AND '.$dateFilterQuery;
-    //         }
+    public function date_to_week(string $date, array $weekList = null)
+    {
+        $dateTime = new DateTime($date);
 
-    //         $itemQuery = "SELECT
-    //             AVG(pue_value) AS pue_value,
-    //             YEAR(created_at) AS year,
-    //             MONTH(created_at) AS month,
-    //             (CASE
-    //                 WHEN (DAY(created_at)/7+1) < 2 THEN 1
-    //                 WHEN (DAY(created_at)/7+1) < 3 THEN 2
-    //                 WHEN (DAY(created_at)/7+1) < 4 THEN 3
-    //                 ELSE 4
-    //             END) AS week
-    //             FROM $this->tableName WHERE $itemFilterQuery
-    //             GROUP BY year, month, week";
-    //         $temp['pue'] = $this->db->query($itemQuery)->result_array();
-            
-    //         array_push($result, $temp);
-            
-    //     }
+        if(is_null($weekList)) {
+            $weekList = $this->get_week_list_of_month($dateTime->format('n'), $dateTime->format('Y'));
+        }
 
-    //     return $result;
-    // }
+        for($i=0; $i<count($weekList); $i++) {
+            if($weekList[$i]['number'] == $dateTime->format('W')) {
+                return $weekList[$i];
+            }
+        }
+        return null;
+    }
 
     public function get_location_data($filter = [])
     {
@@ -201,30 +199,11 @@ class Pue_offline_model extends CI_Model
         return $result;
     }
 
-    // public function get($filter = [])
-    // {
-    //     $pueFilter = $this->get_filter($filter, 'pue');
-    //     $dateFilter = $this->get_datetime_filter($filter, 'pue');
-    //     $locFilter = $this->get_loc_filter($filter, 'loc');
-
-    //     $fileBasicPath = base_url(UPLOAD_PUE_EVIDENCE_PATH);
-    //     $selectFields = [
-    //         'pue.*', 'loc.*',
-    //         "IF(pue.evidence>'', CONCAT('$fileBasicPath', pue.evidence), '#') AS evidence_url"
-    //     ];
-
-    //     $query = $this->db
-    //         ->select(implode(', ', $selectFields))
-    //         ->from("$this->tableName AS pue")
-    //         ->join("$this->tableLocationName AS loc", 'loc.id_location=pue.id_location')
-    //         ->where($pueFilter)
-    //         ->where($dateFilter)
-    //         ->where($locFilter)
-    //         ->get();
-            
-    //     $result = isset($filter['pue.id']) ? $query->row_array() : $query->result_array();
-    //     return $result;
-    // }
+    public function get_location_data_v2($filter = [])
+    {
+        $this->use_module('get_location_data_v2', [ 'filter' => $filter ]);
+        return $this->result;
+    }
 
     public function get($filter = [])
     {
@@ -252,6 +231,12 @@ class Pue_offline_model extends CI_Model
             
         $result = isset($filter['pue.id']) ? $query->row_array() : $query->result_array();
         return $result;
+    }
+
+    public function get_detail($filter = [])
+    {
+        $this->use_module('get_detail', [ 'filter' => $filter ]);
+        return $this->result;
     }
 
     public function save($body, $id = null)
