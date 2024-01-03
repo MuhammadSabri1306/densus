@@ -63,6 +63,8 @@ export const toNumberText = (numb, decimalLimit = 2) => {
 
 	if(numbAfterDecimal.length > 0)
 		numbStr += `,${ numbAfterDecimal }`;
+	if(numbStr[0] == ".")
+		numbStr = numbStr.slice(1);
 
 	return isNegative ? `-${ numbStr }` : numbStr;
 };

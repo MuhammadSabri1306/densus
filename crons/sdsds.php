@@ -79,6 +79,7 @@ class CronStorePueConter {
 
             while(!$pueData && $fetchCounter < 3) {
                 $pueData = $cron->getPue($rtu);
+                var_dump($pueData);
                 $fetchCounter++;
                 if(!$pueData) {
                     sleep(1);
