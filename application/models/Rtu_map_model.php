@@ -15,23 +15,32 @@ class Rtu_map_model extends CI_Model {
         }
     }
 
+    public function setFilter($filters = [])
+    {
+        if(count($filters) > 0) {
+            $this->db->where($filters);
+        }
+    }
+
     public function get($id = null, $currUser = null) {
         $this->filter_for_curr_user($currUser);
+        $this->db
+            ->select()
+            ->from('rtu_map');
+
         if(is_null($id)) {
-            $query = $this->db
-                ->select()
-                ->from('rtu_map')
-                ->get();
-            return $query->result();
+            return $this->db
+                ->order_by('divre_kode')
+                ->order_by('witel_kode')
+                ->order_by('sto_kode')
+                ->get()
+                ->result();
         }
 
-        $query = $this->db
-            ->select()
-            ->from('rtu_map')
+        return $this->db
             ->where('id', $id)
-            ->get();
-            
-        return $query->row();
+            ->get()
+            ->row();
     }
 
     public function get_by_rtu_code($rtuCode, $currUser = null) {

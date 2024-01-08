@@ -1,10 +1,9 @@
 <script setup>
 import { ref, computed, reactive } from "vue";
-import { useRoute } from "vue-router";
 import { useKwhStore } from "@/stores/kwh";
 import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
-import { toNumberText, toIdrCurrency } from "@helpers/number-format";
+import { toNumberText } from "@helpers/number-format";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
 import { BuildingOfficeIcon, CalendarIcon } from "@heroicons/vue/24/outline";

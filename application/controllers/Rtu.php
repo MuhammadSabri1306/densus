@@ -17,8 +17,17 @@ class Rtu extends RestController
 		$status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
         if($status === 200) {
 
+            $divreCode = $this->input->get('divre') ?? null;
+            $witelCode = $this->input->get('witel') ?? null;
+
+            $filters = [];
+            if($divreCode) $filters['divre_kode'] = $divreCode;
+            if($witelCode) $filters['witel_kode'] = $witelCode;
+
             $currUser = $this->auth_jwt->get_payload();
             $this->load->model("rtu_map_model");
+
+            if(!$id) $this->rtu_map_model->setFilter($filters);
 			$dataRtu = $this->rtu_map_model->get($id, $currUser);
 
             $this->user_log
@@ -67,6 +76,7 @@ class Rtu extends RestController
                 'port_genset' => [ 'string', 'required' ],
                 'kva_genset' => [ 'int', 'required' ],
                 'port_pue' => [ 'string' ],
+                'port_pue_v2' => [ 'string' ],
                 'use_gepee' => [ 'bool', 'required' ],
                 'id_lokasi_gepee' => [ 'int' ]
             ];
@@ -145,6 +155,7 @@ class Rtu extends RestController
                 'port_genset' => [ 'string', 'required' ],
                 'kva_genset' => [ 'int', 'required' ],
                 'port_pue' => [ 'string' ],
+                'port_pue_v2' => [ 'string' ],
                 'use_gepee' => [ 'bool', 'required' ],
                 'id_lokasi_gepee' => [ 'int' ]
             ];

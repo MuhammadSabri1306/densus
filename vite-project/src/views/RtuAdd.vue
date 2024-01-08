@@ -23,6 +23,7 @@ const { data, v$ } = useDataForm({
     portGenset: { required },
     kvaGenset: { required },
     portPue: {},
+    portPueV2: {},
     useGepee: { value: false, required },
     idLocGepee: {}
 });
@@ -107,6 +108,7 @@ const onSubmit = async () => {
         port_genset: data.portGenset,
         kva_genset: data.kvaGenset,
         port_pue: data.portPue,
+        port_pue_v2: data.portPueV2,
         use_gepee: data.useGepee
     };
     if(data.useGepee)
@@ -118,9 +120,7 @@ const onSubmit = async () => {
         hasSubmitted.value = true;
         if(!response.success)
             return;
-
-        viewStore.showToast("Data RTU", "Berhasil menyimpan data.", true);
-        rtuStore.fetchList(true, () => router.push("/rtu"));
+        router.push("/rtu");
     });
 };
 </script>
@@ -151,46 +151,62 @@ const onSubmit = async () => {
                                 <form @submit.prevent="onSubmit">
                                     <div class="form-group">
                                         <label for="rtuCode" class="required">Kode RTU</label>
-                                        <input v-model="v$.rtuCode.$model" :class="{ 'is-invalid': hasSubmitted && v$.rtuCode.$invalid }" class="form-control" id="rtuCode" name="rtuCode" type="text" placeholder="Cth. RTU-BALA">
+                                        <input v-model="v$.rtuCode.$model" :class="{ 'is-invalid': hasSubmitted && v$.rtuCode.$invalid }"
+                                            class="form-control" id="rtuCode" name="rtuCode" type="text" placeholder="Cth. RTU-BALA">
                                     </div>
                                     <div class="form-group">
                                         <label for="rtuName" class="required">Nama RTU</label>
-                                        <input v-model="v$.rtuName.$model" :class="{ 'is-invalid': hasSubmitted && v$.rtuName.$invalid }" class="form-control" id="rtuName" name="rtuName" type="text" placeholder="Cth. RTU STO BALAI KOTA">
+                                        <input v-model="v$.rtuName.$model" :class="{ 'is-invalid': hasSubmitted && v$.rtuName.$invalid }"
+                                            class="form-control" id="rtuName" name="rtuName" type="text" placeholder="Cth. RTU STO BALAI KOTA">
                                     </div>
                                     <div class="form-group">
                                         <label for="location" class="required">Lokasi</label>
-                                        <input v-model="v$.location.$model" :class="{ 'is-invalid': hasSubmitted && v$.location.$invalid }" class="form-control" id="location" name="location" type="text" placeholder="Cth. STO BALAI KOTA">
+                                        <input v-model="v$.location.$model" :class="{ 'is-invalid': hasSubmitted && v$.location.$invalid }"
+                                            class="form-control" id="location" name="location" type="text" placeholder="Cth. STO BALAI KOTA">
                                     </div>
                                     <div class="form-group">
                                         <label for="stoCode" class="required">Kode STO</label>
-                                        <input v-model="v$.stoCode.$model" :class="{ 'is-invalid': hasSubmitted && v$.stoCode.$invalid }" class="form-control" id="stoCode" name="stoCode" type="text" placeholder="Cth. BAL">
+                                        <input v-model="v$.stoCode.$model" :class="{ 'is-invalid': hasSubmitted && v$.stoCode.$invalid }"
+                                            class="form-control" id="stoCode" name="stoCode" type="text" placeholder="Cth. BAL">
                                     </div>
                                     
-                                    <InputGroupLocation ref="inputLocation" :divreValue="data.divreCode" :witelValue="data.witelCode" @change="onLocationChange" />
+                                    <InputGroupLocation ref="inputLocation" :divreValue="data.divreCode" :witelValue="data.witelCode"
+                                        @change="onLocationChange" />
     
-                                    <div class="row mb-4">
-                                        <div class="col-md-6 col-lg-3">
+                                    <div class="row mb-4 align-items-end">
+                                        <div class="col-md-6 col-lg-auto">
                                             <div class="form-group">
                                                 <label for="portKwh" class="required">Analog Port KW</label>
-                                                <input v-model="v$.portKwh.$model" :class="{ 'is-invalid': hasSubmitted && v$.portKwh.$invalid }" class="form-control" id="portKwh" name="portKwh" type="text" placeholder="Cth. A-16">
+                                                <input v-model="v$.portKwh.$model" :class="{ 'is-invalid': hasSubmitted && v$.portKwh.$invalid }"
+                                                    class="form-control" id="portKwh" name="portKwh" type="text" placeholder="Cth. A-16">
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-lg-3">
+                                        <div class="col-md-6 col-lg-auto">
                                             <div class="form-group">
                                                 <label for="portGenset" class="required">Digital Port Status Genset</label>
-                                                <input v-model="v$.portGenset.$model" :class="{ 'is-invalid': hasSubmitted && v$.portGenset.$invalid }" class="form-control" id="portGenset" name="portGenset" type="text" placeholder="Cth. D-02">
+                                                <input v-model="v$.portGenset.$model" :class="{ 'is-invalid': hasSubmitted && v$.portGenset.$invalid }"
+                                                    class="form-control" id="portGenset" name="portGenset" type="text" placeholder="Cth. D-02">
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-lg-3">
+                                        <div class="col-md-6 col-lg">
                                             <div class="form-group">
                                                 <label for="kvaGenset" class="required">Kapasitas Genset Terpasang (KVA)</label>
-                                                <input v-model="v$.kvaGenset.$model" :class="{ 'is-invalid': hasSubmitted && v$.kvaGenset.$invalid }" class="form-control" id="kvaGenset" name="kvaGenset" type="text" placeholder="Cth. 500">
+                                                <input v-model="v$.kvaGenset.$model" :class="{ 'is-invalid': hasSubmitted && v$.kvaGenset.$invalid }"
+                                                    class="form-control" id="kvaGenset" name="kvaGenset" type="text" placeholder="Cth. 500">
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-lg-3">
+                                        <div class="col-md-6 col-lg-auto">
                                             <div class="form-group">
                                                 <label for="portPue">Analog Port PUE</label>
-                                                <input v-model="v$.portPue.$model" class="form-control" id="portPue" name="portPue" type="text" placeholder="Cth. A-16">
+                                                <input v-model="v$.portPue.$model" class="form-control" id="portPue" name="portPue"
+                                                    type="text" placeholder="Cth. A-92">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-auto">
+                                            <div class="form-group">
+                                                <label for="portPue">Analog Port PUE (NewOsase Baru)</label>
+                                                <input v-model="v$.portPueV2.$model" class="form-control" id="portPueV2" name="portPueV2"
+                                                    type="text" placeholder="Cth. A-92">
                                             </div>
                                         </div>
                                     </div>
@@ -198,7 +214,7 @@ const onSubmit = async () => {
                                     <div class="px-4">
                                         <div class="row align-items-center">
                                             <div class="col-auto mb-2">
-                                                <InputSwitch v-model="data.useGepee" inputId="switchUseGepee" />
+                                                <InputSwitch v-model="data.useGepee" :disabled="isLoading" inputId="switchUseGepee" />
                                             </div>
                                             <div class="col-auto mb-2">
                                                 <label for="switchUseGepee">Hubungkan</label>
@@ -211,7 +227,8 @@ const onSubmit = async () => {
                                             :isRequired="data.useGepee" valueKey="id" labelKey="sto_name" @change="onGepeeLocChange" />
                                     </div>
                                     <div class="d-flex justify-content-end px-4">
-                                        <button type="submit" :class="{ 'btn-loading': isLoading }" class="btn btn-primary btn-lg">Simpan</button>
+                                        <button type="submit" :disabled="isLoading" :class="{ 'btn-loading': isLoading }"
+                                            class="btn btn-primary btn-lg">Simpan RTU</button>
                                     </div>
                                 </form>
                             </div>
