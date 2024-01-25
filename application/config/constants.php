@@ -102,6 +102,7 @@ defined('UPLOAD_OXISP_CHECK_EVIDENCE_PATH') OR define('UPLOAD_OXISP_CHECK_EVIDEN
 $err_response = [
     'default' => [ 'code' => 400, 'success' => false, 'message' => 'Terjadi masalah saat menghubungi server.' ],
     'bad_req' => [ 'code' => 400, 'success' => false, 'message' => 'Request tidak dapat diproses di server.' ],
+    'not_found' => [ 'code' => 404, 'success' => false, 'message' => 'Data tidak ditemukan.' ],
     'exp_token' => [ 'code' => 417, 'success' => false, 'message' => 'Masa berlaku token telah habis.' ],
     'unauth' => [ 'code' => 401, 'success' => false, 'message' => 'Anda perlu login terlebih dahulu.' ],
     'unmatch_old_pass' => [ 'code' => 400, 'success' => false, 'message' => 'Harap memasukkan password lama anda dengan benar.' ]

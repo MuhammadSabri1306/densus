@@ -8,6 +8,8 @@ function get_time_range(...$keys) {
         'prevMonth' => [ date('Y-m-01 00:00:00', strtotime('-1 month')), date('Y-m-d H:i:s', strtotime('-1 month')) ],
         'currWeek' => [ date('Y-m-d 00:00:00', strtotime('this week')), date('Y-m-d H:i:s') ],
         'prevWeek' => [ date('Y-m-d 00:00:00', strtotime('last week monday')), date('Y-m-d H:i:s', strtotime('-1 week')) ],
+        // 'currWeek' => [ date('Y-m-d 00:00:00', strtotime('-7 day')), date('Y-m-d H:i:s') ],
+        // 'prevWeek' => [ date('Y-m-d 00:00:00', strtotime('-14 day')), date('Y-m-d H:i:s', strtotime('-7 day')) ],
         'currDay' => [ date('Y-m-d 00:00:00'), date('Y-m-d H:i:s') ],
         'prevDay' => [ date('Y-m-d 00:00:00', strtotime('-1 day')), date('Y-m-d H:i:s', strtotime('-1 day')) ],
         'currHour' => [ date('Y-m-d H:00:00'), date('Y-m-d H:i:s') ],

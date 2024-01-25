@@ -4,8 +4,10 @@ import { handlingFetchErr } from "@helpers/error-handler";
 import { useUserStore } from "@stores/user";
 import { useViewStore } from "@stores/view";
 import { backendUrl } from "@/configs/base";
+import { createUrlParams } from "@helpers/url";
 
 import { allowSampleData } from "@/configs/base";
+import getSampleData from "@helpers/sample-data";
 import samplePueOfflineByLocation from "@helpers/sample-data/pue/offline_by_location";
 import sampleLatestValue from "@helpers/sample-data/pue/latest-value";
 import sampleChartData from "@helpers/sample-data/pue/chart-data";
@@ -441,6 +443,45 @@ export const usePueV2Store = defineStore("pueV2", {
             } catch(err) {
                 handlingFetchErr(err);
                 callback && callback({ success: false, status: err.response?.status });
+            }
+        },
+
+        async getPueOnlineMonitoringData(callback) {
+            const params = {};
+            if(this.filters.divre) params.divre = this.filters.divre;
+            if(this.filters.witel) params.witel = this.filters.witel;
+            const urlParams = createUrlParams(params);
+            try {
+                const response = await http.get("/pue/online?" + urlParams, this.fetchHeader);
+                if(!response.data.success) {
+                    console.warn(response.data);
+                    callback(response.data);
+                    return;
+                }
+                callback(response.data);
+            } catch(err) {
+                handlingFetchErr(err);
+                if(allowSampleData) {
+                    const sampleData = await getSampleData("pue-online", {});
+                    callback(sampleData);
+                } else {
+                    callback(null);
+                }
+            }
+        },
+
+        async getRtuPueOnline(rtuCode, callback) {
+            try {
+                const response = await http.get("/pue/online/" + rtuCode, this.fetchHeader);
+                if(!response.data.success) {
+                    console.warn(response.data);
+                    callback(response.data);
+                    return;
+                }
+                callback(response.data);
+            } catch(err) {
+                handlingFetchErr(err);
+                callback(null);
             }
         }
 

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, onMounted, onUnmounted } from "vue";
+import { computed, ref } from "vue";
 import { useRtuStore } from "@stores/rtu";
 import { useViewStore } from "@stores/view";
 import Skeleton from "primevue/skeleton";

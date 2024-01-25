@@ -11,6 +11,96 @@ class Monitoring_pue extends RestController
         $this->load->library('auth_jwt');
     }
 
+    public function index_get()
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+
+        if($status === 200) {
+            $currUser = $this->auth_jwt->get_payload();
+            $zone = [
+                'witel' => $currUser['level'] == 'witel' ? $currUser['locationId'] : $this->input->get('witel'),
+                'divre' => $currUser['level'] == 'divre' ? $currUser['locationId'] : $this->input->get('divre')
+            ];
+
+            $this->load->model('pue_counter2_model');
+            $dataLevel = $this->pue_counter2_model->get_data_level_by_filter($zone);
+
+            $forbiddWitel = $currUser['level'] == 'witel' && $dataLevel['witel_kode'] != $currUser['locationId'];
+            $forbiddDivre = $currUser['level'] == 'divre' && $dataLevel['divre_kode'] != $currUser['locationId'];
+            if($forbiddWitel || $forbiddDivre) {
+                $status = REST_ERR_BAD_REQ_STATUS;
+                $data = REST_ERR_BAD_REQ_DATA;
+            }
+        }
+
+        if($status === 200) {
+            $pueMonitoringData = $this->pue_counter2_model->get_pue_monitoring($zone);
+            $data = array_merge(
+                [ 'level' => $dataLevel ],
+                $pueMonitoringData,
+                [ 'success' => true ]
+            );
+            
+            $this->load->library('user_log');
+            $this->user_log
+                ->userId($currUser['id'])
+                ->username($currUser['username'])
+                ->name($currUser['name'])
+                ->activity('get pue monitoring data')
+                ->log();
+        }
+        
+        $this->response($data, $status);
+    }
+
+    public function detail_get($rtuCode)
+    {
+        // $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        // switch($status) {
+        //     case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+        //     case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+        //     default: $data = REST_ERR_DEFAULT_DATA; break;
+        // }
+        $status = 200;
+
+        if($status === 200) {
+            // $currUser = $this->auth_jwt->get_payload();
+            $this->load->model('pue_counter2_model');
+
+            $zone = [ 'rtu' => $rtuCode ];
+            if($currUser['level'] == 'witel') $zone['witel'] = $currUser['locationId'];
+            if($currUser['level'] == 'regional') $zone['witel'] = $currUser['locationId'];
+            $dataLevel = $this->pue_counter2_model->get_data_level_by_filter($zone);
+
+            if($dataLevel['level'] != 'rtu') {
+                $data = REST_ERR_NOT_FOUND_DATA;
+                $status = REST_ERR_NOT_FOUND_STATUS;
+            } else {
+                $pueData = $this->pue_counter2_model->get_rtu_pue_hourly($zone, $rtuCode);
+                $data = [
+                    'level' => $dataLevel,
+                    ...$pueData,
+                    'success' => true
+                ];
+            }
+            
+            // $this->load->library('user_log');
+            // $this->user_log
+            //     ->userId($currUser['id'])
+            //     ->username($currUser['username'])
+            //     ->name($currUser['name'])
+            //     ->activity('get rtu detail pue monitoring data')
+            //     ->log();
+        }
+        
+        $this->response($data, $status);
+    }
+
     public function chart_data_get()
     {
         $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');

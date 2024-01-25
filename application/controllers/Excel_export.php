@@ -53,7 +53,7 @@ class Excel_export extends CI_Controller
         return str_replace('[[VAL]]', $value, $patternText);
     }
 
-    public function pue()
+    public function pue_online_monitoring()
     {
         $filter = [
             'witel' => $this->input->get('witel'),
@@ -61,7 +61,8 @@ class Excel_export extends CI_Controller
         ];
 
         $this->load->model('pue_counter2_model');
-        $pue = $this->pue_counter2_model->get_curr_year_avg_on_sto($filter);
+        $pueData = $this->pue_counter2_model->get_pue_monitoring_excel($filter);
+        // dd_json($pue);
         
         $this->excel->useColSizeAuto = true;
         $startRow = 1; $currRow = $startRow;
@@ -123,37 +124,39 @@ class Excel_export extends CI_Controller
             ->setAlignment('center');
         
         $currRow++;
-        foreach($pue['data'] as $item) {
+        foreach($pueData as $item) {
 
             $currCol = $startCol;
 
-            $this->excel->setValue($item->divre_kode, $currRow, $currCol);
+            $this->excel->setValue($item['divre_kode'], $currRow, $currCol);
             $currCol++;
-            $this->excel->setValue($item->divre_name, $currRow, $currCol);
+            $this->excel->setValue($item['divre_name'], $currRow, $currCol);
             $currCol++;
             
-            $this->excel->setValue($item->witel_kode, $currRow, $currCol);
+            $this->excel->setValue($item['witel_kode'], $currRow, $currCol);
             $currCol++;
-            $this->excel->setValue($item->witel_name, $currRow, $currCol);
+            $this->excel->setValue($item['witel_name'], $currRow, $currCol);
             $currCol++;
 
-            $this->excel->setValue($item->rtu_kode, $currRow, $currCol);
+            $this->excel->setValue($item['rtu_kode'], $currRow, $currCol);
             $currCol++;
-            $this->excel->setValue($item->rtu_name, $currRow, $currCol);
+            $this->excel->setValue($item['rtu_name'], $currRow, $currCol);
             $currCol++;
             
             $this->excel
-                ->setValue($item->currDay, $currRow, $currCol)
+                ->setValue($item['currDay'], $currRow, $currCol)
+                ->setAlignment('center');
+            // if($item[])
+            // $this->excel->setFill($this->colorScheme['primary']['argb'])
+            $currCol++;
+
+            $this->excel
+                ->setValue($item['currWeek'], $currRow, $currCol)
                 ->setAlignment('center');
             $currCol++;
 
             $this->excel
-                ->setValue($item->currWeek, $currRow, $currCol)
-                ->setAlignment('center');
-            $currCol++;
-
-            $this->excel
-                ->setValue($item->currMonth, $currRow, $currCol)
+                ->setValue($item['currMonth'], $currRow, $currCol)
                 ->setAlignment('center');
 
             $currRow++;
@@ -171,36 +174,20 @@ class Excel_export extends CI_Controller
         $this->excel->createDownload($fileName);
     }
 
-    public function pue_rtu()
+    public function pue_rtu($rtuCode)
     {
-        $rtuCode = $this->input->get('rtu');
-        // $month = $this->input->get('month');
-        $year = $this->input->get('year');
-        
+        $zone = [];
         $this->load->library('datetime_range');
-        if(!$year) $year = date('Y');
+        $datetime = $this->datetime_range->get_by_year( date('Y') );
 
-        // if($month) {
-        //     $datetime = $this->datetime_range->get_by_month($month, $year);
-        // } else {
-        //     $datetime = $this->datetime_range->get_by_year($year);
-        // }
-        $datetime = $this->datetime_range->get_by_year($year);
-
-        $filter = [
-            'rtu' => $rtuCode,
-            'startDate' => $datetime[0],
-            'endDate' => $datetime[1]
-        ];
-        
         $this->load->model('pue_counter2_model');
-        $data = $this->pue_counter2_model->get_all($filter);
+        $data = $this->pue_counter2_model->get_rtu_pue_hourly_excel($zone, $rtuCode);
         
         $this->excel->useColSizeAuto = true;
         $this->excel->setValue('Mulai tanggal :', 2, 2);
-        $this->excel->setValue($filter['startDate'], 2, 3);
+        $this->excel->setValue($datetime[0], 2, 3);
         $this->excel->setValue('Sampai tanggal :', 3, 2);
-        $this->excel->setValue($filter['endDate'], 3, 3);
+        $this->excel->setValue($datetime[1], 3, 3);
 
         $this->excel->setField([
             'divre_kode' => 'KODE DIVRE',
@@ -222,7 +209,7 @@ class Excel_export extends CI_Controller
             ->fill($data);
 
         $this->excel
-            ->selectCell([5, 1], [5, 12])
+            ->selectCell([5, 1], [5, 11])
             ->setFill($this->colorScheme['primary']['argb'])
             ->setColor($this->colorScheme['white']['argb'])
             ->setBorderColor($this->colorScheme['white']['argb'])

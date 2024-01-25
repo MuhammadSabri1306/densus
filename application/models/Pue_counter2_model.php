@@ -65,10 +65,40 @@ class Pue_Counter2_model extends CI_Model {
         $this->use_module('get_zone_avg_on_curr_year_v2', [ 'zone' => $zone ]);
         return $this->result;
     }
-    
+
     public function get_curr_year_avg_on_sto($zone)
     {
         $this->use_module('get_curr_year_avg_on_sto', [ 'zone' => $zone ]);
+        return $this->result;
+    }
+
+    public function get_pue_monitoring($zone)
+    {
+        $this->use_module('get_pue_monitoring', [ 'zone' => $zone ]);
+        return $this->result;
+    }
+
+    public function get_pue_monitoring_excel($zone)
+    {
+        $this->use_module('get_pue_monitoring_excel', [ 'zone' => $zone ]);
+        return $this->result;
+    }
+
+    public function get_rtu_pue_hourly($zone, $rtuCode)
+    {
+        $this->use_module('get_rtu_pue_hourly', [ 'zone' => $zone, 'rtuCode' => $rtuCode ]);
+        return $this->result;
+    }
+
+    public function get_rtu_pue_hourly_excel($zone, $rtuCode)
+    {
+        $this->use_module('get_rtu_pue_hourly_excel', [ 'zone' => $zone, 'rtuCode' => $rtuCode ]);
+        return $this->result;
+    }
+
+    public function get_excel_data($zone)
+    {
+        $this->use_module('get_excel_data', [ 'zone' => $zone ]);
         return $this->result;
     }
 
