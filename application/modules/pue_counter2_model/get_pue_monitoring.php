@@ -78,7 +78,11 @@ try {
             }
 
         }
-    
+
+        // if($rtu['rtu_kode'] == 'RTU-PTRN-01') {
+        //     dd($useNewosasePue);
+        // }
+
         if(!$useNewosasePue) {
             foreach($pue1Values as $pue1) {
 

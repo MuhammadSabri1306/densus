@@ -27,6 +27,7 @@ $this->db
     ->select('rtu_kode, AVG(pue_value) AS pue_value, timestamp, date_format(timestamp, "%Y-%m-%d %H") AS hour')
     ->from("pue_counter_new")
     ->where('timestamp >=', $currYearDate)
+    ->where('rtu_kode', $rtuCode)
     ->group_by('rtu_kode')
     ->group_by('hour');
 $pue2Values = $this->db->get()->result_array();

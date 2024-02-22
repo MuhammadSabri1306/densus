@@ -17,7 +17,8 @@ export const toIdrCurrency = numb => {
 };
 
 export const toFixedNumber = (numb, maxDecimal = 2, normalizeZero = false) => {
-	numb = Number(numb);
+	if(typeof numb != "number")
+		numb = Number(numb);
 	const isNegative = numb < 0;
 	if(isNegative)
 		numb = Math.abs(numb);
@@ -36,37 +37,30 @@ export const toFixedNumber = (numb, maxDecimal = 2, normalizeZero = false) => {
 	return isNegative ? -numb : numb;
 };
 
-export const toNumberText = (numb, decimalLimit = 2) => {
+export const toNumberText = (numb, maxDecimal = 2) => {
+	if(typeof numb != "number")
+		numb = Number(numb);
 	const isNegative = numb < 0;
 	if(isNegative)
 		numb = Math.abs(numb);
 
-	const numbStrArr = numb.toString().split(".");
-	const numbBeforeDecimal = numbStrArr[0];
-	let numbAfterDecimal = numbStrArr.length > 1 ? numbStrArr[1] : "";
+	const numbStr = toFixedNumber(numb, maxDecimal).toString();
+	let [ baseNumb, decimalNumb ] = numbStr.split(".");
 
-	if(numbAfterDecimal.length > decimalLimit) {
-		numb = toFixedNumber(numb, decimalLimit);
-		numbAfterDecimal = numb.toString().split(".")[1];
-	}
+	if(baseNumb.length > 3) {
+        let dotIndex = baseNumb.length % 3;
+		dotIndex = dotIndex === 0 ? 3 : dotIndex;
+		for(let i=dotIndex; i<baseNumb.length; i+=4) {
+            baseNumb = baseNumb.slice(0, i) + "." + baseNumb.slice(i);
+        }
+    }
 
-	let numbStr = "";
-	let charCount = 0;
-	for(let i=(numbBeforeDecimal.length - 1); i>=0; i--) {
-		numbStr = `${ numbBeforeDecimal[i] }${ numbStr }`;
-		charCount++;
-		if(charCount == 3) {
-			numbStr = `.${ numbStr }`;
-			charCount = 0;
-		}
-	}
-
-	if(numbAfterDecimal.length > 0)
-		numbStr += `,${ numbAfterDecimal }`;
-	if(numbStr[0] == ".")
-		numbStr = numbStr.slice(1);
-
-	return isNegative ? `-${ numbStr }` : numbStr;
+	let result = baseNumb;
+	if(decimalNumb !== undefined)
+		result += `,${ decimalNumb }`;
+	if(isNegative)
+		result = `-${ result }`;
+	return result;
 };
 
 export const toZeroLeading = (numb, maxDigit) => {

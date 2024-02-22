@@ -209,6 +209,7 @@ $plnMonthKeys = ['januari', 'februari', 'maret', 'april', 'mei', 'juni', 'juli',
 
 $plnCurrMonth = array_column($plnCurrYear, $plnMonthKeys[($filter['month'] - 1)]);
 $plnPrevMonth = array_column($plnCurrYear, $plnMonthKeys[($filter['month'] - 2)]);
+if($filter['month'] === 1) $plnPrevMonth = array_column($plnPrevYearData, $plnMonthKeys[11]);
 $plnPrevYear = array_column($plnPrevYearData, $plnMonthKeys[($filter['month'] - 1)]);
 
 $data = [];

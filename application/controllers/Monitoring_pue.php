@@ -60,16 +60,15 @@ class Monitoring_pue extends RestController
 
     public function detail_get($rtuCode)
     {
-        // $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
-        // switch($status) {
-        //     case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
-        //     case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
-        //     default: $data = REST_ERR_DEFAULT_DATA; break;
-        // }
-        $status = 200;
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
 
         if($status === 200) {
-            // $currUser = $this->auth_jwt->get_payload();
+            $currUser = $this->auth_jwt->get_payload();
             $this->load->model('pue_counter2_model');
 
             $zone = [ 'rtu' => $rtuCode ];
