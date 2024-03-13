@@ -31,12 +31,8 @@ onUnmounted(() => {
 });
 
 const confirmExit = () => {
-    if(hasScheduleChanged.value) {
-        const hasConfirmed = confirm(exitConfirmMessage);
-        if(hasConfirmed)
-            activityStore.setHasScheduleChanged(false);
-        return hasConfirmed;
-    }
+    if(hasScheduleChanged.value)
+        return confirm(exitConfirmMessage);
     return true;
 };
 

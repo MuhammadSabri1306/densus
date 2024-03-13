@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-// import Landing from "@views/Landing.vue";
 import Dashboard from "@views/Dashboard.vue";
 import User from "@views/User.vue";
 import Login from "@views/Login.vue";
@@ -12,7 +11,6 @@ import MonitoringDetail from "@views/MonitoringDetail.vue";
 
 import Monitoring2 from "@views/Monitoring2.vue";
 import MonitoringPlnParams from "@views/MonitoringPlnParams.vue";
-// import MonitoringPlnParamsDetail from "@views/MonitoringPlnParamsDetail.vue";
 import MonitoringPlnBilling from "@views/MonitoringPlnBilling.vue";
 import MonitoringPlnBillingDetail from "@views/MonitoringPlnBillingDetail.vue";
 import MonitoringFuelParams from "@views/MonitoringFuelParams.vue";
@@ -20,10 +18,6 @@ import MonitoringFuelParamsDetail from "@views/MonitoringFuelParamsDetail.vue";
 import MonitoringFuelInvoice from "@views/MonitoringFuelInvoice.vue";
 import MonitoringFuelInvoiceDetail from "@views/MonitoringFuelInvoiceDetail.vue";
 
-// import PueOnlineRtu from "@views/PueOnlineRtu.vue";
-// import PueOnlineDivre from "@views/PueOnlineDivre.vue";
-// import PueOnlineWitel from "@views/PueOnlineWitel.vue";
-// import PueOnline from "@views/PueOnline.vue";
 import PueOnlineV2 from "@views/PueOnlineV2.vue";
 import PueOffline from "@views/PueOffline.vue";
 import PueOfflineDetail from "@views/PueOfflineDetail.vue";
@@ -37,7 +31,6 @@ import RtuAdd from "@views/RtuAdd.vue";
 import RtuEdit from "@views/RtuEdit.vue";
 
 import ActivityDashboard from "@views/ActivityDashboard.vue";
-import ActivitySchedule from "@views/ActivitySchedule.vue";
 import ActivityScheduleV2 from "@views/ActivityScheduleV2.vue";
 import ActivityExecution from "@views/ActivityExecution.vue";
 
@@ -100,22 +93,6 @@ const routes = [
         path: "/monitoring-fuel/invoice/:locationId", component: MonitoringFuelInvoiceDetail,
         meta: { menuKey: ["energy"], requiresAuth: true }
     },
-    // {
-    //     path: "/pue/online", component: PueOnline,
-    //     meta: { menuKey: ["pue", "online"], requiresAuth: true }
-    // },
-    // {
-    //     path: "/pue/online/divre/:divreCode", component: PueOnlineDivre,
-    //     meta: { menuKey: ["pue", "online"], requiresAuth: true }
-    // },
-    // {
-    //     path: "/pue/online/witel/:witelCode", component: PueOnlineWitel,
-    //     meta: { menuKey: ["pue", "online"], requiresAuth: true }
-    // },
-    // {
-    //     path: "/pue/online/rtu/:rtuCode", component: PueOnlineRtu,
-    //     meta: { menuKey: ["pue", "online"], requiresAuth: true }
-    // },
     {
         path: "/pue/online/", component: PueOnlineV2,
         meta: { menuKey: ["pue", "online"], requiresAuth: true }

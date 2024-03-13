@@ -74,6 +74,7 @@ const setupData = () => {
         return { ...locItem, col, locationIndex };
     });
 
+    activityStore.setHasScheduleChanged(false);
     dataSchedule.value = dataSetup;
 };
 
@@ -114,7 +115,7 @@ const getRowClass = item => {
 
 const isSaving = ref(false);
 const hasScheduleChanged = computed(() => activityStore.hasScheduleChanged);
-const disableSave = computed(() => !hasScheduleChanged.value || isSaving.value);
+const disableSave = computed(() => !activityStore.hasScheduleChanged || isSaving.value);
 
 const onSubmit = event => {
     const form = event.target;

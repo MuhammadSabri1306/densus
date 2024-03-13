@@ -211,6 +211,7 @@ export const useActivityStore = defineStore("activity", {
             const url = getApiPath("/activity/schedule", this.filters);
             try {
                 const response = await http.post(url, body, this.fetchHeader);
+                this.hasScheduleChanged = false;
                 if(!response.data.success) {
                     console.warn(response.data);
                     callback && callback({ success: false, status: response.status });

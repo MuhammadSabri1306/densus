@@ -27,7 +27,6 @@ const isSaving = ref(false);
 
 const onSave = schedule => {
     isSaving.value = true;
-    // console.log(schedule)
     activityStore.saveSchedule(schedule, response => {
         isSaving.value = false;
         if(!response.success)
