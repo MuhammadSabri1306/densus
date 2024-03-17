@@ -54,7 +54,7 @@ export const useGepeeReportStore = defineStore("gepee-report", {
 
         async getReport(callback) {
             const urlParams = this.getUrlParams();
-            const url = "/gepee-report-v2" + urlParams;
+            const url = "/gepee-report" + urlParams;
             try {
 
                 const response = await http.get(url, this.fetchHeader);

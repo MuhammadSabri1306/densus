@@ -8,9 +8,12 @@ class Gepee_management_model extends CI_Model
     protected $tableRtuName = 'rtu_map';
     protected $tablePueOfflineName = 'pue_offline';
     protected $tablePueOnlineName = 'pue_counter';
+    protected $tablePueOnlineNewName = 'pue_counter_new';
     protected $tablePueTargetName = 'pue_location_target';
     protected $tableIkeName = 'ike_master';
+
     public $currUser;
+    public $pueMaxTarget = 1.8;
 
     public function __construct()
     {
@@ -83,26 +86,29 @@ class Gepee_management_model extends CI_Model
         ];
     }
 
-    public function get_report($filter, $pueLowLimit = 1.8)
-    {
-        $this->use_module('get_report', [
-            'filter' => $filter,
-            'pueLowLimit' => $pueLowLimit
-        ]);
-        return $this->result;
-    }
-
-    public function get_report_v2($filter, $pueLowLimit = 1.8, $sumNasional = false)
+    public function get_report_v3($filter, $sumNasional = false)
     {
         $this->load->helper('array');
-        $this->use_module('get_report_v2', [
+        $this->use_module('get_report_v3', [
             'filter' => $filter,
-            'pueLowLimit' => $pueLowLimit,
             'sumNasional' => $sumNasional
         ]);
         return $this->result;
     }
-    
+
+    public function is_pue_reach_target($pueOnlineValue, $pueOfflineValue)
+    {
+        $pueValues = [];
+        if(is_array($pueOnlineValue)) array_push($pueValues, max($pueOnlineValue));
+        elseif(!is_null($pueOnlineValue)) array_push($pueValues, $pueOnlineValue);
+
+        if(is_array($pueOfflineValue)) array_push($pueValues, max($pueOfflineValue));
+        elseif(!is_null($pueOfflineValue)) array_push($pueValues, $pueOfflineValue);
+
+        if(count($pueValues) < 1) return false;
+        return max($pueValues) <= $this->pueMaxTarget;
+    }
+
     public function get_report_sum_nasional($filter, $pueLowLimit)
     {
         $this->use_module('get_report_sum_nasional', [
@@ -111,7 +117,7 @@ class Gepee_management_model extends CI_Model
         ]);
         return $this->result;
     }
-    
+
     public function get_report_summary_nasional($filter, $pueLowLimit)
     {
         $this->use_module('get_report_summary_nasional', [

@@ -17,7 +17,7 @@ const gepeeReportStore = useGepeeReportStore();
 
 const tableData = ref([]);
 const categoryList = ref([]);
-const pueLowLimit = ref(null);
+const pueMaxTarget = ref(null);
 const summaryNasional = ref(null);
 
 const level = computed(() => {
@@ -182,10 +182,10 @@ const getGroupAvg = (data, groupKey) => {
     
     if(pueValue == null)
         currItem.pue.isReachTarget = true;
-    else if(!pueLowLimit.value)
-        currItem.pue.isReachTarget = true;
+    else if(!pueMaxTarget.value)
+        currItem.pue.isReachTarget = false;
     else
-        currItem.pue.isReachTarget = pueValue > pueLowLimit.value;
+        currItem.pue.isReachTarget = pueValue <= pueMaxTarget.value;
     
     return currItem;
 };
@@ -242,8 +242,8 @@ const fetch = () => {
     isLoading.value = true;
     hasInit.value = true;
     gepeeReportStore.getReport(({ data }) => {
-        if(data.pueLowLimit)
-            pueLowLimit.value = data.pueLowLimit;
+        if(data.pue_max_target)
+            pueMaxTarget.value = data.pue_max_target;
         if(data.category)
             categoryList.value = data.category;
         if(data.gepee) {
@@ -347,7 +347,7 @@ const selectedYear = computed(() => viewStore.filters.year);
                         <th>OFFLINE/<br>ONLINE</th>
                         <th>OFFLINE</th>
                         <th>ONLINE</th>
-                        <th>PUE &lt;= {{ pueLowLimit }}<br><small>(YA/TIDAK)</small></th>
+                        <th>PUE &lt;= {{ pueMaxTarget }}<br><small>(YA/TIDAK)</small></th>
                         <th class="tw-whitespace-nowrap">Rp. Tagihan PLN<br><small>(Bulan {{ selectedMonth }})</small></th>
                         <th class="tw-whitespace-nowrap">Jumlah Saving<br><small>(Dibanding bulan sebelumnya)</small></th>
                         <th class="tw-whitespace-nowrap">% Saving<br><small>(Dibanding bulan sebelumnya)</small></th>
@@ -380,7 +380,7 @@ const selectedYear = computed(() => viewStore.filters.year);
                             {{ formatItemNumber(summaryNasional.pue_online) }}
                         </td>
                         <td class="middle text-center">
-                            {{ summaryNasional.isPueReachTarget ? "TIDAK" : "YA" }}
+                            {{ summaryNasional.isPueReachTarget ? "YA" : "TIDAK" }}
                         </td>
                         <td class="middle text-center f-w-700 tw-whitespace-nowrap text-muted">
                             {{ formatItemNumber(summaryNasional.tagihan_pln, "-", "Rp [value]") }}
@@ -465,7 +465,7 @@ const selectedYear = computed(() => viewStore.filters.year);
                                 {{ formatItemNumber(item.pue.online) }}
                             </td>
     
-                            <td class="middle text-center">{{ isPueReachTarget(item) ? "TIDAK" : "YA" }}</td>
+                            <td class="middle text-center">{{ isPueReachTarget(item) ? "YA" : "TIDAK" }}</td>
 
                         </template>
                         <template v-else>
