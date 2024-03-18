@@ -630,11 +630,8 @@ class Excel_export extends CI_Controller
     {
         $divreCode = $this->input->get('divre');
         $witelCode = $this->input->get('witel');
-        $year = $this->input->get('year');
-        $month = $this->input->get('month');
-
-        if(!$year) $year = date('Y');
-        if(!$month) $month = date('m');
+        $year = $this->input->get('year') ?? date('Y');
+        $month = $this->input->get('month') ?? date('m');
 
         $this->load->library('datetime_range');
         $datetime = $this->datetime_range->get_by_month($month, $year);
@@ -645,16 +642,15 @@ class Excel_export extends CI_Controller
             'witel' => $witelCode,
             'datetime' => $datetime,
             'datetimeYear' => $datetimeYear,
-            'year' => (int) ($this->input->get('year') ?? date('Y')),
-            'month' => (int) ($this->input->get('month') ?? date('n')),
+            'year' => (int) $year,
+            'month' => (int) $month,
         ];
 
         $this->load->model('gepee_management_model');
         $this->load->model('activity_category_model');
-
-        $pueLowLimit = 1.8;        
+        
         $categoryList = $this->activity_category_model->get();
-        $data = $this->gepee_management_model->get_report_v2($filter, $pueLowLimit);
+        $data = $this->gepee_management_model->get_report_v3($filter, false);
 
         $monthList = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
             'Oktober', 'November', 'Desember'];
@@ -808,7 +804,7 @@ class Excel_export extends CI_Controller
             $this->excel->setValue(( !$item['is_pue'] ? null : $item['pue']['online'] ), $currRow, $currCol);
             $currCol++;
 
-            $isReachTargetText = !$item['is_pue'] ? null : ($item['pue']['isReachTarget'] ? 'TIDAK' : 'YA');
+            $isReachTargetText = !$item['is_pue'] ? null : ($item['pue']['isReachTarget'] ? 'YA' : 'TIDAK');
             $this->excel
                 ->setValue($isReachTargetText, $currRow, $currCol)
                 ->setAlignment('center');
