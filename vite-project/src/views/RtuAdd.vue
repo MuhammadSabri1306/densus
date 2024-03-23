@@ -3,15 +3,16 @@ import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useRtuStore } from "@stores/rtu";
 import { useViewStore } from "@stores/view";
-import { useDataForm } from "@helpers/data-form";
 import { required } from "@vuelidate/validators";
+import { useDataForm } from "@helpers/data-form2";
+import { mustBeRtuCode } from "@helpers/form-validator";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
 import InputGroupLocation from "@components/InputGroupLocation.vue";
 import InputSwitch from "primevue/inputswitch";
 import ListboxFilter from "@components/ListboxFilter.vue";
 
-const { data, v$ } = useDataForm({
-    rtuCode: { required },
+const { data, v$, hasSubmitted, getInvalidClass, useErrorTooltip } = useDataForm({
+    rtuCode: { required, mustBeRtuCode },
     rtuName: { required },
     location: { required },
     stoCode: { required },
@@ -82,8 +83,12 @@ const validateStoGepee = () => {
     return data.idLocGepee ? true : false;
 };
 
+const useRtuCodeTooltip = (field) => {
+    const message = "Kode RTU tidak dapat dikosongkan, hanya menerima karakter Alfanumerik (A-Z, 0-1) dan tanda '-'";
+    return useErrorTooltip({ field, message });
+};
+
 const isLoading = ref(false);
-const hasSubmitted = ref(false);
 const rtuStore = useRtuStore();
 
 const onSubmit = async () => {
@@ -151,22 +156,23 @@ const onSubmit = async () => {
                                 <form @submit.prevent="onSubmit">
                                     <div class="form-group">
                                         <label for="rtuCode" class="required">Kode RTU</label>
-                                        <input v-model="v$.rtuCode.$model" :class="{ 'is-invalid': hasSubmitted && v$.rtuCode.$invalid }"
-                                            class="form-control" id="rtuCode" name="rtuCode" type="text" placeholder="Cth. RTU-BALA">
+                                        <input v-model="v$.rtuCode.$model" :class="getInvalidClass('rtuCode', 'is-invalid')"
+                                            class="form-control" id="rtuCode" name="rtuCode" type="text" placeholder="Cth. RTU00-D7-BAL"
+                                            v-tooltip.top="useRtuCodeTooltip('rtuCode')">
                                     </div>
                                     <div class="form-group">
                                         <label for="rtuName" class="required">Nama RTU</label>
-                                        <input v-model="v$.rtuName.$model" :class="{ 'is-invalid': hasSubmitted && v$.rtuName.$invalid }"
+                                        <input v-model="v$.rtuName.$model" :class="getInvalidClass('rtuName', 'is-invalid')"
                                             class="form-control" id="rtuName" name="rtuName" type="text" placeholder="Cth. RTU STO BALAI KOTA">
                                     </div>
                                     <div class="form-group">
                                         <label for="location" class="required">Lokasi</label>
-                                        <input v-model="v$.location.$model" :class="{ 'is-invalid': hasSubmitted && v$.location.$invalid }"
+                                        <input v-model="v$.location.$model" :class="getInvalidClass('location', 'is-invalid')"
                                             class="form-control" id="location" name="location" type="text" placeholder="Cth. STO BALAI KOTA">
                                     </div>
                                     <div class="form-group">
                                         <label for="stoCode" class="required">Kode STO</label>
-                                        <input v-model="v$.stoCode.$model" :class="{ 'is-invalid': hasSubmitted && v$.stoCode.$invalid }"
+                                        <input v-model="v$.stoCode.$model" :class="getInvalidClass('stoCode', 'is-invalid')"
                                             class="form-control" id="stoCode" name="stoCode" type="text" placeholder="Cth. BAL">
                                     </div>
                                     
@@ -177,21 +183,21 @@ const onSubmit = async () => {
                                         <div class="col-md-6 col-lg-auto">
                                             <div class="form-group">
                                                 <label for="portKwh" class="required">Analog Port KW</label>
-                                                <input v-model="v$.portKwh.$model" :class="{ 'is-invalid': hasSubmitted && v$.portKwh.$invalid }"
+                                                <input v-model="v$.portKwh.$model" :class="getInvalidClass('portKwh', 'is-invalid')"
                                                     class="form-control" id="portKwh" name="portKwh" type="text" placeholder="Cth. A-16">
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-auto">
                                             <div class="form-group">
                                                 <label for="portGenset" class="required">Digital Port Status Genset</label>
-                                                <input v-model="v$.portGenset.$model" :class="{ 'is-invalid': hasSubmitted && v$.portGenset.$invalid }"
+                                                <input v-model="v$.portGenset.$model" :class="getInvalidClass('portGenset', 'is-invalid')"
                                                     class="form-control" id="portGenset" name="portGenset" type="text" placeholder="Cth. D-02">
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg">
                                             <div class="form-group">
                                                 <label for="kvaGenset" class="required">Kapasitas Genset Terpasang (KVA)</label>
-                                                <input v-model="v$.kvaGenset.$model" :class="{ 'is-invalid': hasSubmitted && v$.kvaGenset.$invalid }"
+                                                <input v-model="v$.kvaGenset.$model" :class="getInvalidClass('kvaGenset', 'is-invalid')"
                                                     class="form-control" id="kvaGenset" name="kvaGenset" type="text" placeholder="Cth. 500">
                                             </div>
                                         </div>

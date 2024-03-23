@@ -23,8 +23,11 @@ export const useDataForm = fields => {
 	const data = reactive(state);
 	const v$ = useVuelidate(validations, data);
 	const hasSubmitted = ref(false);
-    const getInvalidClass = (key, invalidClass) => {
-        if(hasSubmitted.value && v$.value[key].$invalid)
+    const getInvalidClass = (key, invalidClass, options = {}) => {
+		const afterSubmit = options.afterSubmit !== false;
+		if(afterSubmit && !hasSubmitted.value)
+			return null;
+        if(v$.value[key].$invalid)
             return invalidClass || "invalid";
         return null;
     };
@@ -40,7 +43,25 @@ export const useDataForm = fields => {
 		return err?.$message;
 	};
 
-	return { data, v$, hasSubmitted, getInvalidClass, getFirstError, getFirstErrorMsg };
+	const useErrorTooltip = (options) => {
+		const fieldKey = options.field;
+		const errMesage = options.message;
+		const afterSubmit = options.afterSubmit !== false;
+
+		if(afterSubmit && !hasSubmitted.value)
+			return null;
+
+		const field = v$.value[fieldKey];
+		const isInvalid = field && field.$invalid;
+		if(!isInvalid)
+			return null;
+		return {
+			value: errMesage,
+			class: "tooltip-error-input"
+		};
+	};
+
+	return { data, v$, hasSubmitted, getInvalidClass, getFirstError, getFirstErrorMsg, useErrorTooltip };
 };
 
 export const buildFormData = (data, keysArr) => {

@@ -112,19 +112,27 @@ class Rtu extends RestController
 
         if($status === 200) {
             $this->load->model("rtu_map_model");
-            $success = $this->rtu_map_model->save($body);
-
-            if($success) {
-                $this->user_log
-                    ->userId($currUser['id'])
-                    ->username($currUser['username'])
-                    ->name($currUser['name'])
-                    ->activity('input new RTU')
-                    ->log();
-                $data = [ 'success' => $success ];
-            } else {
-                $data = REST_ERR_BAD_REQ_STATUS;
+            try {
+                $success = $this->rtu_map_model->save($body);
+                if($success) {
+                    $this->user_log
+                        ->userId($currUser['id'])
+                        ->username($currUser['username'])
+                        ->name($currUser['name'])
+                        ->activity('input new RTU')
+                        ->log();
+                    $data = [ 'success' => $success ];
+                } else {
+                    $status = REST_ERR_BAD_REQ_STATUS;
+                    $data = REST_ERR_BAD_REQ_DATA;
+                }
+            } catch(FormValidationException $err) {
                 $status = REST_ERR_BAD_REQ_STATUS;
+                $data = [
+                    ...REST_ERR_BAD_REQ_DATA,
+                    'message' => $err->getMessage(),
+                    ...$err->getData()
+                ];
             }
         }
         
@@ -178,19 +186,27 @@ class Rtu extends RestController
         if($status === 200) {
             $this->load->model("rtu_map_model");
             $currUser = $this->auth_jwt->get_payload();
-            $success = $this->rtu_map_model->save($body, $id, $currUser);
-
-            if($success) {
-                $this->user_log
-                    ->userId($currUser['id'])
-                    ->username($currUser['username'])
-                    ->name($currUser['name'])
-                    ->activity('input new RTU')
-                    ->log();
-                $data = [ 'success' => $success ];
-            } else {
-                $data = REST_ERR_BAD_REQ_STATUS;
+            try {
+                $success = $this->rtu_map_model->save($body, $id, $currUser);
+                if($success) {
+                    $this->user_log
+                        ->userId($currUser['id'])
+                        ->username($currUser['username'])
+                        ->name($currUser['name'])
+                        ->activity('update RTU '.$body['rtu_kode'])
+                        ->log();
+                    $data = [ 'success' => $success ];
+                } else {
+                    $status = REST_ERR_BAD_REQ_STATUS;
+                    $data = REST_ERR_BAD_REQ_DATA;
+                }
+            } catch(FormValidationException $err) {
                 $status = REST_ERR_BAD_REQ_STATUS;
+                $data = [
+                    ...REST_ERR_BAD_REQ_DATA,
+                    'message' => $err->getMessage(),
+                    ...$err->getData()
+                ];
             }
         }
         

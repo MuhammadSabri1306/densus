@@ -230,7 +230,6 @@ foreach($locationData as $location) {
     $isTarget = (bool) $location['is_target'];
     $isPueOnline = is_null($location['is_pue_online']) ? null : (bool) $location['is_pue_online'];
     unset($location['is_target'], $location['is_pue_online']);
-    $location['is_online'] = $isPueOnline; // Hapus Brii!! Ntar klo datatable dan excel beres 
 
     $idLoc = $location['id'];
     $perfMonth = [];

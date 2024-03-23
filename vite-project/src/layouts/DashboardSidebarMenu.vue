@@ -43,17 +43,6 @@ const menuItems = computed(() => {
                 return item;
 
             const isGepeeEvidence = item.key == "gepee_evidence";
-            const isPue = item.key == "pue";
-            
-            if(isPue) {
-                const pueOnlineIndex = item.child.findIndex(childItem => childItem.key == "online");
-                if(pueOnlineIndex >= 0) {
-                    const newItem = JSON.parse(JSON.stringify(item));
-                    newItem.child[pueOnlineIndex].to = `${ item.child[pueOnlineIndex].to }/${ userLevel }/${ userLocId }`;
-                    return newItem;
-                }
-            }
-
             if(isGepeeEvidence) {
                 const newItem = JSON.parse(JSON.stringify(item));
                 newItem.to = `${ item.to }/${ userLevel }/${ userLocId }`;
