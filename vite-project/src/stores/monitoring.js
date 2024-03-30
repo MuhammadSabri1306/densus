@@ -2,6 +2,8 @@ import { defineStore } from "pinia";
 import http from "@helpers/http-common";
 import { handlingFetchErr } from "@helpers/error-handler";
 import { useUserStore } from "@stores/user";
+import { useViewStore } from "@stores/view";
+import { createUrlParams } from "@/helpers/url";
 
 import { allowSampleData } from "@/configs/base";
 import sampleRtuDetail from "@helpers/sample-data/monitoring/rtu-detail";
@@ -9,12 +11,44 @@ import samplePueDetail from "@helpers/sample-data/monitoring/pue-detail";
 
 export const useMonitoringStore = defineStore("monitoring", {
     getters: {
+
         fetchHeader: () => {
             const userStore = useUserStore();
             return userStore.axiosAuthConfig;
-        }
+        },
+
+        filters: () => {
+            const viewStore = useViewStore();
+            const divre = viewStore.filters.divre;
+            const witel = viewStore.filters.witel;
+            
+            return { divre, witel };
+        },
+
     },
     actions: {
+
+        async getRtuList(callback) {
+            const params = {};
+            if(this.filters.divre)
+                params.divre = this.filters.divre;
+            if(this.filters.witel)
+                params.witel = this.filters.witel;
+            const urlParams = createUrlParams(params);
+
+            try {
+                const response = await http.get("/monitoring/rtulist/v2?"+urlParams, this.fetchHeader);
+                if(response.data.rtu) {
+                    callback(response.data.rtu);
+                    return;
+                }
+                console.warn(response.data);
+                callback(response.data.rtu);
+            } catch(err) {
+                handlingFetchErr(err);
+                callback([]);
+            }
+        },
 
         async getRtuDetail(rtuCode) {
             try {

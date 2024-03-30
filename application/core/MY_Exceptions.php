@@ -2,7 +2,7 @@
 
 class MY_Exceptions extends CI_Exceptions {}
 
-class FormValidationException extends \Exception
+class DensusException extends \Exception
 {
     private $data;
 
@@ -17,3 +17,6 @@ class FormValidationException extends \Exception
         return $this->data;
     }
 }
+
+class FormValidationException extends DensusException {}
+class ModelEmptyDataException extends DensusException {}

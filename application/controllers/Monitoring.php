@@ -159,6 +159,47 @@ class Monitoring extends RestController
         $this->response($data, 200);
     }
 
+    public function rtulist_v2_get()
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+        if($status === 200) {
+
+            $divreCode = $this->input->get('divre') ?? null;
+            $witelCode = $this->input->get('witel') ?? null;
+
+            $filters = [];
+            if($divreCode) $filters['divre_kode'] = $divreCode;
+            if($witelCode) $filters['witel_kode'] = $witelCode;
+
+            $this->load->model("rtu_map_model");
+            $this->rtu_map_model->setCurrUser( $this->auth_jwt->get_payload() );
+            $rtu = [];
+            try {
+                $rtu = $this->rtu_map_model->get_newosase_rtus($divreCode, $witelCode);
+            } catch(ModelEmptyDataException $err) {
+                $status = REST_ERR_BAD_REQ_STATUS;
+                $data = [
+                    ...REST_ERR_BAD_REQ_DATA,
+                    'message' => $err->getMessage(),
+                    ...$err->getData()
+                ];
+            }
+
+            $data = [
+                'rtu' => $rtu,
+                'success' => true
+            ];
+
+        }
+
+        $this->response($data, $status);
+    }
+
     public function rtudetail_get($rtuCode)
     {
         $envPattern = EnvPattern::getPattern();
