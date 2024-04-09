@@ -391,3 +391,7 @@ label .required:after {
 .tooltip-error-input .p-tooltip-arrow {
     @apply !tw-border-r-danger;
 }
+
+.filter-month.hide-year .p-datepicker-header > :not(.custom-year-title) {
+    @apply tw-hidden;
+}

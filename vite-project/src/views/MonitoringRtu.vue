@@ -4,18 +4,23 @@ import { useMonitoringStore } from "@stores/monitoring";
 import { useViewStore } from "@stores/view";
 import Skeleton from "primevue/skeleton";
 import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
+import FilterRtuV2 from "@components/FilterRtuV2.vue";
 
 const monitoringStore = useMonitoringStore()
 const viewStore = useViewStore();
 const filterAutoApply = () => viewStore.filters.divre ? true : false;
 
 const rtuShowedCount = ref(12);
-const rtuList = ref([]);
+const allRtuList = ref([]);
+const rtuList = computed(() => {
+    const list = allRtuList.value;
+    const count = rtuShowedCount.value;
+    return list.slice(0, count);
+});
 
 const isShowingAllRtu = computed(() => {
     const currCount = rtuShowedCount.value;
-    const allRtus =  rtuList.value;
+    const allRtus =  allRtuList.value;
     return currCount < allRtus.length ? false : true;
 });
 
@@ -26,7 +31,7 @@ const onShowMoreRtu = () => {
     const randomTime = times[Math.floor( (Math.random() * times.length) )];
     setTimeout(() => {
         const currCount = rtuShowedCount.value + 12;
-        const allCount = rtuList.length;
+        const allCount = allRtuList.value.length;
         rtuShowedCount.value = Math.min(currCount, allCount);
         isLoadingMore.value = false;
     }, randomTime);
@@ -43,7 +48,7 @@ const onFilterApply = filterValue => {
     isLoading.value = true;
     rtuShowedCount.value = 12;
     monitoringStore.getRtuList(rtus => {
-        rtuList.value = rtus;
+        allRtuList.value = rtus;
         isLoading.value = false;
     });
 
@@ -65,7 +70,7 @@ const onFilterApply = filterValue => {
             </div>
         </div>
         <div class="container-fluid dashboard-default-sec">
-            <FilterGepeeV2 @apply="onFilterApply" :autoApply="filterAutoApply" divreColClass="col-12 col-md"
+            <FilterRtuV2 @apply="onFilterApply" :autoApply="filterAutoApply" divreColClass="col-12 col-md"
                 witelColClass="col-12 col-md" />
         </div>
         <div v-if="hasFetched" class="container-fluid dashboard-default-sec">
@@ -83,12 +88,12 @@ const onFilterApply = filterValue => {
                 </div>
             </div>
             <div v-else-if="rtuList.length < 1">
-                <p class="text-center text-muted">Belum ada data RTU.</p>
+                <p class="text-center text-muted">Tidak ada data RTU.</p>
             </div>
             <div v-else class="tw-pb-[12rem]">
                 <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 lg:tw-grid-cols-4 tw-gap-6">
                     <div v-for="item in rtuList" class="rtu-wrapper">
-                        <RouterLink v-if="item.is_available" :to="'/monitoring/'+item.rtu_kode" class="card btn-outline-primary" :title="item.rtu_name">
+                        <RouterLink v-if="item.is_available" :to="'/monitoring-rtu/'+item.rtu_kode" class="card btn-outline-primary" :title="item.rtu_name">
                             <div class="card-body bg-success">
                                 <div class="d-flex flex-column justify-content-center align-items-center">
                                     <VueFeather type="hard-drive" width="40px" height="40px" />

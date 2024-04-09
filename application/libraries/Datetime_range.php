@@ -18,12 +18,35 @@ class Datetime_range
         return [$startDate, $endDate];
     }
 
+    public function get_by_day($day, $month, $year)
+    {
+        $date = "$year-$month-$day";
+        $this->startDate = new DateTime($date);
+        $this->startDate->setTime(0, 0, 0);
+
+        $this->endDate = new DateTime($date);
+        $this->endDate->setTime(23, 59, 59);
+
+        return $this->get_result();
+    }
+
     public function get_by_year($year)
     {
         $this->startDate = new DateTime($year.'-01-01');
         $this->startDate->setTime(0, 0, 0);
 
         $this->endDate = new DateTime($year.'-12-31');
+        $this->endDate->setTime(23, 59, 59);
+
+        return $this->get_result();
+    }
+
+    public function get_by_year_range($startYear, $endYear)
+    {
+        $this->startDate = new DateTime($startYear.'-01-01');
+        $this->startDate->setTime(0, 0, 0);
+
+        $this->endDate = new DateTime($endYear.'-12-31');
         $this->endDate->setTime(23, 59, 59);
 
         return $this->get_result();

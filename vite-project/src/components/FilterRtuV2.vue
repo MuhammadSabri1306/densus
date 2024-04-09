@@ -153,7 +153,7 @@ const onDivreChange = val => {
         listboxWitel.value.reset();
         tempFilters.witel = null;
     } else
-        listboxWitel.value.fetch(() => viewStore.getWitelByDivre(val, "gepee"));
+        listboxWitel.value.fetch(() => viewStore.getWitelByDivre(val));
 };
 
 const onWitelChange = val => tempFilters.witel = val;
@@ -219,8 +219,8 @@ const setupFilter = () => {
         listboxDivre.value.setValue(currUser.value.locationId);
         listboxDivre.value.setDisabled(true);
 
-        listboxWitel.value.fetch(() => viewStore.getWitelByDivre(currUser.value.locationId, "gepee"));
-        listboxDivre.value.fetch(() => viewStore.getDivre("gepee"));
+        listboxWitel.value.fetch(() => viewStore.getWitelByDivre(currUser.value.locationId));
+        listboxDivre.value.fetch(() => viewStore.getDivre());
 
         if(tempFilters.witel)
             listboxWitel.value.setValue(tempFilters.witel);
@@ -234,7 +234,7 @@ const setupFilter = () => {
         listboxDivre.value.setDisabled(true)
 
         listboxWitel.value.fetch(
-            () => viewStore.getWitel(currUser.value.locationId, "gepee"),
+            () => viewStore.getWitel(currUser.value.locationId),
             data => {
                 if(data.length < 2)
                     return;
@@ -242,7 +242,7 @@ const setupFilter = () => {
                 const { divre_kode } = data[1];
                 tempFilters.divre = divre_kode;
                 listboxDivre.value.setValue(divre_kode)
-                listboxDivre.value.fetch(() => viewStore.getDivre("gepee"));
+                listboxDivre.value.fetch(() => viewStore.getDivre());
             }
         );
 

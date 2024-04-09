@@ -6,8 +6,8 @@ import Login from "@views/Login.vue";
 import ErrorNotFound from "@views/ErrorNotFound.vue";
 import ErrorMaintenance from "@views/ErrorMaintenance.vue";
 
-import Monitoring from "@views/Monitoring.vue";
-import MonitoringDetail from "@views/MonitoringDetail.vue";
+import MonitoringRtu from "@views/MonitoringRtu.vue";
+import MonitoringRtuDetail from "@views/MonitoringRtuDetail.vue";
 
 import Monitoring2 from "@views/Monitoring2.vue";
 import MonitoringPlnParams from "@views/MonitoringPlnParams.vue";
@@ -54,12 +54,12 @@ const routes = [
         meta: { menuKey: ["landing"], requiresAuth: true }
     },
     {
-        path: "/monitoring", component: Monitoring,
-        meta: { menuKey: ["monitoring"], requiresAuth: true }
+        path: "/monitoring-rtu", component: MonitoringRtu,
+        meta: { menuKey: ["monitoring_rtu"], requiresAuth: true }
     },
     {
-        path: "/monitoring/:rtuCode", component: MonitoringDetail,
-        meta: { menuKey: ["monitoring"], requiresAuth: true }
+        path: "/monitoring-rtu/:rtuCode", component: MonitoringRtuDetail,
+        meta: { menuKey: ["monitoring_rtu"], requiresAuth: true }
     },
     {
         path: "/monitoring-v2", component: Monitoring2,

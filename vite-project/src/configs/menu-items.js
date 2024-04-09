@@ -9,8 +9,8 @@ export const menuLanding = {
 };
 
 export const menuMonitoring = {
-    key: "monitoring",
-    to: "/monitoring",
+    key: "monitoring_rtu",
+    to: "/monitoring-rtu",
     title: "Monitoring RTU",
     icon: "airplay",
     roles: ["admin", "viewer", "teknisi"],
