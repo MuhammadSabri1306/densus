@@ -2,88 +2,86 @@
 
 class Test extends CI_Controller
 {
-    public function __construct()
+    // public function __construct()
+    // {
+    //   parent::__construct();
+    // }
+
+    public function index()
     {
-      parent::__construct();
-    }
+        error_reporting(E_ALL);
+        $method = $this->input->get('method');
+        $args = $this->input->get('args');
+        try {
+            if($args) {
 
-    private function load_test($testName, $params = [])
-    {
-        $filePath = APPPATH."modules/test/$testName.php";
+                if(!is_array($args)) {
+                    throw new \Error('args params should be array, ex:\'?method=test&args[]=2&args[]=5\'');
+                }
 
-        if(count($params) > 0) extract($params);
-        require $filePath;
-    }
+                $this->$method(...$args);
 
-    public function get_pue_chart_data()
-    {
-        $zone = [ 'divre' => 'TLK-r7000000' ];
-        $stopwatchConfig = [
-            'auto' => true,
-            'case' => 'pue_chart_data',
-            'description' => 'Pue_counter2_model/get_zone_avg_on_curr_year'
-        ];
+            } else {
 
-        $this->load->model('pue_counter2_model');
-        $this->load->library('blackbox_stopwatch');
+                $this->$method();
 
-        $this->blackbox_stopwatch->create_case('pue_chart_data', 'Pue_counter2_model/get_zone_avg_on_curr_year');
-        $this->blackbox_stopwatch->start();
-        $chartData = $this->pue_counter2_model->get_zone_avg_on_curr_year($zone);
-        dd($chartData);
-        $this->blackbox_stopwatch->stop();
-        $this->blackbox_stopwatch->print_interval(false);
+            }
+        } catch(\Throwable $err) {
 
-        $this->blackbox_stopwatch->create_case('pue_chart_data', 'Pue_counter2_model/get_zone_avg_on_curr_year_test');
-        $this->blackbox_stopwatch->start();
-        $this->pue_counter2_model->get_zone_avg_on_curr_year_v2($zone);
-        $this->blackbox_stopwatch->stop();
-        $this->blackbox_stopwatch->print_interval();
-    }
-
-    public function cron_store_pue_counter()
-    {
-        $filePath = APPPATH.'modules/crons/CronStorePueConter.php';
-        require $filePath;
-
-        CronStorePueConter::run();
-    }
-
-    public function newosase_api()
-    {
-        $url = 'https://newosase.telkom.co.id/api/v1/dashboard-service/dashboard/rtu/port-sensors?searchRtuName=PLN_CONS';
-        $token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfaWQiOiJ3ckIyRWtrWjQyVUNuZGxsNDI1eCIsInRva2VuIjoicDVjVVRfeTVFeklXUzRrY2VkTFdBUHdXeWlsVkpNZzNSNkdFaEduVW5VakZaS2VlVE8iLCJpYXQiOjE2NzI5NjgzNjQsImV4cCI6MTY3MzA1NDc2NH0.CE7j2PmC9qB3D_eIBlY-Ro3tNRrXUiwl_4VRXLsX_4Y';
-        
-        $curl = curl_init();
-        
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-
-        curl_setopt($curl, CURLOPT_HTTPHEADER, [
-            'Accept: application/json'
-        ]);
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-        if($err) {
-            dd_json($err);
-        } else {
-            $response = json_decode($response);
-            dd_json($response);
+            $errMessage = '<div style="margin: 12px 15px 12px 15px;"><pre>' . strval($err) . '</pre></div>';
+            show_error($errMessage, 400);
         }
     }
 
-    public function list_uploaded_file()
+    private function broken_deg(bool $isUpdatable)
     {
-        $this->load_test('list_uploaded_file');
-    }
+        $this->load->database('opnimus_new');
 
-    public function setup_db_opnimus_new()
-    {
-        $this->load_test('setup_db_opnimus_new');
+        $fields = [
+            'hist.alarm_history_id',
+            'hist.alarm_id',
+            'hist.alarm_type',
+            'hist.port_id',
+            'hist.port_no',
+            'hist.port_name',
+            'hist.rtu_id',
+            'hist.rtu_sname',
+            'hist.alert_start_time',
+            'hist.opened_at',
+            'hist.closed_at',
+            'alert.created_at AS alert_created_at',
+        ];
+
+        if($isUpdatable) {
+            $this->db
+                ->select( implode(', ', $fields) )
+                ->from('alarm_history AS hist')
+                ->join('alert_stack AS alert', 'alert.alarm_history_id=hist.alarm_history_id')
+                ->where('alert.alert_type', 'close-port')
+                ->where('hist.port_name', 'Status DEG')
+                ->where('hist.closed_at<', '2024-04-03 12:54:00')
+                ->order_by('rtu_sname')
+                ->order_by('alarm_id')
+                ->order_by('alarm_history_id');
+            $result = $this->db->get()->result_array();
+        } else {
+            $this->db
+                ->select( implode(', ', $fields) )
+                ->from('alarm_history AS hist')
+                ->join('alert_stack AS alert', 'alert.alarm_history_id=hist.alarm_history_id', 'LEFT')
+                ->where('alert.alert_stack_id IS NULL')
+                ->where('hist.port_name', 'Status DEG')
+                ->where('hist.closed_at<', '2024-04-03 12:54:00')
+                ->order_by('rtu_sname')
+                ->order_by('alarm_id')
+                ->order_by('alarm_history_id');
+            dd($this->db->get_compiled_select());
+            $result = $this->db->get()->result_array();
+        }
+
+        $this->load->view('simple_bootstrap/table_default', [
+            'title' => 'Broken DEG Data',
+            'tableData' => $result
+        ]);
     }
 }

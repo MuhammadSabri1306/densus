@@ -1,6 +1,5 @@
 <?php
 
-// $this->load->library('rest_client', [ 'baseUri' => 'https://newosase.telkom.co.id/api/v1' ] );
 try {
 
 $this->load->library('datetime_range');
@@ -10,8 +9,8 @@ $this->load->helper('number');
 $monthList = Month_idn::getList();
 // $currYear = '2023';
 $currYear = date('Y');
-$currMonth = '03';
-// $currMonth = date('m');
+// $currMonth = '03';
+$currMonth = date('m');
 $currDay = date('d');
 $prev2Day = date('d', strtotime('-2 days'));
 
@@ -76,29 +75,7 @@ $kwhListCount = count($kwhList);
 
 
 /*
- * get KwH data
- */
-$this->db
-    ->select('*')
-    ->from($this->tablePortStatusName)
-    ->where('rtu_kode', $rtuCode)
-    ->where('port', $rtu['port_genset'])
-    ->group_start()
-        ->group_start()
-            ->where('timestamp>=', $filterDegDateTime[0])
-            ->where('timestamp<=', $filterDegDateTime[1])
-        ->group_end()
-        ->or_group_start()
-            ->where('timeended>=', $filterDegDateTime[0])
-            ->where('timeended<=', $filterDegDateTime[1])
-        ->group_end()
-    ->group_end();
-$degList = $this->db->get()->result_array();
-$degListCount = count($degList);
-
-
-/*
- * setup KwH value and PLN cost result data
+ * setup KwH and PLN result data
  */
 $kwhSummary = [
     'curr_day' => [
@@ -313,7 +290,36 @@ if(!is_null($kwhTotalCurrYearDay) && !is_null($kwhTotalPrevYearDay)) {
 
 
 /*
- * setup BBM cost result data
+ * clear kwh db result to optimize memory usage
+ */
+unset($kwhList);
+
+
+/*
+ * get Deg data
+ */
+// $dbOpnimusNew = $this->load->database('opnimus_new', true);
+$this->db
+    ->select('*')
+    ->from($this->tablePortStatusName)
+    ->where('rtu_kode', $rtuCode)
+    ->where('port', $rtu['port_genset'])
+    ->group_start()
+        ->group_start()
+            ->where('timestamp>=', $filterDegDateTime[0])
+            ->where('timestamp<=', $filterDegDateTime[1])
+        ->group_end()
+        ->or_group_start()
+            ->where('timeended>=', $filterDegDateTime[0])
+            ->where('timeended<=', $filterDegDateTime[1])
+        ->group_end()
+    ->group_end();
+$degList = $this->db->get()->result_array();
+$degListCount = count($degList);
+
+
+/*
+ * setup Deg and BBM result data
  */
 $bbmCostMonthly = array_map(function($monthNumber) use ($currYear) {
     return [
