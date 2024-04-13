@@ -1,11 +1,11 @@
 import { defineStore } from "pinia";
-import http from "@helpers/http-common";
-import { handlingFetchErr } from "@helpers/error-handler";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
+import http from "@/helpers/http-common";
+import { handlingFetchErr } from "@/helpers/error-handler";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
 
 import { allowSampleData } from "@/configs/base";
-import sampleGepeeReport from "@helpers/sample-data/gepee-report";
+import sampleGepeeReport from "@/helpers/sample-data/gepee-report";
 
 export const useGepeeReportStore = defineStore("gepee-report", {
     state: () => {

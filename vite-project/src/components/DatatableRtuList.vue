@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useRtuStore } from "@stores/rtu";
-import { useUserStore } from "@stores/user";
+import { useRtuStore } from "@/stores/rtu";
+import { useUserStore } from "@/stores/user";
 import { FilterMatchMode } from "primevue/api";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";

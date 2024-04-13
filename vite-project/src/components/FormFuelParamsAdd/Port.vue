@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from "vue";
-import { useDataForm } from "@helpers/data-form";
+import { useDataForm } from "@/helpers/data-form";
 import { required } from "@vuelidate/validators";
-import Steps from "@components/ui/Steps.vue";
+import Steps from "@/components/ui/Steps.vue";
 
 const emit = defineEmits(["update"]);
 const props = defineProps({

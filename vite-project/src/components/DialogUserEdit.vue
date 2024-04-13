@@ -1,12 +1,12 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
-import { useListUserStore } from "@stores/list-user";
-import { useDataForm } from "@helpers/data-form";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
+import { useListUserStore } from "@/stores/list-user";
+import { useDataForm } from "@/helpers/data-form";
 import { required } from "@vuelidate/validators";
 import Dialog from "primevue/dialog";
-import InputGroupLocation from "@components/InputGroupLocation.vue";
+import InputGroupLocation from "@/components/InputGroupLocation.vue";
 
 const emit = defineEmits(["saved", "die"]);
 const props = defineProps({

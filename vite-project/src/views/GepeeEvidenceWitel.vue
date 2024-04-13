@@ -1,12 +1,12 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useUserStore } from "@stores/user";
+import { useUserStore } from "@/stores/user";
 import { useRoute } from "vue-router";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import SectionGepeeEvidenceInfo from "@components/SectionGepeeEvidenceInfo.vue";
-import FilterGepeeEvd from "@components/FilterGepeeEvd.vue";
-import SectionGepeeEvidenceCategory from "@components/SectionGepeeEvidenceCategory.vue";
-import DialogGepeeEvidence from "@components/DialogGepeeEvidence.vue";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import SectionGepeeEvidenceInfo from "@/components/SectionGepeeEvidenceInfo.vue";
+import FilterGepeeEvd from "@/components/FilterGepeeEvd.vue";
+import SectionGepeeEvidenceCategory from "@/components/SectionGepeeEvidenceCategory.vue";
+import DialogGepeeEvidence from "@/components/DialogGepeeEvidence.vue";
 
 const divreCode = ref(null);
 const witelName = ref(null);

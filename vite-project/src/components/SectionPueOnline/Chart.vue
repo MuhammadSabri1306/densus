@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from "vue";
-import { toFixedNumber } from "@helpers/number-format"
+import { toFixedNumber } from "@/helpers/number-format"
 import VueApexCharts from "vue3-apexcharts";
 import { dtColors } from "@/configs/datatable";
 

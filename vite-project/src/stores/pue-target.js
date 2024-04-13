@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
-import http from "@helpers/http-common";
-import { handlingFetchErr } from "@helpers/error-handler";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
+import http from "@/helpers/http-common";
+import { handlingFetchErr } from "@/helpers/error-handler";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
 
 import { allowSampleData } from "@/configs/base";
-import samplePueTargetReport from "@helpers/sample-data/pue-target/report";
-import samplePueLocationStatus from "@helpers/sample-data/pue-target/location-status";
+import samplePueTargetReport from "@/helpers/sample-data/pue-target/report";
+import samplePueLocationStatus from "@/helpers/sample-data/pue-target/location-status";
 
 export const usePueTargetStore = defineStore("pue-target", {
     state: () => ({

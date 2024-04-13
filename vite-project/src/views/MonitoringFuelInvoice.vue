@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterPln from "@components/FilterPln.vue";
-import DatatableFuelInvoice from "@components/DatatableFuelInvoice.vue";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import FilterPln from "@/components/FilterPln.vue";
+import DatatableFuelInvoice from "@/components/DatatableFuelInvoice.vue";
 
 const tableInvoice = ref(null);
 const onFilterSubmit = () => {

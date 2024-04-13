@@ -1,13 +1,13 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
 import Footer from "./Footer.vue";
 import SidebarUser from "./DashboardSidebarUser.vue";
 import SidebarMenu from "./DashboardSidebarMenu.vue";
-import DialogUpdatePassword from "@components/DialogUpdatePassword.vue";
-import DialogUserEdit from "@components/DialogUserEdit.vue";
+import DialogUpdatePassword from "@/components/DialogUpdatePassword.vue";
+import DialogUserEdit from "@/components/DialogUserEdit.vue";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@/assets/css/app.css";

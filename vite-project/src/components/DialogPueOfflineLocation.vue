@@ -1,12 +1,12 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
-import { usePueV2Store } from "@stores/pue-v2";
-import { useViewStore } from "@stores/view";
+import { usePueV2Store } from "@/stores/pue-v2";
+import { useViewStore } from "@/stores/view";
 import Dialog from "primevue/dialog";
 import { required } from "@vuelidate/validators";
 import { useDataForm } from "@/helpers/data-form";
-import InputGroupLocation from "@components/InputGroupLocation.vue";
+import InputGroupLocation from "@/components/InputGroupLocation.vue";
 
 defineEmits(["close", "save"]);
 const showDialog = ref(true);

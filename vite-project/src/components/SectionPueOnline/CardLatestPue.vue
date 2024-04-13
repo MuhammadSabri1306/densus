@@ -1,8 +1,8 @@
 <script setup>
 import { computed } from "vue";
-import { toFixedNumber } from "@helpers/number-format";
-import Blobs from "@components/Blobs/index.vue";
-import { getPueBgClass } from "@helpers/pue-color";
+import { toFixedNumber } from "@/helpers/number-format";
+import Blobs from "@/components/Blobs/index.vue";
+import { getPueBgClass } from "@/helpers/pue-color";
 import Skeleton from "primevue/skeleton";
 
 const props = defineProps({

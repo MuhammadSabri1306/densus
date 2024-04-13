@@ -1,9 +1,9 @@
 <script setup>
 import { computed, defineAsyncComponent } from "vue";
 import { useRouter } from "vue-router";
-import { useViewStore } from "@stores/view";
-import { useUserStore } from "@stores/user";
-import Toast from "@components/ui/Toast.vue";
+import { useViewStore } from "@/stores/view";
+import { useUserStore } from "@/stores/user";
+import Toast from "@/components/ui/Toast.vue";
 import LoadingWaveBar from "@/components/ui/LoadingWaveBar.vue";
 
 const userStore = useUserStore();
@@ -21,7 +21,7 @@ router.beforeEach((to, from) => {
 		viewStore.setActiveMenu(to.meta.menuKey);
 });
 
-const Layout = defineAsyncComponent(() => import("@layouts/index.vue"));
+const Layout = defineAsyncComponent(() => import("@/layouts/index.vue"));
 const showLoadingLayer = computed(() => viewStore.showLoading);
 </script>
 <template>

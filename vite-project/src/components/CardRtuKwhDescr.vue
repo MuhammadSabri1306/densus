@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useMonitoringRtuStore } from "@stores/monitoring-rtu";
-import { toIdrCurrency, toNumberText } from "@helpers/number-format";
+import { useMonitoringRtuStore } from "@/stores/monitoring-rtu";
+import { toIdrCurrency, toNumberText } from "@/helpers/number-format";
 import Skeleton from "primevue/skeleton";
 
 const monitoringRtuStore = useMonitoringRtuStore();

@@ -1,8 +1,8 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useIkeStore } from "@/stores/ike";
-import { useViewStore } from "@stores/view";
-import { toRoman } from "@helpers/number-format";
+import { useViewStore } from "@/stores/view";
+import { toRoman } from "@/helpers/number-format";
 import { required, integer, decimal } from "@vuelidate/validators";
 import { useDataForm } from "@/helpers/data-form";
 import Dialog from "primevue/dialog";

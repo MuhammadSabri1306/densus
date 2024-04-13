@@ -1,14 +1,14 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
-import { useOxispStore } from "@stores/oxisp";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
+import { useOxispStore } from "@/stores/oxisp";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
 import { required } from "@vuelidate/validators";
 import { useDataForm } from "@/helpers/data-form";
 import Dialog from "primevue/dialog";
 import Skeleton from "primevue/skeleton";
-import InputGroupLocation from "@components/InputGroupLocation.vue";
+import InputGroupLocation from "@/components/InputGroupLocation.vue";
 
 const emit = defineEmits(["update", "close"]);
 const showDialog = ref(true);

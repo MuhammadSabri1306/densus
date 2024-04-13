@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useMonitoringRtuStore } from "@stores/monitoring-rtu";
+import { useMonitoringRtuStore } from "@/stores/monitoring-rtu";
 import Skeleton from "primevue/skeleton";
 import { dtColors } from "@/configs/datatable";
 import VueApexCharts from "vue3-apexcharts";

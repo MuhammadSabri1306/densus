@@ -1,11 +1,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterPln from "@components/FilterPln.vue";
-import DatatablePlnParams from "@components/DatatablePlnParams.vue";
-import DialogPlnParamsEdit from "@components/DialogPlnParamsEdit.vue";
-import DialogPlnParamsAdd from "@components/DialogPlnParamsAdd.vue";
-import DialogPlnParamsDetail from "@components/DialogPlnParamsDetail.vue";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import FilterPln from "@/components/FilterPln.vue";
+import DatatablePlnParams from "@/components/DatatablePlnParams.vue";
+import DialogPlnParamsEdit from "@/components/DialogPlnParamsEdit.vue";
+import DialogPlnParamsAdd from "@/components/DialogPlnParamsAdd.vue";
+import DialogPlnParamsDetail from "@/components/DialogPlnParamsDetail.vue";
 
 const datatable = ref(null);
 const fetchTable = () => datatable.value && datatable.value.fetch();

@@ -1,16 +1,16 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
-import { usePueV2Store } from "@stores/pue-v2";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
+import { usePueV2Store } from "@/stores/pue-v2";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
 
-import CardPueRtuInfo from "@components/CardPueRtuInfo.vue";
-import CardPueCurrent from "@components/CardPueCurrent.vue";
-import CardPueMax from "@components/CardPueMax.vue";
-import ChartPueValue from "@components/ChartPueValue.vue";
-import CardContentPueAverage from "@components/CardContentPueAverage.vue";
-import CardContentPuePerformance from "@components/CardContentPuePerformance.vue";
-import DatatablePueOnSto from "@components/DatatablePueOnSto.vue";
+import CardPueRtuInfo from "@/components/CardPueRtuInfo.vue";
+import CardPueCurrent from "@/components/CardPueCurrent.vue";
+import CardPueMax from "@/components/CardPueMax.vue";
+import ChartPueValue from "@/components/ChartPueValue.vue";
+import CardContentPueAverage from "@/components/CardContentPueAverage.vue";
+import CardContentPuePerformance from "@/components/CardContentPuePerformance.vue";
+import DatatablePueOnSto from "@/components/DatatablePueOnSto.vue";
 
 const route = useRoute();
 const divreCode = computed(() => route.params.divreCode);

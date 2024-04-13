@@ -1,8 +1,8 @@
 <script setup>
 import { ref, computed, watch } from "vue";
-import { useViewStore, watchLoading } from "@stores/view";
-import { useOxispCheckStore } from "@stores/oxisp-check";
-import { isFileImg } from "@helpers/file";
+import { useViewStore, watchLoading } from "@/stores/view";
+import { useOxispCheckStore } from "@/stores/oxisp-check";
+import { isFileImg } from "@/helpers/file";
 import { required } from "@vuelidate/validators";
 import { useDataForm } from "@/helpers/data-form2";
 import Dialog from "primevue/dialog";

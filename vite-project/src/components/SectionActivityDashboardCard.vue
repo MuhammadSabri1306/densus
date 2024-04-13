@@ -1,10 +1,10 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useActivityStore } from "@stores/activity";
-import { toFixedNumber } from "@helpers/number-format";
-import CardModern from "@components/CardModern.vue";
+import { useActivityStore } from "@/stores/activity";
+import { toFixedNumber } from "@/helpers/number-format";
+import CardModern from "@/components/CardModern.vue";
 import Skeleton from "primevue/skeleton";
-import ChartActivityStatusCount from "@components/ChartActivityStatusCount.vue";
+import ChartActivityStatusCount from "@/components/ChartActivityStatusCount.vue";
 
 const activityStore = useActivityStore();
 const isLoading = ref(true);

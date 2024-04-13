@@ -1,13 +1,13 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import { usePlnStore } from "@stores/pln";
-import { useUserStore } from "@stores/user";
-import { groupByLocation } from "@helpers/location-group";
-import { useCollapseRow } from "@helpers/collapse-row";
-import { toFixedNumber } from "@helpers/number-format";
+import { usePlnStore } from "@/stores/pln";
+import { useUserStore } from "@/stores/user";
+import { groupByLocation } from "@/helpers/location-group";
+import { useCollapseRow } from "@/helpers/collapse-row";
+import { toFixedNumber } from "@/helpers/number-format";
 import Skeleton from "primevue/skeleton";
-import DialogGepeeLocationAdd from "@components/DialogGepeeLocationAdd.vue";
+import DialogGepeeLocationAdd from "@/components/DialogGepeeLocationAdd.vue";
 
 const { collapsedDivre, collapsedWitel, toggleRowCollapse } = useCollapseRow();
 

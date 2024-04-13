@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import { usePueV2Store } from "@stores/pue-v2";
+import { usePueV2Store } from "@/stores/pue-v2";
 import Skeleton from "primevue/skeleton";
 
 const props = defineProps({

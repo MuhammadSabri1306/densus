@@ -1,8 +1,8 @@
 <script setup>
 import { ref, reactive, computed } from "vue";
 import { useKwhStore } from "@/stores/kwh";
-import { useUserStore } from "@stores/user";
-import { toNumberText } from "@helpers/number-format";
+import { useUserStore } from "@/stores/user";
+import { toNumberText } from "@/helpers/number-format";
 import { generateUniqueStyle } from "@/helpers/apexchart";
 import VueApexCharts from "vue3-apexcharts";
 

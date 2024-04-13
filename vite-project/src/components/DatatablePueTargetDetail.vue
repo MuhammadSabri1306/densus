@@ -1,8 +1,8 @@
 <script setup>
 import { ref, computed } from "vue";
 import { usePueTargetStore } from "@/stores/pue-target";
-import { useUserStore } from "@stores/user";
-import { useCollapseRow } from "@helpers/collapse-row";
+import { useUserStore } from "@/stores/user";
+import { useCollapseRow } from "@/helpers/collapse-row";
 import Skeleton from "primevue/skeleton";
 
 const emit = defineEmits(["create", "edit"]);

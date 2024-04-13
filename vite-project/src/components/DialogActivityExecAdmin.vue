@@ -1,11 +1,11 @@
 <script setup>
 import { ref, computed, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useActivityStore } from "@stores/activity";
-import { useViewStore } from "@stores/view";
+import { useActivityStore } from "@/stores/activity";
+import { useViewStore } from "@/stores/view";
 import Dialog from "primevue/dialog";
 import Skeleton from "primevue/skeleton";
-import SectionActivityExecDetail from "@components/SectionActivityExecDetail.vue";
+import SectionActivityExecDetail from "@/components/SectionActivityExecDetail.vue";
 
 const emit = defineEmits(["update", "loaded"]);
 

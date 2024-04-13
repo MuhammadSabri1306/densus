@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
-import http from "@helpers/http-common";
-import { handlingFetchErr } from "@helpers/error-handler";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
+import http from "@/helpers/http-common";
+import { handlingFetchErr } from "@/helpers/error-handler";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
 import { createUrlParams } from "@/helpers/url";
 
 import { allowSampleData } from "@/configs/base";
-import getSampleData from "@helpers/sample-data";
+import getSampleData from "@/helpers/sample-data";
 
 export const usePiLatenStore = defineStore("pi-laten", {
     state: () => {

@@ -1,10 +1,10 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useUserStore } from "@stores/user";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import SectionGepeeEvidenceInfo from "@components/SectionGepeeEvidenceInfo.vue";
-import SectionGepeeEvidenceGrid from "@components/SectionGepeeEvidenceGrid.vue";
-import FilterGepeeEvd from "@components/FilterGepeeEvd.vue";
+import { useUserStore } from "@/stores/user";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import SectionGepeeEvidenceInfo from "@/components/SectionGepeeEvidenceInfo.vue";
+import SectionGepeeEvidenceGrid from "@/components/SectionGepeeEvidenceGrid.vue";
+import FilterGepeeEvd from "@/components/FilterGepeeEvd.vue";
 
 const panelInfo = ref(null);
 const panelGrid = ref(null);

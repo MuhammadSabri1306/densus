@@ -1,11 +1,11 @@
 <script setup>
 import { ref, reactive } from "vue";
-import { useViewStore } from "@stores/view";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
-import DatatablePueTargetDetail from "@components/DatatablePueTargetDetail.vue";
-import DialogPueTargetAdd from "@components/DialogPueTargetAdd.vue";
-import DialogPueTargetEdit from "@components/DialogPueTargetEdit.vue";
+import { useViewStore } from "@/stores/view";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import FilterGepeeV2 from "@/components/FilterGepeeV2.vue";
+import DatatablePueTargetDetail from "@/components/DatatablePueTargetDetail.vue";
+import DialogPueTargetAdd from "@/components/DialogPueTargetAdd.vue";
+import DialogPueTargetEdit from "@/components/DialogPueTargetEdit.vue";
 
 const viewStore = useViewStore();
 if(!viewStore.filters.year) {

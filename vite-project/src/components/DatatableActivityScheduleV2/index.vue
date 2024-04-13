@@ -1,9 +1,9 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useActivityStore } from "@stores/activity";
-import { useViewStore } from "@stores/view";
+import { useActivityStore } from "@/stores/activity";
+import { useViewStore } from "@/stores/view";
 import Skeleton from "primevue/skeleton";
-import DialogActivityCategory from "@components/DialogActivityCategory.vue";
+import DialogActivityCategory from "@/components/DialogActivityCategory.vue";
 import Datatable from "./Datatable.vue";
 
 const showCategory = ref(false);

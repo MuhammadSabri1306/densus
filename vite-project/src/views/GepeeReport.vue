@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from "vue";
-import { useViewStore } from "@stores/view";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterGepee from "@components/FilterGepee.vue";
-import DatatableGepeeReport from "@components/DatatableGepeeReport.vue";
-import DialogActivityCategory from "@components/DialogActivityCategory.vue";
-import DialogExportLinkVue from "@components/ui/DialogExportLink.vue";
+import { useViewStore } from "@/stores/view";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import FilterGepee from "@/components/FilterGepee.vue";
+import DatatableGepeeReport from "@/components/DatatableGepeeReport.vue";
+import DialogActivityCategory from "@/components/DialogActivityCategory.vue";
+import DialogExportLinkVue from "@/components/ui/DialogExportLink.vue";
 
 const viewStore = useViewStore();
 if(!viewStore.filters.month) {

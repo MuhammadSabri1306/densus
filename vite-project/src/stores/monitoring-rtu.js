@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
-import { http, createHttpInstance } from "@helpers/http-common/http";
-import { handlingFetchErr } from "@helpers/error-handler";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
+import { http, createHttpInstance } from "@/helpers/http-common/http";
+import { handlingFetchErr } from "@/helpers/error-handler";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
 import { createUrlParams } from "@/helpers/url";
 
 export const useMonitoringRtuStore = defineStore("monitoring-rtu", {

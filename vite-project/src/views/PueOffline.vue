@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from "vue";
-import { useViewStore } from "@stores/view";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
-import DatatablePueOfflineV2 from "@components/DatatablePueOfflineV2.vue";
+import { useViewStore } from "@/stores/view";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import FilterGepeeV2 from "@/components/FilterGepeeV2.vue";
+import DatatablePueOfflineV2 from "@/components/DatatablePueOfflineV2.vue";
 
 const viewStore = useViewStore();
 if(!viewStore.filters.month) {

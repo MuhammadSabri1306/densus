@@ -1,52 +1,52 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import Dashboard from "@views/Dashboard.vue";
-import User from "@views/User.vue";
-import Login from "@views/Login.vue";
-import ErrorNotFound from "@views/ErrorNotFound.vue";
-import ErrorMaintenance from "@views/ErrorMaintenance.vue";
+import Dashboard from "@/views/Dashboard.vue";
+import User from "@/views/User.vue";
+import Login from "@/views/Login.vue";
+import ErrorNotFound from "@/views/ErrorNotFound.vue";
+import ErrorMaintenance from "@/views/ErrorMaintenance.vue";
 
-import MonitoringRtu from "@views/MonitoringRtu.vue";
-import MonitoringRtuDetail from "@views/MonitoringRtuDetail.vue";
+import MonitoringRtu from "@/views/MonitoringRtu.vue";
+import MonitoringRtuDetail from "@/views/MonitoringRtuDetail.vue";
 
-import Monitoring2 from "@views/Monitoring2.vue";
-import MonitoringPlnParams from "@views/MonitoringPlnParams.vue";
-import MonitoringPlnBilling from "@views/MonitoringPlnBilling.vue";
-import MonitoringPlnBillingDetail from "@views/MonitoringPlnBillingDetail.vue";
-import MonitoringFuelParams from "@views/MonitoringFuelParams.vue";
-import MonitoringFuelParamsDetail from "@views/MonitoringFuelParamsDetail.vue";
-import MonitoringFuelInvoice from "@views/MonitoringFuelInvoice.vue";
-import MonitoringFuelInvoiceDetail from "@views/MonitoringFuelInvoiceDetail.vue";
+import Monitoring2 from "@/views/Monitoring2.vue";
+import MonitoringPlnParams from "@/views/MonitoringPlnParams.vue";
+import MonitoringPlnBilling from "@/views/MonitoringPlnBilling.vue";
+import MonitoringPlnBillingDetail from "@/views/MonitoringPlnBillingDetail.vue";
+import MonitoringFuelParams from "@/views/MonitoringFuelParams.vue";
+import MonitoringFuelParamsDetail from "@/views/MonitoringFuelParamsDetail.vue";
+import MonitoringFuelInvoice from "@/views/MonitoringFuelInvoice.vue";
+import MonitoringFuelInvoiceDetail from "@/views/MonitoringFuelInvoiceDetail.vue";
 
-import PueOnlineV2 from "@views/PueOnlineV2.vue";
-import PueOffline from "@views/PueOffline.vue";
-import PueOfflineDetail from "@views/PueOfflineDetail.vue";
-import Ike from "@views/Ike.vue";
-import IkeDetail from "@views/IkeDetail.vue";
+import PueOnlineV2 from "@/views/PueOnlineV2.vue";
+import PueOffline from "@/views/PueOffline.vue";
+import PueOfflineDetail from "@/views/PueOfflineDetail.vue";
+import Ike from "@/views/Ike.vue";
+import IkeDetail from "@/views/IkeDetail.vue";
 
 import MonitoringKwHVue from "@/views/MonitoringKwH.vue";
 
-import Rtu from "@views/Rtu.vue";
-import RtuAdd from "@views/RtuAdd.vue";
-import RtuEdit from "@views/RtuEdit.vue";
+import Rtu from "@/views/Rtu.vue";
+import RtuAdd from "@/views/RtuAdd.vue";
+import RtuEdit from "@/views/RtuEdit.vue";
 
-import ActivityDashboard from "@views/ActivityDashboard.vue";
-import ActivityScheduleV2 from "@views/ActivityScheduleV2.vue";
-import ActivityExecution from "@views/ActivityExecution.vue";
+import ActivityDashboard from "@/views/ActivityDashboard.vue";
+import ActivityScheduleV2 from "@/views/ActivityScheduleV2.vue";
+import ActivityExecution from "@/views/ActivityExecution.vue";
 
-import GepeeEvidence from "@views/GepeeEvidence.vue";
-import GepeeEvidenceDivre from "@views/GepeeEvidenceDivre.vue";
-import GepeeEvidenceWitel from "@views/GepeeEvidenceWitel.vue";
+import GepeeEvidence from "@/views/GepeeEvidence.vue";
+import GepeeEvidenceDivre from "@/views/GepeeEvidenceDivre.vue";
+import GepeeEvidenceWitel from "@/views/GepeeEvidenceWitel.vue";
 
-import GepeeReport from "@views/GepeeReport.vue";
-import PueTarget from "@views/PueTarget.vue";
-import PueTargetDetail from "@views/PueTargetDetail.vue";
-import GepeePiLatenV2 from "@views/GepeePiLatenV2.vue";
+import GepeeReport from "@/views/GepeeReport.vue";
+import PueTarget from "@/views/PueTarget.vue";
+import PueTargetDetail from "@/views/PueTargetDetail.vue";
+import GepeePiLatenV2 from "@/views/GepeePiLatenV2.vue";
 
-import OxispActivity from "@views/OxispActivity.vue";
-import OxispChecklist from "@views/OxispChecklist.vue";
+import OxispActivity from "@/views/OxispActivity.vue";
+import OxispChecklist from "@/views/OxispChecklist.vue";
 
-import TestAsyncComponent from "@views/TestAsyncComponent.vue";
+import TestAsyncComponent from "@/views/TestAsyncComponent.vue";
 
 const routes = [
     {

@@ -1,11 +1,11 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import { onBeforeRouteLeave } from "vue-router";
-import { useActivityStore } from "@stores/activity";
-import { useViewStore } from "@stores/view";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
-import DataTableActivitySchedule from "@components/DataTableActivitySchedule/index.vue";
+import { useActivityStore } from "@/stores/activity";
+import { useViewStore } from "@/stores/view";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import FilterGepeeV2 from "@/components/FilterGepeeV2.vue";
+import DataTableActivitySchedule from "@/components/DataTableActivitySchedule/index.vue";
 
 const viewStore = useViewStore();
 const datatableSchedule = ref(null);

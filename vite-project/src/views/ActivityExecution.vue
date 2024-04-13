@@ -1,13 +1,13 @@
 <script setup>
 import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
-import DataTableActivityExecution from "@components/DataTableActivityExecutionV2/index.vue";
-import DialogActivityExec from "@components/DialogActivityExec.vue";
-import DialogActivityExecAdmin from "@components/DialogActivityExecAdmin.vue";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import FilterGepeeV2 from "@/components/FilterGepeeV2.vue";
+import DataTableActivityExecution from "@/components/DataTableActivityExecutionV2/index.vue";
+import DialogActivityExec from "@/components/DialogActivityExec.vue";
+import DialogActivityExecAdmin from "@/components/DialogActivityExecAdmin.vue";
 
 const datatableExecution = ref(null);
 const hasTableFetched = ref(false);

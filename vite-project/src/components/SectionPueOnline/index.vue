@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { usePueV2Store } from "@stores/pue-v2";
+import { usePueV2Store } from "@/stores/pue-v2";
 import { backendUrl } from "@/configs/base";
 import CardLocation from "./CardLocation.vue";
 import CardLatestPue from "./CardLatestPue.vue";
@@ -10,7 +10,7 @@ import CardAverages from "./CardAverages.vue";
 import CardPerformances from "./CardPerformances.vue";
 import Datatable from "./Datatable.vue";
 import DialogDetailRtu from "./DialogDetailRtu.vue";
-import DialogExportLinkVue from "@components/ui/DialogExportLink.vue";
+import DialogExportLinkVue from "@/components/ui/DialogExportLink.vue";
 
 const isLoading = ref(false);
 const fetchLevel = ref(null);

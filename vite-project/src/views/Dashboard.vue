@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from "vue";
-import { useUserStore } from "@stores/user";
+import { useUserStore } from "@/stores/user";
 import { testApi } from "@/helpers/newosase-test";
 
 const userStore = useUserStore();

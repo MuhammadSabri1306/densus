@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
-import { useUserStore } from "@stores/user";
-import { useLocationStore } from "@stores/location";
+import { useUserStore } from "@/stores/user";
+import { useLocationStore } from "@/stores/location";
 import Listbox from "primevue/listbox";
 
 const emit = defineEmits(["divreChange", "witelChange"]);

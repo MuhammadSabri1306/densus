@@ -1,12 +1,12 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useGepeeReportStore } from "@/stores/gepee-report";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
-import { useCollapseRow } from "@helpers/collapse-row";
-import { getPueBgClass } from "@helpers/pue-color";
-import { getPercentageTextClass } from "@helpers/percentage-color";
-import { toNumberText, toFixedNumber } from "@helpers/number-format";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
+import { useCollapseRow } from "@/helpers/collapse-row";
+import { getPueBgClass } from "@/helpers/pue-color";
+import { getPercentageTextClass } from "@/helpers/percentage-color";
+import { toNumberText, toFixedNumber } from "@/helpers/number-format";
 import Skeleton from "primevue/skeleton";
 
 defineEmits(["showCategory"]);

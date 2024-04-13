@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useMonitoringRtuStore } from "@stores/monitoring-rtu";
-import { toNumberText } from "@helpers/number-format";
+import { useMonitoringRtuStore } from "@/stores/monitoring-rtu";
+import { toNumberText } from "@/helpers/number-format";
 import Skeleton from "primevue/skeleton";
 import VueApexCharts from "vue3-apexcharts";
 import { baseUrl } from "@/configs/base";

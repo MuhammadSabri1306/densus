@@ -1,19 +1,19 @@
 <script setup>
 import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import { usePueV2Store } from "@stores/pue-v2";
-import { useViewStore } from "@stores/view";
-import { toNumberText, toRoman } from "@helpers/number-format";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
+import { usePueV2Store } from "@/stores/pue-v2";
+import { useViewStore } from "@/stores/view";
+import { toNumberText, toRoman } from "@/helpers/number-format";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import { FilterMatchMode } from "primevue/api";
 import ButtonGroupAction from "@/components/ButtonGroupAction.vue";
 import Skeleton from "primevue/skeleton";
-import DialogPueOfflineAdd from "@components/DialogPueOfflineAdd.vue";
-import DialogPueOfflineEdit from "@components/DialogPueOfflineEdit.vue";
-import DialogPueOfflineDetail from "@components/DialogPueOfflineDetail.vue";
-import FilterGepeeMonth from "@components/FilterGepeeMonth.vue";
+import DialogPueOfflineAdd from "@/components/DialogPueOfflineAdd.vue";
+import DialogPueOfflineEdit from "@/components/DialogPueOfflineEdit.vue";
+import DialogPueOfflineDetail from "@/components/DialogPueOfflineDetail.vue";
+import FilterGepeeMonth from "@/components/FilterGepeeMonth.vue";
 
 const pueStore = usePueV2Store();
 const route = useRoute();

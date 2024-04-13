@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterPln from "@components/FilterPln.vue";
-import DatatablePlnParams from "@components/DatatablePlnParams.vue";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import FilterPln from "@/components/FilterPln.vue";
+import DatatablePlnParams from "@/components/DatatablePlnParams.vue";
 
 const tableParams = ref(null);
 const onFilterSubmit = () => {

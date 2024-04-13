@@ -1,17 +1,17 @@
 <script setup>
 import { ref, computed, watch, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useRtuStore } from "@stores/rtu";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
+import { useRtuStore } from "@/stores/rtu";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
 import { required } from "@vuelidate/validators";
-import { useDataForm } from "@helpers/data-form2";
-import { mustBeRtuCode } from "@helpers/form-validator";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
+import { useDataForm } from "@/helpers/data-form2";
+import { mustBeRtuCode } from "@/helpers/form-validator";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
 import Skeleton from "primevue/skeleton";
-import InputGroupLocation from "@components/InputGroupLocation.vue";
+import InputGroupLocation from "@/components/InputGroupLocation.vue";
 import InputSwitch from "primevue/inputswitch";
-import ListboxFilter from "@components/ListboxFilter.vue";
+import ListboxFilter from "@/components/ListboxFilter.vue";
 
 const route = useRoute();
 const router = useRouter();

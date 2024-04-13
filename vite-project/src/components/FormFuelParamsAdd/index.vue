@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive } from "vue";
-import { usePlnStore } from "@stores/pln";
-import { useViewStore } from "@stores/view";
+import { usePlnStore } from "@/stores/pln";
+import { useViewStore } from "@/stores/view";
 import SectionLocation from "./Location.vue";
 import SectionPort from "./Port.vue";
 import SectionSend from "./Send.vue";

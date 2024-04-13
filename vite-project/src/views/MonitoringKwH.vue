@@ -1,13 +1,13 @@
 <script setup>
 import { ref, computed, reactive } from "vue";
 import { useKwhStore } from "@/stores/kwh";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
-import { toNumberText } from "@helpers/number-format";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
+import { toNumberText } from "@/helpers/number-format";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import FilterGepeeV2 from "@/components/FilterGepeeV2.vue";
 import { BuildingOfficeIcon, CalendarIcon } from "@heroicons/vue/24/outline";
-import CardModern from "@components/CardModern.vue";
+import CardModern from "@/components/CardModern.vue";
 import Dropdown from "primevue/dropdown";
 import Calendar from "primevue/calendar";
 import Skeleton from "primevue/skeleton";

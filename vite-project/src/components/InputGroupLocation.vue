@@ -1,8 +1,8 @@
 <script setup>
 import { ref, reactive, computed, watch, onMounted, nextTick } from "vue";
-import { useViewStore } from "@stores/view";
-import { useUserStore } from "@stores/user";
-import ListboxFilter from "@components/ListboxFilter.vue";
+import { useViewStore } from "@/stores/view";
+import { useUserStore } from "@/stores/user";
+import ListboxFilter from "@/components/ListboxFilter.vue";
 
 const emit = defineEmits(["change"]);
 const props = defineProps({

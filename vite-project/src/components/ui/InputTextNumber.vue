@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, watchEffect, onMounted } from "vue";
-import { toNumberText } from "@helpers/number-format";
+import { toNumberText } from "@/helpers/number-format";
 
 const props = defineProps(["modelValue"]);
 const emit = defineEmits(["update:modelValue"]);

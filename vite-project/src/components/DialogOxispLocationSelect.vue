@@ -1,9 +1,9 @@
 <script setup>
 import { computed, ref } from "vue";
-import { useViewStore } from "@stores/view";
+import { useViewStore } from "@/stores/view";
 import Dialog from "primevue/dialog";
-import InputGroupLocation from "@components/InputGroupLocation.vue";
-import ListboxFilter from "@components/ListboxFilter.vue";
+import InputGroupLocation from "@/components/InputGroupLocation.vue";
+import ListboxFilter from "@/components/ListboxFilter.vue";
 
 const emit = defineEmits(["select", "close"]);
 const showDialog = ref(true);

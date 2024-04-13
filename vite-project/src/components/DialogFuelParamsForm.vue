@@ -1,9 +1,9 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
-import { usePlnStore } from "@stores/pln";
-import { useViewStore } from "@stores/view";
-import { useDataForm } from "@helpers/data-form";
+import { usePlnStore } from "@/stores/pln";
+import { useViewStore } from "@/stores/view";
+import { useDataForm } from "@/helpers/data-form";
 import { required, numeric } from "@vuelidate/validators";
 import Dialog from "primevue/dialog";
 

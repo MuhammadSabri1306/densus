@@ -1,9 +1,9 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from "vue";
-import { useViewStore } from "@stores/view";
-import { useUserStore } from "@stores/user";
+import { useViewStore } from "@/stores/view";
+import { useUserStore } from "@/stores/user";
 import { getYearConfig } from "@/configs/filter";
-import ListboxFilter from "@components/ListboxFilter.vue";
+import ListboxFilter from "@/components/ListboxFilter.vue";
 import Calendar from "primevue/calendar";
 
 const emit = defineEmits(["apply"]);

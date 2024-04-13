@@ -1,4 +1,4 @@
-import { useViewStore } from "@stores/view";
+import { useViewStore } from "@/stores/view";
 import config from "@/configs/fall-route";
 
 export const handlingFetchErr = (err, msg = {}) => {

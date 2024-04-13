@@ -1,9 +1,9 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useIkeStore } from "@/stores/ike";
-import { useUserStore } from "@stores/user";
-import { useCollapseRow } from "@helpers/collapse-row";
-import { toFixedNumber } from "@helpers/number-format";
+import { useUserStore } from "@/stores/user";
+import { useCollapseRow } from "@/helpers/collapse-row";
+import { toFixedNumber } from "@/helpers/number-format";
 import Skeleton from "primevue/skeleton";
 
 const { collapsedDivre, collapsedWitel, toggleRowCollapse } = useCollapseRow();

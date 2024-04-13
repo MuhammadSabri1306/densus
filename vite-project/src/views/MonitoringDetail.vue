@@ -1,22 +1,22 @@
 <script setup>
 import { ref, reactive, computed, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { useMonitoringStore } from "@stores/monitoring";
+import { useMonitoringStore } from "@/stores/monitoring";
 import Skeleton from "primevue/skeleton";
 
-import HeadingMonitoringDetail from "@components/HeadingMonitoringDetail.vue";
-import CardCurrKwh from "@components/CardCurrKwh.vue";
-import CardTotalKwh from "@components/CardTotalKwh.vue";
-import CardListrikCost from "@components/CardListrikCost.vue";
-import CardSolarCost from "@components/CardSolarCost.vue";
-import ChartKwhDaily from "@components/ChartKwhDaily.vue";
-import CardKwhUsageToday from "@components/CardKwhUsageToday.vue";
-import CardTotalEnergyCost from "@components/CardTotalEnergyCost.vue";
-import CardMonitoringAlert from "@components/CardMonitoringAlert.vue";
-import ChartSavingEnergyResult from "@components/ChartSavingEnergyResult.vue";
-import ChartEnergyCostEstimation from "@components/ChartEnergyCostEstimation.vue";
-import DatatableDashboard1 from "@components/DatatableDashboard1.vue";
-import DatatableDashboard2 from "@components/DatatableDashboard2.vue";
+import HeadingMonitoringDetail from "@/components/HeadingMonitoringDetail.vue";
+import CardCurrKwh from "@/components/CardCurrKwh.vue";
+import CardTotalKwh from "@/components/CardTotalKwh.vue";
+import CardListrikCost from "@/components/CardListrikCost.vue";
+import CardSolarCost from "@/components/CardSolarCost.vue";
+import ChartKwhDaily from "@/components/ChartKwhDaily.vue";
+import CardKwhUsageToday from "@/components/CardKwhUsageToday.vue";
+import CardTotalEnergyCost from "@/components/CardTotalEnergyCost.vue";
+import CardMonitoringAlert from "@/components/CardMonitoringAlert.vue";
+import ChartSavingEnergyResult from "@/components/ChartSavingEnergyResult.vue";
+import ChartEnergyCostEstimation from "@/components/ChartEnergyCostEstimation.vue";
+import DatatableDashboard1 from "@/components/DatatableDashboard1.vue";
+import DatatableDashboard2 from "@/components/DatatableDashboard2.vue";
 
 const route = useRoute();
 const rtuCode = computed(() => route.params.rtuCode);

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
-import { useListUserStore } from "@stores/list-user";
-import { useViewStore } from "@stores/view";
+import { useListUserStore } from "@/stores/list-user";
+import { useViewStore } from "@/stores/view";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import InputSwitch from "primevue/inputswitch";

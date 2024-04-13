@@ -1,12 +1,12 @@
 <script setup>
 import { ref, computed } from "vue";
-import { usePueV2Store } from "@stores/pue-v2";
-import { groupByLocation } from "@helpers/location-group-pue";
-import { toFixedNumber } from "@helpers/number-format";
-import { getPueBgClass } from "@helpers/pue-color";
-import { useCollapseRow } from "@helpers/collapse-row";
+import { usePueV2Store } from "@/stores/pue-v2";
+import { groupByLocation } from "@/helpers/location-group-pue";
+import { toFixedNumber } from "@/helpers/number-format";
+import { getPueBgClass } from "@/helpers/pue-color";
+import { useCollapseRow } from "@/helpers/collapse-row";
 import Skeleton from "primevue/skeleton";
-import DialogExportLinkVue from "@components/ui/DialogExportLink.vue";
+import DialogExportLinkVue from "@/components/ui/DialogExportLink.vue";
 
 const props = defineProps({
     level: String

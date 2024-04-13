@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
-import { isFileImg } from "@helpers/file";
-import { toNumberText } from "@helpers/number-format";
+import { isFileImg } from "@/helpers/file";
+import { toNumberText } from "@/helpers/number-format";
 import Dialog from "primevue/dialog";
 import Image from "primevue/image";
 

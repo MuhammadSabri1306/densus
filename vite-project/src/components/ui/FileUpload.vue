@@ -1,11 +1,11 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
-import http from "@helpers/http-common";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
+import http from "@/helpers/http-common";
 import { apiEndpoint } from "@/configs/base";
-import { fromBytes, fromMb } from "@helpers/byte-unit";
-import { getFileName, getFileExt, isFileImg, getFileRawName } from "@helpers/file";
+import { fromBytes, fromMb } from "@/helpers/byte-unit";
+import { getFileName, getFileExt, isFileImg, getFileRawName } from "@/helpers/file";
 import FileUpload from "primevue/fileupload";
 import { DocumentIcon } from "@heroicons/vue/24/solid";
 

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
-import { useLocationStore } from "@stores/location";
+import { useLocationStore } from "@/stores/location";
 import Listbox from "primevue/listbox";
 
 const emit = defineEmits(["change"]);

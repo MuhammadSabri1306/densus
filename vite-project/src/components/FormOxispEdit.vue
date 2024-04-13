@@ -1,9 +1,9 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useOxispStore } from "@stores/oxisp";
+import { useOxispStore } from "@/stores/oxisp";
 import { required } from "@vuelidate/validators";
 import { useDataForm } from "@/helpers/data-form";
-import FileUpload from "@components/ui/FileUpload.vue";
+import FileUpload from "@/components/ui/FileUpload.vue";
 
 const emit = defineEmits(["save", "cancel"]);
 const props = defineProps({

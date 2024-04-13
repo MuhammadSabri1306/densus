@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from "vue";
-import { usePueTargetStore } from "@stores/pue-target";
-import { useViewStore } from "@stores/view";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
-import DatatablePueTargetTarget from "@components/DatatablePueTargetTarget.vue";
-import DatatablePueTargetRange from "@components/DatatablePueTargetRange.vue";
+import { usePueTargetStore } from "@/stores/pue-target";
+import { useViewStore } from "@/stores/view";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import FilterGepeeV2 from "@/components/FilterGepeeV2.vue";
+import DatatablePueTargetTarget from "@/components/DatatablePueTargetTarget.vue";
+import DatatablePueTargetRange from "@/components/DatatablePueTargetRange.vue";
 
 const viewStore = useViewStore();
 if(!viewStore.filters.quarter) {

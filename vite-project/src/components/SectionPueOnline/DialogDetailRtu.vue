@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from "vue";
-import { usePueV2Store } from "@stores/pue-v2";
-import { toFixedNumber } from "@helpers/number-format";
-import { getPueBgClass } from "@helpers/pue-color";
+import { usePueV2Store } from "@/stores/pue-v2";
+import { toFixedNumber } from "@/helpers/number-format";
+import { getPueBgClass } from "@/helpers/pue-color";
 import Dialog from "primevue/dialog";
 import Skeleton from "primevue/skeleton";
 import DataTable from "primevue/datatable";

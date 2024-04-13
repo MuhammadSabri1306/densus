@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useActivityStore } from "@stores/activity";
+import { useActivityStore } from "@/stores/activity";
 import Dialog from "primevue/dialog";
 import Skeleton from "primevue/skeleton";
 

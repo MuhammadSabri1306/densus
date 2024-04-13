@@ -1,8 +1,8 @@
 <script setup>
 import { computed, onBeforeMount } from "vue";
 import { useRoute } from "vue-router";
-import LayoutDashboard from "@layouts/Dashboard.vue";
-import LayoutSingle from "@layouts/SinglePage.vue";
+import LayoutDashboard from "@/layouts/Dashboard.vue";
+import LayoutSingle from "@/layouts/SinglePage.vue";
 
 const route = useRoute();
 const layout = computed(() => {

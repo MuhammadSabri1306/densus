@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from "vue";
 import Skeleton from "primevue/skeleton";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import DatatableUser from "@components/DatatableUser.vue";
-import DialogUserDetail from "@components/DialogUserDetail.vue";
-import DialogUserEdit from "@components/DialogUserEdit.vue";
-import DialogUserAdd from "@components/DialogUserAdd.vue";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import DatatableUser from "@/components/DatatableUser.vue";
+import DialogUserDetail from "@/components/DialogUserDetail.vue";
+import DialogUserEdit from "@/components/DialogUserEdit.vue";
+import DialogUserAdd from "@/components/DialogUserAdd.vue";
 
 const currUser = ref({});
 const showDetailDialog = ref(false);

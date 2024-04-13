@@ -1,10 +1,10 @@
 <script setup>
 import { ref } from "vue";
-import { useActivityStore } from "@stores/activity";
+import { useActivityStore } from "@/stores/activity";
 import Skeleton from "primevue/skeleton";
-import DialogActivityCategory from "@components/DialogActivityCategory.vue";
+import DialogActivityCategory from "@/components/DialogActivityCategory.vue";
 import Datatable from "./Datatable.vue";
-import DialogExportLinkVue from "@components/ui/DialogExportLink.vue";
+import DialogExportLinkVue from "@/components/ui/DialogExportLink.vue";
 
 const show = ref(false);
 const isLoading = ref(true);

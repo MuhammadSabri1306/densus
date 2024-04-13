@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from "vue";
-import { useViewStore } from "@stores/view";
+import { useViewStore } from "@/stores/view";
 import Dialog from "primevue/dialog";
-import FormPlnParamsAdd from "@components/FormPlnParamsAdd/index.vue";
+import FormPlnParamsAdd from "@/components/FormPlnParamsAdd/index.vue";
 
 defineEmits(["close", "save"]);
 const showDialog = ref(true);

@@ -1,17 +1,17 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
-import { useMonitoringStore } from "@stores/monitoring";
+import { useMonitoringStore } from "@/stores/monitoring";
 import Skeleton from "primevue/skeleton";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
 
-import CardPueRtuInfo from "@components/CardPueRtuInfo.vue";
-import CardPueCurrent from "@components/CardPueCurrent.vue";
-import CardPueMax from "@components/CardPueMax.vue";
-import ChartPueValue from "@components/ChartPueValue.vue";
-import CardContentPueAverage from "@components/CardContentPueAverage.vue";
-import CardContentPuePerformance from "@components/CardContentPuePerformance.vue";
-import DatatablePueValue from "@components/DatatablePueValue.vue";
+import CardPueRtuInfo from "@/components/CardPueRtuInfo.vue";
+import CardPueCurrent from "@/components/CardPueCurrent.vue";
+import CardPueMax from "@/components/CardPueMax.vue";
+import ChartPueValue from "@/components/ChartPueValue.vue";
+import CardContentPueAverage from "@/components/CardContentPueAverage.vue";
+import CardContentPuePerformance from "@/components/CardContentPuePerformance.vue";
+import DatatablePueValue from "@/components/DatatablePueValue.vue";
 
 const route = useRoute();
 const rtuCode = computed(() => route.params.rtuCode);

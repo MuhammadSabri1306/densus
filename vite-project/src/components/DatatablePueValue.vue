@@ -1,9 +1,9 @@
 <script setup>
 import { computed } from "vue";
-import { toIdrCurrency } from "@helpers/number-format";
+import { toIdrCurrency } from "@/helpers/number-format";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
-import { getPueBgClass } from "@helpers/pue-color";
+import { getPueBgClass } from "@/helpers/pue-color";
 
 const props = defineProps({
     pueValues: { type: Array, required: true }

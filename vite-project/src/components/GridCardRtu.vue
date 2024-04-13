@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
-import http from "@helpers/http-common";
+import http from "@/helpers/http-common";
 import Skeleton from "primevue/skeleton";
 
 const rtuList = ref([]);

@@ -1,15 +1,15 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import { useRtuStore } from "@stores/rtu";
-import { useViewStore } from "@stores/view";
+import { useRtuStore } from "@/stores/rtu";
+import { useViewStore } from "@/stores/view";
 import { required } from "@vuelidate/validators";
-import { useDataForm } from "@helpers/data-form2";
-import { mustBeRtuCode } from "@helpers/form-validator";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import InputGroupLocation from "@components/InputGroupLocation.vue";
+import { useDataForm } from "@/helpers/data-form2";
+import { mustBeRtuCode } from "@/helpers/form-validator";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import InputGroupLocation from "@/components/InputGroupLocation.vue";
 import InputSwitch from "primevue/inputswitch";
-import ListboxFilter from "@components/ListboxFilter.vue";
+import ListboxFilter from "@/components/ListboxFilter.vue";
 
 const { data, v$, hasSubmitted, getInvalidClass, useErrorTooltip } = useDataForm({
     rtuCode: { required, mustBeRtuCode },

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useActivityStore } from "@stores/activity";
+import { useActivityStore } from "@/stores/activity";
 import { dtColors } from "@/configs/datatable";
 import VueApexCharts from "vue3-apexcharts";
 import Skeleton from "primevue/skeleton";

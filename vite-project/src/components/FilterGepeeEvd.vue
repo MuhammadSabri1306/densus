@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useGepeeEvdStore } from "@stores/gepee-evidence";
+import { useGepeeEvdStore } from "@/stores/gepee-evidence";
 import Calendar from "primevue/calendar";
 import { getYearConfig } from "@/configs/filter";
 

@@ -1,9 +1,9 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useViewStore } from "@stores/view";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
-import SectionPueOnline from "@components/SectionPueOnline/index.vue";
+import { useViewStore } from "@/stores/view";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import FilterGepeeV2 from "@/components/FilterGepeeV2.vue";
+import SectionPueOnline from "@/components/SectionPueOnline/index.vue";
 
 const viewStore = useViewStore();
 const sectionPueElm = ref(null);

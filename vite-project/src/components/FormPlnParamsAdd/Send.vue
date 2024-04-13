@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from "vue";
-import Steps from "@components/ui/Steps.vue";
+import Steps from "@/components/ui/Steps.vue";
 
 defineEmits(["navigate"]);
 const props = defineProps({

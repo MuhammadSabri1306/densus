@@ -1,12 +1,12 @@
 <script setup>
 import { ref, computed, watch } from "vue";
-import { useViewStore, watchLoading } from "@stores/view";
-import { useOxispCheckStore } from "@stores/oxisp-check";
-import { isFileImg } from "@helpers/file";
+import { useViewStore, watchLoading } from "@/stores/view";
+import { useOxispCheckStore } from "@/stores/oxisp-check";
+import { isFileImg } from "@/helpers/file";
 import Dialog from "primevue/dialog";
 import Image from "primevue/image";
-import FormOxispChecklistAdd from "@components/FormOxispChecklistAdd.vue";
-import FormOxispChecklistEdit from "@components/FormOxispChecklistEdit.vue";
+import FormOxispChecklistAdd from "@/components/FormOxispChecklistAdd.vue";
+import FormOxispChecklistEdit from "@/components/FormOxispChecklistEdit.vue";
 
 const emit = defineEmits(["close", "update"]);
 const props = defineProps({

@@ -1,10 +1,10 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useMonitoringStore } from "@stores/monitoring";
-import { useViewStore } from "@stores/view";
+import { useMonitoringStore } from "@/stores/monitoring";
+import { useViewStore } from "@/stores/view";
 import Skeleton from "primevue/skeleton";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterRtuV2 from "@components/FilterRtuV2.vue";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import FilterRtuV2 from "@/components/FilterRtuV2.vue";
 
 const monitoringStore = useMonitoringStore()
 const viewStore = useViewStore();

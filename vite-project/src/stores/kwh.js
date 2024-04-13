@@ -1,15 +1,15 @@
 import { defineStore } from "pinia";
-import http from "@helpers/http-common";
-import { handlingFetchErr } from "@helpers/error-handler";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
+import http from "@/helpers/http-common";
+import { handlingFetchErr } from "@/helpers/error-handler";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
 import { createUrlParams } from "@/helpers/url";
 
 import { allowSampleData } from "@/configs/base";
-import sampleKwhDaily from "@helpers/sample-data/monitoring-kwh/daily";
-import sampleKwhWeekly from "@helpers/sample-data/monitoring-kwh/weekly";
-import sampleKwhMonthly from "@helpers/sample-data/monitoring-kwh/monthly";
-import sampleKwhMoM from "@helpers/sample-data/monitoring-kwh/mom";
+import sampleKwhDaily from "@/helpers/sample-data/monitoring-kwh/daily";
+import sampleKwhWeekly from "@/helpers/sample-data/monitoring-kwh/weekly";
+import sampleKwhMonthly from "@/helpers/sample-data/monitoring-kwh/monthly";
+import sampleKwhMoM from "@/helpers/sample-data/monitoring-kwh/mom";
 
 export const useKwhStore = defineStore("kwh", {
     state: () => {

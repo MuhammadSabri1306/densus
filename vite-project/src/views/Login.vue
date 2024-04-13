@@ -1,9 +1,9 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
-import { useDataForm } from "@helpers/data-form";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
+import { useDataForm } from "@/helpers/data-form";
 import { required } from "@vuelidate/validators";
 import InputSwitch from "primevue/inputswitch";
 import Checkbox from "primevue/checkbox";

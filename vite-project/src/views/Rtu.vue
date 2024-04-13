@@ -1,10 +1,10 @@
 <script setup>
 import { computed, ref } from "vue";
-import { useRtuStore } from "@stores/rtu";
-import { useViewStore } from "@stores/view";
+import { useRtuStore } from "@/stores/rtu";
+import { useViewStore } from "@/stores/view";
 import Skeleton from "primevue/skeleton";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterRtuV2 from "@components/FilterRtuV2.vue";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import FilterRtuV2 from "@/components/FilterRtuV2.vue";
 
 const viewStore = useViewStore();
 const filterAutoApply = () => viewStore.filters.divre ? true : false;

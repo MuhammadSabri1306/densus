@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useMonitoringStore } from "@stores/monitoring";
+import { useMonitoringStore } from "@/stores/monitoring";
 import Skeleton from "primevue/skeleton";
 
 const rtuList = ref([]);

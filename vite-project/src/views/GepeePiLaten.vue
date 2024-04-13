@@ -1,10 +1,10 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useViewStore } from "@stores/view";
-import { usePiLatenStore } from "@stores/pi-laten";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
-import DatatableGepeePiLaten from "@components/DatatableGepeePiLaten.vue";
+import { useViewStore } from "@/stores/view";
+import { usePiLatenStore } from "@/stores/pi-laten";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import FilterGepeeV2 from "@/components/FilterGepeeV2.vue";
+import DatatableGepeePiLaten from "@/components/DatatableGepeePiLaten.vue";
 
 const viewStore = useViewStore();
 if(!viewStore.filters.month) {

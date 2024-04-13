@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, nextTick } from "vue";
 import { usePueTargetStore } from "@/stores/pue-target";
-import { useUserStore } from "@stores/user";
+import { useUserStore } from "@/stores/user";
 import Table1 from "./Table1.vue";
 import Table2 from "./Table2.vue";
 

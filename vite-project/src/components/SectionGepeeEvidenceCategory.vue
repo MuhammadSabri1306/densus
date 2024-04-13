@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import { useGepeeEvdStore } from "@stores/gepee-evidence";
+import { useGepeeEvdStore } from "@/stores/gepee-evidence";
 import { categoryList } from "@/configs/gepee-evidence";
 
 const dataCategory = ref([]);

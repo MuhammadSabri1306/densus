@@ -1,10 +1,10 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useActivityStore } from "@stores/activity";
-import { useUserStore } from "@stores/user";
-import { useCollapseRow } from "@helpers/collapse-row";
-import { toFixedNumber } from "@helpers/number-format";
-import { getPercentageTextClass } from "@helpers/percentage-color";
+import { useActivityStore } from "@/stores/activity";
+import { useUserStore } from "@/stores/user";
+import { useCollapseRow } from "@/helpers/collapse-row";
+import { toFixedNumber } from "@/helpers/number-format";
+import { getPercentageTextClass } from "@/helpers/percentage-color";
 
 defineEmits(["showCategory"]);
 const { collapsedDivre, collapsedWitel, toggleRowCollapse } = useCollapseRow();

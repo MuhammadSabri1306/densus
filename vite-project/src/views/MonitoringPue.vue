@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from "vue";
-import { useViewStore } from "@stores/view";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import GridCardRtuPue from "@components/GridCardRtuPue.vue";
-import FilterRtu from "@components/FilterRtu.vue";
+import { useViewStore } from "@/stores/view";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import GridCardRtuPue from "@/components/GridCardRtuPue.vue";
+import FilterRtu from "@/components/FilterRtu.vue";
 
 const gridCardRtuPue = ref(null);
 

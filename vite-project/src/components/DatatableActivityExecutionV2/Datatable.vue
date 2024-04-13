@@ -1,9 +1,9 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useActivityStore } from "@stores/activity";
-import { useUserStore } from "@stores/user";
-import { useCollapseRow } from "@helpers/collapse-row";
-import { groupByLocation } from "@helpers/location-group";
+import { useActivityStore } from "@/stores/activity";
+import { useUserStore } from "@/stores/user";
+import { useCollapseRow } from "@/helpers/collapse-row";
+import { groupByLocation } from "@/helpers/location-group";
 
 const emit = defineEmits(["update", "showCategory"]);
 const { collapsedDivre, collapsedWitel, toggleRowCollapse } = useCollapseRow();

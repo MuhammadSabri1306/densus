@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
-import http from "@helpers/http-common";
-import { handlingFetchErr } from "@helpers/error-handler";
+import http from "@/helpers/http-common";
+import { handlingFetchErr } from "@/helpers/error-handler";
 import { createUrlParams } from "@/helpers/url";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
 
 import { allowSampleData } from "@/configs/base";
-import sampleOxispCheck from "@helpers/sample-data/oxisp-check/all";
+import sampleOxispCheck from "@/helpers/sample-data/oxisp-check/all";
 
 export const useOxispCheckStore = defineStore("oxisp-check", {
     state: () => ({

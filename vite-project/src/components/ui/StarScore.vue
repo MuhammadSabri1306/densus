@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from "vue";
-import { toFixedNumber } from "@helpers/number-format";
+import { toFixedNumber } from "@/helpers/number-format";
 import { StarIcon } from "@heroicons/vue/24/solid";
 
 const props = defineProps({

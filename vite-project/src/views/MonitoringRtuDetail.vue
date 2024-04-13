@@ -1,20 +1,20 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
-import { useMonitoringRtuStore } from "@stores/monitoring-rtu";
+import { useMonitoringRtuStore } from "@/stores/monitoring-rtu";
 import Skeleton from "primevue/skeleton";
-import CardRtuKwhDescr from "@components/CardRtuKwhDescr.vue";
-import ChartRtuKwhDaily from "@components/ChartRtuKwhDaily.vue";
-import CardRtuCurrKwh from "@components/CardRtuCurrKwh.vue";
-import CardRtuKwhCurrMonth from "@components/CardRtuKwhCurrMonth.vue";
-import CardRtuKwhCostCurrYear from "@components/CardRtuKwhCostCurrYear.vue";
-import CardRtuBbmCostCurrYear from "@components/CardRtuBbmCostCurrYear.vue";
-import CardRtuKwhUsageToday from "@components/CardRtuKwhUsageToday.vue";
-import CardRtuTotalEnergyCost from "@components/CardRtuTotalEnergyCost.vue";
-import ChartRtuKwhSaving from "@components/ChartRtuKwhSaving.vue";
-import ChartRtuEnergyCostEstimation from "@components/ChartRtuEnergyCostEstimation.vue";
-import DatatableRtuPlnMonthly from "@components/DatatableRtuPlnMonthly.vue";
-import DatatableRtuBbmMonthly from "@components/DatatableRtuBbmMonthly.vue";
+import CardRtuKwhDescr from "@/components/CardRtuKwhDescr.vue";
+import ChartRtuKwhDaily from "@/components/ChartRtuKwhDaily.vue";
+import CardRtuCurrKwh from "@/components/CardRtuCurrKwh.vue";
+import CardRtuKwhCurrMonth from "@/components/CardRtuKwhCurrMonth.vue";
+import CardRtuKwhCostCurrYear from "@/components/CardRtuKwhCostCurrYear.vue";
+import CardRtuBbmCostCurrYear from "@/components/CardRtuBbmCostCurrYear.vue";
+import CardRtuKwhUsageToday from "@/components/CardRtuKwhUsageToday.vue";
+import CardRtuTotalEnergyCost from "@/components/CardRtuTotalEnergyCost.vue";
+import ChartRtuKwhSaving from "@/components/ChartRtuKwhSaving.vue";
+import ChartRtuEnergyCostEstimation from "@/components/ChartRtuEnergyCostEstimation.vue";
+import DatatableRtuPlnMonthly from "@/components/DatatableRtuPlnMonthly.vue";
+import DatatableRtuBbmMonthly from "@/components/DatatableRtuBbmMonthly.vue";
 
 const route = useRoute();
 const rtuCode = computed(() => route.params.rtuCode);

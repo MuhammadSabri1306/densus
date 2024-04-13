@@ -1,15 +1,15 @@
 <script setup>
 import { ref, computed, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useOxispStore } from "@stores/oxisp";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
-import { isFileImg } from "@helpers/file";
+import { useOxispStore } from "@/stores/oxisp";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
+import { isFileImg } from "@/helpers/file";
 import Dialog from "primevue/dialog";
-import ButtonGroupAction from "@components/ButtonGroupAction.vue";
+import ButtonGroupAction from "@/components/ButtonGroupAction.vue";
 import Skeleton from "primevue/skeleton";
-import FormOxispAdd from "@components/FormOxispAdd.vue";
-import FormOxispEditVue from "@components/FormOxispEdit.vue";
+import FormOxispAdd from "@/components/FormOxispAdd.vue";
+import FormOxispEditVue from "@/components/FormOxispEdit.vue";
 import Image from "primevue/image";
 import { DocumentIcon } from "@heroicons/vue/24/solid";
 

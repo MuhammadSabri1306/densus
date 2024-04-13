@@ -1,10 +1,10 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useActivityStore } from "@stores/activity";
-import { useUserStore } from "@stores/user";
-import { useCollapseRow } from "@helpers/collapse-row";
+import { useActivityStore } from "@/stores/activity";
+import { useUserStore } from "@/stores/user";
+import { useCollapseRow } from "@/helpers/collapse-row";
 import CheckColumn from "./CheckColumn.vue";
-import DialogActivityCategory from "@components/DialogActivityCategory.vue";
+import DialogActivityCategory from "@/components/DialogActivityCategory.vue";
 
 const props = defineProps({
     performance: { type: Array, required: true },

@@ -1,8 +1,8 @@
 <script setup>
 import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import { useActivityStore } from "@stores/activity";
-import { useViewStore } from "@stores/view";
+import { useActivityStore } from "@/stores/activity";
+import { useViewStore } from "@/stores/view";
 import Dialog from "primevue/dialog";
 import Skeleton from "primevue/skeleton";
 

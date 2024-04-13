@@ -1,5 +1,10 @@
 {
     "compilerOptions": {
         "allowJs": true,
+        "baseUrl": ".",
+        "target": "es6",
+        "paths": {
+            "@/*": ["./src/*"],
+        }
     }
 }

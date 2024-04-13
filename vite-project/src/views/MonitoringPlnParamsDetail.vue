@@ -1,16 +1,16 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
-import { usePlnStore } from "@stores/pln";
-import { useViewStore } from "@stores/view";
-import { useUserStore } from "@stores/user";
-import { toFixedNumber } from "@helpers/number-format";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
+import { usePlnStore } from "@/stores/pln";
+import { useViewStore } from "@/stores/view";
+import { useUserStore } from "@/stores/user";
+import { toFixedNumber } from "@/helpers/number-format";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
 import Skeleton from "primevue/skeleton";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
-import ButtonGroupAction from "@components/ButtonGroupAction.vue";
-import DialogPlnParamsForm from "@components/DialogPlnParamsForm.vue";
+import ButtonGroupAction from "@/components/ButtonGroupAction.vue";
+import DialogPlnParamsForm from "@/components/DialogPlnParamsForm.vue";
 
 const viewStore = useViewStore();
 const data = ref([]);

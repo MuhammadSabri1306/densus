@@ -1,10 +1,10 @@
 <script setup>
 import { ref, computed } from "vue";
 import { usePueV2Store } from "@/stores/pue-v2";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
-import { useCollapseRow } from "@helpers/collapse-row";
-import { toFixedNumber, toNumberText, toRoman } from "@helpers/number-format";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
+import { useCollapseRow } from "@/helpers/collapse-row";
+import { toFixedNumber, toNumberText, toRoman } from "@/helpers/number-format";
 import Skeleton from "primevue/skeleton";
 
 const userStore = useUserStore();

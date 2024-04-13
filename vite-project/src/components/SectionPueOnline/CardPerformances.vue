@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from "vue";
-import { toFixedNumber } from "@helpers/number-format";
+import { toFixedNumber } from "@/helpers/number-format";
 import Skeleton from "primevue/skeleton";
 
 const props = defineProps({

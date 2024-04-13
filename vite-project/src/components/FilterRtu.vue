@@ -1,8 +1,8 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { useViewStore } from "@stores/view";
-import { useUserStore } from "@stores/user";
-import ListboxFilter from "@components/ListboxFilter.vue";
+import { useViewStore } from "@/stores/view";
+import { useUserStore } from "@/stores/user";
+import ListboxFilter from "@/components/ListboxFilter.vue";
 
 const emit = defineEmits(["apply"]);
 const props = defineProps({

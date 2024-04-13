@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, watch } from "vue";
-import { useViewStore } from "@stores/view";
+import { useViewStore } from "@/stores/view";
 import { getYearConfig } from "@/configs/filter";
 import Calendar from "primevue/calendar";
 

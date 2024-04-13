@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
-import { usePueV2Store } from "@stores/pue-v2";
-import { toFixedNumber } from "@helpers/number-format";
+import { usePueV2Store } from "@/stores/pue-v2";
+import { toFixedNumber } from "@/helpers/number-format";
 import Skeleton from "primevue/skeleton";
 
 const performance = ref({});

@@ -1,12 +1,12 @@
 <script setup>
 import { ref, computed } from "vue";
-import { usePlnStore } from "@stores/pln";
-import { useViewStore } from "@stores/view";
-import { useDataForm } from "@helpers/data-form";
+import { usePlnStore } from "@/stores/pln";
+import { useViewStore } from "@/stores/view";
+import { useDataForm } from "@/helpers/data-form";
 import { required, numeric } from "@vuelidate/validators";
-import { toIdrCurrency } from "@helpers/number-format";
+import { toIdrCurrency } from "@/helpers/number-format";
 import Dialog from "primevue/dialog";
-import InputGroupLocation from "@components/InputGroupLocation.vue";
+import InputGroupLocation from "@/components/InputGroupLocation.vue";
 
 const emit = defineEmits(["cancel", "save"]);
 

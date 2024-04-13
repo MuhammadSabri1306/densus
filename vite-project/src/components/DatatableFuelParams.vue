@@ -1,10 +1,10 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useFuelStore } from "@stores/fuel";
-import { useUserStore } from "@stores/user";
-import { groupByLocation } from "@helpers/location-group";
-import { useCollapseRow } from "@helpers/collapse-row";
-import { toFixedNumber } from "@helpers/number-format";
+import { useFuelStore } from "@/stores/fuel";
+import { useUserStore } from "@/stores/user";
+import { groupByLocation } from "@/helpers/location-group";
+import { useCollapseRow } from "@/helpers/collapse-row";
+import { toFixedNumber } from "@/helpers/number-format";
 import Skeleton from "primevue/skeleton";
 
 defineEmits(["create", "edit", "detail"]);

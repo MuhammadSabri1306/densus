@@ -1,16 +1,16 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useGepeeEvdStore } from "@stores/gepee-evidence";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
-import { limitWords } from "@helpers/text-format";
-import { toRoman } from "@helpers/number-format";
-import { isFileImg } from "@helpers/file";
+import { useGepeeEvdStore } from "@/stores/gepee-evidence";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
+import { limitWords } from "@/helpers/text-format";
+import { toRoman } from "@/helpers/number-format";
+import { isFileImg } from "@/helpers/file";
 import Dialog from "primevue/dialog";
-import ButtonGroupAction from "@components/ButtonGroupAction.vue";
+import ButtonGroupAction from "@/components/ButtonGroupAction.vue";
 import Skeleton from "primevue/skeleton";
-import FormGepeeEvidence from "@components/FormGepeeEvidence.vue";
+import FormGepeeEvidence from "@/components/FormGepeeEvidence.vue";
 import Image from "primevue/image";
 import { DocumentIcon } from "@heroicons/vue/24/solid";
 

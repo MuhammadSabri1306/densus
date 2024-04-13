@@ -1,6 +1,6 @@
 <script setup>
-import { toFixedNumber } from "@helpers/number-format";
-import { getPercentageTextClass } from "@helpers/percentage-color";
+import { toFixedNumber } from "@/helpers/number-format";
+import { getPercentageTextClass } from "@/helpers/percentage-color";
 
 const props = defineProps({
     type: { type: String, required: true  },

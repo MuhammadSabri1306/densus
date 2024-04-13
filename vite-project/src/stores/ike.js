@@ -1,14 +1,14 @@
 import { defineStore } from "pinia";
-import http from "@helpers/http-common";
-import { handlingFetchErr } from "@helpers/error-handler";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
+import http from "@/helpers/http-common";
+import { handlingFetchErr } from "@/helpers/error-handler";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
 import { backendUrl } from "@/configs/base";
 import { createUrlParams } from "@/helpers/url";
 
 import { allowSampleData } from "@/configs/base";
-import samplePueOfflineByLocation from "@helpers/sample-data/pue/offline_by_location";
-import sampleIkeList from "@helpers/sample-data/ike/ike-list";
+import samplePueOfflineByLocation from "@/helpers/sample-data/pue/offline_by_location";
+import sampleIkeList from "@/helpers/sample-data/ike/ike-list";
 
 export const useIkeStore = defineStore("ike", {
     state: () => ({

@@ -1,14 +1,14 @@
 import { isRef, watch, onBeforeUnmount } from "vue";
 import { defineStore } from "pinia";
-import { useUserStore } from "@stores/user";
-import http from "@helpers/http-common";
-import { handlingFetchErr } from "@helpers/error-handler";
+import { useUserStore } from "@/stores/user";
+import http from "@/helpers/http-common";
+import { handlingFetchErr } from "@/helpers/error-handler";
 import menuItems from "@/configs/menu-items";
 
 import { allowSampleData } from "@/configs/base";
-import sampleDivre from "@helpers/sample-data/divre";
-import sampleWitelByDivre from "@helpers/sample-data/witel-by-divre";
-import sampleWitel from "@helpers/sample-data/witel";
+import sampleDivre from "@/helpers/sample-data/divre";
+import sampleWitelByDivre from "@/helpers/sample-data/witel-by-divre";
+import sampleWitel from "@/helpers/sample-data/witel";
 
 const monthList = ["Januari", "Februari", "Maret",
     "April", "Mei", "Juni", "Juli", "Agustus",

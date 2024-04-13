@@ -1,5 +1,5 @@
 <script setup>
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
 </script>
 <template>
     <div>

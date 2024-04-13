@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
-import http from "@helpers/http-common";
-import { handlingFetchErr } from "@helpers/error-handler";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
+import http from "@/helpers/http-common";
+import { handlingFetchErr } from "@/helpers/error-handler";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
 
 import { allowSampleData } from "@/configs/base";
-import samplePlnBill from "@helpers/sample-data/pln/bill";
-import samplePlnBillOnLocation from "@helpers/sample-data/pln/bill-on-location";
-import samplePlnParams from "@helpers/sample-data/pln/params";
+import samplePlnBill from "@/helpers/sample-data/pln/bill";
+import samplePlnBillOnLocation from "@/helpers/sample-data/pln/bill-on-location";
+import samplePlnParams from "@/helpers/sample-data/pln/params";
 
 export const usePlnStore = defineStore("pln", {
     state: () => null,

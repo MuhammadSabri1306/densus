@@ -1,14 +1,14 @@
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { useActivityStore } from "@stores/activity";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import DataTableActivityDashboardV2 from "@components/DataTableActivityDashboardV2/index.vue";
-import DialogActivityDashboard from "@components/DialogActivityDashboard.vue";
-import SectionActivityDashboardCard from "@components/SectionActivityDashboardCard.vue";
-import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
+import { useActivityStore } from "@/stores/activity";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import DataTableActivityDashboardV2 from "@/components/DataTableActivityDashboardV2/index.vue";
+import DialogActivityDashboard from "@/components/DialogActivityDashboard.vue";
+import SectionActivityDashboardCard from "@/components/SectionActivityDashboardCard.vue";
+import FilterGepeeV2 from "@/components/FilterGepeeV2.vue";
 
 const userStore = useUserStore();
 const location = computed(() => {

@@ -1,11 +1,11 @@
 <script setup>
 import { computed, ref } from "vue";
-import { useViewStore } from "@stores/view";
-import { useUserStore } from "@stores/user";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
-import DatatableOxispChecklist from "@components/DatatableOxispChecklist.vue";
-import DialogOxispChecklistCategory from "@components/DialogOxispChecklistCategory.vue";
+import { useViewStore } from "@/stores/view";
+import { useUserStore } from "@/stores/user";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import FilterGepeeV2 from "@/components/FilterGepeeV2.vue";
+import DatatableOxispChecklist from "@/components/DatatableOxispChecklist.vue";
+import DialogOxispChecklistCategory from "@/components/DialogOxispChecklistCategory.vue";
 import DialogOxispChecklistDetail from "@/components/DialogOxispChecklistDetail.vue";
 import DialogOxispChecklistDetailAdmin from "@/components/DialogOxispChecklistDetailAdmin.vue";
 

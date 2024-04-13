@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
-import http from "@helpers/http-common";
-import { handlingFetchErr } from "@helpers/error-handler";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
+import http from "@/helpers/http-common";
+import { handlingFetchErr } from "@/helpers/error-handler";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
 import { createUrlParams } from "@/helpers/url";
 
 import { allowSampleData } from "@/configs/base";
-import sampleRtuDetail from "@helpers/sample-data/monitoring/rtu-detail";
-import samplePueDetail from "@helpers/sample-data/monitoring/pue-detail";
+import sampleRtuDetail from "@/helpers/sample-data/monitoring/rtu-detail";
+import samplePueDetail from "@/helpers/sample-data/monitoring/pue-detail";
 
 export const useMonitoringStore = defineStore("monitoring", {
     getters: {

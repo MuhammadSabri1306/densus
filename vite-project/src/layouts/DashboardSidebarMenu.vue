@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
 
 const userStore = useUserStore();
 const userRole = computed(() => userStore.role);

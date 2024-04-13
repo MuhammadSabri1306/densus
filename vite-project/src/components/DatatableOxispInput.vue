@@ -1,9 +1,9 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useOxispStore } from "@/stores/oxisp";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
-import { useCollapseRow } from "@helpers/collapse-row";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
+import { useCollapseRow } from "@/helpers/collapse-row";
 import Skeleton from "primevue/skeleton";
 import { useRouter } from "vue-router";
 

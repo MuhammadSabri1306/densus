@@ -1,11 +1,11 @@
 <script setup>
 import { ref, computed } from "vue";
 import { usePueV2Store } from "@/stores/pue-v2";
-import { useUserStore } from "@stores/user";
-import { useCollapseRow } from "@helpers/collapse-row";
-import { toFixedNumber } from "@helpers/number-format";
+import { useUserStore } from "@/stores/user";
+import { useCollapseRow } from "@/helpers/collapse-row";
+import { toFixedNumber } from "@/helpers/number-format";
 import Skeleton from "primevue/skeleton";
-import DialogPueOfflineLocation from "@components/DialogPueOfflineLocation.vue";
+import DialogPueOfflineLocation from "@/components/DialogPueOfflineLocation.vue";
 
 const { collapsedDivre, collapsedWitel, toggleRowCollapse } = useCollapseRow();
 const userStore = useUserStore();

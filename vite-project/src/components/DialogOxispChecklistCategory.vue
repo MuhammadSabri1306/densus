@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useOxispCheckStore } from "@stores/oxisp-check";
+import { useOxispCheckStore } from "@/stores/oxisp-check";
 import Dialog from "primevue/dialog";
 import Skeleton from "primevue/skeleton";
 

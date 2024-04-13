@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
-import http from "@helpers/http-common";
-import { getCookie, setCookie, deleteCookie } from "@helpers/app-cookie";
-import { useListUserStore } from "@stores/list-user";
-import { useRtuStore } from "@stores/rtu";
-import { handlingFetchErr } from "@helpers/error-handler";
+import http from "@/helpers/http-common";
+import { getCookie, setCookie, deleteCookie } from "@/helpers/app-cookie";
+import { useListUserStore } from "@/stores/list-user";
+import { useRtuStore } from "@/stores/rtu";
+import { handlingFetchErr } from "@/helpers/error-handler";
 
 import { allowSampleData } from "@/configs/base";
-import fakeLogin from "@helpers/sample-data/fake-login";
+import fakeLogin from "@/helpers/sample-data/fake-login";
 
 export const useUserStore = defineStore("user", {
     state: () => ({

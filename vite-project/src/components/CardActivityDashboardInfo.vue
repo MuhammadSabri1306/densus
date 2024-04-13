@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useActivityStore } from "@stores/activity";
-import { useUserStore } from "@stores/user";
+import { useActivityStore } from "@/stores/activity";
+import { useUserStore } from "@/stores/user";
 import Skeleton from "primevue/skeleton";
 
 const userStore = useUserStore();

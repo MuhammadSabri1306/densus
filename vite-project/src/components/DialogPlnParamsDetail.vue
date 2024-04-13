@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useViewStore } from "@stores/view";
+import { useViewStore } from "@/stores/view";
 import Dialog from "primevue/dialog";
 
 const emit = defineEmits(["close"]);

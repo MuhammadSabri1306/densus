@@ -1,20 +1,20 @@
 import { defineStore } from "pinia";
-import http from "@helpers/http-common";
-import { handlingFetchErr } from "@helpers/error-handler";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
+import http from "@/helpers/http-common";
+import { handlingFetchErr } from "@/helpers/error-handler";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
 import { backendUrl } from "@/configs/base";
-import { createUrlParams } from "@helpers/url";
+import { createUrlParams } from "@/helpers/url";
 
 import { allowSampleData } from "@/configs/base";
-import getSampleData from "@helpers/sample-data";
-import samplePueOfflineByLocation from "@helpers/sample-data/pue/offline_by_location";
-import sampleLatestValue from "@helpers/sample-data/pue/latest-value";
-import sampleChartData from "@helpers/sample-data/pue/chart-data";
-import sampleMaxValue from "@helpers/sample-data/pue/max-value";
-import sampleAvg from "@helpers/sample-data/pue/avg";
-import samplePerformance from "@helpers/sample-data/pue/performance";
-import sampleStoValue from "@helpers/sample-data/pue/sto-value";
+import getSampleData from "@/helpers/sample-data";
+import samplePueOfflineByLocation from "@/helpers/sample-data/pue/offline_by_location";
+import sampleLatestValue from "@/helpers/sample-data/pue/latest-value";
+import sampleChartData from "@/helpers/sample-data/pue/chart-data";
+import sampleMaxValue from "@/helpers/sample-data/pue/max-value";
+import sampleAvg from "@/helpers/sample-data/pue/avg";
+import samplePerformance from "@/helpers/sample-data/pue/performance";
+import sampleStoValue from "@/helpers/sample-data/pue/sto-value";
 
 export const usePueV2Store = defineStore("pueV2", {
     state: () => ({

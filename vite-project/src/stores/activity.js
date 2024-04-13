@@ -1,19 +1,19 @@
 import { defineStore } from "pinia";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
-import http from "@helpers/http-common";
-import { handlingFetchErr } from "@helpers/error-handler";
-import { getApiPath } from "@helpers/get-api-path";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
+import http from "@/helpers/http-common";
+import { handlingFetchErr } from "@/helpers/error-handler";
+import { getApiPath } from "@/helpers/get-api-path";
 import { backendUrl } from "@/configs/base";
 
 import { allowSampleData } from "@/configs/base";
-import sampleSchedule from "@helpers/sample-data/schedule";
-// import sampleExecution from "@helpers/sample-data/execution";
-import sampleExecution from "@helpers/sample-data/activity-execution";
-import sampleCategory from "@helpers/sample-data/activity-category";
-import sampleAvailableMonth from "@helpers/sample-data/available-month";
-import sampleLocation from "@helpers/sample-data/location";
-import sampleChart from "@helpers/sample-data/activity-chart";
+import sampleSchedule from "@/helpers/sample-data/schedule";
+// import sampleExecution from "@/helpers/sample-data/execution";
+import sampleExecution from "@/helpers/sample-data/activity-execution";
+import sampleCategory from "@/helpers/sample-data/activity-category";
+import sampleAvailableMonth from "@/helpers/sample-data/available-month";
+import sampleLocation from "@/helpers/sample-data/location";
+import sampleChart from "@/helpers/sample-data/activity-chart";
 
 const mapSchedule = item => {
     const createdAt = new Date(item.created_at);

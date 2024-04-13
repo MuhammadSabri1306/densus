@@ -1,14 +1,14 @@
 <script setup>
 import { ref, computed, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useActivityStore } from "@stores/activity";
-import { useViewStore } from "@stores/view";
+import { useActivityStore } from "@/stores/activity";
+import { useViewStore } from "@/stores/view";
 import Dialog from "primevue/dialog";
-import ButtonGroupAction from "@components/ButtonGroupAction.vue";
+import ButtonGroupAction from "@/components/ButtonGroupAction.vue";
 import Skeleton from "primevue/skeleton";
-import FormActivityExecAdd from "@components/FormActivityExecAdd.vue";
-import FormActivityExecEdit from "@components/FormActivityExecEdit.vue";
-import SectionActivityExecDetail from "@components/SectionActivityExecDetail.vue";
+import FormActivityExecAdd from "@/components/FormActivityExecAdd.vue";
+import FormActivityExecEdit from "@/components/FormActivityExecEdit.vue";
+import SectionActivityExecDetail from "@/components/SectionActivityExecDetail.vue";
 
 const emit = defineEmits(["update", "loaded"]);
 

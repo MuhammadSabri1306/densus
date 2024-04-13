@@ -1,19 +1,19 @@
 import { defineStore } from "pinia";
-import http from "@helpers/http-common";
-import { handlingFetchErr } from "@helpers/error-handler";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
+import http from "@/helpers/http-common";
+import { handlingFetchErr } from "@/helpers/error-handler";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
 
 import { allowSampleData } from "@/configs/base";
-import sampleCategory from "@helpers/sample-data/gepee-evidence/category";
-import sampleCategoryData from "@helpers/sample-data/gepee-evidence/category-data";
-import sampleDivre from "@helpers/sample-data/gepee-evidence/divre";
-import sampleWitel from "@helpers/sample-data/gepee-evidence/witel";
-import sampleLocationInfoNasional from "@helpers/sample-data/gepee-evidence/location-info-nasional";
-import sampleLocationInfoDivre from "@helpers/sample-data/gepee-evidence/location-info-divre";
-import sampleLocationInfoWitel from "@helpers/sample-data/gepee-evidence/location-info-witel";
-import sampleEvidenceList from "@helpers/sample-data/gepee-evidence/evidence-list";
-import sampleEvidence from "@helpers/sample-data/gepee-evidence/evidence";
+import sampleCategory from "@/helpers/sample-data/gepee-evidence/category";
+import sampleCategoryData from "@/helpers/sample-data/gepee-evidence/category-data";
+import sampleDivre from "@/helpers/sample-data/gepee-evidence/divre";
+import sampleWitel from "@/helpers/sample-data/gepee-evidence/witel";
+import sampleLocationInfoNasional from "@/helpers/sample-data/gepee-evidence/location-info-nasional";
+import sampleLocationInfoDivre from "@/helpers/sample-data/gepee-evidence/location-info-divre";
+import sampleLocationInfoWitel from "@/helpers/sample-data/gepee-evidence/location-info-witel";
+import sampleEvidenceList from "@/helpers/sample-data/gepee-evidence/evidence-list";
+import sampleEvidence from "@/helpers/sample-data/gepee-evidence/evidence";
 
 const getCurrentSemester = () => {
     const currMonth = new Date().getMonth() + 1;

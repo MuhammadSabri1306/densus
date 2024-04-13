@@ -1,14 +1,14 @@
 <script setup>
 import { ref, computed, watch, reactive } from "vue";
 import { useRoute } from "vue-router";
-import { toRoman } from "@helpers/number-format";
-import { useGepeeEvdStore } from "@stores/gepee-evidence";
+import { toRoman } from "@/helpers/number-format";
+import { useGepeeEvdStore } from "@/stores/gepee-evidence";
 import { categoryList } from "@/configs/gepee-evidence";
 import { BuildingOffice2Icon } from "@heroicons/vue/24/solid";
-import CheckedScoreGepeeEvidence from "@components/CheckedScoreGepeeEvidence.vue";
+import CheckedScoreGepeeEvidence from "@/components/CheckedScoreGepeeEvidence.vue";
 import Skeleton from "primevue/skeleton";
-import StarScore from "@components/ui/StarScore.vue";
-import DialogExportLinkVue from "@components/ui/DialogExportLink.vue";
+import StarScore from "@/components/ui/StarScore.vue";
+import DialogExportLinkVue from "@/components/ui/DialogExportLink.vue";
 
 const emit = defineEmits(["fetched"]);
 const info = reactive({

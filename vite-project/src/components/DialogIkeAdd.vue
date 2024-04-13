@@ -2,7 +2,7 @@
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useIkeStore } from "@/stores/ike";
-import { useViewStore } from "@stores/view";
+import { useViewStore } from "@/stores/view";
 import { required, integer, decimal } from "@vuelidate/validators";
 import { useDataForm } from "@/helpers/data-form";
 import Dialog from "primevue/dialog";

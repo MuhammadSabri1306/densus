@@ -1,10 +1,10 @@
 <script setup>
 import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import { useGepeeEvdStore } from "@stores/gepee-evidence";
+import { useGepeeEvdStore } from "@/stores/gepee-evidence";
 import { BuildingOfficeIcon } from "@heroicons/vue/24/solid";
 import Skeleton from "primevue/skeleton";
-import StarScore from "@components/ui/StarScore.vue";
+import StarScore from "@/components/ui/StarScore.vue";
 
 const route = useRoute();
 const gepeeEvdStore = useGepeeEvdStore();

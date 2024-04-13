@@ -1,12 +1,12 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useActivityStore } from "@stores/activity";
-import { useUserStore } from "@stores/user";
-import { useCollapseRow } from "@helpers/collapse-row";
-import { groupByLocation } from "@helpers/location-group";
+import { useActivityStore } from "@/stores/activity";
+import { useUserStore } from "@/stores/user";
+import { useCollapseRow } from "@/helpers/collapse-row";
+import { groupByLocation } from "@/helpers/location-group";
 import Skeleton from "primevue/skeleton";
 import CheckColumn from "./CheckColumn.vue";
-import DialogActivityCategory from "@components/DialogActivityCategory.vue";
+import DialogActivityCategory from "@/components/DialogActivityCategory.vue";
 
 const { collapsedDivre, collapsedWitel, toggleRowCollapse } = useCollapseRow();
 const showCategory = ref(false);

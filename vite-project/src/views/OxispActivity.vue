@@ -1,15 +1,15 @@
 <script setup>
 import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
-import FilterGepeeV2 from "@components/FilterGepeeV2.vue";
-import DatatableOxispInput from "@components/DatatableOxispInput.vue";
-import DialogOxisp from "@components/DialogOxisp.vue";
-import DialogOxispAdmin from "@components/DialogOxispAdmin.vue";
-import DialogOxispLocationSelect from "@components/DialogOxispLocationSelect.vue";
-import DialogOxispLocationDetail from "@components/DialogOxispLocationDetail.vue";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
+import FilterGepeeV2 from "@/components/FilterGepeeV2.vue";
+import DatatableOxispInput from "@/components/DatatableOxispInput.vue";
+import DialogOxisp from "@/components/DialogOxisp.vue";
+import DialogOxispAdmin from "@/components/DialogOxispAdmin.vue";
+import DialogOxispLocationSelect from "@/components/DialogOxispLocationSelect.vue";
+import DialogOxispLocationDetail from "@/components/DialogOxispLocationDetail.vue";
 
 const userStore = useUserStore();
 const isAdmin = computed(() => userStore.role == "admin");

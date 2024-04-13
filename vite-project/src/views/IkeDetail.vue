@@ -2,19 +2,19 @@
 import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useIkeStore } from "@/stores/ike";
-import { useViewStore } from "@stores/view";
-import { toNumberText, toRoman } from "@helpers/number-format";
-import DashboardBreadcrumb from "@layouts/DashboardBreadcrumb.vue";
+import { useViewStore } from "@/stores/view";
+import { toNumberText, toRoman } from "@/helpers/number-format";
+import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import { FilterMatchMode } from "primevue/api";
 import ButtonGroupAction from "@/components/ButtonGroupAction.vue";
 import Skeleton from "primevue/skeleton";
-import DialogIkeAdd from "@components/DialogIkeAdd.vue";
-import DialogIkeEdit from "@components/DialogIkeEdit.vue";
-import DialogPueOfflineEdit from "@components/DialogPueOfflineEdit.vue";
-import DialogPueOfflineDetail from "@components/DialogPueOfflineDetail.vue";
-import FilterGepeeMonth from "@components/FilterGepeeMonth.vue";
+import DialogIkeAdd from "@/components/DialogIkeAdd.vue";
+import DialogIkeEdit from "@/components/DialogIkeEdit.vue";
+import DialogPueOfflineEdit from "@/components/DialogPueOfflineEdit.vue";
+import DialogPueOfflineDetail from "@/components/DialogPueOfflineDetail.vue";
+import FilterGepeeMonth from "@/components/FilterGepeeMonth.vue";
 
 const ikeStore = useIkeStore();
 const route = useRoute();

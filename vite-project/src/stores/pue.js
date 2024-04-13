@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
-import http from "@helpers/http-common";
-import { handlingFetchErr } from "@helpers/error-handler";
-import { useUserStore } from "@stores/user";
+import http from "@/helpers/http-common";
+import { handlingFetchErr } from "@/helpers/error-handler";
+import { useUserStore } from "@/stores/user";
 import { backendUrl } from "@/configs/base";
 
 import { allowSampleData } from "@/configs/base";
-import samplePueDivre from "@helpers/sample-data/pue/divre";
-import samplePueWitel from "@helpers/sample-data/pue/witel";
-import samplePueRtu from "@helpers/sample-data/pue/rtu";
+import samplePueDivre from "@/helpers/sample-data/pue/divre";
+import samplePueWitel from "@/helpers/sample-data/pue/witel";
+import samplePueRtu from "@/helpers/sample-data/pue/rtu";
 
 export const usePueStore = defineStore("pue", {
     state: () => ({

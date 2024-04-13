@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from "vue";
-import { toFixedNumber } from "@helpers/number-format";
-import { getPueTextClass } from "@helpers/pue-color";
+import { toFixedNumber } from "@/helpers/number-format";
+import { getPueTextClass } from "@/helpers/pue-color";
 import Skeleton from "primevue/skeleton";
 
 const props = defineProps({

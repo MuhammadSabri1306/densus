@@ -1,8 +1,8 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useUserStore } from "@stores/user";
-import { useViewStore } from "@stores/view";
-import { useDataForm } from "@helpers/data-form";
+import { useUserStore } from "@/stores/user";
+import { useViewStore } from "@/stores/view";
+import { useDataForm } from "@/helpers/data-form";
 import { required } from "@vuelidate/validators";
 import Dialog from "primevue/dialog";
 
