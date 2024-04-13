@@ -5,7 +5,6 @@
  */
 $filterLocGepee = $this->get_loc_filter($filter, 'loc');
 $filterLocRtu = $this->get_loc_filter($filter, 'rtu');
-$filterDatePueOff = $this->get_datetime_filter('created_at', $filter, 'pue');
 $filterDatePueOn = $this->get_datetime_filter('timestamp', $filter, 'pue');
 $filterDateIke = $this->get_datetime_filter('created_at', $filter, 'ike');
 
@@ -30,11 +29,7 @@ function getTargetQuery($rawFilter) {
  * get Location data
  */
 $targetLocQuery = getTargetQuery($filterLocGepee);
-$selectQuery = [
-    'loc.*',
-    'IF(loc.tipe_perhitungan=\'ike\', NULL, IF(rtu.id_lokasi_gepee!=\'\', 1, 0)) AS is_pue_online',
-    "$targetLocQuery AS is_target"
-];
+$selectQuery = [ 'loc.*', "$targetLocQuery AS is_target" ];
 
 $this->db
     ->select(implode(', ', $selectQuery), false)
@@ -50,19 +45,6 @@ $categoryList = $this->db
     ->from($this->tableCategoryName)
     ->get()
     ->result_array();
-
-/*
- * get PUE Offline data
- */
-$targetLocQuery = getTargetQuery($filterLocGepee);
-$this->db
-    ->select("pue.id_location, pue.pue_value, pue.created_at, $targetLocQuery AS is_target")
-    ->from("$this->tablePueOfflineName AS pue")
-    ->join("$this->tableLocationName AS loc", 'loc.id=pue.id_location')
-    ->where($filterDatePueOff)
-    ->order_by('loc.divre_kode')
-    ->order_by('loc.witel_kode');
-$pueOfflineData = $this->db->get()->result_array();
 
 /*
  * get PUE Online data
@@ -228,8 +210,7 @@ $dataNasional = [];
 foreach($locationData as $location) {
 
     $isTarget = (bool) $location['is_target'];
-    $isPueOnline = is_null($location['is_pue_online']) ? null : (bool) $location['is_pue_online'];
-    unset($location['is_target'], $location['is_pue_online']);
+    unset($location['is_target']);
 
     $idLoc = $location['id'];
     $perfMonth = [];
@@ -314,10 +295,8 @@ foreach($locationData as $location) {
         'is_pue' => $location['tipe_perhitungan'] == 'pue',
         'is_ike' => $location['tipe_perhitungan'] == 'ike',
         'pue' => [
-            'offline' => null,
             'online' => null,
             'isReachTarget' => false,
-            'is_online' => $isPueOnline
         ],
         'ike' => null,
         'tagihan_pln' => $plnBill,
@@ -331,54 +310,37 @@ foreach($locationData as $location) {
     if($row['is_pue']) {
 
         /*
-        * join PUE Offline data to Result
+        * join PUE Online data to Result
         */
-        $pueOffline = [ 'sum' => 0, 'count' => 0 ];
-        for($i=0; $i<count($pueOfflineData); $i++) {
-            if($pueOfflineData[$i]['id_location'] == $location['id']) {
-                $pueOffline['sum'] += (double) $pueOfflineData[$i]['pue_value'];
-                $pueOffline['count']++;
+        $pueOnline = [ 'sum' => 0, 'count' => 0 ];
+        $hasNewPueCounter = false;
+
+        for($i=0; $i<count($pueOnlineData2); $i++) {
+
+            if($pueOnlineData2[$i]['id_lokasi_gepee'] == $location['id']) {
+                $pueOnline['sum'] += (double) $pueOnlineData2[$i]['pue_value'];
+                $pueOnline['count']++;
+                $hasNewPueCounter = true;
+            }
+
+        }
+
+        if(!$hasNewPueCounter) {
+            for($i=0; $i<count($pueOnlineData1); $i++) {
+
+                if(!$pueOnlineData1[$i]['has_new_counter'] && $pueOnlineData1[$i]['id_lokasi_gepee'] == $location['id']) {
+                    $pueOnline['sum'] += (double) $pueOnlineData1[$i]['pue_value'];
+                    $pueOnline['count']++;
+                }
+
             }
         }
         
-        if($pueOffline['count'] > 0) {
-            $row['pue']['offline'] = $pueOffline['sum'] / $pueOffline['count'];
+        if($pueOnline['count'] > 0) {
+            $row['pue']['online'] = $pueOnline['sum'] / $pueOnline['count'];
         }
 
-        /*
-        * join PUE Online data to Result
-        */
-        if($row['pue']['is_online']) {
-            $pueOnline = [ 'sum' => 0, 'count' => 0 ];
-            $hasNewPueCounter = false;
-
-            for($i=0; $i<count($pueOnlineData2); $i++) {
-
-                if($pueOnlineData2[$i]['id_lokasi_gepee'] == $location['id']) {
-                    $pueOnline['sum'] += (double) $pueOnlineData2[$i]['pue_value'];
-                    $pueOnline['count']++;
-                    $hasNewPueCounter = true;
-                }
-
-            }
-
-            if(!$hasNewPueCounter) {
-                for($i=0; $i<count($pueOnlineData1); $i++) {
-    
-                    if(!$pueOnlineData1[$i]['has_new_counter'] && $pueOnlineData1[$i]['id_lokasi_gepee'] == $location['id']) {
-                        $pueOnline['sum'] += (double) $pueOnlineData1[$i]['pue_value'];
-                        $pueOnline['count']++;
-                    }
-    
-                }
-            }
-            
-            if($pueOnline['count'] > 0) {
-                $row['pue']['online'] = $pueOnline['sum'] / $pueOnline['count'];
-            }
-        }
-
-        $row['pue']['isReachTarget'] = $this->is_pue_reach_target($row['pue']['online'], $row['pue']['offline']);
+        $row['pue']['isReachTarget'] = $this->is_pue_reach_target($row['pue']['online'], null);
 
     } elseif($row['is_ike']) {
 
@@ -413,7 +375,6 @@ foreach($locationData as $location) {
         'performance_summary' => $row['performance_summary'],
         'performance_summary_yearly' => $row['performance_summary_yearly'],
         'pue_online' => $row['pue']['online'],
-        'pue_offline' => $row['pue']['offline'],
         'ike' => $row['ike'],
         'tagihan_pln' => $row['tagihan_pln'],
         'pln_saving' => $row['pln_saving'],
@@ -519,14 +480,6 @@ foreach ($dataNasional as $item) {
                 $groupedData[$divreKode][$witelKode]['count_pue_online']++;
             }
 
-            if ($item['pue_offline'] !== null) {
-                if ($groupedData[$divreKode][$witelKode]['pue_offline'] === null) {
-                    $groupedData[$divreKode][$witelKode]['pue_offline'] = 0;
-                }
-                $groupedData[$divreKode][$witelKode]['pue_offline'] += $item['pue_offline'];
-                $groupedData[$divreKode][$witelKode]['count_pue_offline']++;
-            }
-
             if ($item['ike'] !== null) {
                 if ($groupedData[$divreKode][$witelKode]['ike'] === null) {
                     $groupedData[$divreKode][$witelKode]['ike'] = 0;
@@ -549,11 +502,9 @@ foreach ($dataNasional as $item) {
                 'pln_saving_yoy' => $item['pln_saving_yoy'],
                 'pln_saving_yoy_percent' => $item['pln_saving_yoy_percent'],
                 'pue_online' => $item['pue_online'],
-                'pue_offline' => $item['pue_offline'],
                 'ike' => $item['ike'],
                 'count' => 1,
                 'count_pue_online' => ($item['pue_online'] !== null) ? 1 : 0,
-                'count_pue_offline' => ($item['pue_offline'] !== null) ? 1 : 0,
                 'count_ike' => ($item['ike'] !== null) ? 1 : 0,
                 'count_pln_saving' => ($item['pln_saving'] !== null) ? 1 : 0,
                 'count_pln_saving_percent' => ($item['pln_saving_percent'] !== null) ? 1 : 0,
@@ -574,11 +525,9 @@ foreach ($dataNasional as $item) {
                 'pln_saving_yoy' => $item['pln_saving_yoy'],
                 'pln_saving_yoy_percent' => $item['pln_saving_yoy_percent'],
                 'pue_online' => $item['pue_online'],
-                'pue_offline' => $item['pue_offline'],
                 'ike' => $item['ike'],
                 'count' => 1,
                 'count_pue_online' => ($item['pue_online'] !== null) ? 1 : 0,
-                'count_pue_offline' => ($item['pue_offline'] !== null) ? 1 : 0,
                 'count_ike' => ($item['ike'] !== null) ? 1 : 0,
                 'count_pln_saving' => ($item['pln_saving'] !== null) ? 1 : 0,
                 'count_pln_saving_percent' => ($item['pln_saving_percent'] !== null) ? 1 : 0,
@@ -616,10 +565,6 @@ foreach ($groupedData as $divreKode => &$divreGroup) {
             $group['pue_online'] /= $group['count_pue_online'];
         }
 
-        if ($group['pue_offline'] !== null) {
-            $group['pue_offline'] /= $group['count_pue_offline'];
-        }
-
         if ($group['ike'] !== null) {
             $group['ike'] /= $group['count_ike'];
         }
@@ -638,11 +583,9 @@ foreach ($groupedData as $divreKode => &$divreGroup) {
         'pln_saving_yoy' => null,
         'pln_saving_yoy_percent' => null,
         'pue_online' => null,
-        'pue_offline' => null,
         'ike' => null,
         'count' => 0,
         'count_pue_online' => 0,
-        'count_pue_offline' => 0,
         'count_ike' => 0,
         'count_pln_saving' => 0,
         'count_pln_saving_percent' => 0,
@@ -689,11 +632,6 @@ foreach ($groupedData as $divreKode => &$divreGroup) {
             $divreItem['count_pue_online']++;
         }
 
-        if($group['pue_offline'] !== null) {
-            $divreItem['pue_offline'] += $group['pue_offline'];
-            $divreItem['count_pue_offline']++;
-        }
-
         if($group['ike'] !== null) {
             $divreItem['ike'] += $group['ike'];
             $divreItem['count_ike']++;
@@ -711,7 +649,6 @@ foreach ($groupedData as $divreKode => &$divreGroup) {
         'pln_saving_yoy' => $divreItem['count_pln_saving_yoy'] < 1 ? null : $divreItem['pln_saving_yoy'] / $divreItem['count_pln_saving_yoy'],
         'pln_saving_yoy_percent' => $divreItem['count_pln_saving_yoy_percent'] < 1 ? null : $divreItem['pln_saving_yoy_percent'] / $divreItem['count_pln_saving_yoy_percent'],
         'pue_online' => $divreItem['count_pue_online'] < 1 ? null : $divreItem['pue_online'] / $divreItem['count_pue_online'],
-        'pue_offline' => $divreItem['count_pue_offline'] < 1 ? null : $divreItem['pue_offline'] / $divreItem['count_pue_offline'],
         'ike' => $divreItem['count_ike'] < 1 ? null : $divreItem['ike'] / $divreItem['count_ike']
     ];
 }
@@ -726,11 +663,9 @@ $nasionalItem = [
     'pln_saving_yoy' => null,
     'pln_saving_yoy_percent' => null,
     'pue_online' => null,
-    'pue_offline' => null,
     'ike' => null,
     'count' => 0,
     'count_pue_online' => 0,
-    'count_pue_offline' => 0,
     'count_ike' => 0,
     'count_pln_saving' => 0,
     'count_pln_saving_percent' => 0,
@@ -777,11 +712,6 @@ foreach($groupedData as $group) {
         $nasionalItem['count_pue_online']++;
     }
 
-    if($group['pue_offline'] !== null) {
-        $nasionalItem['pue_offline'] += $group['pue_offline'];
-        $nasionalItem['count_pue_offline']++;
-    }
-
     if($group['ike'] !== null) {
         $nasionalItem['ike'] += $group['ike'];
         $nasionalItem['count_ike']++;
@@ -799,10 +729,9 @@ $nasional = [
     'pln_saving_yoy' => $nasionalItem['count_pln_saving_yoy'] < 1 ? null : $nasionalItem['pln_saving_yoy'] / $nasionalItem['count_pln_saving_yoy'],
     'pln_saving_yoy_percent' => $nasionalItem['count_pln_saving_yoy_percent'] < 1 ? null : $nasionalItem['pln_saving_yoy_percent'] / $nasionalItem['count_pln_saving_yoy'],
     'pue_online' => $nasionalItem['count_pue_online'] < 1 ? null : $nasionalItem['pue_online'] / $nasionalItem['count_pue_online'],
-    'pue_offline' => $nasionalItem['count_pue_offline'] < 1 ? null : $nasionalItem['pue_offline'] / $nasionalItem['count_pue_offline'],
     'ike' => $nasionalItem['count_ike'] < 1 ? null : $nasionalItem['ike'] / $nasionalItem['count_ike'],
 ];
-$nasional['isPueReachTarget'] = $this->is_pue_reach_target($nasional['pue_online'], $nasional['pue_offline']);
+$nasional['isPueReachTarget'] = $this->is_pue_reach_target($nasional['pue_online'], null);
 
 $this->result = [
     'gepee' => $data,

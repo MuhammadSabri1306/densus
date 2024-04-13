@@ -371,7 +371,7 @@ class Excel_export extends CI_Controller
         $monthList = isset($data['month_list']) ? $data['month_list'] : [];
         $categoryList = isset($data['category_list']) ? $data['category_list'] : [];
         $schedule = isset($data['schedule']) ? $data['schedule'] : [];
-        
+
         $this->excel
             ->selectCell([2, 2], [2, 3])
             ->mergeCell()
@@ -476,7 +476,7 @@ class Excel_export extends CI_Controller
                 }
             }
         }
-        
+
         $this->excel->createDownload('GEPEE Activity Penjadwalan '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
     }
 
@@ -708,14 +708,10 @@ class Excel_export extends CI_Controller
         $currCol++;
 
         $this->excel
-            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 3)])
+            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 1)])
             ->mergeCell()
             ->setValue("PUE (bulan $monthName)", $currRow, $currCol);
-        $this->excel->setValue('OFFLINE/ONLINE', ($currRow + 1), $currCol);
-        $currCol++;
-        $this->excel->setValue('OFFLINE', ($currRow + 1), $currCol);
-        $currCol++;
-        $this->excel->setValue('ONLINE', ($currRow + 1), $currCol);
+        $this->excel->setValue('Nilai PUE', ($currRow + 1), $currCol);
         $currCol++;
         $this->excel->setValue('PUE <= 1.8', ($currRow + 1), $currCol);
         $currCol++;
@@ -792,15 +788,6 @@ class Excel_export extends CI_Controller
                 ->setAlignment('center');
             $currCol++;
 
-            $isOnlineText = !$item['is_pue'] ? null : ($item['pue']['is_online'] ? 'ONLINE' : 'OFFLINE');
-            $this->excel
-                ->setValue($isOnlineText, $currRow, $currCol)
-                ->setAlignment('center');
-            $currCol++;
-
-            $this->excel->setValue(( !$item['is_pue'] ? null : $item['pue']['offline'] ), $currRow, $currCol);
-            $currCol++;
-
             $this->excel->setValue(( !$item['is_pue'] ? null : $item['pue']['online'] ), $currRow, $currCol);
             $currCol++;
 
@@ -812,23 +799,25 @@ class Excel_export extends CI_Controller
             
             $this->excel->setValue($item['tagihan_pln'], $currRow, $currCol);
             $currCol++;
-            
-            $this->excel->setValue($item['pln_saving'], $currRow, $currCol);
+
+            if(!is_null($item['pln_saving'])) {
+                $this->excel->setValue($item['pln_saving'], $currRow, $currCol);
+            }
             $currCol++;
-            
-            $percentText = (string) $item['pln_saving_percent'];
-            $percentText .= "%";
-            $this->excel
-                ->setValue($percentText, $currRow, $currCol)
-                ->setAlignment('center');
+
+            if(!is_null($item['pln_saving_percent'])) {
+                $this->excel
+                    ->setValue($item['pln_saving_percent'], $currRow, $currCol)
+                    ->setAlignment('center');
+            }
 
             foreach($item['performance'] as $perf) {
                 $currCol++;
-                $percentText = (string) $perf['percentage'];
-                $percentText .= "%";
-                $this->excel
-                    ->setValue($percentText, $currRow, $currCol)
-                    ->setAlignment('center');
+                if(!is_null($perf['percentage'])) {
+                    $this->excel
+                        ->setValue($perf['percentage'], $currRow, $currCol)
+                        ->setAlignment('center');
+                }
             }
 
             $currCol += 2;
