@@ -4,6 +4,7 @@ class Monitoring_rtu_model extends CI_Model
     protected $tableRtuName = 'rtu_map';
     protected $tableKwhName = 'kwh_counter';
     protected $tablePortStatusName = 'rtu_port_status';
+    protected $tableOpnAlarm = 'alarm_history'; // opn => inside db opnimus_new
     protected $tableNonRegionalName = 'master_non_regional'; // non => Newosase/New
     protected $tableNonWitelName = 'master_non_witel';
 

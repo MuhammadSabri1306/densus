@@ -372,6 +372,8 @@ for($j=0; $j<$degListCount; $j++) {
 
 }
 
+unset($degList);
+
 $costEstimation['total_cost_curr_year']['total_cost'] = ($costEstimation['kwh_cost_curr_year']['kwh_cost'] ?? 0) + ($costEstimation['bbm_cost_curr_year']['bbm_cost'] ?? 0);
 $costEstimation['total_cost_curr_month']['total_cost'] = ($costEstimation['kwh_cost_curr_month']['kwh_cost'] ?? 0) + ($costEstimation['bbm_cost_curr_month']['bbm_cost'] ?? 0);
 
