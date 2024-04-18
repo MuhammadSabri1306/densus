@@ -94,7 +94,7 @@ const onDivreChange = divre => {
 
 const userStore = useUserStore();
 (async () => {
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    // await new Promise(resolve => setTimeout(resolve, 3000));
 
     isListboxDivreLoading.value = true;
     isListboxWitelLoading.value = true;
