@@ -23,13 +23,20 @@ export const useDataForm = fields => {
 	const data = reactive(state);
 	const v$ = useVuelidate(validations, data);
 	const hasSubmitted = ref(false);
-    const getInvalidClass = (key, invalidClass, options = {}) => {
+
+	const isInvalid = (key, options = {}) => {
+		if(v$.value[key] === undefined)
+			throw new Error(`key:${ key } is undefined`);
 		const afterSubmit = options.afterSubmit !== false;
 		if(afterSubmit && !hasSubmitted.value)
+			return false;
+		return v$.value[key].$invalid;
+	};
+
+    const getInvalidClass = (key, invalidClass, options = {}) => {
+        if(!isInvalid(key, options))
 			return null;
-        if(v$.value[key].$invalid)
-            return invalidClass || "invalid";
-        return null;
+		return invalidClass || "invalid";
     };
 
 	const getFirstError = (fieldKey = null) => {
@@ -61,7 +68,7 @@ export const useDataForm = fields => {
 		};
 	};
 
-	return { data, v$, hasSubmitted, getInvalidClass, getFirstError, getFirstErrorMsg, useErrorTooltip };
+	return { data, v$, hasSubmitted, isInvalid, getInvalidClass, getFirstError, getFirstErrorMsg, useErrorTooltip };
 };
 
 export const buildFormData = (data, keysArr) => {

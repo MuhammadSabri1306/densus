@@ -97,7 +97,8 @@ export const useViewStore = defineStore("view", {
             const list = {
                 "basic": "",
                 "gepee": "/gepee",
-                "sto_master": "/sto-master"
+                "sto_master": "/sto-master",
+                "newosase": "/newosase",
             };
             return list[$locationKey];
         },
@@ -110,12 +111,26 @@ export const useViewStore = defineStore("view", {
                 const response = await http.get(url, this.fetchHeader);
                 if(response.data.divre)
                     return response.data.divre;
-        
                 console.warn(response.data);
                 return [];
             } catch(err) {
                 handlingFetchErr(err);
                 return allowSampleData ? sampleDivre.divre : [];
+            }
+        },
+
+        async getDivreByWitel(witelCode, locationKey = "basic") {
+            const urlKey = this.getLocationUrlKey(locationKey);
+            const url = `/location${ urlKey }/divre?witel=${ witelCode }`;
+            try {
+                const response = await http.get(url, this.fetchHeader);
+                if(response.data.divre)
+                    return response.data.divre;
+                console.warn(response.data);
+                return null;
+            } catch(err) {
+                handlingFetchErr(err);
+                return null;
             }
         },
 
@@ -150,7 +165,7 @@ export const useViewStore = defineStore("view", {
                     return response.data.witel;
         
                 console.warn(response.data);
-                return {};
+                return [];
         
             } catch(err) {
         

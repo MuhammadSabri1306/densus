@@ -78,7 +78,7 @@ export const useRtuStore = defineStore("rtu", {
                 callback && callback({ success: true, status: response.status });
             } catch(err) {
                 handlingFetchErr(err);
-                callback && callback({ success: false, status: err.response.status });
+                callback && callback({ success: false, status: err.response?.status });
             }
         },
 

@@ -1,17 +1,23 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useRtuStore } from "@/stores/rtu";
+import { useNewosaseStore } from "@/stores/newosase";
 import { useViewStore } from "@/stores/view";
 import { required } from "@vuelidate/validators";
 import { useDataForm } from "@/helpers/data-form2";
 import { mustBeRtuCode } from "@/helpers/form-validator";
 import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
-import InputGroupLocation from "@/components/InputGroupLocation.vue";
+import InputGroupLocationV2 from "@/components/InputGroupLocationV2.vue";
+import ListboxFilterV2 from "@/components/ListboxFilterV2.vue";
 import InputSwitch from "primevue/inputswitch";
-import ListboxFilter from "@/components/ListboxFilter.vue";
 
-const { data, v$, hasSubmitted, getInvalidClass, useErrorTooltip } = useDataForm({
+const router = useRouter();
+const rtuStore = useRtuStore();
+const newosaseStore = useNewosaseStore();
+const viewStore = useViewStore();
+
+const { data, v$, hasSubmitted, isInvalid, getInvalidClass, useErrorTooltip } = useDataForm({
     rtuCode: { required, mustBeRtuCode },
     rtuName: { required },
     location: { required },
@@ -29,75 +35,112 @@ const { data, v$, hasSubmitted, getInvalidClass, useErrorTooltip } = useDataForm
     idLocGepee: {}
 });
 
-const inputLocation = ref(null);
-const onLocationChange = (loc) => {
-    data.divreCode = loc.divre_kode;
-    data.divreName = loc.divre_name;
-    data.witelCode = loc.witel_kode;
-    data.witelName = loc.witel_name;
+const isGepeeStoInvalid = () => hasSubmitted.value && data.useGepee && !data.idLocGepee;
+
+const rtuList = ref([]);
+const isRtuListLoading = ref(false);
+
+const gepeeStoList = ref([]);
+const isGepeeStoLoading = ref(false);
+
+const sortNewosaseRtu = rtus => {
+    return rtus.sort((a, b) => {
+        const nameA = a.rtu_name.toUpperCase();
+        const nameB = b.rtu_name.toUpperCase();
+        return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
+    });
 };
 
-const viewStore = useViewStore();
-const router = useRouter();
-
-const listboxGepeeSto = ref(null);
-
-const watcherSrc = () => {
-    const useGepee = data.useGepee;
-    const divre = data.divreCode;
-    const witel = data.witelCode;
-    return { useGepee, divre, witel };
+const resetRtuData = () => {
+    data.rtuCode = null;
+    data.rtuName = null;
+    data.location = null;
+    data.stoCode = null;
 };
 
-const watcherCall = ({ useGepee, divre, witel }) => {
-    if(!useGepee) {
-        if(listboxGepeeSto.value)
-            listboxGepeeSto.value.setDisabled(true);
-        data.idLocGepee = null;
-        return;
+const onRtuChange = rtu => {
+    data.rtuName = rtu?.rtu_name || null;
+    data.location = rtu?.locs_name || null;
+
+    let stoCode = null;
+    if(rtu?.rtu_sname) {
+        const rtuCodePieces = rtu.rtu_sname.split("-");
+        if(rtuCodePieces.length > 2)
+            stoCode = rtuCodePieces[rtuCodePieces.length - 1];
     }
+    data.stoCode = stoCode;
+};
 
-    if(listboxGepeeSto.value) {
-        listboxGepeeSto.value.setDisabled(false);
-        listboxGepeeSto.value.fetch(
-            () => viewStore.getSto({ divre, witel }, "gepee"),
-            list => {
-                const index = list.findIndex(item => item.id == data.idLocGepee);
-                if(index >= 0)
-                    return;
-                listboxGepeeSto.value.setValue(null);
-                data.idLocGepee = null;
+const onLocationInit = ({ divre, witel }) => {
+    const regionalId = divre?.regional_id || null;
+    const witelId = witel?.witel_id || null;
+    if(regionalId && witelId) {
+        isRtuListLoading.value = true;
+        newosaseStore.getMapViewRtu({ regionalId, witelId }, rtus => {
+            rtuList.value = sortNewosaseRtu(rtus);
+            isRtuListLoading.value = false;
+        });
+    }
+    data.divreCode = divre?.divre_kode || null;
+    data.divreName = divre?.regional_name || null;
+    data.witelCode = witel?.witel_kode || null;
+    data.witelName = witel?.witel_name || null;
+};
+
+const onLocationChange = ({ divre, witel }) => {
+    rtuList.value = [];
+    gepeeStoList.value = [];
+    const regionalId = divre?.regional_id || null;
+    const witelId = witel?.witel_id || null;
+
+    if(regionalId && witelId) {
+        isRtuListLoading.value = true;
+        newosaseStore.getMapViewRtu({ regionalId, witelId }, rtus => {
+            if(data.rtuCode && !rtus.find(item => item.rtu_sname == data.rtuCode))
+                resetRtuData();
+            rtuList.value = sortNewosaseRtu(rtus);
+            isRtuListLoading.value = false;
+            if(data.useGepee) {
+                isGepeeStoLoading.value = true;
+                viewStore.getSto({ divre: data.divreCode, witel: data.witelCode }, "gepee")
+                    .then(sList => {
+                        gepeeStoList.value = sList;
+                        if(data.idLocGepee && !sList.find(item => item.id == data.idLocGepee))
+                            data.idLocGepee = null;
+                    })
+                    .catch(err => console.error(err))
+                    .finally(() => isGepeeStoLoading.value = false);
             }
-        );
+        });
+    } else {
+        resetRtuData();
+        data.idLocGepee = null;
+    }
+
+    data.divreCode = divre?.divre_kode || null;
+    data.divreName = divre?.regional_name || null;
+    data.witelCode = witel?.witel_kode || null;
+    data.witelName = witel?.witel_name || null;
+};
+
+const onInputUseGepeeChange = () => {
+    gepeeStoList.value = [];
+    data.idLocGepee = null;
+    if(data.useGepee && data.divreCode && data.witelCode) {
+        isGepeeStoLoading.value = true;
+        viewStore.getSto({ divre: data.divreCode, witel: data.witelCode }, "gepee")
+            .then(sList => gepeeStoList.value = sList)
+            .catch(err => console.error(err))
+            .finally(() => isGepeeStoLoading.value = false);
     }
 };
 
-watch(watcherSrc, watcherCall);
-const onGepeeLocChange = idLocGepee => data.idLocGepee = idLocGepee;
-
-const validateStoGepee = () => {
-    if(!data.useGepee)
-        return true;
-
-    listboxGepeeSto.value.validate();
-    return data.idLocGepee ? true : false;
-};
-
-const useRtuCodeTooltip = (field) => {
-    const message = "Kode RTU tidak dapat dikosongkan, hanya menerima karakter Alfanumerik (A-Z, 0-1) dan tanda '-'";
-    return useErrorTooltip({ field, message });
-};
-
-const isLoading = ref(false);
-const rtuStore = useRtuStore();
-
+const isSaveLoading = ref(false);
 const onSubmit = async () => {
     hasSubmitted.value = true;
     const isValid = await v$.value.$validate();
-    const isWitelValid = inputLocation.value.validate();
-    const isGepeeLocValid = validateStoGepee();
-
-    if(!isValid || !isWitelValid || !isGepeeLocValid)
+    const isGepeeStoValid = !isGepeeStoInvalid();
+    if(!isValid || !isGepeeStoValid)
         return;
 
     const body = {
@@ -119,9 +162,9 @@ const onSubmit = async () => {
     if(data.useGepee)
         body.id_lokasi_gepee = data.idLocGepee;
 
-    isLoading.value = true;
+    isSaveLoading.value = true;
     rtuStore.create(body, response => {
-        isLoading.value = false;
+        isSaveLoading.value = false;
         hasSubmitted.value = true;
         if(!response.success)
             return;
@@ -153,17 +196,22 @@ const onSubmit = async () => {
                         </div>
                         <div class="card-body">
                             <div class="px-md-4 py-3">
-                                <form @submit.prevent="onSubmit">
+                                <form @submit.prevent="onSubmit" autocomplete="off">
+                                    <InputGroupLocationV2 v-model:divreValue="v$.divreCode.$model" v-model:witelValue="v$.witelCode.$model"
+                                        applyUserLevel locationType="newosase" divreLabelKey="regional_name" isDivreRequired isWitelRequired
+                                        :isDivreInvalid="isInvalid('divreCode')" :isWitelInvalid="isInvalid('witelCode')"
+                                        @init="onLocationInit" @change="onLocationChange" />
+                                    <div class="form-group">
+                                        <label for="rtuCode" class="required">Nama RTU</label>
+                                        <ListboxFilterV2 v-model:list="rtuList" v-model:value="v$.rtuCode.$model" @change="onRtuChange"
+                                            :isLoading="isRtuListLoading" :isInvalid="isInvalid('rtuName')" valueKey="rtu_sname"
+                                            labelKey="rtu_name" inputId="rtuCode" inputPlaceholder="Pilih RTU" />
+                                    </div>
                                     <div class="form-group">
                                         <label for="rtuCode" class="required">Kode RTU</label>
                                         <input v-model="v$.rtuCode.$model" :class="getInvalidClass('rtuCode', 'is-invalid')"
-                                            class="form-control" id="rtuCode" name="rtuCode" type="text" placeholder="Cth. RTU00-D7-BAL"
-                                            v-tooltip.top="useRtuCodeTooltip('rtuCode')">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="rtuName" class="required">Nama RTU</label>
-                                        <input v-model="v$.rtuName.$model" :class="getInvalidClass('rtuName', 'is-invalid')"
-                                            class="form-control" id="rtuName" name="rtuName" type="text" placeholder="Cth. RTU STO BALAI KOTA">
+                                            class="form-control" id="rtuCode" name="rtuCode" type="text" disabled
+                                            placeholder="Cth. RTU00-D7-BAL" />
                                     </div>
                                     <div class="form-group">
                                         <label for="location" class="required">Lokasi</label>
@@ -175,10 +223,6 @@ const onSubmit = async () => {
                                         <input v-model="v$.stoCode.$model" :class="getInvalidClass('stoCode', 'is-invalid')"
                                             class="form-control" id="stoCode" name="stoCode" type="text" placeholder="Cth. BAL">
                                     </div>
-                                    
-                                    <InputGroupLocation ref="inputLocation" :divreValue="data.divreCode" :witelValue="data.witelCode"
-                                        @change="onLocationChange" />
-    
                                     <div class="row mb-4 align-items-end">
                                         <div class="col-md-6 col-lg-auto">
                                             <div class="form-group">
@@ -220,7 +264,8 @@ const onSubmit = async () => {
                                     <div class="px-4">
                                         <div class="row align-items-center">
                                             <div class="col-auto mb-2">
-                                                <InputSwitch v-model="data.useGepee" :disabled="isLoading" inputId="switchUseGepee" />
+                                                <InputSwitch v-model="data.useGepee" :disabled="isSaveLoading" @change="onInputUseGepeeChange"
+                                                    inputId="switchUseGepee" />
                                             </div>
                                             <div class="col-auto mb-2">
                                                 <label for="switchUseGepee">Hubungkan</label>
@@ -229,11 +274,12 @@ const onSubmit = async () => {
                                     </div>
                                     <div class="form-group ps-4 mb-5">
                                         <label id="inputGepeeLocation" :class="{ 'required': data.useGepee }">Pilih Lokasi</label>
-                                        <ListboxFilter ref="listboxGepeeSto" inputId="inputGepeeLocation" inputPlaceholder="Pilih Lokasi GEPEE"
-                                            :isRequired="data.useGepee" valueKey="id" labelKey="sto_name" @change="onGepeeLocChange" />
+                                        <ListboxFilterV2 v-model:list="gepeeStoList" v-model:value="v$.idLocGepee.$model" :isLoading="isGepeeStoLoading"
+                                            :isInvalid="isGepeeStoInvalid()" valueKey="id" labelKey="sto_name"
+                                            inputId="inputGepeeLocation" inputPlaceholder="Pilih Lokasi GEPEE" />
                                     </div>
                                     <div class="d-flex justify-content-end px-4">
-                                        <button type="submit" :disabled="isLoading" :class="{ 'btn-loading': isLoading }"
+                                        <button type="submit" :disabled="isSaveLoading" :class="{ 'btn-loading': isSaveLoading }"
                                             class="btn btn-primary btn-lg">Simpan RTU</button>
                                     </div>
                                 </form>
