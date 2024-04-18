@@ -83,6 +83,59 @@ class Location extends RestController
         }
     }
 
+    // --------------------------- NEWOSASE
+
+    public function divre_newosase_get()
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+
+        if($status === 200) {
+
+            $witelCode = $this->input->get('witel') ?? null;
+
+            $this->load->model('master_non_location_model');
+            $dataDivre = !$witelCode ? $this->master_non_location_model->get_divre()
+                : $this->master_non_location_model->find_divre_by_witel($witelCode);
+
+			$data = [
+                'divre' => $dataDivre,
+                'success' => true
+            ];
+
+        }
+
+        $this->response($data, $status);
+    }
+
+    public function witel_by_divre_newosase_get($divreCode)
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+
+        if($status === 200) {
+
+            $this->load->model('master_non_location_model');
+			$data = [
+                'witel' => $this->master_non_location_model->get_witel_by_divre($divreCode),
+                'success' => true
+            ];
+
+        }
+
+        $this->response($data, $status);
+    }
+
+    // ---------------------------------- NEWOSASE
+
     public function gepee_divre_get()
     {
         $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
