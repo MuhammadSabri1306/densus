@@ -1,15 +1,6 @@
 <?php
 
-function customRound($numb, $precision = 0) {
-    $numbPow = pow(10, $precision);
-    $result = floor($numb * $numbPow) / $numbPow;
-    $lastDecimal = ($numb - $result) * $numbPow;
-    
-    if($lastDecimal < 0.5) return $result;
-
-    $result = (ceil($result * $numbPow) + 1) / $numbPow;
-    return $result;
-}
+$this->load->helper('number');
 
 $this->db
     ->select('*')
@@ -35,6 +26,7 @@ $this->db
     ->select('rtu_kode, AVG(pue_value) AS pue_value, timestamp, date_format(timestamp, "%Y-%m-%d %H") AS hour, no_port, satuan')
     ->from("pue_counter_new")
     ->where('timestamp >=', $currYearDate)
+    ->where('rtu_kode', $rtuCode)
     ->group_by('rtu_kode')
     ->group_by('hour');
 $pue2Values = $this->db->get()->result_array();
@@ -110,4 +102,5 @@ try {
     dd(strval($err));
 }
 
+// dd_json($data);
 $this->result = $data;

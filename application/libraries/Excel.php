@@ -137,19 +137,11 @@ class Excel
         }
         
         $startRowNumber++;
-        // dd_json($data);
-        for($i=$startRowNumber; $i<count($data); $i++) {
-            // if($i == 11920) {
-                // dd(count($data));
-                // 54982
-                // dd($i);
-            //     dd_json($data[$i + 1]);
-            // }
-
+        for($i=0; $i<count($data); $i++) {
             for($j=$startColNumber; $j<count($this->field); $j++) {
 
                 $dataKey = $this->field[$j]['key'];
-                $this->setValue($data[$i][$dataKey], $i, $j);
+                $this->setValue($data[$i][$dataKey], $i + $startRowNumber, $j);
 
             }
         }
