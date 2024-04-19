@@ -7,6 +7,10 @@ const sampleUserResponse = {
     level: "nasional",
     location: null,
     locationId: null,
+    divreCode: null,
+    divreName: null,
+    witelCode: null,
+    witelName: null,
     token: "sdasa"
 };
 

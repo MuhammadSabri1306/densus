@@ -21,6 +21,11 @@ class Auth_jwt
     public $location; // nasional / divre_name / witel_name
     public $locationId; // null / divre_code / witel_code
 
+    public $divreCode; // new item
+    public $divreName;
+    public $witelCode;
+    public $witelName;
+
     public function __construct()
     {
         $this->CI =& get_instance();
@@ -51,6 +56,10 @@ class Auth_jwt
             $this->level = $payload->level;
             $this->location = $payload->location;
             $this->locationId = $payload->locationId;
+            $this->divreCode = isset($payload->divreCode) ? $payload->divreCode : null;
+            $this->divreName = isset($payload->divreName) ? $payload->divreName : null;
+            $this->witelCode = isset($payload->witelCode) ? $payload->witelCode : null;
+            $this->witelName = isset($payload->witelName) ? $payload->witelName : null;
         }
         
         return 200;
@@ -119,6 +128,10 @@ class Auth_jwt
             'level' => $this->level,
             'location' => $this->location,
             'locationId' => $this->locationId,
+            'divreCode' => isset($this->divreCode) ? $this->divreCode : null,
+            'divreName' => isset($this->divreName) ? $this->divreName : null,
+            'witelCode' => isset($this->witelCode) ? $this->witelCode : null,
+            'witelName' => isset($this->witelName) ? $this->witelName : null,
         ];
     }
 }

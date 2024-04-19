@@ -17,6 +17,10 @@ export const useUserStore = defineStore("user", {
         level: null,
         location: null,
         locationId: null,
+        divreCode: null,
+        divreName: null,
+        witelCode: null,
+        witelName: null,
         token: null,
         userData: {}
     }),
@@ -58,6 +62,10 @@ export const useUserStore = defineStore("user", {
                     level: data.level,
                     location: data.location || null,
                     locationId: data.locationId || null,
+                    divreCode: data.divreCode || null,
+                    divreName: data.divreName || null,
+                    witelCode: data.witelCode || null,
+                    witelName: data.witelName || null,
                     token: data.token
                 });
                 callback && callback({ success: true, status: response.status });
@@ -105,6 +113,14 @@ export const useUserStore = defineStore("user", {
                 this.location = params.location;
             if(params.locationId && params.locationId !== undefined)
                 this.locationId = params.locationId;
+            if(params.divreCode && params.divreCode !== undefined)
+                this.divreCode = params.divreCode;
+            if(params.divreName && params.divreName !== undefined)
+                this.divreName = params.divreName;
+            if(params.witelCode && params.witelCode !== undefined)
+                this.witelCode = params.witelCode;
+            if(params.witelName && params.witelName !== undefined)
+                this.witelName = params.witelName;
             if(params.token && params.token !== undefined)
                 this.token = params.token;
 
@@ -118,6 +134,10 @@ export const useUserStore = defineStore("user", {
 				level: this.level,
 				location: this.location,
 				locationId: this.locationId,
+				divreCode: this.divreCode,
+				divreName: this.divreName,
+				witelCode: this.witelCode,
+				witelName: this.witelName,
 				token: this.token
 			}, 2);
 		},
@@ -128,22 +148,18 @@ export const useUserStore = defineStore("user", {
                 return;
 
 			let params = {};
-            if(data.id)
-                params.id = data.id;
-            if(data.name)
-                params.name = data.name;
-            if(data.username)
-                params.username = data.username;
-            if(data.role)
-                params.role = data.role;
-            if(data.level)
-                params.level = data.level;
-            if(data.location)
-                params.location = data.location;
-            if(data.locationId)
-                params.locationId = data.locationId;
-            if(data.token)
-                params.token = data.token;
+            if(data.id) params.id = data.id;
+            if(data.name) params.name = data.name;
+            if(data.username) params.username = data.username;
+            if(data.role) params.role = data.role;
+            if(data.level) params.level = data.level;
+            if(data.location) params.location = data.location;
+            if(data.locationId) params.locationId = data.locationId;
+            if(data.divreCode) params.divreCode = data.divreCode;
+            if(data.divreName) params.divreName = data.divreName;
+            if(data.witelCode) params.witelCode = data.witelCode;
+            if(data.witelName) params.witelName = data.witelName;
+            if(data.token) params.token = data.token;
             this.sync(params, false);
 		},
 
@@ -235,6 +251,10 @@ export const useUserStore = defineStore("user", {
                     level: data.level,
                     location: data.location || null,
                     locationId: data.locationId || null,
+                    divreCode: data.divreCode || null,
+                    divreName: data.divreName || null,
+                    witelCode: data.witelCode || null,
+                    witelName: data.witelName || null,
                     token: data.token
                 });
                 callback && callback({ success: true, status: response.status });

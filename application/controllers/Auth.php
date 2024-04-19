@@ -66,7 +66,6 @@ class Auth extends RestController
             $this->auth_jwt->name = $dataUser->nama;
             $this->auth_jwt->role = $dataUser->role;
             $this->auth_jwt->level = $dataUser->organisasi;
-            
             if($dataUser->organisasi == 'divre') {
                 $this->auth_jwt->location = $dataUser->divre_name;
                 $this->auth_jwt->locationId = $dataUser->divre_code;
@@ -77,6 +76,10 @@ class Auth extends RestController
                 $this->auth_jwt->location = 'nasional';
                 $this->auth_jwt->locationId = null;
             }
+            $this->auth_jwt->divreCode = $dataUser->divre_code;
+            $this->auth_jwt->divreName = $dataUser->divre_name;
+            $this->auth_jwt->witelCode = $dataUser->witel_code;
+            $this->auth_jwt->witelName = $dataUser->witel_name;
             
             $data = [
                 'success' => true,
