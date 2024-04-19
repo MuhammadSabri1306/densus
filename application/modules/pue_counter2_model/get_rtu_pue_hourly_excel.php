@@ -102,5 +102,4 @@ try {
     dd(strval($err));
 }
 
-// dd_json($data);
 $this->result = $data;
