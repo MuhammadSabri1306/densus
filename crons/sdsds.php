@@ -87,7 +87,7 @@ class CronStorePueConter {
             }
             
             if($pueData && isset($pueData['VALUE'])) {
-                if((double) $pueData['VALUE'] <= 100) {
+                if($pueData['VALUE'] <= 10 && $pueData['VALUE'] > 0) {
                     $result = $cron->setPueCounter($pueData);
                     var_dump($result);
                 }
