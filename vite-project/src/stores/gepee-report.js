@@ -52,9 +52,11 @@ export const useGepeeReportStore = defineStore("gepee-report", {
             return params.length < 1 ? "" : "/?" + params.join("&");
         },
 
-        async getReport(callback) {
-            const urlParams = this.getUrlParams();
-            const url = "/gepee-report" + urlParams;
+        async getReport(callback, useApiV2 = false) {
+            let url = "/gepee-report";
+            if(useApiV2)
+                url += "/v2"
+            url += this.getUrlParams();
             try {
 
                 const response = await http.get(url, this.fetchHeader);

@@ -8,6 +8,7 @@ import { useViewStore } from "@/stores/view";
 import { required } from "@vuelidate/validators";
 import { useDataForm } from "@/helpers/data-form2";
 import { mustBeRtuCode } from "@/helpers/form-validator";
+import { toNewosasePortValue } from "@/helpers/number-format";
 import DashboardBreadcrumb from "@/layouts/DashboardBreadcrumb.vue";
 import InputGroupLocationV2 from "@/components/InputGroupLocationV2.vue";
 import ListboxFilterV2 from "@/components/ListboxFilterV2.vue";
@@ -32,9 +33,8 @@ const { data, v$, hasSubmitted, isInvalid, getInvalidClass, useErrorTooltip } = 
     witelName: { required },
     portKwh: { required },
     portGenset: { required },
-    kvaGenset: { required },
-    portPue: {},
     portPueV2: {},
+    kvaGenset: { required },
     useGepee: { value: false, required },
     idLocGepee: {}
 });
@@ -42,11 +42,17 @@ const { data, v$, hasSubmitted, isInvalid, getInvalidClass, useErrorTooltip } = 
 const isGepeeStoInvalid = () => hasSubmitted.value && data.useGepee && !data.idLocGepee;
 
 const rtuId = computed(() => route.params.rtuId);
-const rtuList = ref([]);
 const isRoleAdmin = computed(() => userStore.role == "admin");
-const gepeeStoList = ref([]);
 
+const rtuList = ref([]);
 const isRtuListLoading = ref(false);
+
+const portList = ref([]);
+const isPortListLoading = ref(false);
+
+const gepeeStoList = ref([]);
+const isGepeeStoLoading = ref(false);
+
 const sortNewosaseRtu = rtus => {
     return rtus.sort((a, b) => {
         const nameA = a.rtu_name.toUpperCase();
@@ -79,14 +85,46 @@ const setDataByCurrRtu = () => {
     data.witelName = rtu?.witel_name || null;
     data.portKwh = rtu?.port_kwh || null;
     data.portGenset = rtu?.port_genset || null;
-    data.kvaGenset = rtu?.kva_genset || null;
-    data.portPue = rtu?.port_pue || null;
     data.portPueV2 = rtu?.port_pue_v2 || null;
+    data.kvaGenset = rtu?.kva_genset || null;
 
     if(rtu?.id_lokasi_gepee) {
         data.idLocGepee = rtu?.id_lokasi_gepee || null;
         data.useGepee = true;
     }
+};
+
+const fetchRtus = (regionalId, witelId) => {
+    isRtuListLoading.value = true;
+    newosaseStore.getMapViewRtu({ regionalId, witelId }, rtus => {
+        if(!rtus.find(item => item.rtu_sname == data.rtuCode))
+            resetRtuData();
+        rtuList.value = sortNewosaseRtu(rtus);
+        isRtuListLoading.value = false;
+        if(data.useGepee) {
+            isGepeeStoLoading.value = true;
+            viewStore.getSto({ divre: data.divreCode, witel: data.witelCode }, "gepee")
+                .then(sList => {
+                    gepeeStoList.value = sList;
+                    if(data.idLocGepee && !sList.find(item => item.id == data.idLocGepee))
+                        data.idLocGepee = null;
+                })
+                .catch(err => console.error(err))
+                .finally(() => isGepeeStoLoading.value = false);
+        }
+    });
+};
+
+const fetchPorts = (rtuSname) => {
+    isPortListLoading.value = true;
+    newosaseStore.getRtuPorts(rtuSname, list => {
+        portList.value = list.map(port => {
+            const portValue = toNewosasePortValue(port.value, port.units, port.identifier);
+            const port_label = `${ port.no_port } | ${ port.port_name } | ${ port.identifier } | ${ portValue }`;
+            return { ...port, port_label };
+        })
+        isPortListLoading.value = false;
+    });
 };
 
 const onRtuChange = rtu => {
@@ -101,6 +139,7 @@ const onRtuChange = rtu => {
             stoCode = rtuCodePieces[rtuCodePieces.length - 1];
     }
     data.stoCode = stoCode;
+    fetchPorts(rtu?.rtu_sname);
 };
 
 const onLocationInit = ({ divre, witel }) => {
@@ -108,21 +147,7 @@ const onLocationInit = ({ divre, witel }) => {
     const witelId = witel?.witel_id || null;
 
     if(regionalId && witelId) {
-        isRtuListLoading.value = true;
-        newosaseStore.getMapViewRtu({ regionalId, witelId }, rtus => {
-            if(!rtus.find(item => item.rtu_sname == data.rtuCode)) {
-                resetRtuData();
-            }
-            rtuList.value = sortNewosaseRtu(rtus);
-            isRtuListLoading.value = false;
-            if(data.useGepee) {
-                isGepeeStoLoading.value = true;
-                viewStore.getSto({ divre: data.divreCode, witel: data.witelCode }, "gepee")
-                    .then(sList => gepeeStoList.value = sList)
-                    .catch(err => console.error(err))
-                    .finally(() => isGepeeStoLoading.value = false);
-            }
-        });
+        fetchRtus(regionalId, witelId);
     } else {
         resetRtuData();
     }
@@ -140,24 +165,7 @@ const onLocationChange = ({ divre, witel }) => {
     const witelId = witel?.witel_id || null;
 
     if(regionalId && witelId) {
-        isRtuListLoading.value = true;
-        newosaseStore.getMapViewRtu({ regionalId, witelId }, rtus => {
-            if(!rtus.find(item => item.rtu_sname == data.rtuCode))
-                resetRtuData();
-            rtuList.value = sortNewosaseRtu(rtus);
-            isRtuListLoading.value = false;
-            if(data.useGepee) {
-                isGepeeStoLoading.value = true;
-                viewStore.getSto({ divre: data.divreCode, witel: data.witelCode }, "gepee")
-                    .then(sList => {
-                        gepeeStoList.value = sList;
-                        if(data.idLocGepee && !sList.find(item => item.id == data.idLocGepee))
-                            data.idLocGepee = null;
-                    })
-                    .catch(err => console.error(err))
-                    .finally(() => isGepeeStoLoading.value = false);
-            }
-        });
+        fetchRtus(regionalId, witelId);
     } else {
         resetRtuData();
         data.idLocGepee = null;
@@ -169,7 +177,6 @@ const onLocationChange = ({ divre, witel }) => {
     data.witelName = witel?.witel_name || null;
 };
 
-const isGepeeStoLoading = ref(false);
 const onInputUseGepeeChange = () => {
     gepeeStoList.value = [];
     data.idLocGepee = null;
@@ -193,6 +200,7 @@ const fetch = () => {
             router.push("/e404");
             return;
         }
+        fetchPorts(rtu?.rtu_kode);
         setDataByCurrRtu();
         isRtuLoading.value = false;
     });
@@ -200,6 +208,8 @@ const fetch = () => {
 
 const onReset = () => {
     showUpdateForm.value = false;
+    if(data.rtuCode != currRtu.value?.rtu_kode)
+        fetchPorts(currRtu.value?.rtu_kode);
     setDataByCurrRtu();
 };
 
@@ -222,9 +232,8 @@ const onSubmit = async () => {
         witel_name: data.witelName,
         port_kwh: data.portKwh,
         port_genset: data.portGenset,
-        kva_genset: data.kvaGenset,
-        port_pue: data.portPue,
         port_pue_v2: data.portPueV2,
+        kva_genset: data.kvaGenset,
         use_gepee: data.useGepee
     };
     if(data.useGepee)
@@ -306,62 +315,69 @@ fetch();
                                         applyUserLevel locationType="newosase" divreLabelKey="regional_name" isDivreRequired isWitelRequired
                                         :isDivreDisabled="!showUpdateForm" :isWitelDisabled="!showUpdateForm" :isDivreInvalid="isInvalid('divreCode')"
                                         :isWitelInvalid="isInvalid('witelCode')" @change="onLocationChange" @init="onLocationInit" />
-                                    <div class="form-group">
-                                        <label for="rtuCode" class="required">Nama RTU</label>
-                                        <ListboxFilterV2 v-model:list="rtuList" v-model:value="v$.rtuCode.$model" @change="onRtuChange"
-                                            :isLoading="isRtuListLoading" :isDisabled="!showUpdateForm" :isInvalid="isInvalid('rtuName')"
-                                            valueKey="rtu_sname" labelKey="rtu_name" inputId="rtuCode" inputPlaceholder="Pilih RTU" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="rtuCode" class="required">Kode RTU</label>
-                                        <input v-model="v$.rtuCode.$model" :class="getInvalidClass('rtuCode', 'is-invalid')"
-                                            class="form-control" id="rtuCode" name="rtuCode" type="text" disabled
-                                            placeholder="Cth. RTU00-D7-BAL" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="location" class="required">Lokasi</label>
-                                        <input v-model="v$.location.$model" :class="getInvalidClass('location', 'is-invalid')" :disabled="!showUpdateForm"
-                                            class="form-control" id="location" name="location" type="text" placeholder="Cth. STO BALAI KOTA">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="stoCode" class="required">Kode STO</label>
-                                        <input v-model="v$.stoCode.$model" :class="getInvalidClass('stoCode', 'is-invalid')" :disabled="!showUpdateForm"
-                                            class="form-control" id="stoCode" name="stoCode" type="text" placeholder="Cth. BAL">
-                                    </div>
                                     <div class="row mb-4 align-items-end">
-                                        <div class="col-md-6 col-lg-auto">
+                                        <div class="col-lg-6 col-xl-8">
+                                            <div class="form-group">
+                                                <label for="rtuCode" class="required">Nama RTU</label>
+                                                <ListboxFilterV2 v-model:list="rtuList" v-model:value="v$.rtuCode.$model" @change="onRtuChange"
+                                                    :isLoading="isRtuListLoading" :isDisabled="!showUpdateForm" :isInvalid="isInvalid('rtuName')"
+                                                    valueKey="rtu_sname" labelKey="rtu_name" inputId="rtuCode" inputPlaceholder="Pilih RTU" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xl-4">
+                                            <div class="form-group">
+                                                <label for="rtuCode" class="required">Kode RTU</label>
+                                                <input v-model="v$.rtuCode.$model" :class="getInvalidClass('rtuCode', 'is-invalid')"
+                                                    class="form-control" id="rtuCode" name="rtuCode" type="text" disabled
+                                                    placeholder="Cth. RTU00-D7-BAL" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xl-8">
+                                            <div class="form-group">
+                                                <label for="location" class="required">Lokasi</label>
+                                                <input v-model="v$.location.$model" :class="getInvalidClass('location', 'is-invalid')"
+                                                    class="form-control" :disabled="!showUpdateForm" id="location" name="location"
+                                                    type="text" placeholder="Cth. STO BALAI KOTA">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xl-4">
+                                            <div class="form-group">
+                                                <label for="stoCode" class="required">Kode STO</label>
+                                                <input v-model="v$.stoCode.$model" :class="getInvalidClass('stoCode', 'is-invalid')"
+                                                    class="form-control" :disabled="!showUpdateForm" id="stoCode" name="stoCode"
+                                                    type="text" placeholder="Cth. BAL">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="portKwh" class="required">Analog Port KW</label>
-                                                <input v-model="v$.portKwh.$model" :class="getInvalidClass('portKwh', 'is-invalid')" :disabled="!showUpdateForm"
-                                                    class="form-control" id="portKwh" name="portKwh" type="text" placeholder="Cth. A-16">
+                                                <ListboxFilterV2 v-model:list="portList" v-model:value="v$.portKwh.$model"
+                                                    :isLoading="isPortListLoading" :isDisabled="!showUpdateForm" :isInvalid="isInvalid('portKwh')"
+                                                    valueKey="no_port" labelKey="port_label" inputId="portKwh" inputPlaceholder="Pilih PORT" />
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-lg-auto">
+                                        <div class="col-md-6 col-lg-4">
                                             <div class="form-group">
                                                 <label for="portGenset" class="required">Digital Port Status Genset</label>
-                                                <input v-model="v$.portGenset.$model" :class="getInvalidClass('portGenset', 'is-invalid')" :disabled="!showUpdateForm"
-                                                    class="form-control" id="portGenset" name="portGenset" type="text" placeholder="Cth. D-02">
+                                                <ListboxFilterV2 v-model:list="portList" v-model:value="v$.portGenset.$model"
+                                                    :isLoading="isPortListLoading" :isDisabled="!showUpdateForm" :isInvalid="isInvalid('portGenset')"
+                                                    valueKey="no_port" labelKey="port_label" inputId="portGenset" inputPlaceholder="Pilih PORT" />
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-lg">
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="portPueV2">Analog Port PUE</label>
+                                                <ListboxFilterV2 v-model:list="portList" v-model:value="v$.portPueV2.$model"
+                                                    :isLoading="isPortListLoading" :isDisabled="!showUpdateForm" :isInvalid="isInvalid('portPueV2')"
+                                                    valueKey="no_port" labelKey="port_label" inputId="portPueV2" inputPlaceholder="Pilih PORT" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-10 col-xl-8">
                                             <div class="form-group">
                                                 <label for="kvaGenset" class="required">Kapasitas Genset Terpasang (KVA)</label>
-                                                <input v-model="v$.kvaGenset.$model" :class="getInvalidClass('kvaGenset', 'is-invalid')" :disabled="!showUpdateForm"
-                                                    class="form-control" id="kvaGenset" name="kvaGenset" type="text" placeholder="Cth. 500">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-auto">
-                                            <div class="form-group">
-                                                <label for="portPue">Analog Port PUE</label>
-                                                <input v-model="v$.portPue.$model" class="form-control" id="portPue" name="portPue" :disabled="!showUpdateForm"
-                                                    type="text" placeholder="Cth. A-92">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-auto">
-                                            <div class="form-group">
-                                                <label for="portPue">Analog Port PUE (NewOsase Baru)</label>
-                                                <input v-model="v$.portPueV2.$model" class="form-control" id="portPueV2" name="portPueV2" :disabled="!showUpdateForm"
-                                                    type="text" placeholder="Cth. A-92">
+                                                <input v-model="v$.kvaGenset.$model" :class="getInvalidClass('kvaGenset', 'is-invalid')"
+                                                    class="form-control" :disabled="!showUpdateForm" id="kvaGenset" name="kvaGenset"
+                                                    type="text" placeholder="Cth. 500">
                                             </div>
                                         </div>
                                     </div>
@@ -377,11 +393,15 @@ fetch();
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group ps-4 mb-5">
-                                        <label id="inputGepeeLocation" :class="{ 'required': data.useGepee }">Pilih Lokasi</label>
-                                        <ListboxFilterV2 v-model:list="gepeeStoList" v-model:value="v$.idLocGepee.$model" :isLoading="isGepeeStoLoading"
-                                            :isDisabled="!showUpdateForm" :isInvalid="isGepeeStoInvalid()" valueKey="id" labelKey="sto_name"
-                                            inputId="inputGepeeLocation" inputPlaceholder="Pilih Lokasi GEPEE" />
+                                    <div class="row">
+                                        <div class="col-lg-10 col-xl-8">
+                                            <div class="form-group ps-4 mb-5">
+                                                <label id="gepeeLoc" :class="{ 'required': data.useGepee }">Pilih Lokasi</label>
+                                                <ListboxFilterV2 v-model:list="gepeeStoList" v-model:value="v$.idLocGepee.$model"
+                                                    :isLoading="isGepeeStoLoading" :isDisabled="!showUpdateForm" :isInvalid="isGepeeStoInvalid()"
+                                                    valueKey="id" labelKey="sto_name" inputId="gepeeLoc" inputPlaceholder="Pilih Lokasi GEPEE" />
+                                            </div>
+                                        </div>
                                     </div>
                                     <div v-if="isRoleAdmin">
                                         <div v-if="showUpdateForm" class="d-flex justify-content-end align-items-center px-4 tw-gap-x-8 tw-gap-y-6">
@@ -408,7 +428,8 @@ fetch();
 
 form:not(.update-form) .form-control,
 form:not(.update-form) :deep(.form-control) {
-    @apply tw-border-transparent tw-bg-transparent;
+    @apply tw-bg-transparent tw-rounded-none tw-border-t-transparent tw-border-r-transparent tw-border-b-transparent
+        tw-border-l-[#b4fff1] tw-border-l-4;
 }
 
 </style>

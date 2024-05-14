@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
+import { useRoute } from "vue-router";
 import { useGepeeReportStore } from "@/stores/gepee-report";
 import { useUserStore } from "@/stores/user";
 import { useViewStore } from "@/stores/view";
@@ -216,11 +217,14 @@ const groupData = data => {
     return groupedData;
 };
 
+const route = useRoute();
 const isLoading = ref(true);
 const hasInit = ref(false);
+
 const fetch = () => {
     isLoading.value = true;
     hasInit.value = true;
+    const useApiV2 = route.name == "GepeeReportV2";
     gepeeReportStore.getReport(({ data }) => {
         if(data.pue_max_target)
             pueMaxTarget.value = data.pue_max_target;
@@ -237,7 +241,7 @@ const fetch = () => {
             summaryNasional.value = data.gepee_summary_nasional;
 
         isLoading.value = false;
-    });
+    }, useApiV2);
 };
 
 defineExpose({ fetch });

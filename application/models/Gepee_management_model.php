@@ -96,6 +96,16 @@ class Gepee_management_model extends CI_Model
         return $this->result;
     }
 
+    public function get_report_v4($filter, $sumNasional = false)
+    {
+        $this->load->helper('array');
+        $this->use_module('get_report_v4', [
+            'filter' => $filter,
+            'sumNasional' => $sumNasional
+        ]);
+        return $this->result;
+    }
+
     public function is_pue_reach_target($pueOnlineValue, $pueOfflineValue)
     {
         $pueValues = [];

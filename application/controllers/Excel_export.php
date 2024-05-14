@@ -220,6 +220,62 @@ class Excel_export extends CI_Controller
         $this->excel->createDownload('Nilai PUE '.$rtuCode.' '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
     }
 
+    public function pue_group_detail()
+    {
+        $filter = [
+            'witel' => $this->input->get('witel'),
+            'divre' => $this->input->get('divre')
+        ];
+
+        $this->load->library('datetime_range');
+        $datetime = $this->datetime_range->get_by_year( date('Y') );
+
+        $this->load->model('pue_counter2_model');
+        $data = $this->pue_counter2_model->get_pue_hourly_excel($filter);
+        
+        $this->excel->useColSizeAuto = true;
+        $this->excel->setValue('Mulai tanggal :', 2, 2);
+        $this->excel->setValue($datetime[0], 2, 3);
+        $this->excel->setValue('Sampai tanggal :', 3, 2);
+        $this->excel->setValue($datetime[1], 3, 3);
+
+        $this->excel->setField([
+            'divre_kode' => 'KODE DIVRE',
+            'divre_name' => 'NAMA DIVRE',
+            'witel_kode' => 'KODE WITEL',
+            'witel_name' => 'NAMA WITEL',
+            'rtu_kode' => 'KODE RTU',
+            'rtu_name' => 'NAMA RTU',
+            'sto_kode' => 'KODE STO',
+            'lokasi' => 'LOKASI',
+            'no_port' => 'NO. PORT',
+            'pue_value' => 'NILAI PUE',
+            'satuan' => 'SATUAN',
+            'timestamp' => 'WAKTU'
+        ]);
+        
+        $this->excel
+            ->selectCell([5, 1])
+            ->fill($data);
+
+        $this->excel
+            ->selectCell([5, 1], [5, 11])
+            ->setFill($this->colorScheme['primary']['argb'])
+            ->setColor($this->colorScheme['white']['argb'])
+            ->setBorderColor($this->colorScheme['white']['argb'])
+            ->setBold(true)
+            ->setAlignment('center')
+            ->setWidthAuto();
+
+        $groupName = '';
+        if($filter['witel']) {
+            $groupName = '_witel_' . $filter['witel'] . '_';
+        } else if($filter['divre']) {
+            $groupName = '_divre_' . $filter['divre'] . '_';
+        }
+        $this->excel->createDownload('Nilai PUE '.$groupName.' '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
+    }
+
     public function activity_performance()
     {
         $divre = $this->input->get('divre');

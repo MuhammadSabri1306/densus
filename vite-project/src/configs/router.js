@@ -174,7 +174,13 @@ const routes = [
         meta: { menuKey: ["gepee_evidence"], requiresAuth: true }
     },
     {
+        name: "GepeeReportV1",
         path: "/gepee-performance/management-report", component: GepeeReport,
+        meta: { menuKey: ["gepee_performance", "report"], requiresAuth: true }
+    },
+    {
+        name: "GepeeReportV2",
+        path: "/gepee-performance/management-reportv2", component: GepeeReport,
         meta: { menuKey: ["gepee_performance", "report"], requiresAuth: true }
     },
     {

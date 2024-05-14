@@ -102,3 +102,27 @@ export const toRoman = num => {
 	}
 	return result;
 };
+
+export const toNewosasePortValue = (value, unit, identifier) => {
+	let portValue = `${ toNumberText(value) } ${ unit }`;
+
+	if(identifier.toLowerCase() == "st_pln") {
+		if(value === 1) portValue = "OFF";
+		else if(value === 0) portValue = "ON";
+		return portValue;
+	}
+
+	if(identifier.toLowerCase() == "st_deg") {
+		if(value === 1) portValue = "ON";
+		else if(value === 0) portValue = "OFF";
+		return portValue;
+	}
+
+	if(unit.toLowerCase() == "on/off") {
+		if(value === 1) portValue = "ON";
+		else if(value === 0) portValue = "OFF";
+		return portValue;
+	}
+
+	return portValue;
+};

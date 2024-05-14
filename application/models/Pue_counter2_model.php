@@ -96,6 +96,12 @@ class Pue_Counter2_model extends CI_Model {
         return $this->result;
     }
 
+    public function get_pue_hourly_excel($zone)
+    {
+        $this->use_module('get_pue_hourly_excel', [ 'zone' => $zone ]);
+        return $this->result;
+    }
+
     public function get_excel_data($zone)
     {
         $this->use_module('get_excel_data', [ 'zone' => $zone ]);

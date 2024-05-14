@@ -4,13 +4,18 @@ import { useViewStore } from "@/stores/view";
 import { handlingFetchErr } from "@/helpers/error-handler";
 import { createUrlParams } from "@/helpers/url";
 
+let http = null;
+
 export const useNewosaseStore = defineStore("newosase", {
     actions: {
 
         useHttp() {
-            return createHttpInstance("https://newosase.telkom.co.id/api/v1", {
-                headers: { "Accept": "application/json" }
-            });
+            if(!http) {
+                http = createHttpInstance("https://newosase.telkom.co.id/api/v1", {
+                    headers: { "Accept": "application/json" }
+                });
+            }
+            return http;
         },
 
         async getMapViewRtu({ regionalId, witelId }, callback) {
@@ -51,6 +56,25 @@ export const useNewosaseStore = defineStore("newosase", {
                 handlingFetchErr(err);
             } finally {
                 callback(rtus);
+            }
+        },
+
+        async getRtuPorts(rtuSname, callback) {
+            try {
+                if(!rtuSname)
+                    throw new Error(`rtuSname is empty, given ${ rtuSname }`);
+                const http = this.useHttp();
+                const params = { searchRtuSname: rtuSname };
+                const response = await http.get("/dashboard-service/dashboard/rtu/port-sensors", { params });
+                if(Array.isArray(response.data?.result?.payload)) {
+                    callback(response.data.result.payload);
+                    return;
+                }
+                console.warn(response.data);
+                callback([]);
+            } catch(err) {
+                console.error(err);
+                callback([]);
             }
         },
 
