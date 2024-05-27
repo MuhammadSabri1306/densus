@@ -39,6 +39,7 @@ import GepeeEvidenceDivre from "@/views/GepeeEvidenceDivre.vue";
 import GepeeEvidenceWitel from "@/views/GepeeEvidenceWitel.vue";
 
 import GepeeReport from "@/views/GepeeReport.vue";
+import GepeeReportV2 from "@/views/GepeeReportV2.vue";
 import PueTarget from "@/views/PueTarget.vue";
 import PueTargetDetail from "@/views/PueTargetDetail.vue";
 import GepeePiLatenV2 from "@/views/GepeePiLatenV2.vue";
@@ -180,7 +181,7 @@ const routes = [
     },
     {
         name: "GepeeReportV2",
-        path: "/gepee-performance/management-reportv2", component: GepeeReport,
+        path: "/gepee-performance/management-reportv2", component: GepeeReportV2,
         meta: { menuKey: ["gepee_performance", "report"], requiresAuth: true }
     },
     {

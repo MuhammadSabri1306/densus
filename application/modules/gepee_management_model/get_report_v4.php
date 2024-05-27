@@ -1,5 +1,7 @@
 <?php
 
+$this->load->helper('number');
+
 /*
  * setup DB Query Filter
  */
@@ -345,7 +347,7 @@ foreach($locationData as $location) {
         }
         
         if($pueOnline['count'] > 0) {
-            $row['pue']['online'] = $pueOnline['sum'] / $pueOnline['count'];
+            $row['pue']['online'] = customRound($pueOnline['sum'] / $pueOnline['count'], 2);
         }
 
         $row['pue']['isReachTarget'] = $this->is_pue_reach_target($row['pue']['online'], null);
@@ -363,7 +365,7 @@ foreach($locationData as $location) {
         }
         
         if($ike['count'] > 0) {
-            $row['ike'] = $ike['sum'] / $ike['count'];
+            $row['ike'] = customRound($ike['sum'] / $ike['count'], 2);
         }
 
     }
@@ -382,8 +384,8 @@ foreach($locationData as $location) {
         'performance' => $perfPercent,
         'performance_summary' => $row['performance_summary'],
         'performance_summary_yearly' => $row['performance_summary_yearly'],
-        'pue_online' => $row['pue']['online'],
-        'ike' => $row['ike'],
+        'pue_online' => customRound($row['pue']['online'], 2),
+        'ike' => customRound($row['ike'], 2),
         'tagihan_pln' => $row['tagihan_pln'],
         'pln_saving' => $row['pln_saving'],
         'pln_saving_percent' => $row['pln_saving_percent'],
@@ -420,7 +422,7 @@ function getAvgPerformance($data) {
 		}
 
 		$average = ($count > 0) ? $sum / $count : null;
-		$averages[] = $average;
+        array_push($averages, $average);
 	}
 
 	return $averages;
@@ -484,7 +486,7 @@ foreach ($dataNasional as $item) {
                 if ($groupedData[$divreKode][$witelKode]['pue_online'] === null) {
                     $groupedData[$divreKode][$witelKode]['pue_online'] = 0;
                 }
-                $groupedData[$divreKode][$witelKode]['pue_online'] += $item['pue_online'];
+                $groupedData[$divreKode][$witelKode]['pue_online'] += customRound($item['pue_online']);
                 $groupedData[$divreKode][$witelKode]['count_pue_online']++;
             }
 
@@ -492,7 +494,7 @@ foreach ($dataNasional as $item) {
                 if ($groupedData[$divreKode][$witelKode]['ike'] === null) {
                     $groupedData[$divreKode][$witelKode]['ike'] = 0;
                 }
-                $groupedData[$divreKode][$witelKode]['ike'] += $item['ike'];
+                $groupedData[$divreKode][$witelKode]['ike'] += customRound($item['ike']);
                 $groupedData[$divreKode][$witelKode]['count_ike']++;
             }
 
@@ -509,8 +511,8 @@ foreach ($dataNasional as $item) {
                 'pln_saving_percent' => $item['pln_saving_percent'],
                 'pln_saving_yoy' => $item['pln_saving_yoy'],
                 'pln_saving_yoy_percent' => $item['pln_saving_yoy_percent'],
-                'pue_online' => $item['pue_online'],
-                'ike' => $item['ike'],
+                'pue_online' => $item['pue_online'] !== null ? customRound($item['pue_online'], 2) : null,
+                'ike' => $item['ike'] !== null ? customRound($item['ike'], 2) : null,
                 'count' => 1,
                 'count_pue_online' => ($item['pue_online'] !== null) ? 1 : 0,
                 'count_ike' => ($item['ike'] !== null) ? 1 : 0,
@@ -532,8 +534,8 @@ foreach ($dataNasional as $item) {
                 'pln_saving_percent' => $item['pln_saving_percent'],
                 'pln_saving_yoy' => $item['pln_saving_yoy'],
                 'pln_saving_yoy_percent' => $item['pln_saving_yoy_percent'],
-                'pue_online' => $item['pue_online'],
-                'ike' => $item['ike'],
+                'pue_online' => $item['pue_online'] !== null ? customRound($item['pue_online'], 2) : null,
+                'ike' => $item['ike'] !== null ? customRound($item['ike'], 2) : null,
                 'count' => 1,
                 'count_pue_online' => ($item['pue_online'] !== null) ? 1 : 0,
                 'count_ike' => ($item['ike'] !== null) ? 1 : 0,
@@ -570,11 +572,11 @@ foreach ($groupedData as $divreKode => &$divreGroup) {
         }
 
         if ($group['pue_online'] !== null) {
-            $group['pue_online'] /= $group['count_pue_online'];
+            $group['pue_online'] = customRound($group['pue_online'] / $group['count_pue_online'], 2);
         }
 
         if ($group['ike'] !== null) {
-            $group['ike'] /= $group['count_ike'];
+            $group['ike'] = customRound($group['ike'] / $group['count_ike'], 2);
         }
     }
 }
@@ -636,12 +638,12 @@ foreach ($groupedData as $divreKode => &$divreGroup) {
         }
 
         if($group['pue_online'] !== null) {
-            $divreItem['pue_online'] += $group['pue_online'];
+            $divreItem['pue_online'] += customRound($group['pue_online'], 2);
             $divreItem['count_pue_online']++;
         }
 
         if($group['ike'] !== null) {
-            $divreItem['ike'] += $group['ike'];
+            $divreItem['ike'] += customRound($group['ike'], 2);
             $divreItem['count_ike']++;
         }
 
@@ -656,8 +658,8 @@ foreach ($groupedData as $divreKode => &$divreGroup) {
         'pln_saving_percent' => $divreItem['count_pln_saving_percent'] < 1 ? null : $divreItem['pln_saving_percent'] / $divreItem['count_pln_saving_percent'],
         'pln_saving_yoy' => $divreItem['count_pln_saving_yoy'] < 1 ? null : $divreItem['pln_saving_yoy'] / $divreItem['count_pln_saving_yoy'],
         'pln_saving_yoy_percent' => $divreItem['count_pln_saving_yoy_percent'] < 1 ? null : $divreItem['pln_saving_yoy_percent'] / $divreItem['count_pln_saving_yoy_percent'],
-        'pue_online' => $divreItem['count_pue_online'] < 1 ? null : $divreItem['pue_online'] / $divreItem['count_pue_online'],
-        'ike' => $divreItem['count_ike'] < 1 ? null : $divreItem['ike'] / $divreItem['count_ike']
+        'pue_online' => $divreItem['count_pue_online'] < 1 ? null : customRound($divreItem['pue_online'] / $divreItem['count_pue_online'], 2),
+        'ike' => $divreItem['count_ike'] < 1 ? null : customRound($divreItem['ike'] / $divreItem['count_ike'], 2)
     ];
 }
 
@@ -716,12 +718,12 @@ foreach($groupedData as $group) {
     }
 
     if($group['pue_online'] !== null) {
-        $nasionalItem['pue_online'] += $group['pue_online'];
+        $nasionalItem['pue_online'] += customRound($group['pue_online'], 2);
         $nasionalItem['count_pue_online']++;
     }
 
     if($group['ike'] !== null) {
-        $nasionalItem['ike'] += $group['ike'];
+        $nasionalItem['ike'] += customRound($group['ike'], 2);
         $nasionalItem['count_ike']++;
     }
 
@@ -736,8 +738,8 @@ $nasional = [
     'pln_saving_percent' => $nasionalItem['count_pln_saving_percent'] < 1 ? null : $nasionalItem['pln_saving_percent'] / $nasionalItem['count_pln_saving'],
     'pln_saving_yoy' => $nasionalItem['count_pln_saving_yoy'] < 1 ? null : $nasionalItem['pln_saving_yoy'] / $nasionalItem['count_pln_saving_yoy'],
     'pln_saving_yoy_percent' => $nasionalItem['count_pln_saving_yoy_percent'] < 1 ? null : $nasionalItem['pln_saving_yoy_percent'] / $nasionalItem['count_pln_saving_yoy'],
-    'pue_online' => $nasionalItem['count_pue_online'] < 1 ? null : $nasionalItem['pue_online'] / $nasionalItem['count_pue_online'],
-    'ike' => $nasionalItem['count_ike'] < 1 ? null : $nasionalItem['ike'] / $nasionalItem['count_ike'],
+    'pue_online' => $nasionalItem['count_pue_online'] < 1 ? null : customRound($nasionalItem['pue_online'] / $nasionalItem['count_pue_online'], 2),
+    'ike' => $nasionalItem['count_ike'] < 1 ? null : customRound($nasionalItem['ike'] / $nasionalItem['count_ike'], 2),
 ];
 $nasional['isPueReachTarget'] = $this->is_pue_reach_target($nasional['pue_online'], null);
 

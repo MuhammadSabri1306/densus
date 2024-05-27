@@ -897,6 +897,221 @@ class Excel_export extends CI_Controller
         $this->excel->createDownload('GEPEE Management Report '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
     }
 
+    public function gepee_report_v2()
+    {
+        $divreCode = $this->input->get('divre');
+        $witelCode = $this->input->get('witel');
+        $year = $this->input->get('year') ?? date('Y');
+        $month = $this->input->get('month') ?? date('m');
+
+        $this->load->library('datetime_range');
+        $datetime = $this->datetime_range->get_by_month($month, $year);
+        $datetimeYear = $this->datetime_range->get_by_year($year);
+
+        $filter = [
+            'divre' => $divreCode,
+            'witel' => $witelCode,
+            'datetime' => $datetime,
+            'datetimeYear' => $datetimeYear,
+            'year' => (int) $year,
+            'month' => (int) $month,
+        ];
+
+        $this->load->model('gepee_management_model');
+        $this->load->model('activity_category_model');
+        
+        $categoryList = $this->activity_category_model->get();
+        $data = $this->gepee_management_model->get_report_v4($filter, false);
+
+        $monthList = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+            'Oktober', 'November', 'Desember'];
+        $monthName = $monthList[$filter['month'] - 1];
+
+        $this->excel
+            ->selectCell([2, 2], [2, 3])
+            ->mergeCell()
+            ->setAlignment('left')
+            ->setValue('Mulai tanggal : '.$datetime[0], 2, 2);
+        $this->excel
+            ->selectCell([3, 2], [3, 3])
+            ->mergeCell()
+            ->setAlignment('left')
+            ->setValue('Sampai tanggal : '.$datetime[1], 3, 2);
+        
+        $this->excel->useColSizeAuto = true;
+        $startRow = 5; $currRow = $startRow;
+        $startCol = 2; $currCol = $startCol;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('Regional', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('Witel', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('STO', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('ID Pelanggan', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue('Tipe Perhitungan', $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue("IKE (bulan $monthName)", $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 1)])
+            ->mergeCell()
+            ->setValue("PUE (bulan $monthName)", $currRow, $currCol);
+        $this->excel->setValue('Nilai PUE', ($currRow + 1), $currCol);
+        $currCol++;
+        $this->excel->setValue('PUE <= 1.8', ($currRow + 1), $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + 2)])
+            ->mergeCell()
+            ->setValue('Tagihan PLN', $currRow, $currCol);
+        $this->excel->setValue("Rp. Tagihan PLN ($monthName)", ($currRow + 1), $currCol);
+        $currCol++;
+        $this->excel->setValue('Jumlah Saving', ($currRow + 1), $currCol);
+        $currCol++;
+        $this->excel->setValue('% Saving', ($currRow + 1), $currCol);
+        $currCol++;
+        
+        $this->excel
+            ->selectCell([$currRow, $currCol], [$currRow, ($currCol + count($categoryList))])
+            ->mergeCell()
+            ->setValue('Presentase Pencapaian Aktivitas GePEE (Dihitung 100% jika sudah dilaksanakan)', $currRow, $currCol);
+
+        foreach($categoryList as $cat) {
+            $this->excel->setValue($cat->alias, ($currRow + 1), $currCol);
+            $currCol++;
+        }
+        
+        $this->excel->setValue('Replacement', ($currRow + 1), $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue("% GEPEE Activity ($monthName)", $currRow, $currCol);
+        $currCol++;
+
+        $this->excel
+            ->selectCell([$currRow, $currCol], [($currRow + 1), $currCol])
+            ->mergeCell()
+            ->setValue("% GEPEE Activity ($year)", $currRow, $currCol);
+
+        $currRow++;
+        $this->excel
+            ->selectCell([$startRow, $startCol], [$currRow, $currCol])
+            ->setFill($this->colorScheme['primary']['argb'])
+            ->setColor($this->colorScheme['white']['argb'])
+            ->setBorderColor($this->colorScheme['white']['argb'])
+            ->setBold(true)
+            ->setAlignment('center');
+
+        $currRow++;
+        foreach($data['gepee'] as $item) {
+
+            $currCol = $startCol;
+
+            $this->excel->setValue($item['location']['divre_name'], $currRow, $currCol);
+            $currCol++;
+            
+            $this->excel->setValue($item['location']['witel_name'], $currRow, $currCol);
+            $currCol++;
+
+            $this->excel->setValue($item['location']['sto_name'], $currRow, $currCol);
+            $currCol++;
+
+            $this->excel->setValue($item['location']['id_pel_pln'], $currRow, $currCol);
+            $currCol++;
+
+            $typeText = $item['is_pue'] ? 'PUE' : ($item['is_ike'] ? 'IKE' : ''); 
+            $this->excel
+                ->setValue($typeText, $currRow, $currCol)
+                ->setAlignment('center');
+            $currCol++;
+
+            $this->excel
+                ->setValue(( $item['is_ike'] ? $item['ike'] : null ), $currRow, $currCol)
+                ->setAlignment('center');
+            $currCol++;
+
+            $this->excel->setValue(( !$item['is_pue'] ? null : $item['pue']['online'] ), $currRow, $currCol);
+            $currCol++;
+
+            $isReachTargetText = !$item['is_pue'] ? null : ($item['pue']['isReachTarget'] ? 'YA' : 'TIDAK');
+            $this->excel
+                ->setValue($isReachTargetText, $currRow, $currCol)
+                ->setAlignment('center');
+            $currCol++;
+            
+            $this->excel->setValue($item['tagihan_pln'], $currRow, $currCol);
+            $currCol++;
+
+            if(!is_null($item['pln_saving'])) {
+                $this->excel->setValue($item['pln_saving'], $currRow, $currCol);
+            }
+            $currCol++;
+
+            if(!is_null($item['pln_saving_percent'])) {
+                $this->excel
+                    ->setValue($item['pln_saving_percent'], $currRow, $currCol)
+                    ->setAlignment('center');
+            }
+
+            foreach($item['performance'] as $perf) {
+                $currCol++;
+                if(!is_null($perf['percentage'])) {
+                    $this->excel
+                        ->setValue($perf['percentage'], $currRow, $currCol)
+                        ->setAlignment('center');
+                }
+            }
+
+            $currCol += 2;
+            $percentText = (string) $item['performance_summary'];
+            $percentText .= "%";
+            $this->excel
+                ->setValue($percentText, $currRow, $currCol)
+                ->setAlignment('center');
+            $currCol++;
+
+            $percentText = (string) $item['performance_summary_yearly'];
+            $percentText .= "%";
+            $this->excel
+                ->setValue($percentText, $currRow, $currCol)
+                ->setAlignment('center');
+
+            $currRow++;
+
+        }
+        
+        $this->excel->createDownload('GEPEE Management Report '.date('Y_m_d_\jH_\mi_\ds_\w\i\b'));
+    }
+
     public function get_opnimus_master_sto()
     {
         $this->load->model('opnimus_master_sto_model');

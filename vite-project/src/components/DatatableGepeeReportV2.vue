@@ -224,7 +224,7 @@ const hasInit = ref(false);
 const fetch = () => {
     isLoading.value = true;
     hasInit.value = true;
-    const useApiV2 = false;
+    const useApiV2 = true;
     gepeeReportStore.getReport(({ data }) => {
         if(data.pue_max_target)
             pueMaxTarget.value = data.pue_max_target;
