@@ -88,7 +88,7 @@ export const usePueTargetStore = defineStore("pue-target", {
             }
 
             const urlParams = this.getUrlParams();
-            const url = "/pue-target/report" + urlParams;
+            const url = "/pue-target/report/v3" + urlParams;
             try {
 
                 const response = await http.get(url, this.fetchHeader);

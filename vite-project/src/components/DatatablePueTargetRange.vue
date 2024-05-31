@@ -24,7 +24,6 @@ const getGroupAvg = (data, groupKey) => {
     const currItem = JSON.parse(JSON.stringify(data[0]));
     const sum = {
         categoryCount: [],
-        stoCount: 0,
         target: 0
     };
 
@@ -40,14 +39,11 @@ const getGroupAvg = (data, groupKey) => {
             sum.categoryCount[i] += item.categoryCount[categoryKey];
         }
 
-        if(item.stoCount)
-            sum.stoCount += item.stoCount;
         if(item.target)
             sum.target += item.target;
     });
     
     currItem.categoryCount = sum.categoryCount;
-    currItem.stoCount = sum.stoCount;
     currItem.target = sum.target;
     currItem.gap = 0;
     currItem.percentage = 0;

@@ -60,8 +60,8 @@ $this->db
     ->where('rtu.id_lokasi_gepee!=""')
     ->where($filterDatePueOn)
     ->group_start()
-        ->where('HOUR(timestamp)>=', 23)
-        ->or_where('HOUR(timestamp)<=', 4)
+        ->where('HOUR(pue.timestamp)>=', 23)
+        ->or_where('HOUR(pue.timestamp)<=', 4)
     ->group_end()
     ->order_by('rtu.divre_kode')
     ->order_by('rtu.witel_kode');
@@ -74,8 +74,8 @@ $this->db
     ->where('rtu.id_lokasi_gepee!=""')
     ->where($filterDatePueOn)
     ->group_start()
-        ->where('HOUR(timestamp)>=', 23)
-        ->or_where('HOUR(timestamp)<=', 4)
+        ->where('HOUR(pue.timestamp)>=', 23)
+        ->or_where('HOUR(pue.timestamp)<=', 4)
     ->group_end()
     ->order_by('rtu.divre_kode')
     ->order_by('rtu.witel_kode');

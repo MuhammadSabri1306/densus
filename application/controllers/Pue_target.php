@@ -305,6 +305,50 @@ class Pue_target extends RestController
         $this->response($data, $status);
     }
 
+    public function report_v3_get()
+    {
+        $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
+        switch($status) {
+            case REST_ERR_EXP_TOKEN_STATUS: $data = REST_ERR_EXP_TOKEN_DATA; break;
+            case REST_ERR_UNAUTH_STATUS: $data = REST_ERR_UNAUTH_DATA; break;
+            default: $data = REST_ERR_DEFAULT_DATA; break;
+        }
+        
+        if($status === 200) {
+            $divreCode = $this->input->get('divre');
+            $witelCode = $this->input->get('witel');
+            $year = $this->input->get('year');
+            $month = $this->input->get('month');
+
+            if(!$year) $year = date('Y');
+            if(!$month) $month = date('n');
+            $quarter = ceil($month / 3);
+
+            $this->load->library('datetime_range');
+            $datetime = $this->datetime_range->get_by_month($month, $year);
+            
+            $filter = [
+                'divre' => $divreCode,
+                'witel' => $witelCode,
+                'datetime' => $datetime,
+                'quartal' => (int) $quarter
+            ];
+
+            $this->load->model('gepee_management_model');
+            $currUser = $this->auth_jwt->get_payload();
+            $this->gepee_management_model->currUser = $currUser;
+
+            $data = [
+                'pue_category' => $this->gepee_management_model->get_pue_category_item(),
+                'pue_target' => $this->gepee_management_model->get_pue_report_v3($filter),
+                'timestamp' => date('Y-m-d H:i:s'),
+                'success' => true
+            ];
+        }
+
+        $this->response($data, $status);
+    }
+
     public function location_status_get()
     {
         $status = $this->auth_jwt->auth('admin', 'viewer', 'teknisi');
