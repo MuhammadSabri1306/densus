@@ -6,9 +6,9 @@ import { useViewStore } from "@/stores/view";
 import { backendUrl } from "@/configs/base";
 import { createUrlParams } from "@/helpers/url";
 
-import { allowSampleData } from "@/configs/base";
-import samplePueOfflineByLocation from "@/helpers/sample-data/pue/offline_by_location";
-import sampleIkeList from "@/helpers/sample-data/ike/ike-list";
+// import { allowSampleData } from "@/configs/base";
+// import samplePueOfflineByLocation from "@/helpers/sample-data/pue/offline_by_location";
+// import sampleIkeList from "@/helpers/sample-data/ike/ike-list";
 
 export const useIkeStore = defineStore("ike", {
     state: () => ({
@@ -88,10 +88,9 @@ export const useIkeStore = defineStore("ike", {
                 callback({ success: true, status: response.status, data: response.data });
             } catch(err) {
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: sampleIkeList });
-                else
-                    callback({ success: false, status: err.response?.status, data: {} });
+                // if(allowSampleData)
+                //     callback({ success: true, status: err.response?.status, data: sampleIkeList });
+                callback({ success: false, status: err.response?.status, data: {} });
             }
         },
 
@@ -108,10 +107,9 @@ export const useIkeStore = defineStore("ike", {
                 callback({ success: true, status: response.status, data: response.data });
             } catch(err) {
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: samplePueOfflineByLocation });
-                else
-                    callback({ success: false, status: err.response?.status, data: {} });
+                // if(allowSampleData)
+                //     return callback({ success: true, status: err.response?.status, data: samplePueOfflineByLocation });
+                callback({ success: false, status: err.response?.status, data: {} });
             }
         },
 

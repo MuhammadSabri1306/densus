@@ -4,10 +4,10 @@ import { handlingFetchErr } from "@/helpers/error-handler";
 import { useUserStore } from "@/stores/user";
 import { backendUrl } from "@/configs/base";
 
-import { allowSampleData } from "@/configs/base";
-import samplePueDivre from "@/helpers/sample-data/pue/divre";
-import samplePueWitel from "@/helpers/sample-data/pue/witel";
-import samplePueRtu from "@/helpers/sample-data/pue/rtu";
+// import { allowSampleData } from "@/configs/base";
+// import samplePueDivre from "@/helpers/sample-data/pue/divre";
+// import samplePueWitel from "@/helpers/sample-data/pue/witel";
+// import samplePueRtu from "@/helpers/sample-data/pue/rtu";
 
 export const usePueStore = defineStore("pue", {
     state: () => ({
@@ -63,8 +63,8 @@ export const usePueStore = defineStore("pue", {
                 this.pue = response.data.pue;
                 callback && callback({ success: true, status: response.status });
             } catch(err) {
-                if(allowSampleData)
-                    this.pue = samplePueDivre.pue;
+                // if(allowSampleData)
+                //     this.pue = samplePueDivre.pue;
                 handlingFetchErr(err);
                 callback && callback({ success: false, status: err.response?.status });
             }
@@ -88,8 +88,8 @@ export const usePueStore = defineStore("pue", {
                 this.pue = response.data.pue;
                 callback && callback({ success: true, status: response.status });
             } catch(err) {
-                if(allowSampleData)
-                    this.pue = samplePueDivre.pue;
+                // if(allowSampleData)
+                //     this.pue = samplePueDivre.pue;
                 handlingFetchErr(err);
                 callback && callback({ success: false, status: err.response?.status });
             }
@@ -113,8 +113,8 @@ export const usePueStore = defineStore("pue", {
                 this.pue = response.data.pue;
                 callback && callback({ success: true, status: response.status });
             } catch(err) {
-                if(allowSampleData)
-                    this.pue = samplePueDivre.pue;
+                // if(allowSampleData)
+                //     this.pue = samplePueDivre.pue;
                 handlingFetchErr(err);
                 callback && callback({ success: false, status: err.response?.status });
             }
@@ -138,8 +138,8 @@ export const usePueStore = defineStore("pue", {
                 this.pue = response.data.pue;
                 callback && callback({ success: true, status: response.status });
             } catch(err) {
-                if(allowSampleData)
-                    this.pue = samplePueDivre.pue;
+                // if(allowSampleData)
+                //     this.pue = samplePueDivre.pue;
                 handlingFetchErr(err);
                 callback && callback({ success: false, status: err.response?.status });
             }

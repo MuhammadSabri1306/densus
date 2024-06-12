@@ -5,8 +5,8 @@ import { useUserStore } from "@/stores/user";
 import { useViewStore } from "@/stores/view";
 import { createUrlParams } from "@/helpers/url";
 
-import { allowSampleData } from "@/configs/base";
-import getSampleData from "@/helpers/sample-data";
+// import { allowSampleData } from "@/configs/base";
+// import getSampleData from "@/helpers/sample-data";
 
 export const usePiLatenStore = defineStore("pi-laten", {
     state: () => {
@@ -82,11 +82,11 @@ export const usePiLatenStore = defineStore("pi-laten", {
             } catch(err) {
 
                 handlingFetchErr(err);
-                if(allowSampleData) {
-                    const sampleData = await getSampleData("pi-laten-gepee", {});
-                    callback({ success: true, status: err.response?.status, data: sampleData });
-                } else
-                    callback({ success: false, status: err.response?.status, data: {} });
+                // if(allowSampleData) {
+                //     const sampleData = await getSampleData("pi-laten-gepee", {});
+                //     return callback({ success: true, status: err.response?.status, data: sampleData });
+                // }
+                callback({ success: false, status: err.response?.status, data: {} });
                     
             }
         },
@@ -108,11 +108,11 @@ export const usePiLatenStore = defineStore("pi-laten", {
             } catch(err) {
 
                 handlingFetchErr(err);
-                if(allowSampleData) {
-                    const sampleData = await getSampleData("pi-laten-gepee-v2", {});
-                    callback({ success: true, status: err.response?.status, data: sampleData });
-                } else
-                    callback({ success: false, status: err.response?.status, data: {} });
+                // if(allowSampleData) {
+                //     const sampleData = await getSampleData("pi-laten-gepee-v2", {});
+                //     return callback({ success: true, status: err.response?.status, data: sampleData });
+                // }
+                callback({ success: false, status: err.response?.status, data: {} });
                     
             }
         }

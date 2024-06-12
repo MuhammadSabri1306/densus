@@ -4,8 +4,8 @@ import { handlingFetchErr } from "@/helpers/error-handler";
 import { useUserStore } from "@/stores/user";
 import { useViewStore } from "@/stores/view";
 
-import { allowSampleData } from "@/configs/base";
-import samplePueTargetReport from "@/helpers/sample-data/pue-target/report";
+// import { allowSampleData } from "@/configs/base";
+// import samplePueTargetReport from "@/helpers/sample-data/pue-target/report";
 
 export const useOxispStore = defineStore("oxisp", {
     getters: {

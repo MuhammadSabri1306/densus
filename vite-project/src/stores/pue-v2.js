@@ -6,15 +6,15 @@ import { useViewStore } from "@/stores/view";
 import { backendUrl } from "@/configs/base";
 import { createUrlParams } from "@/helpers/url";
 
-import { allowSampleData } from "@/configs/base";
-import getSampleData from "@/helpers/sample-data";
-import samplePueOfflineByLocation from "@/helpers/sample-data/pue/offline_by_location";
-import sampleLatestValue from "@/helpers/sample-data/pue/latest-value";
-import sampleChartData from "@/helpers/sample-data/pue/chart-data";
-import sampleMaxValue from "@/helpers/sample-data/pue/max-value";
-import sampleAvg from "@/helpers/sample-data/pue/avg";
-import samplePerformance from "@/helpers/sample-data/pue/performance";
-import sampleStoValue from "@/helpers/sample-data/pue/sto-value";
+// import { allowSampleData } from "@/configs/base";
+// import getSampleData from "@/helpers/sample-data";
+// import samplePueOfflineByLocation from "@/helpers/sample-data/pue/offline_by_location";
+// import sampleLatestValue from "@/helpers/sample-data/pue/latest-value";
+// import sampleChartData from "@/helpers/sample-data/pue/chart-data";
+// import sampleMaxValue from "@/helpers/sample-data/pue/max-value";
+// import sampleAvg from "@/helpers/sample-data/pue/avg";
+// import samplePerformance from "@/helpers/sample-data/pue/performance";
+// import sampleStoValue from "@/helpers/sample-data/pue/sto-value";
 
 export const usePueV2Store = defineStore("pueV2", {
     state: () => ({
@@ -134,13 +134,13 @@ export const usePueV2Store = defineStore("pueV2", {
                 callback && callback(true);
             } catch(err) {
                 handlingFetchErr(err);
-                if(allowSampleData) {
-                    this.chartData = sampleChartData.chart;
-                    this.requestLocation = sampleChartData.request_location;
-                    console.log(this.requestLocation)
-                    callback && callback(true);
-                    return;
-                }
+                // if(allowSampleData) {
+                //     this.chartData = sampleChartData.chart;
+                //     this.requestLocation = sampleChartData.request_location;
+                //     console.log(this.requestLocation)
+                //     callback && callback(true);
+                //     return;
+                // }
                 callback && callback(false);
             } finally {
                 this.isLoading.chartData = false;
@@ -160,10 +160,9 @@ export const usePueV2Store = defineStore("pueV2", {
                 callback({ success: true, status: response.status, data: response.data });
             } catch(err) {
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: sampleChartData });
-                else
-                    callback({ success: false, status: err.response?.status, data: {} });
+                // if(allowSampleData)
+                //     return callback({ success: true, status: err.response?.status, data: sampleChartData });
+                callback({ success: false, status: err.response?.status, data: {} });
             }
         },
 
@@ -180,10 +179,9 @@ export const usePueV2Store = defineStore("pueV2", {
                 callback({ success: true, status: response.status, data: response.data });
             } catch(err) {
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: sampleLatestValue });
-                else
-                    callback({ success: false, status: err.response?.status, data: {} });
+                // if(allowSampleData)
+                //     return callback({ success: true, status: err.response?.status, data: sampleLatestValue });
+                callback({ success: false, status: err.response?.status, data: {} });
             }
         },
 
@@ -200,10 +198,9 @@ export const usePueV2Store = defineStore("pueV2", {
                 callback({ success: true, status: response.status, data: response.data });
             } catch(err) {
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: sampleMaxValue });
-                else
-                    callback({ success: false, status: err.response?.status, data: {} });
+                // if(allowSampleData)
+                //     return callback({ success: true, status: err.response?.status, data: sampleMaxValue });
+                callback({ success: false, status: err.response?.status, data: {} });
 
             }
         },
@@ -221,10 +218,9 @@ export const usePueV2Store = defineStore("pueV2", {
                 callback({ success: true, status: response.status, data: response.data });
             } catch(err) {
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: sampleAvg });
-                else
-                    callback({ success: false, status: err.response?.status, data: {} });
+                // if(allowSampleData)
+                //     return callback({ success: true, status: err.response?.status, data: sampleAvg });
+                callback({ success: false, status: err.response?.status, data: {} });
 
             }
         },
@@ -245,8 +241,8 @@ export const usePueV2Store = defineStore("pueV2", {
             } catch(err) {
                 handlingFetchErr(err);
                 status = err.response?.status;
-                if(allowSampleData)
-                    data = samplePerformance;
+                // if(allowSampleData)
+                //     data = samplePerformance;
             } finally {
                 callback({ success: false, status, data });
             }
@@ -268,8 +264,8 @@ export const usePueV2Store = defineStore("pueV2", {
             } catch(err) {
                 handlingFetchErr(err);
                 status = err.response?.status;
-                if(allowSampleData)
-                    data = sampleStoValue;
+                // if(allowSampleData)
+                //     data = sampleStoValue;
             } finally {
                 callback({ success: false, status, data });
             }
@@ -370,10 +366,9 @@ export const usePueV2Store = defineStore("pueV2", {
                 callback({ success: true, status: response.status, data: response.data });
             } catch(err) {
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: samplePueOfflineByLocation });
-                else
-                    callback({ success: false, status: err.response?.status, data: {} });
+                // if(allowSampleData)
+                //     return callback({ success: true, status: err.response?.status, data: samplePueOfflineByLocation });
+                callback({ success: false, status: err.response?.status, data: {} });
             }
         },
         
@@ -393,10 +388,9 @@ export const usePueV2Store = defineStore("pueV2", {
                 callback({ success: true, status: response.status, data: response.data });
             } catch(err) {
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: samplePueOfflineByLocation });
-                else
-                    callback({ success: false, status: err.response?.status, data: {} });
+                // if(allowSampleData)
+                //     return callback({ success: true, status: err.response?.status, data: samplePueOfflineByLocation });
+                callback({ success: false, status: err.response?.status, data: {} });
             }
         },
 
@@ -461,12 +455,11 @@ export const usePueV2Store = defineStore("pueV2", {
                 callback(response.data);
             } catch(err) {
                 handlingFetchErr(err);
-                if(allowSampleData) {
-                    const sampleData = await getSampleData("pue-online", {});
-                    callback(sampleData);
-                } else {
-                    callback(null);
-                }
+                // if(allowSampleData) {
+                //     const sampleData = await getSampleData("pue-online", {});
+                //     return callback(sampleData);
+                // }
+                callback(null);
             }
         },
 

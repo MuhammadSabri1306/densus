@@ -5,10 +5,10 @@ import http from "@/helpers/http-common";
 import { handlingFetchErr } from "@/helpers/error-handler";
 import menuItems from "@/configs/menu-items";
 
-import { allowSampleData } from "@/configs/base";
-import sampleDivre from "@/helpers/sample-data/divre";
-import sampleWitelByDivre from "@/helpers/sample-data/witel-by-divre";
-import sampleWitel from "@/helpers/sample-data/witel";
+// import { allowSampleData } from "@/configs/base";
+// import sampleDivre from "@/helpers/sample-data/divre";
+// import sampleWitelByDivre from "@/helpers/sample-data/witel-by-divre";
+// import sampleWitel from "@/helpers/sample-data/witel";
 
 const monthList = ["Januari", "Februari", "Maret",
     "April", "Mei", "Juni", "Juli", "Agustus",
@@ -115,7 +115,8 @@ export const useViewStore = defineStore("view", {
                 return [];
             } catch(err) {
                 handlingFetchErr(err);
-                return allowSampleData ? sampleDivre.divre : [];
+                // return allowSampleData ? sampleDivre.divre : [];
+                return [];
             }
         },
 
@@ -150,7 +151,8 @@ export const useViewStore = defineStore("view", {
             } catch(err) {
         
                 handlingFetchErr(err);
-                return allowSampleData ? sampleWitel.witel : [];
+                // return allowSampleData ? sampleWitel.witel : [];
+                return [];
                 
             }
         },
@@ -170,7 +172,8 @@ export const useViewStore = defineStore("view", {
             } catch(err) {
         
                 handlingFetchErr(err);
-                return allowSampleData ? sampleWitelByDivre.witel : [];
+                // return allowSampleData ? sampleWitelByDivre.witel : [];
+                return [];
                 
             }
         },

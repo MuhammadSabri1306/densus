@@ -5,8 +5,8 @@ import { createUrlParams } from "@/helpers/url";
 import { useUserStore } from "@/stores/user";
 import { useViewStore } from "@/stores/view";
 
-import { allowSampleData } from "@/configs/base";
-import sampleOxispCheck from "@/helpers/sample-data/oxisp-check/all";
+// import { allowSampleData } from "@/configs/base";
+// import sampleOxispCheck from "@/helpers/sample-data/oxisp-check/all";
 
 export const useOxispCheckStore = defineStore("oxisp-check", {
     state: () => ({
@@ -80,13 +80,13 @@ export const useOxispCheckStore = defineStore("oxisp-check", {
             } catch(err) {
 
                 handlingFetchErr(err);
-                if(allowSampleData) {
-                    const data = sampleOxispCheck;
-                    if(Array.isArray(data.categories) && data.categories.length > 0) {
-                        this.categories = data.categories;
-                    }
-                }
-                
+                // if(allowSampleData) {
+                //     const data = sampleOxispCheck;
+                //     if(Array.isArray(data.categories) && data.categories.length > 0) {
+                //         this.categories = data.categories;
+                //     }
+                // }
+                this.categories = [];
                 callback && callback(false);
                     
             }
@@ -112,15 +112,15 @@ export const useOxispCheckStore = defineStore("oxisp-check", {
             } catch(err) {
 
                 handlingFetchErr(err);
-                if(allowSampleData) {
-                    const data = sampleOxispCheck;
-                    if(Array.isArray(data.categories) && data.categories.length > 0) {
-                        this.categories = data.categories;
-                    }
-                    callback({ success: false, status: err.response?.status, data });
-                }
-                else
-                    callback({ success: false, status: err.response?.status, data: {} });
+                // if(allowSampleData) {
+                //     const data = sampleOxispCheck;
+                //     if(Array.isArray(data.categories) && data.categories.length > 0) {
+                //         this.categories = data.categories;
+                //     }
+                //     return callback({ success: false, status: err.response?.status, data });
+                // }
+                this.categories = [];
+                callback({ success: false, status: err.response?.status, data: {} });
                     
             }
         },

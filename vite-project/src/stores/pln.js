@@ -4,10 +4,10 @@ import { handlingFetchErr } from "@/helpers/error-handler";
 import { useUserStore } from "@/stores/user";
 import { useViewStore } from "@/stores/view";
 
-import { allowSampleData } from "@/configs/base";
-import samplePlnBill from "@/helpers/sample-data/pln/bill";
-import samplePlnBillOnLocation from "@/helpers/sample-data/pln/bill-on-location";
-import samplePlnParams from "@/helpers/sample-data/pln/params";
+// import { allowSampleData } from "@/configs/base";
+// import samplePlnBill from "@/helpers/sample-data/pln/bill";
+// import samplePlnBillOnLocation from "@/helpers/sample-data/pln/bill-on-location";
+// import samplePlnParams from "@/helpers/sample-data/pln/params";
 
 export const usePlnStore = defineStore("pln", {
     state: () => null,
@@ -68,8 +68,8 @@ export const usePlnStore = defineStore("pln", {
             } catch(err) {
                 handlingFetchErr(err);
                 let data = [];
-                if(allowSampleData)
-                    data = samplePlnBill.pln_bill;
+                // if(allowSampleData)
+                //     data = samplePlnBill.pln_bill;
                 callback({ success: false, status: err.response?.status, data });
             }
         },
@@ -91,8 +91,8 @@ export const usePlnStore = defineStore("pln", {
             } catch(err) {
                 handlingFetchErr(err);
                 let data = [];
-                if(allowSampleData)
-                    data = samplePlnBillOnLocation.pln_bill;
+                // if(allowSampleData)
+                //     data = samplePlnBillOnLocation.pln_bill;
                 callback({ success: false, status: err.response?.status, data });
             }
         },
@@ -160,8 +160,8 @@ export const usePlnStore = defineStore("pln", {
             } catch(err) {
                 handlingFetchErr(err);
                 let data = [];
-                if(allowSampleData)
-                    data = samplePlnParams.pln_params;
+                // if(allowSampleData)
+                //     data = samplePlnParams.pln_params;
                 callback({ success: false, status: err.response?.status, data });
             }
         },

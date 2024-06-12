@@ -5,9 +5,9 @@ import { useUserStore } from "@/stores/user";
 import { useViewStore } from "@/stores/view";
 import { createUrlParams } from "@/helpers/url";
 
-import { allowSampleData } from "@/configs/base";
-import sampleRtuDetail from "@/helpers/sample-data/monitoring/rtu-detail";
-import samplePueDetail from "@/helpers/sample-data/monitoring/pue-detail";
+// import { allowSampleData } from "@/configs/base";
+// import sampleRtuDetail from "@/helpers/sample-data/monitoring/rtu-detail";
+// import samplePueDetail from "@/helpers/sample-data/monitoring/pue-detail";
 
 export const useMonitoringStore = defineStore("monitoring", {
     getters: {
@@ -63,7 +63,8 @@ export const useMonitoringStore = defineStore("monitoring", {
             } catch(err) {
                 
                 handlingFetchErr(err);
-                return allowSampleData ? sampleRtuDetail.rtu : {};
+                // return allowSampleData ? sampleRtuDetail.rtu : {};
+                return {};
                 
             }
         },
@@ -254,9 +255,9 @@ export const useMonitoringStore = defineStore("monitoring", {
             } catch(err) {
         
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback(samplePueDetail.pue);
-                else callback({});
+                // if(allowSampleData)
+                //     return callback(samplePueDetail.pue);
+                callback({});
                 
             }
         }

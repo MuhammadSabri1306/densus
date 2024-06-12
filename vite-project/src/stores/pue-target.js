@@ -4,9 +4,9 @@ import { handlingFetchErr } from "@/helpers/error-handler";
 import { useUserStore } from "@/stores/user";
 import { useViewStore } from "@/stores/view";
 
-import { allowSampleData } from "@/configs/base";
-import samplePueTargetReport from "@/helpers/sample-data/pue-target/report";
-import samplePueLocationStatus from "@/helpers/sample-data/pue-target/location-status";
+// import { allowSampleData } from "@/configs/base";
+// import samplePueTargetReport from "@/helpers/sample-data/pue-target/report";
+// import samplePueLocationStatus from "@/helpers/sample-data/pue-target/location-status";
 
 export const usePueTargetStore = defineStore("pue-target", {
     state: () => ({
@@ -71,10 +71,9 @@ export const usePueTargetStore = defineStore("pue-target", {
             } catch(err) {
 
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: samplePueTargetReport });
-                else
-                    callback({ success: false, status: err.response?.status, data: {} });
+                // if(allowSampleData)
+                //     return callback({ success: true, status: err.response?.status, data: samplePueTargetReport });
+                callback({ success: false, status: err.response?.status, data: {} });
                     
             }
         },
@@ -106,13 +105,13 @@ export const usePueTargetStore = defineStore("pue-target", {
 
             } catch(err) {
                 handlingFetchErr(err);
-                if(allowSampleData) {
-                    this.target = samplePueTargetReport.pue_target;
-                    this.category = samplePueTargetReport.pue_category;
-                    this.isLoading.report = false;
-                    callback && callback(true);
-                    return;
-                }
+                // if(allowSampleData) {
+                //     this.target = samplePueTargetReport.pue_target;
+                //     this.category = samplePueTargetReport.pue_category;
+                //     this.isLoading.report = false;
+                //     callback && callback(true);
+                //     return;
+                // }
 
                 this.isLoading.report = false;
                 callback && callback(false);
@@ -136,10 +135,9 @@ export const usePueTargetStore = defineStore("pue-target", {
             } catch(err) {
 
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: samplePueTargetReport });
-                else
-                    callback({ success: false, status: err.response?.status, data: {} });
+                // if(allowSampleData)
+                //     return callback({ success: true, status: err.response?.status, data: samplePueTargetReport });
+                callback({ success: false, status: err.response?.status, data: {} });
                     
             }
         },
@@ -206,8 +204,8 @@ export const usePueTargetStore = defineStore("pue-target", {
             } catch(err) {
                 
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    result.data = samplePueLocationStatus;
+                // if(allowSampleData)
+                //     result.data = samplePueLocationStatus;
                 result.status = err.response?.status;
                 result.success = false;
     

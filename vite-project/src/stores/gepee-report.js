@@ -4,8 +4,8 @@ import { handlingFetchErr } from "@/helpers/error-handler";
 import { useUserStore } from "@/stores/user";
 import { useViewStore } from "@/stores/view";
 
-import { allowSampleData } from "@/configs/base";
-import sampleGepeeReport from "@/helpers/sample-data/gepee-report";
+// import { allowSampleData } from "@/configs/base";
+// import sampleGepeeReport from "@/helpers/sample-data/gepee-report";
 
 export const useGepeeReportStore = defineStore("gepee-report", {
     state: () => {
@@ -69,13 +69,10 @@ export const useGepeeReportStore = defineStore("gepee-report", {
                 callback({ success: true, status: response.status, data: response.data });
 
             } catch(err) {
-
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: sampleGepeeReport });
-                else
-                    callback({ success: false, status: err.response?.status, data: {} });
-                    
+                // if(allowSampleData)
+                //     return callback({ success: true, status: err.response?.status, data: sampleGepeeReport });
+                callback({ success: false, status: err.response?.status, data: {} });
             }
         }
 

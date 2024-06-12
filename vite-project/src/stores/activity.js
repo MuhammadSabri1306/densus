@@ -6,14 +6,14 @@ import { handlingFetchErr } from "@/helpers/error-handler";
 import { getApiPath } from "@/helpers/get-api-path";
 import { backendUrl } from "@/configs/base";
 
-import { allowSampleData } from "@/configs/base";
-import sampleSchedule from "@/helpers/sample-data/schedule";
+// import { allowSampleData } from "@/configs/base";
+// import sampleSchedule from "@/helpers/sample-data/schedule";
 // import sampleExecution from "@/helpers/sample-data/execution";
-import sampleExecution from "@/helpers/sample-data/activity-execution";
-import sampleCategory from "@/helpers/sample-data/activity-category";
-import sampleAvailableMonth from "@/helpers/sample-data/available-month";
-import sampleLocation from "@/helpers/sample-data/location";
-import sampleChart from "@/helpers/sample-data/activity-chart";
+// import sampleExecution from "@/helpers/sample-data/activity-execution";
+// import sampleCategory from "@/helpers/sample-data/activity-category";
+// import sampleAvailableMonth from "@/helpers/sample-data/available-month";
+// import sampleLocation from "@/helpers/sample-data/location";
+// import sampleChart from "@/helpers/sample-data/activity-chart";
 
 const mapSchedule = item => {
     const createdAt = new Date(item.created_at);
@@ -131,8 +131,8 @@ export const useActivityStore = defineStore("activity", {
                 this.location = response.data.lokasi;
                 callback && callback({ success: true, status: response.status });
             } catch(err) {
-                if(allowSampleData)
-                    this.location = sampleLocation.lokasi;
+                // if(allowSampleData)
+                //     this.location = sampleLocation.lokasi;
                 handlingFetchErr(err);
                 callback && callback({ success: false, status: err.response?.status });
             }
@@ -154,8 +154,8 @@ export const useActivityStore = defineStore("activity", {
                 this.category = response.data.category;
                 callback && callback({ success: true, status: response.status });
             } catch(err) {
-                if(allowSampleData)
-                    this.category = sampleCategory.category;
+                // if(allowSampleData)
+                //     this.category = sampleCategory.category;
                 handlingFetchErr(err);
                 callback && callback({ success: false, status: err.response?.status });
             }
@@ -192,11 +192,11 @@ export const useActivityStore = defineStore("activity", {
 
                 callback && callback({ success: true, status: response.status });
             } catch(err) {
-                if(allowSampleData) {
-                    const schedule = sampleSchedule.schedule.map(mapSchedule);
-                    this.schedule = schedule;
-                    this.userSchedule = schedule;
-                }
+                // if(allowSampleData) {
+                //     const schedule = sampleSchedule.schedule.map(mapSchedule);
+                //     this.schedule = schedule;
+                //     this.userSchedule = schedule;
+                // }
                 handlingFetchErr(err);
                 callback && callback({ success: false, status: err.response?.status });
             }
@@ -258,8 +258,8 @@ export const useActivityStore = defineStore("activity", {
 
             } catch(err) {
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    data = sampleExecution;
+                // if(allowSampleData)
+                //     data = sampleExecution;
                 callback({ success: false, status: err.response?.status, data });
             }
         },
@@ -280,9 +280,8 @@ export const useActivityStore = defineStore("activity", {
                 this.execution = response.data.executionList;
                 callback && callback({ success: true, status: response.status });
             } catch(err) {
-                if(allowSampleData)
-                    this.execution = sampleExecution.executionList;
-                    
+                // if(allowSampleData)
+                //     this.execution = sampleExecution.executionList;
                 handlingFetchErr(err);
                 callback && callback({ success: false, status: err.response?.status });
             }
@@ -303,11 +302,10 @@ export const useActivityStore = defineStore("activity", {
                 data.schedule = response.data.schedule;
                 callback({ success: true, status: response.status, data });
             } catch(err) {
-                if(allowSampleData) {
-                    data.executionList = sampleExecution.executionList;
-                    data.schedule = sampleExecution.schedule;
-                }
-                
+                // if(allowSampleData) {
+                //     data.executionList = sampleExecution.executionList;
+                //     data.schedule = sampleExecution.schedule;
+                // }
                 handlingFetchErr(err);
                 callback({ success: false, status: err.response?.status, data });
             }
@@ -433,12 +431,10 @@ export const useActivityStore = defineStore("activity", {
                 callback && callback({ success: true, status: 200 });
         
             } catch(err) {
-                if(allowSampleData)
-                    this.chart = sampleChart.chart;
-                
+                // if(allowSampleData)
+                //     this.chart = sampleChart.chart;
                 handlingFetchErr(err);
                 callback && callback({ success: false, status: err.response?.status });
-                
             }
         },
 

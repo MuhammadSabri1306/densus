@@ -4,16 +4,16 @@ import { handlingFetchErr } from "@/helpers/error-handler";
 import { useUserStore } from "@/stores/user";
 import { useViewStore } from "@/stores/view";
 
-import { allowSampleData } from "@/configs/base";
-import sampleCategory from "@/helpers/sample-data/gepee-evidence/category";
-import sampleCategoryData from "@/helpers/sample-data/gepee-evidence/category-data";
-import sampleDivre from "@/helpers/sample-data/gepee-evidence/divre";
-import sampleWitel from "@/helpers/sample-data/gepee-evidence/witel";
-import sampleLocationInfoNasional from "@/helpers/sample-data/gepee-evidence/location-info-nasional";
-import sampleLocationInfoDivre from "@/helpers/sample-data/gepee-evidence/location-info-divre";
-import sampleLocationInfoWitel from "@/helpers/sample-data/gepee-evidence/location-info-witel";
-import sampleEvidenceList from "@/helpers/sample-data/gepee-evidence/evidence-list";
-import sampleEvidence from "@/helpers/sample-data/gepee-evidence/evidence";
+// import { allowSampleData } from "@/configs/base";
+// import sampleCategory from "@/helpers/sample-data/gepee-evidence/category";
+// import sampleCategoryData from "@/helpers/sample-data/gepee-evidence/category-data";
+// import sampleDivre from "@/helpers/sample-data/gepee-evidence/divre";
+// import sampleWitel from "@/helpers/sample-data/gepee-evidence/witel";
+// import sampleLocationInfoNasional from "@/helpers/sample-data/gepee-evidence/location-info-nasional";
+// import sampleLocationInfoDivre from "@/helpers/sample-data/gepee-evidence/location-info-divre";
+// import sampleLocationInfoWitel from "@/helpers/sample-data/gepee-evidence/location-info-witel";
+// import sampleEvidenceList from "@/helpers/sample-data/gepee-evidence/evidence-list";
+// import sampleEvidence from "@/helpers/sample-data/gepee-evidence/evidence";
 
 const getCurrentSemester = () => {
     const currMonth = new Date().getMonth() + 1;
@@ -85,8 +85,8 @@ export const useGepeeEvdStore = defineStore("gepee", {
 				callback && callback({ success: true, status: 200 });
 				return;
 			}
-
-            this.categoryList = sampleCategory.category;
+            // this.categoryList = sampleCategory.category;
+            this.categoryList = [];
             callback && callback({ success: true, status: 200 });
         },
 
@@ -104,13 +104,10 @@ export const useGepeeEvdStore = defineStore("gepee", {
                 callback({});
 
             } catch(err) {
-
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback(sampleDivre);
-                else
-                    callback({});
-
+                // if(allowSampleData)
+                //     return callback(sampleDivre);
+                callback({});
             }
         },
 
@@ -130,11 +127,9 @@ export const useGepeeEvdStore = defineStore("gepee", {
             } catch(err) {
 
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback(sampleWitel);
-                else
-                    callback({});
-
+                // if(allowSampleData)
+                //     callback(sampleWitel);
+                callback({});
             }
         },
 
@@ -155,12 +150,12 @@ export const useGepeeEvdStore = defineStore("gepee", {
 
                 handlingFetchErr(err);
                 let data = {};
-                if(allowSampleData && settedParams.witel)
-                    data = sampleLocationInfoWitel;
-                else if(allowSampleData && settedParams.divre)
-                    data = sampleLocationInfoDivre;
-                else if(allowSampleData)
-                    data = sampleLocationInfoNasional;
+                // if(allowSampleData && settedParams.witel)
+                //     data = sampleLocationInfoWitel;
+                // else if(allowSampleData && settedParams.divre)
+                //     data = sampleLocationInfoDivre;
+                // else if(allowSampleData)
+                //     data = sampleLocationInfoNasional;
                 
                 callback(data);
 
@@ -181,13 +176,10 @@ export const useGepeeEvdStore = defineStore("gepee", {
                 callback({});
 
             } catch(err) {
-
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback(sampleCategoryData);
-                else
-                    callback({});
-
+                // if(allowSampleData)
+                //     return callback(sampleCategoryData);
+                callback({});
             }
         },
 
@@ -202,13 +194,10 @@ export const useGepeeEvdStore = defineStore("gepee", {
                 callback(response.data);
 
             } catch(err) {
-
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback(sampleEvidenceList);
-                else
-                    callback({});
-
+                // if(allowSampleData)
+                //     return callback(sampleEvidenceList);
+                callback({});
             }
         },
 

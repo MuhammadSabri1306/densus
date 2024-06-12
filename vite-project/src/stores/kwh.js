@@ -5,11 +5,11 @@ import { useUserStore } from "@/stores/user";
 import { useViewStore } from "@/stores/view";
 import { createUrlParams } from "@/helpers/url";
 
-import { allowSampleData } from "@/configs/base";
-import sampleKwhDaily from "@/helpers/sample-data/monitoring-kwh/daily";
-import sampleKwhWeekly from "@/helpers/sample-data/monitoring-kwh/weekly";
-import sampleKwhMonthly from "@/helpers/sample-data/monitoring-kwh/monthly";
-import sampleKwhMoM from "@/helpers/sample-data/monitoring-kwh/mom";
+// import { allowSampleData } from "@/configs/base";
+// import sampleKwhDaily from "@/helpers/sample-data/monitoring-kwh/daily";
+// import sampleKwhWeekly from "@/helpers/sample-data/monitoring-kwh/weekly";
+// import sampleKwhMonthly from "@/helpers/sample-data/monitoring-kwh/monthly";
+// import sampleKwhMoM from "@/helpers/sample-data/monitoring-kwh/mom";
 
 export const useKwhStore = defineStore("kwh", {
     state: () => {
@@ -86,10 +86,9 @@ export const useKwhStore = defineStore("kwh", {
             } catch(err) {
 
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: sampleKwhDaily });
-                else
-                    callback({ success: false, status: err.response?.status, data: {} });
+                // if(allowSampleData)
+                //     return callback({ success: true, status: err.response?.status, data: sampleKwhDaily });
+                callback({ success: false, status: err.response?.status, data: {} });
                     
             }
         },
@@ -110,10 +109,9 @@ export const useKwhStore = defineStore("kwh", {
             } catch(err) {
 
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: sampleKwhWeekly });
-                else
-                    callback({ success: false, status: err.response?.status, data: {} });
+                // if(allowSampleData)
+                //     return callback({ success: true, status: err.response?.status, data: sampleKwhWeekly });
+                callback({ success: false, status: err.response?.status, data: {} });
                     
             }
         },
@@ -134,10 +132,9 @@ export const useKwhStore = defineStore("kwh", {
             } catch(err) {
 
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: sampleKwhMonthly });
-                else
-                    callback({ success: false, status: err.response?.status, data: {} });
+                // if(allowSampleData)
+                //     return callback({ success: true, status: err.response?.status, data: sampleKwhMonthly });
+                callback({ success: false, status: err.response?.status, data: {} });
                     
             }
         },
@@ -156,13 +153,10 @@ export const useKwhStore = defineStore("kwh", {
                 callback({ success: true, status: response.status, data: response.data });
 
             } catch(err) {
-
                 handlingFetchErr(err);
-                if(allowSampleData)
-                    callback({ success: true, status: err.response?.status, data: sampleKwhMoM });
-                else
-                    callback({ success: false, status: err.response?.status, data: {} });
-                    
+                // if(allowSampleData)
+                //     return callback({ success: true, status: err.response?.status, data: sampleKwhMoM });
+                callback({ success: false, status: err.response?.status, data: {} }); 
             }
         }
 
