@@ -121,7 +121,10 @@ const fetchPorts = (rtuSname) => {
         portList.value = list.map(port => {
             const portValue = toNewosasePortValue(port.value, port.units, port.identifier);
             const port_label = `${ port.no_port } | ${ port.port_name } | ${ port.identifier } | ${ portValue }`;
-            return { ...port, port_label };
+            let portNoId = port.no_port;
+            if(port.result_type == "formula")
+                portNoId = `${ port.no_port }.${ port.id }`;
+            return { ...port, port_label, portNoId };
         })
         isPortListLoading.value = false;
     });
@@ -353,7 +356,7 @@ fetch();
                                                 <label for="portKwh" class="required">Analog Port KW</label>
                                                 <ListboxFilterV2 v-model:list="portList" v-model:value="v$.portKwh.$model"
                                                     :isLoading="isPortListLoading" :isDisabled="!showUpdateForm" :isInvalid="isInvalid('portKwh')"
-                                                    valueKey="no_port" labelKey="port_label" inputId="portKwh" inputPlaceholder="Pilih PORT" />
+                                                    valueKey="portNoId" labelKey="port_label" inputId="portKwh" inputPlaceholder="Pilih PORT" />
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-4">
@@ -361,7 +364,7 @@ fetch();
                                                 <label for="portGenset" class="required">Digital Port Status Genset</label>
                                                 <ListboxFilterV2 v-model:list="portList" v-model:value="v$.portGenset.$model"
                                                     :isLoading="isPortListLoading" :isDisabled="!showUpdateForm" :isInvalid="isInvalid('portGenset')"
-                                                    valueKey="no_port" labelKey="port_label" inputId="portGenset" inputPlaceholder="Pilih PORT" />
+                                                    valueKey="portNoId" labelKey="port_label" inputId="portGenset" inputPlaceholder="Pilih PORT" />
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-4">
@@ -369,7 +372,7 @@ fetch();
                                                 <label for="portPueV2">Analog Port PUE</label>
                                                 <ListboxFilterV2 v-model:list="portList" v-model:value="v$.portPueV2.$model"
                                                     :isLoading="isPortListLoading" :isDisabled="!showUpdateForm" :isInvalid="isInvalid('portPueV2')"
-                                                    valueKey="no_port" labelKey="port_label" inputId="portPueV2" inputPlaceholder="Pilih PORT" />
+                                                    valueKey="portNoId" labelKey="port_label" inputId="portPueV2" inputPlaceholder="Pilih PORT" />
                                             </div>
                                         </div>
                                         <div class="col-lg-10 col-xl-8">
