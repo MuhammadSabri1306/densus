@@ -384,6 +384,6 @@ class Gepee_evidence extends RestController
             }
         }
 
-        $this->response($data, 200);
+        $this->response($data, $status);
 	}
 }

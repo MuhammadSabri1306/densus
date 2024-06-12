@@ -1,19 +1,23 @@
 <?php
 
+$this->result = false;
 $this->db
     ->select()
     ->from($this->tableName)
     ->where('id', $id);
 $evd = $this->db->get()->row_array();
 
+$isFileExists = isset($evd['file']);
 $isFileDeleted = false;
-if(isset($evd['file'])) {
+if($isFileExists) {
     $filePath = FCPATH . UPLOAD_GEPEE_EVIDENCE_PATH . '/' . $evd['file'];
-    $isFileDeleted = unlink($filePath);
+    $isFileExists = file_exists($filePath);
+    if($isFileExists) {
+        $isFileDeleted = unlink($filePath);
+    }
 }
 
-if($isFileDeleted) {
+if(!$isFileExists || $isFileDeleted) {
     $this->db->where('id', $id);
     $this->result = $this->db->delete($this->tableName);
 }
-$this->result = false;
