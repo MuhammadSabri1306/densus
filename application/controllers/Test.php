@@ -285,4 +285,16 @@ class Test extends CI_Controller
         $this->load->view('simple_bootstrap/footer');
 
     }
+
+    public function unused_gepee_evd_attach()
+    {
+        $this->load->database('densus');
+        $this->db->select('*')->from('gepee_evidence')->limit(1);
+        $gepeeEvds = $this->db->get()->result_array();
+        $gepeeEvdsAttchs = array_column($gepeeEvds, 'file');
+
+        $attchDir = __DIR__ . '/../../upload/gepee_evidence/';
+        $files = array_diff(scandir($attchDir), ['.', '..'], $gepeeEvdsAttchs);
+        dd_json($files);
+    }
 }

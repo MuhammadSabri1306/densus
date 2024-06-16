@@ -20,9 +20,13 @@ class Attachment extends RestController
     private function create_filename($srcFilename)
     {
         $fileInfo = pathinfo($srcFilename);
-        $filename = str_replace('.', '', $fileInfo['filename']);
-        $filename = str_replace(' ', '', $filename);
+
+        $filename = str_replace(' ', '-', $fileInfo['filename']);
+        $filename = preg_replace('/[^A-Za-z0-9\-_\.]/', '_', $filename);
+        $filename = preg_replace('/_+/', '_', $filename);
+        $filename = ltrim(rtrim($filename, '_'), '_');
         $filename .= '_' . time() . '.' . $fileInfo['extension'];
+
         return $filename;
     }
 
