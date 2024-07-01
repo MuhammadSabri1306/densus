@@ -1,15 +1,6 @@
 <?php
 
-function customRound($numb, $precision = 0) {
-    $numbPow = pow(10, $precision);
-    $result = floor($numb * $numbPow) / $numbPow;
-    $lastDecimal = ($numb - $result) * $numbPow;
-    
-    if($lastDecimal < 0.5) return $result;
-
-    $result = (ceil($result * $numbPow) + 1) / $numbPow;
-    return $result;
-}
+$this->load->helper('number');
 
 $currYearDate = strval( date('Y') ).'-01-01 00:00:00';
 
@@ -54,6 +45,10 @@ if(isset($zone['witel'])) {
 }
 $pue2Values = $this->db->get()->result_array();
 
+// if($zone['divre'] == 'TLK-r2000000' && !$zone['witel']) {
+//     dd(count($pue1Values), count($pue2Values));
+// }
+
 $pueValues = [];
 try {
     foreach($rtuList as $rtu) {
@@ -61,7 +56,7 @@ try {
         $useNewosasePue = false;
         $pues = [];
 
-        foreach($pue2Values as $pue2) {
+        foreach($pue2Values as $pue2Index => $pue2) {
 
             $isRtuMatch = $pue2['rtu_kode'] == $rtu['rtu_kode'];
             $isPueValueExists = $isRtuMatch && $pue2['pue_value'] !== null;
@@ -75,16 +70,14 @@ try {
                 }
                 array_push($pues[$pueHour]['values'], $pue2['pue_value']);
                 $useNewosasePue = true;
+                $pue2Values[$pue2Index] = null;
             }
 
         }
-
-        // if($rtu['rtu_kode'] == 'RTU-PTRN-01') {
-        //     dd($useNewosasePue);
-        // }
+        $pue2Values = array_values( array_filter($pue2Values, fn($item) => $item !== null) );
 
         if(!$useNewosasePue) {
-            foreach($pue1Values as $pue1) {
+            foreach($pue1Values as $pue1Index => $pue1) {
 
                 $isRtuMatch = $pue1['rtu_kode'] == $rtu['rtu_kode'];
                 $isPueValueExists = $isRtuMatch && $pue1['pue_value'] !== null;
@@ -97,9 +90,12 @@ try {
                         ];
                     }
                     array_push($pues[$pueHour]['values'], $pue1['pue_value']);
+                    $pue1Values[$pue1Index] = null;
                 }
-    
+
             }
+
+            $pue1Values = array_values( array_filter($pue1Values, fn($item) => $item !== null) );
         }
 
         $item = [ 'rtu' => $rtu, 'pue_values' => [] ];
@@ -108,12 +104,22 @@ try {
             if($pueCount > 0) {
                 $pueHourlyAvg = array_sum($pue['values']) / $pueCount;
                 $pueHourlyAvg = customRound($pueHourlyAvg, 2);
+                // if($zone['divre'] == 'TLK-r2000000' && !$zone['witel']) {
+
+                // } else {
+                //     // errors happen't here in big index of $pueValues
+                //     array_push($item['pue_values'], [
+                //         'timestamp' => $pue['timestamp'],
+                //         'value' => $pueHourlyAvg
+                //     ]);
+                // }
                 array_push($item['pue_values'], [
                     'timestamp' => $pue['timestamp'],
                     'value' => $pueHourlyAvg
                 ]);
             }
         }
+
         array_push($pueValues, $item);
 
     }

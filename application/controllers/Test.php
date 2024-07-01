@@ -33,6 +33,24 @@ class Test extends CI_Controller
         }
     }
 
+    public function pass_hash(string $pass)
+    {
+        dd(password_hash($pass, PASSWORD_DEFAULT));
+    }
+
+    public function phpinfo(string $privateKey)
+    {
+        if($privateKey == 'densus@phpinfo983u2') {
+            phpinfo();
+        }
+    }
+
+    public function log_ability()
+    {
+        log_message('error', 'Test logging error');
+        echo 'done';
+    }
+
     private function broken_deg(bool $isUpdatable, $rtuSname = null, $closedAt = null)
     {
         $this->load->database('opnimus_new');
