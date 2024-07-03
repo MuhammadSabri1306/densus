@@ -24,35 +24,58 @@ class Auth extends RestController
 
         $input = $this->input_handler->get_body('post');
         $this->load->model('user_model');
+        $this->load->library('brute_force_protector');
         $dataUser = null;
         $status = 200;
         
         if(!$input['valid']) {
-            
             $data = [ 'success' => false, 'message' => $input['msg'] ];
             $status = REST_ERR_BAD_REQ;
-            
-        } elseif($input['body']['is_ldap']) {
-            
-            $ldapurl = EnvPattern::$api_ldap . 'login.php?username=' . $input['body']['username'] . '&password=' . $input['body']['password'];
-            $content = file_get_contents($ldapurl);
-            $authdata = json_decode($content, TRUE);
-            if ($authdata['status'] === "success") {
-                $dataUser = $this->user_model->get_by_username($authdata['nik']);
-            } else {
+        }
+
+        if($status === 200) {
+            if(!$this->brute_force_protector->is_allowed( $input['body']['username'] )) {
+                $data = [
+                    'success' => false,
+                    'message' => 'Permintaan login anda dinonaktifkan sementara waktu',
+                    'max_retry' => $this->brute_force_protector->getConfigMaxTry(),
+                    'next_retry_at' => $this->brute_force_protector->attemptData['blocked_until']
+                ];
                 $status = REST_ERR_BAD_REQ;
             }
+        }
 
-        } else {
-            
-            $dataUser = $this->user_model->get_by_username($input['body']['username']);
-            if($dataUser && !password_verify($input['body']['password'], $dataUser->password)) {
-                $status = REST_ERR_BAD_REQ;
+        if($status === 200) {
+
+            if($input['body']['is_ldap']) {
+                $ldapurl = EnvPattern::$api_ldap . 'login.php?username=' . $input['body']['username'] . '&password=' . $input['body']['password'];
+                $content = file_get_contents($ldapurl);
+                $authdata = json_decode($content, TRUE);
+                if ($authdata['status'] === "success") {
+                    $dataUser = $this->user_model->get_by_username($authdata['nik']);
+                } else {
+                    $status = REST_ERR_BAD_REQ;
+                }
+            } else {
+                $dataUser = $this->user_model->get_by_username($input['body']['username']);
+                if($dataUser && !password_verify($input['body']['password'], $dataUser->password)) {
+                    $status = REST_ERR_BAD_REQ;
+                }
+            }
+
+            if($status !== 200) {
+                $isNotBlocked = $this->brute_force_protector->commit_failed_login($input['body']['username']);
+                $data = [
+                    'success' => false,
+                    'message' => 'Username dan password tidak ditemukan',
+                    'max_retry' => $this->brute_force_protector->getConfigMaxTry(),
+                ];
+                if(!$isNotBlocked) $data['next_retry_at'] = $this->brute_force_protector->attemptData['blocked_until'];
             }
 
         }
 
-        if($dataUser && $status === 200) {
+        if($status === 200 && $dataUser) {
             
             $this->user_log
                 ->userId($dataUser->id)
@@ -85,21 +108,16 @@ class Auth extends RestController
                 'success' => true,
                 'user' => $this->auth_jwt->get_payload()
             ];
-            
             $data['user']['token'] = $this->auth_jwt->create_token();
-            $this->response($data, 200);
 
-        } else {
-
-            if(!isset($data)) {
-                $data = [
-                    'success' => false,
-                    'message' => 'Username or password not matched'
-                ];
-            }
-            $this->response($data, REST_ERR_BAD_REQ);
-            
+        } elseif(!isset($data)) {
+            $data = [
+                'success' => false,
+                'message' => 'Username dan password tidak ditemukan'
+            ];
         }
+
+        $this->response($data, $status);
     }
 
     public function logout_get()

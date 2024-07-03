@@ -51,6 +51,37 @@ class Test extends CI_Controller
         echo 'done';
     }
 
+    public function client_ip()
+    {
+        dd($_SERVER['HTTP_USER_AGENT']);
+        $getters = [
+            fn() => isset( $_SERVER['HTTP_CLIENT_IP'] ) ? $_SERVER['HTTP_CLIENT_IP'] : null,
+            fn() => isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : null,
+            fn() => isset( $_SERVER['HTTP_X_FORWARDED'] ) ? $_SERVER['HTTP_X_FORWARDED'] : null,
+            fn() => isset( $_SERVER['HTTP_FORWARDED_FOR'] ) ? $_SERVER['HTTP_FORWARDED_FOR'] : null,
+            fn() => isset( $_SERVER['HTTP_FORWARDED'] ) ? $_SERVER['HTTP_FORWARDED'] : null,
+            fn() => isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : null,
+            fn() => getenv('HTTP_CLIENT_IP'),
+            fn() => getenv('HTTP_X_FORWARDED_FOR'),
+            fn() => getenv('HTTP_X_FORWARDED'),
+            fn() => getenv('HTTP_FORWARDED_FOR'),
+            fn() => getenv('HTTP_FORWARDED'),
+            fn() => getenv('REMOTE_ADDR'),
+        ];
+        
+        $gettersCount = count($getters);
+        for($i=0; $i<$gettersCount; $i++) {
+            $clientIp = $getters[$i]();
+            if($clientIp) {
+                $gettersIndex = $i;
+                $i = $gettersCount;
+            }
+        }
+
+        if(!$clientIp) $clientIp = 'UNKNOWN';
+        dd($gettersIndex, $clientIp);
+    }
+
     private function broken_deg(bool $isUpdatable, $rtuSname = null, $closedAt = null)
     {
         $this->load->database('opnimus_new');

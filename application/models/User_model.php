@@ -1,6 +1,9 @@
 <?php
 class User_model extends CI_Model
 {
+    protected $tableName = 'user';
+    protected $tableLoginFailedName = 'user_login_failed';
+
     public function __construct()
     {
             $this->load->database('densus');
@@ -27,7 +30,7 @@ class User_model extends CI_Model
         if(is_null($id)) {
             $query = $this->db
                 ->select($select)
-                ->from('user')
+                ->from($this->tableName)
                 ->order_by('id', 'DESC')
                 ->get();
             $result = $query->result();
@@ -42,7 +45,7 @@ class User_model extends CI_Model
 
         $query = $this->db
             ->select($select)
-            ->from('user')
+            ->from($this->tableName)
             ->where('id', $id)
             ->get();
             
@@ -57,12 +60,12 @@ class User_model extends CI_Model
     public function save($body, $id = null, $currUser = null)
     {
         if(is_null($id)) {
-            $success = $this->db->insert('user', $body);
+            $success = $this->db->insert($this->tableName, $body);
         } else {
             $this->filter_for_curr_user($currUser);
             $this->db->where('id', $id);
 
-            $success = $this->db->update('user', $body);
+            $success = $this->db->update($this->tableName, $body);
         }
         return $success;
     }
@@ -71,14 +74,14 @@ class User_model extends CI_Model
     {
         $this->filter_for_curr_user($currUser);
         $this->db->where('id', $id);
-        return $this->db->delete('user');
+        return $this->db->delete($this->tableName);
     }
 
     public function get_by_username($username)
     {
         $query = $this->db
             ->select('*')
-            ->from('user')
+            ->from($this->tableName)
             ->where('username', $username)
             ->get();
         return $query->row();
@@ -88,7 +91,7 @@ class User_model extends CI_Model
     {
         $query = $this->db
             ->select('id, username, nama, organisasi, role, no_hp, email, is_ldap, telegram_id, telegram_username, witel_code, witel_name, divre_code, divre_name, is_active')
-            ->from('user')
+            ->from($this->tableName)
             ->where('id', $currUser['id'])
             ->get();
             
@@ -103,6 +106,6 @@ class User_model extends CI_Model
     public function update_pass($id, $password)
     {
         $this->db->where('id', $id);
-        return $this->db->update('user', [ 'password' => $password ]);
+        return $this->db->update($this->tableName, [ 'password' => $password ]);
     }
 }
