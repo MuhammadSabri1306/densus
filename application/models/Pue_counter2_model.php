@@ -90,9 +90,9 @@ class Pue_Counter2_model extends CI_Model {
         return $this->result;
     }
 
-    public function get_rtu_pue_hourly_excel($zone, $rtuCode)
+    public function get_rtu_pue_hourly_excel($filter, $rtuCode)
     {
-        $this->use_module('get_rtu_pue_hourly_excel', [ 'zone' => $zone, 'rtuCode' => $rtuCode ]);
+        $this->use_module('get_rtu_pue_hourly_excel', [ 'filter' => $filter, 'rtuCode' => $rtuCode ]);
         return $this->result;
     }
 

@@ -10,7 +10,6 @@ import CardAverages from "./CardAverages.vue";
 import CardPerformances from "./CardPerformances.vue";
 import Datatable from "./Datatable.vue";
 import DialogDetailRtu from "./DialogDetailRtu.vue";
-import DialogExportLinkVue from "@/components/ui/DialogExportLink.vue";
 
 const isLoading = ref(false);
 const fetchLevel = ref(null);
@@ -47,7 +46,6 @@ const showDialogDetail = ref(false);
 const detailRtuCode = ref(null);
 
 const onDatatableDetail = (rtuCode) => {
-    console.log(rtuCode)
     detailRtuCode.value = rtuCode;
     showDialogDetail.value = true;
 };
@@ -55,11 +53,6 @@ const onDatatableDetail = (rtuCode) => {
 const onDialogDetailHide = () => {
     showDialogDetail.value = false;
     detailRtuCode.value = null;
-};
-
-const showDialogExport = ref(false);
-const onDialogDetailExport = rtuCode => {
-    window.open(`${ backendUrl }/export/excel/pue/${ rtuCode }`, "_blank");
 };
 </script>
 <template>
@@ -83,11 +76,7 @@ const onDialogDetailExport = rtuCode => {
                 <CardPerformances :isLoading="isLoading" :performances="performances" />
             </div>
         </div>
-        <Datatable v-show="hasInit" ref="datatableElm" :isLoading="isLoading" @detail="onDatatableDetail"
-            @export="showDialogExport = true" />
-        <DialogDetailRtu v-if="showDialogDetail" :rtuCode="detailRtuCode" @close="onDialogDetailHide"
-            @export="onDialogDetailExport" />
-        <DialogExportLinkVue v-if="showDialogExport" baseUrl="/export/excel/pue" title="Export Monitoring PUE Online"
-            useDivre useWitel @close="showDialogExport = false" />
+        <Datatable v-show="hasInit" ref="datatableElm" :isLoading="isLoading" @detail="onDatatableDetail" />
+        <DialogDetailRtu v-if="showDialogDetail" :rtuCode="detailRtuCode" @close="onDialogDetailHide" />
     </section>
 </template>

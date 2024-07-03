@@ -6,8 +6,9 @@ import { getPueBgClass } from "@/helpers/pue-color";
 import { useCollapseRow } from "@/helpers/collapse-row";
 import { toFixedNumber } from "@/helpers/number-format";
 import Skeleton from "primevue/skeleton";
+import DialogExportLinkVue from "@/components/ui/DialogExportLink.vue";
 
-const emit = defineEmits(["export", "detail"]);
+const emit = defineEmits(["detail"]);
 const props = defineProps({
     isLoading: { type: Boolean, default: false }
 });
@@ -133,12 +134,14 @@ const getRowClass = item => {
     
     return { "row-collapsed": collapsed };
 };
+
+const showDialogExport = ref(false);
 </script>
 <template>
     <div class="card border-0">
         <div class="card-header border-top border-start border-end d-flex align-items-center">
             <h5>Tabel nilai PUE tahun {{ currYear }}</h5>
-            <button type="button" @click="$emit('export')" class="btn-icon ms-auto px-3">
+            <button type="button" @click="showDialogExport = true" class="btn-icon ms-auto px-3">
                 <VueFeather type="download" size="1em" />
                 <span class="ms-2">Export</span>
             </button>
@@ -213,5 +216,7 @@ const getRowClass = item => {
                 </tbody>
             </table>
         </div>
+        <DialogExportLinkVue v-if="showDialogExport" baseUrl="/export/excel/pue" title="Export Monitoring PUE Online"
+            useDivre useWitel @close="showDialogExport = false" />
     </div>
 </template>

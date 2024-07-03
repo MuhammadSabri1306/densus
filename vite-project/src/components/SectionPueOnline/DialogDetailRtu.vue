@@ -7,13 +7,25 @@ import Dialog from "primevue/dialog";
 import Skeleton from "primevue/skeleton";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
+import DialogExportLinkVue from "@/components/ui/DialogExportLink.vue";
 
-defineEmits(["close", "export"]);
+const emit = defineEmits(["close"]);
 const props = defineProps({
     rtuCode: { default: null }
 });
 
 const showDialog = ref(true);
+const showDialogExport = ref(false);
+const onDialogHide = () => !showDialogExport.value && emit("close");
+const onShowDialogExport = () => {
+    showDialogExport.value = true;
+    showDialog.value = false;
+};
+const onHideDialogExport = () => {
+    showDialog.value = true;
+    showDialogExport.value = false;
+};
+
 const rtu = ref(null);
 const tableData = ref([]);
 const isEmpty = val => (val === undefined || val === null);
@@ -39,10 +51,12 @@ const getDateTimeStr = timestamp => {
         .DateTimeFormat('id', { dateStyle: 'long', timeStyle: 'short' })
         .format(new Date(timestamp));
 };
+
+const getExportUrl = () => `/export/excel/pue/${ rtu.value?.rtu_kode }`;
 </script>
 <template>
     <Dialog header="Detail PUE Online" v-model:visible="showDialog" modal maximizable draggable
-        class="dialog-basic" contentClass="tw-overflow-x-hidden" @afterHide="$emit('close')">
+        class="dialog-basic" contentClass="tw-overflow-x-hidden" @afterHide="onDialogHide">
         <div class="pb-4 pt-4 pt-md-0">
             <div class="card card-body bg-light text-dark p-t-25 p-b-25 p-l-30 p-r-30">
                 <div class="row">
@@ -62,7 +76,7 @@ const getDateTimeStr = timestamp => {
                         </template>
                     </div>
                     <div v-if="!isLoading && rtu?.rtu_kode" class="col-auto ms-auto mt-4 mt-md-auto">
-                        <button type="button" @click="$emit('export', rtu.rtu_kode)" class="btn btn-lg btn-primary shadow-sm">
+                        <button type="button" @click="onShowDialogExport" class="btn btn-lg btn-primary shadow-sm">
                             <VueFeather type="download" size="1.2em" class="middle" />
                             <span class="ms-1 middle">Export</span>
                         </button>
@@ -91,4 +105,6 @@ const getDateTimeStr = timestamp => {
             </DataTable>
         </div>
     </Dialog>
+    <DialogExportLinkVue v-if="showDialogExport" :baseUrl="getExportUrl()" title="Export Monitoring PUE Online"
+        useDivre useWitel useYear useMonth initCurrDate @close="onHideDialogExport" />
 </template>

@@ -176,12 +176,25 @@ class Excel_export extends CI_Controller
 
     public function pue_rtu($rtuCode)
     {
-        $zone = [];
+        $filter = [];
+        $year = $this->input->get('year');
+        $month = $this->input->get('month');
+
+        if(!$year) $year = date('Y');
+        if(!is_string($year)) $year = strval($year);
+        if($month && !is_string($month)) $month = strval($month);
+
         $this->load->library('datetime_range');
-        $datetime = $this->datetime_range->get_by_year( date('Y') );
+        if($month) {
+            if(strlen($month) < 2) $month = "0$month";
+            $datetime = $this->datetime_range->get_by_month($month, $year);
+        } else {
+            $datetime = $this->datetime_range->get_by_year($year);
+        }
+        $filter['datetime'] = $datetime;
 
         $this->load->model('pue_counter2_model');
-        $data = $this->pue_counter2_model->get_rtu_pue_hourly_excel($zone, $rtuCode);
+        $data = $this->pue_counter2_model->get_rtu_pue_hourly_excel($filter, $rtuCode);
         
         $this->excel->useColSizeAuto = true;
         $this->excel->setValue('Mulai tanggal :', 2, 2);
@@ -224,11 +237,23 @@ class Excel_export extends CI_Controller
     {
         $filter = [
             'witel' => $this->input->get('witel'),
-            'divre' => $this->input->get('divre')
+            'divre' => $this->input->get('divre'),
         ];
+        $year = $this->input->get('year');
+        $month = $this->input->get('month');
+
+        if(!$year) $year = date('Y');
+        if(!is_string($year)) $year = strval($year);
+        if($month && !is_string($month)) $month = strval($month);
 
         $this->load->library('datetime_range');
-        $datetime = $this->datetime_range->get_by_year( date('Y') );
+        if($month) {
+            if(strlen($month) < 2) $month = "0$month";
+            $datetime = $this->datetime_range->get_by_month($month, $year);
+        } else {
+            $datetime = $this->datetime_range->get_by_year($year);
+        }
+        $filter['datetime'] = $datetime;
 
         $this->load->model('pue_counter2_model');
         $data = $this->pue_counter2_model->get_pue_hourly_excel($filter);

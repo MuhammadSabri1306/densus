@@ -12,21 +12,25 @@ if(!$rtu) {
     return $this->result;
 }
 
-$currYearDate = strval( date('Y') ).'-01-01 00:00:00';
+// $currYearDate = strval( date('Y') ).'-01-01 00:00:00';
 
 $this->db
     ->select('rtu_kode, AVG(pue_value) AS pue_value, timestamp, date_format(timestamp, "%Y-%m-%d %H") AS hour, no_port, satuan')
     ->from($this->tableName)
-    ->where('timestamp >=', $currYearDate)
+    // ->where('timestamp >=', $currYearDate)
     ->where('rtu_kode', $rtuCode)
+    ->where('timestamp >=', $filter['datetime'][0])
+    ->where('timestamp <=', $filter['datetime'][1])
     ->group_by('hour');
 $pue1Values = $this->db->get()->result_array();
 
 $this->db
     ->select('rtu_kode, AVG(pue_value) AS pue_value, timestamp, date_format(timestamp, "%Y-%m-%d %H") AS hour, no_port, satuan')
     ->from("pue_counter_new")
-    ->where('timestamp >=', $currYearDate)
+    // ->where('timestamp >=', $currYearDate)
     ->where('rtu_kode', $rtuCode)
+    ->where('timestamp >=', $filter['datetime'][0])
+    ->where('timestamp <=', $filter['datetime'][1])
     ->group_by('rtu_kode')
     ->group_by('hour');
 $pue2Values = $this->db->get()->result_array();
